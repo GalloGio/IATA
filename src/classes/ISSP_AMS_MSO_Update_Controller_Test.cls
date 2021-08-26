@@ -27,7 +27,7 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 			RecordTypeId = conRtId,
 			LastName = 'portalUser',
 			FirstName = 'first',
-			Email = 'someuser@iata.org',
+			Email = 'someuser@test.org',
 			User_Portal_Status__c = 'Approved User'
 			);
 		insert con;
@@ -53,8 +53,8 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 
 		User newUser = new User(
 			profileId = p.id,
-			username = 'someuser@iata.org',
-			email = 'someuser@iata.org',
+			username = 'someuser@test.org',
+			email = 'someuser@test.org',
 			emailencodingkey = 'UTF-8',
 			localesidkey = 'en_US',
 			languagelocalekey = 'en_US',
@@ -138,7 +138,7 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 			RecordTypeId = conRtId,
 			LastName = 'portalUser',
 			FirstName = 'first',
-			Email = 'someuser@iata.org',
+			Email = 'someuser@test.org',
 			User_Portal_Status__c = 'Approved User'
 			);
 		insert con;
@@ -162,8 +162,8 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 
 		User newUser = new User(
 			profileId = p.id,
-			username = 'someuser@iata.org',
-			email = 'someuser@iata.org',
+			username = 'someuser@test.org',
+			email = 'someuser@test.org',
 			emailencodingkey = 'UTF-8',
 			localesidkey = 'en_US',
 			languagelocalekey = 'en_US',
@@ -216,7 +216,7 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 			RecordTypeId = conRtId,
 			LastName = 'portalUser',
 			FirstName = 'first',
-			Email = 'someuser@iata.org',
+			Email = 'someuser@test.org',
 			User_Portal_Status__c = 'Approved User'
 			);
 		insert con;
@@ -240,8 +240,8 @@ private class ISSP_AMS_MSO_Update_Controller_Test {
 
 		User newUser = new User(
 			profileId = p.id,
-			username = 'someuser@iata.org',
-			email = 'someuser@iata.org',
+			username = 'someuser@test.org',
+			email = 'someuser@test.org',
 			emailencodingkey = 'UTF-8',
 			localesidkey = 'en_US',
 			languagelocalekey = 'en_US',

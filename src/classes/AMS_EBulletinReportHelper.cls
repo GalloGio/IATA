@@ -63,7 +63,7 @@ public without sharing class AMS_EBulletinReportHelper {
 	public static final String IRRPERIODED		= 	'89-IRR: Period';
 
 	public static final String IRRCHANGECODE = 'IRR';
-	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC'};
+	public static final Set<String> NEWCHANGECODESET = new Set<String> {'NEW','NWD','REC','DIS'};
 
 	private static final String NOTAPPLICABLE = 'Not Applicable';
 	private static final String ADDITIONALQUERYFIELDS = ',Account__r.ANG_IsNewGenAgency__c';

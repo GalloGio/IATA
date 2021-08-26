@@ -366,7 +366,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 					} else if (cse.oscar__r.Process__c == AMS_Utils.NGCHANGES
 						&& (ON_GOING_MAJOR_CHANGES_STATUS.contains(cse.Oscar__r.Status__c)
 							|| (cse.Oscar__r.Status__c == AMS_Utils.OSCAR_CLOSED
-								&& (System.today().daysBetween(Date.valueOf(cse.ClosedDate)) < 180)))) {
+							&& (cse.ClosedDate != null && Date.valueOf(cse.ClosedDate).daysBetween(System.today()) < 180)))) {
 						return true;
 					}
 				}
@@ -394,13 +394,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		}
 
 		String queryAccount =
-			'SELECT Id, IATACode__c, Name, RecordType.Name, ' + 
+			'SELECT Id, IATACode__c, Name, RecordType.Name, Location_Class__c, ' + 
 			'   Location_Type__c, Status__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Iso_State__r.name, Financial_Year_End__c, ' +
 			getOscarCasesSubquery() +
 			'FROM Account ' +
 			'WHERE RecordType.DeveloperName = \'IATA_Agency\' ' + 
 			'AND ANG_Accreditation_Model__c IN :selectedAccreditationsSet ' + 
 			'AND Status__c IN :TARGET_ACCOUNT_STATUS ' + 
+			'AND Location_Class__c != \'D\' ' + 
 			'AND Accreditation_date__c < LAST_N_MONTHS:6 ';
 
 		if (cashOrLiteAccreditationModelSelected) {

@@ -54,6 +54,8 @@ public class ANG_RHCHelper {
 	private static final String YES = 'Yes';
 	private static final String NO = 'No';
 
+	public static boolean bIsNewHELiteProcess = false;
+
 	// *********************************************************
 	// *********************** Methods *************************
 	// *********************************************************
@@ -64,7 +66,7 @@ public class ANG_RHCHelper {
 											   IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c,
 											   (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c
 												FROM Financial_Securities__r),
-											   (SELECT Id, ANG_Financial_Security__c, ANG_RHC_Amount__c
+											   (SELECT Id, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_Minimum_Financial_Security__c
 												FROM RHC_Informations__r
 												WHERE RecordTypeId = :RECTYPE_STDRHCINFO)
 										   FROM Account
@@ -110,7 +112,7 @@ public class ANG_RHCHelper {
 	}
 
 	public static void deactivateRHCInfo(Set<Id> accounts) {
-		deactivateRHCInfo([SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
+		deactivateRHCInfo([SELECT Id, ANG_Minimum_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
  	}
 
 	public static void deactivateRHCInfo(List<ANG_RHC_Information__c> rhcInfos) {
@@ -148,8 +150,8 @@ public class ANG_RHCHelper {
 		if(!accountsIds.isEmpty()){
 
 			for (Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
-								  Financial_Assessment_Points__c, ANG_RiskStatus__c, Remittance_frequency__c, ANG_Accreditation_Model__c,
-								  (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
+								  Financial_Assessment_Points__c, ANG_RiskStatus__c, Remittance_frequency__c, ANG_Accreditation_Model__c,IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,
+								  (SELECT id, ANG_RHC_Amount_Equals_FS__c, ANG_Minimum_Financial_Security__c FROM RHC_Informations__r)
 							  FROM Account
 							  WHERE Id IN :accountsIds]) {
 
@@ -190,122 +192,128 @@ public class ANG_RHCHelper {
 		}
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
-			string Tier = determineTier(rhc.Amount_At_Risk_USD__c, bspAttributesMap.values());
-
 			Account acct = accountsMap.get(rhc.ANG_AccountId__c);
 
-			Boolean isMulticountry = (acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
-
-			Decimal fsAmount = (rhc.ANG_Financial_Security__c == null) ? 0 : rhc.ANG_Financial_Security__c;
-			Decimal rhcAmountFsPercent = (rhc.RHC_Amount_Equals_FS_Percent__c == null) ? 0 : rhc.RHC_Amount_Equals_FS_Percent__c;
-
-			Boolean shouldApplyRhcPercentage = ! isMulticountry || rhcAmountFsPercent != 0;
-
-			// If RHC equal FS % condition is applied on the agent
-			// retrieve % of FS from the RHC information (rhcAmountFsPercent) and calculate RHC amount
-			if (rhc.ANG_RHC_Amount_Equals_FS__c && shouldApplyRhcPercentage) {
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
-				applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent);
-				continue;
+			//If the agency is CASHLESS and the flag "Allow_Cash_FOP_for_Cashless_Agencies__c" on country is true, then force the RHC Amount to 1
+			if(acct.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && (acct.ANG_Accreditation_Model__c == ams_utils.ACCREDITATIONMODEL_CASHLESS || (string.isBlank(acct.ANG_Accreditation_Model__c) && ANG_RHCHelper.bIsNewHELiteProcess))){
+				rhc.ANG_RHC_Amount__c = 1;
+				rhc.ANG_RHC_Amount_Forecasted__c = 1;
 			}
+			else{
+				string Tier = determineTier(rhc.Amount_At_Risk_USD__c, bspAttributesMap.values());
 
-			//Fetch BSP associated with the given account
-			String relatedBspId = accountsBspMap.get(rhc.ANG_AccountId__c);
+				Boolean isMulticountry = (acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY);
 
-			//If cash condition is TRUE on the agent
-			//fetch the cash condition record from BSP Attributes
-			//and apply RHC amount = % FS
-			if (rhc.ANG_CashCondition__c && fsAmount >= 0)
-			{
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Cash Condition');
-				Decimal fsPercentage = null;
+				Decimal fsAmount = (rhc.ANG_Financial_Security__c == null) ? 0 : rhc.ANG_Financial_Security__c;
+				Decimal rhcAmountFsPercent = (rhc.RHC_Amount_Equals_FS_Percent__c == null) ? 0 : rhc.RHC_Amount_Equals_FS_Percent__c;
 
-				if (isMulticountry) {
-					fsPercentage = 100;
-					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply 100% percentage for multicountry agent');
-				} else {
-					ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + '.' + RECTYPE_CASH_CONDITION_CONFIG);
-					fsPercentage = (bspAttrCash == null || bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
-					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Consider cash condition BSP Attribute');
-				}
+				Boolean shouldApplyRhcPercentage = ! isMulticountry || rhcAmountFsPercent != 0;
 
-				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
-				continue;
-			}
-			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + (acct.ANG_RiskStatus__c==null || acct.ANG_RiskStatus__c =='Not Applicable'?'C':acct.ANG_RiskStatus__c));
-			ANG_BSP_Attributes__c bspAttrRhc = null;
-			//Find the correct BSP Attribute configuration based on
-			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
-			//If the agent contains Financial Assessment Points finds the BSP attribute
-			//that contains the interval [Min FA Points ~ Max FA Points]
-			for(ANG_BSP_Attributes__c bspAttr : bspAttributesMap.values()){
-				if(bspAttr.RecordTypeId == RECTYPE_CASH_CONDITION_CONFIG){
+				// If RHC equal FS % condition is applied on the agent
+				// retrieve % of FS from the RHC information (rhcAmountFsPercent) and calculate RHC amount
+				if (rhc.ANG_RHC_Amount_Equals_FS__c && shouldApplyRhcPercentage) {
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Amount Equals FS');
+					applyRhcAmountFsPercentage(rhc, fsAmount, rhcAmountFsPercent);
 					continue;
 				}
 
-				String bspAttrKey = (String.valueOf(bspAttr.BSP__c) +
-									 String.valueOf(bspAttr.RecordTypeId) +
-									 (string.isEmpty(bspAttr.Tier__c)?'1':bspAttr.Tier__c) + 
-									 bspAttr.Risk_Status__c);
-				//If the agent has financial assessment points
-				//considers the point interval from the configuration on BSP Attribute record.
-				//Otherwise assessment points interval are not considered
-				if(currentBspAttrKey == bspAttrKey &&
-					(acct.Financial_Assessment_Points__c == null ||
-					 (bspAttr.Max_FA_Points__c >= acct.Financial_Assessment_Points__c &&
-						bspAttr.Min_FA_Points__c <= acct.Financial_Assessment_Points__c)
-					)
-				){
-					bspAttrRhc = bspAttr;
-					break;
-				}
+				//Fetch BSP associated with the given account
+				String relatedBspId = accountsBspMap.get(rhc.ANG_AccountId__c);
 
-			}
+				//If cash condition is TRUE on the agent
+				//fetch the cash condition record from BSP Attributes
+				//and apply RHC amount = % FS
+				if (rhc.ANG_CashCondition__c && fsAmount >= 0)
+				{
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Cash Condition');
+					Decimal fsPercentage = null;
 
-			//If we are processing a RHC information record
-			//related with a multicountry hierarchy
-			//jump into the formula calculation
-			if(isMulticountry){
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
-				if(bspAttrRhc!=null){
-					applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
+					if (isMulticountry) {
+						fsPercentage = 100;
+						System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply 100% percentage for multicountry agent');
+					} else {
+						ANG_BSP_Attributes__c bspAttrCash = bspAttributesMap.get(relatedBspId + '.' + RECTYPE_CASH_CONDITION_CONFIG);
+						fsPercentage = (bspAttrCash == null || bspAttrCash.FS_Percentage__c == null) ? 0 : bspAttrCash.FS_Percentage__c;
+						System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Consider cash condition BSP Attribute');
+					}
+
+					applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 					continue;
 				}
+				String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + (acct.ANG_RiskStatus__c==null || acct.ANG_RiskStatus__c =='Not Applicable'?'C':acct.ANG_RiskStatus__c));
+				ANG_BSP_Attributes__c bspAttrRhc = null;
+				//Find the correct BSP Attribute configuration based on
+				//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
+				//If the agent contains Financial Assessment Points finds the BSP attribute
+				//that contains the interval [Min FA Points ~ Max FA Points]
+				for(ANG_BSP_Attributes__c bspAttr : bspAttributesMap.values()){
+					if(bspAttr.RecordTypeId == RECTYPE_CASH_CONDITION_CONFIG){
+						continue;
+					}
+
+					String bspAttrKey = (String.valueOf(bspAttr.BSP__c) +
+										String.valueOf(bspAttr.RecordTypeId) +
+										(string.isEmpty(bspAttr.Tier__c)?'1':bspAttr.Tier__c) + 
+										bspAttr.Risk_Status__c);
+					//If the agent has financial assessment points
+					//considers the point interval from the configuration on BSP Attribute record.
+					//Otherwise assessment points interval are not considered
+					if(currentBspAttrKey == bspAttrKey &&
+						(acct.Financial_Assessment_Points__c == null ||
+						(bspAttr.Max_FA_Points__c >= acct.Financial_Assessment_Points__c &&
+							bspAttr.Min_FA_Points__c <= acct.Financial_Assessment_Points__c)
+						)
+					){
+						bspAttrRhc = bspAttr;
+						break;
+					}
+
+				}
+
+				//If we are processing a RHC information record
+				//related with a multicountry hierarchy
+				//jump into the formula calculation
+				if(isMulticountry){
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
+					if(bspAttrRhc!=null){
+						applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
+						continue;
+					}
+				}
+
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] BSP Attribute to use: ' + bspAttrRhc);
+
+				//If the field "RHC Amount Calculation Type" is "Fixed Percentage",
+				//then apply RHC amount and forecasted = % of FS from the BSP Attributes record
+				Boolean fixedPercentageCalc =
+					bspAttrRhc != null &&
+					bspAttrRhc.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_FIXED_PERC;
+
+				//If the current BSP is Hong Kong or Macau and
+				//the agent does not have financial assessment points
+				//skips the fixed percentage calculation
+				Boolean skipFixedPercentageCalc =
+					fixedPercentageCalc &&
+					(acct.Financial_Assessment_Points__c == null) &&
+					skipPercentageCalcBspSet.contains(bspAttrRhc.BSP__r.Name);
+					
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] fixedPercentageCalc ' + fixedPercentageCalc);
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Financial_Assessment_Points__c ' + acct.Financial_Assessment_Points__c);
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipPercentageCalcBspSet ' + skipPercentageCalcBspSet);
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] bspAttrRhc. ' + bspAttrRhc);
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipFixedPercentageCalc? ' + skipFixedPercentageCalc);
+
+				if(fixedPercentageCalc && !skipFixedPercentageCalc){
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
+					double fsPercentage = (bspAttrRhc.FS_Percentage__c == null) ? 0 : bspAttrRhc.FS_Percentage__c;
+					applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
+				}
+				else {
+					System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
+					if(bspAttrRhc!=null)
+						applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
+				}
 			}
-
-			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] BSP Attribute to use: ' + bspAttrRhc);
-
-			//If the field "RHC Amount Calculation Type" is "Fixed Percentage",
-			//then apply RHC amount and forecasted = % of FS from the BSP Attributes record
-			Boolean fixedPercentageCalc =
-				bspAttrRhc != null &&
-				bspAttrRhc.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_FIXED_PERC;
-
-			//If the current BSP is Hong Kong or Macau and
-			//the agent does not have financial assessment points
-			//skips the fixed percentage calculation
-			Boolean skipFixedPercentageCalc =
-				fixedPercentageCalc &&
-				(acct.Financial_Assessment_Points__c == null) &&
-				skipPercentageCalcBspSet.contains(bspAttrRhc.BSP__r.Name);
-				
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] fixedPercentageCalc ' + fixedPercentageCalc);
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Financial_Assessment_Points__c ' + acct.Financial_Assessment_Points__c);
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipPercentageCalcBspSet ' + skipPercentageCalcBspSet);
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] bspAttrRhc. ' + bspAttrRhc);
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipFixedPercentageCalc? ' + skipFixedPercentageCalc);
-
-			if(fixedPercentageCalc && !skipFixedPercentageCalc){
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
-				double fsPercentage = (bspAttrRhc.FS_Percentage__c == null) ? 0 : bspAttrRhc.FS_Percentage__c;
-				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
-			}
-			else {
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
-				if(bspAttrRhc!=null)
-					applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
-			}
-
 		}
 	}
 
@@ -392,7 +400,7 @@ public class ANG_RHCHelper {
 	private static void applyRhcAmountFsPercentage(ANG_RHC_Information__c rhc, Decimal fsAmount, Decimal fsPercentage){
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcAmountFsPercentage] FS Amount: ' + fsAmount);
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - applyRhcAmountFsPercentage] FS Percentage to apply: ' + fsPercentage);
-
+		if(fsPercentage == 0) fsPercentage = 100; // JIRASP-47244
 		Decimal rhcAmount = (fsAmount * fsPercentage/100);
 		System.debug(LoggingLevel.FINE, '____ [cls ANG_RHCHelper - rhcAmount] RHC Amount: ' + rhcAmount);
 
@@ -433,7 +441,9 @@ public class ANG_RHCHelper {
 				ANG_RHC_Amount_Forecasted__c,
 				ANG_RHC_Effective_Date__c,
 				ANG_AccountId__r.ANG_HE_RiskStatus__c,
-				ANG_AccountId__r.ANG_HE_CashCondition__c
+				ANG_AccountId__r.ANG_HE_CashCondition__c,
+				ANG_Minimum_Financial_Security__c,
+				ANG_RHC_Amount_Provisional__c
 			 FROM ANG_RHC_Information__c
 			 WHERE ANG_AccountId__c IN :accountIdSet
 			]

@@ -2,7 +2,7 @@
 public with sharing class PortalServiceAssTriggerTest {
 
 	public static testmethod void PortalServiceAssTriggerTest() {
-		String recordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Portal_Service_Assignment__c', 'Country Assignment');
+		String recordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Portal_Service_Assignment__c', 'Country_Assignment');
 
 		List<IATA_ISO_Country__c> countryList = TestDataFactory_IATAISOCountries.createDefaultIATAISOCountries(2);
 		IATA_ISO_Country__c country = countryList.get(0);

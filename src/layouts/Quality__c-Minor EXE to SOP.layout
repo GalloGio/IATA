@@ -39,7 +39,11 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
+                <field>Parent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Related_Case_Number__c</field>
             </layoutItems>
             <layoutItems>
@@ -51,7 +55,7 @@
                 <field>Exception_Priority__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Region__c</field>
             </layoutItems>
             <layoutItems>
@@ -147,11 +151,11 @@
         <label>Recommendation</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Description_Internal_Case__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Solution_Recommended__c</field>
             </layoutItems>
         </layoutColumns>
@@ -819,6 +823,14 @@
         <fields>TASK.PRIORITY</fields>
         <fields>CORE.USERS.FULL_NAME</fields>
         <relatedList>RelatedActivityList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Exe_Category_New__c</fields>
+        <fields>SOP_Type__c</fields>
+        <fields>Status__c</fields>
+        <fields>Exception_Classification_Type__c</fields>
+        <relatedList>Quality__c.Parent__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>

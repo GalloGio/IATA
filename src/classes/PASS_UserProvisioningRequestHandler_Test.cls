@@ -2,10 +2,8 @@
 public class PASS_UserProvisioningRequestHandler_Test {
 	@isTest
 	static void PASS_UserProvisioningRequestHandler_PassUserProv() {
-
 		Test.startTesT();
 		UserProvisioningRequest upr = UserProvisioningTestUtils.createUserProvisioningRequest('Pass User Prov', 'Update');
-		//UserProvisioningRequest upr2 = UserProvisioningTestUtils.createUserProvisioningRequest('Pass User Prov','Update','Completed');
 
 		UserProvisioningUtils userProvUtils = new UserProvisioningUtils(false);
 		userProvUtils.init(upr.Id);
@@ -56,7 +54,6 @@ public class PASS_UserProvisioningRequestHandler_Test {
 
 	@isTest
 	static void passAddNewUser(){
-
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c (Name = 'PT', ISO_Code__c = 'PT', Airline_EasyPay_Opt_Out_Date__c = Date.today()-1);
 		insert countryPT;
 		Id AirlineHQ_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
@@ -74,34 +71,35 @@ public class PASS_UserProvisioningRequestHandler_Test {
 		update con;
 
 		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		pa.Name = AMS_Utils.passSSOPortalService;
+		pa.name = AMS_Utils.passSSOPortalService;
+		pa.Provisioning_Type__c = 'WebService';
 		insert pa;
 
 		Connected_App_Roles__c crole = new Connected_App_Roles__c();
-		crole.Name='PASS';
+		crole.Name='Pass';
+		crole.Connected_App_Provisioning_Name__c = 'Pass';
 		insert crole;
 
-		
-		Portal_Application_Right__c portalAccess = new Portal_Application_Right__c();
-		portalAccess.Portal_Application__c = pa.Id;
-		portalAccess.Right__c = 'Access Requested';
-		portalAccess.Contact__c = con.Id;
+		User systemAdminUser = TestDataFactory_Users.createInternalSystemAdminUsers(1).get(0);
+		insert systemAdminUser;
+		System.runAs(systemAdminUser){
+			Portal_Application_Right__c portalAccess = new Portal_Application_Right__c();
+			portalAccess.Portal_Application__c = pa.Id;
+			portalAccess.Right__c = 'Access Requested';
+			portalAccess.Contact__c = con.Id;
+			insert portalAccess;
 
-		insert portalAccess;
+			portalAccess.Right__c = 'Access Granted';
+			update portalAccess;
 
-		portalAccess.Right__c = 'Access Granted';
-		update portalAccess;
+			portalAccess.Right__c = 'Access Denied';
+			update portalAccess;
 
-		portalAccess.Right__c = 'Access Denied';
-		update portalAccess;
-
-		portalAccess.Right__c = 'Access Granted';
-		update portalAccess;
+			portalAccess.Right__c = 'Access Granted';
+			update portalAccess;
+		}
 
 		List<UserProvisioningRequest> userProvs = [SELECT Id FROM UserProvisioningRequest];
-		System.assertEquals(3, userProvs.size());
-
+		System.assertEquals(4, userProvs.size());
 	}
-
-
 }

@@ -35,7 +35,7 @@ export default class TidsCases extends LightningElement {
 				count++;
 				item.showContextMenu=false;
 				item.visible=true;
-				item.url="/csportal/s/case-details?caseId="+item.Id + '&Att=false';
+				item.url="/s/case-details?caseId="+item.Id + '&Att=false';
 				item.newId='$'+item.Id+'$';
 			});
 			if (count>0){

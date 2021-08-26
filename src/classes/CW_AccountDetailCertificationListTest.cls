@@ -25,11 +25,13 @@ private class CW_AccountDetailCertificationListTest {
 		certOne.is_visible__C = true;
 		certOne.Name = 'TestCert';
 		certOne.Applicable_to__c = 'Airline';
+		certOne.ValidationPrograms__c = 'IATA';
 
 		ICG_Certification__c certTwo = CW_TestDataFactory.newCertification();
 		certTwo.is_visible__C = true;
 		certTwo.Name = 'TestCert2';
 		certTwo.Applicable_to__c = 'Airline';
+		certOne.ValidationPrograms__c = 'IATA';
 
 		insert new List<ICG_Certification__c>{ certOne, certTwo };
 

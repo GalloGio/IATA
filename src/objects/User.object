@@ -1637,6 +1637,30 @@ If( Contact.Account.ICH_Member__c = true,&quot;ICH&quot;, &quot;&quot;)</formula
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>OdigoCti__Odigo_Conf__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Odigo Conf</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Odigo_login__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <deprecated>false</deprecated>
+        <description>Login Odigo</description>
+        <externalId>false</externalId>
+        <label>Odigo login</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
         <fullName>Office_Location__c</fullName>
         <externalId>false</externalId>
         <label>Office Location</label>
@@ -3696,7 +3720,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <label>SIS Help Desk Users</label>
         <language>en_US</language>
         <sharedTo>
-            <group>IATASISCustomerSupport</group>
             <group>IATASISHelpDeskAgent</group>
             <group>IATASISOperations</group>
         </sharedTo>
@@ -3863,6 +3886,54 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!User.Id}</url>
         <width>625</width>
+    </webLinks>
+    <webLinks>
+        <fullName>OdigoCti__Odigo_access</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Odigo access</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&apos;/soap/ajax/26.0/connection.js&apos;)}
+{!REQUIRESCRIPT(&apos;/js/functions.js&apos;)}
+{!REQUIRESCRIPT(&apos;/resource/OdigoCti__jQuery/jquery-1.8.2.min.js&apos;)}
+{!REQUIRESCRIPT(&apos;/resource/OdigoCti__jQuery/ui/jquery-ui-1.9.1.custom.min.js&apos;)}
+
+requireCssFile(&apos;/resource/OdigoCti__jQuery/ui/css/ui-lightness/jquery-ui-1.9.1.custom.min.css&apos;);
+function requireCssFile(filename)
+{
+var fileref = document.createElement(&apos;link&apos;);
+fileref.setAttribute(&apos;rel&apos;, &apos;stylesheet&apos;);
+fileref.setAttribute(&apos;type&apos;, &apos;text/css&apos;);
+fileref.setAttribute(&apos;href&apos;, filename);
+document.getElementsByTagName(&apos;head&apos;)[0].appendChild(fileref);
+}
+var j$ = jQuery.noConflict();
+var recID = &apos;{!User.Id}&apos;;
+var iframe_url = &apos;{!URLFOR(&quot;/apex/OdigoCti__VFP06OdigoNewUserPopup?&quot;, null, [Id=User.Id])}&apos;;
+var child_domain = iframe_url.substring(0, iframe_url.indexOf(&apos;/&apos;, 9));
+var parent_domain = window.location.protocol + &apos;//&apos; + window.location.host;
+var j$modalDialog = j$(&apos;&lt;div id=&quot;uPopup&quot;&gt;&lt;/div&gt;&apos;)
+.html(&apos;&lt;iframe id=&quot;iframeContentId&quot; src=&quot;&apos; + iframe_url + &apos;&quot; frameborder=&quot;0&quot; height=&quot;100%&quot; width=&quot;100%&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; scrolling=&quot;yes&quot; /&gt;&apos;)
+.dialog({
+autoOpen: false,
+title: &apos;ODIGO Access&apos;,
+resizable: true,
+width: 1050,
+height: 210,
+autoResize: true,
+modal: true,
+draggable: true,
+closeOnEscape: true, 
+close: function(event, ui){ 
+location.reload(true); 
+}
+
+});
+j$(&quot;.ui-dialog-titlebar&quot;).css({&quot;background&quot;: &quot;#dde1eb&quot;, &quot;border&quot;: &quot;none&quot;});
+j$(&quot;.ui-dialog-title&quot;).css({&quot;color&quot;: &quot;#090B0F&quot;});
+j$modalDialog.dialog(&apos;open&apos;);</url>
     </webLinks>
     <webLinks>
         <fullName>Provision_Kavi_Access</fullName>

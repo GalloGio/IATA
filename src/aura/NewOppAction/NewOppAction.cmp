@@ -1,0 +1,14 @@
+<aura:component access="public" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+	<aura:attribute name="recordId" type="Id" />
+	<aura:html tag="style">
+		.slds-modal__container{
+			height : 100% !important;
+			max-height: 100% !important;
+		}
+		.slds-modal__content {
+			height: auto !important;
+			max-height: 100% !important;
+		}
+	</aura:html> 
+	<c:newOpportunityAction recordId="{!v.recordId}" onclose="{!c.closeModal}"></c:newOpportunityAction>
+</aura:component>

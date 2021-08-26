@@ -213,4 +213,39 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		return outputText;
 	}
 
+	/**
+	 * @description		handler Before Insert/Update
+	 * @param			Map<Id, ICG_Account_Role_Detail__c> newMap
+	 */
+	public static void handleBeforeInsertUpdate(List<ICG_Account_Role_Detail__c> newItems) {
+		IsValidServices(newItems);
+	}
+
+	/**
+	 * @description		Check if there is shared items between In-House Service list and Third party Services list. If so, it will raise and error.
+	 * @param			Map<Id, ICG_Account_Role_Detail__c> ardList
+	 */
+	private static void IsValidServices(List<ICG_Account_Role_Detail__c> ardList){
+		for(ICG_Account_Role_Detail__c item : ardList) {
+			Boolean isValid = true;
+
+			if (item.In_House_Services__c == null || item.Third_Party_Services__c == null){
+				break;
+			}
+
+			List<String> thirdPartyServices = item.Third_Party_Services__c.split(';');
+
+			for(String inHouseItem : item.In_House_Services__c.split(';')){
+				if (thirdPartyServices.contains(inHouseItem)){
+					isValid = false;
+					break;
+				}
+			}
+
+			if (!isValid){
+				item.addError(Label.icg_validation_services_message);
+				break;
+			}
+		}
+	} 
 }

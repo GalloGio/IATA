@@ -234,7 +234,7 @@
 	            			<apex:outputPanel layout="block" id="rhcInfoPanel" styleClass="row" style="margin-right: 15px; display: {!IF(isChinaAgent,'none','block')};">
 	              				<section id="remittance-holding-table" class="col-md-8 col-sm-12">
 					                <table class="table borderless" style="margin-left: 13px;">
-					                  	<tr style="display: {!IF(isCashless,'none','table-row')}">
+					                  	<tr style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'none','table-row')}">
 					                    	<td>
 					                      		{!$ObjectType.ANG_RHC_Information__c.fields.ANG_RHC_Amount__c.label}
 					                      		<apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_RHCAmountTooltip}" />
@@ -246,7 +246,7 @@
 					                      		</apex:outputText>
 					                    	</td>
 					                  	</tr>
-					                  	<tr style="display: {!IF(isCashless,'none','table-row')}">
+					                  	<tr style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'none','table-row')}">
 					                    	<td>
 					                      		{!$Label.ISSP_RHC_HUB_Current_Usage}
 					                      		<apex:image value="/img/msg_icons/info16.png" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" title="{!$Label.ANG_RHC_HUB_Current_UsageTooltip}" />
@@ -270,7 +270,7 @@
 					                    	</td>
 					                    	<td/>
 					                  	</tr>
-					                  	<tr style="display: {!IF(isCashless,'none','table-row')}">
+					                  	<tr style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'none','table-row')}">
 					                    	<td>
 					                      		{!$ObjectType.Account.fields.Remittance_frequency__c.label}
 					                    	</td>
@@ -279,7 +279,7 @@
 					                </table>
 	              				</section>
 	              
-				              	<section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(isCashless,'none','block')}">
+				              	<section id="gaugeSection" class="col-md-4 col-sm-12" style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'none','block')}">
 				                	<canvas id="percentageUsageGauge"></canvas>
 				                	<br/>
 				                	<span>
@@ -298,7 +298,7 @@
 				              	</section>
 	            			</apex:outputPanel>
 
-	            			<div class="row" style="display: {!IF(OR(isCashless, isChinaAgent),'none','block')}">
+	            			<div class="row" style="display: {!IF(OR(isCashless, isChinaAgent, isCashlessWithAllowedCash),'none','block')}">
 	              				<div class="requestbtn-wrapper">
 	                				<button id="requestRME" onclick="requestBalanceUpdate();return false;" class="iatabtn-main">{!$Label.ANG_ISSP_RHC_Request_Balance_Update}</button>
 	              				</div>
@@ -313,7 +313,7 @@
 	            				</div>
 	            			</div>
 
-	            			<div class="row" style="display: {!IF(OR(isCashless, isChinaAgent),'none','block')}">
+	            			<div class="row" style="display: {!IF(OR(isCashless, isChinaAgent, isCashlessWithAllowedCash),'none','block')}">
 	              				<div class="col-xs-12 text-center" style="padding-top: 20px; padding-bottom: 20px;">
 	                				<apex:outputLink value="/ISSP_AccountStatements?retURL=/ISSP_Homepage" rendered="{!hasRightAccessIceService}">{!$Label.ISSP_Account_Statements}</apex:outputLink>
 	                				<apex:outputText escape="false" value="{!$Label.ANG_ISSP_RHC_Request_ICE}" rendered="{!NOT(hasRightAccessIceService)}"></apex:outputText>
@@ -322,7 +322,7 @@
 	          			</section>
 
 	          			<!-- Risk Event History -->
-	          			<section id="riskHistory" name="remittance-holding" class="row" style="display: {!IF(isCashless,'none','block')};">
+	          			<section id="riskHistory" name="remittance-holding" class="row" style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'none','block')};">
 	        				<header class="col-xs-12">
 	              				<div class="section-header">
 	                				<apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/RiskEventsHistory.png')}"/>
@@ -404,7 +404,7 @@
 	            			</body>
 	          			</section>
 
-	          			<div style="display: {!IF(isCashless,'block','none')}; min-height: 350px;">
+	          			<div style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'block','none')}; min-height: 350px;">
 	            			<c:AFP_Component wrapperClass="{!afpWrapper}"/>
 	          			</div>
         			</section> <!-- Left -->
@@ -412,7 +412,7 @@
 	        		<section name="right-side" class="col-md-4 col-sm-12">
 	          		<!-- Available forms of payment-->
 
-	          			<div style="display: {!IF(isCashless,'none','block')}; min-height: 350px;" id="afp">
+	          			<div style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'none','block')}; min-height: 350px;" id="afp">
 	            			<c:AFP_Component wrapperClass="{!afpWrapper}"/>
 	          			</div>
 
@@ -440,7 +440,7 @@
 	                  					</div>
 	                				</td>
 	              				</tr>
-	              				<tr style="display: {!IF(isCashless,'none','table-row')}">
+	              				<tr style="display: {!IF(AND(isCashless, !isCashlessWithAllowedCash),'none','table-row')}">
 	                				<td>
 	                  					<div class="customTable">
 	                    					<div>

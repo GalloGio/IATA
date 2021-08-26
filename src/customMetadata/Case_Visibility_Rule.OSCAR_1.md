@@ -78,7 +78,8 @@ IEP Bank account setup
 Major Changes
 Major Change
 MCH – Minor Change of Shareholding
-Bank Detail Update</value>
+Bank Detail Update
+Screening IEP Model B</value>
     </values>
     <values>
         <field>RecordTypeId__c</field>

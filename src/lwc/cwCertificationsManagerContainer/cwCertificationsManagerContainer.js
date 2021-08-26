@@ -17,6 +17,7 @@ import labels from 'c/cwOneSourceLabels';
 import pubsub from 'c/cwPubSub';
 export default class CwCertificationsManagerContainer extends LightningElement {
 	@api recordId;
+	@api validationPrograms;
 	label = labels.labels();
 	@track editMode=false;
 	@track certifications = [];
@@ -54,6 +55,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	@track renewMode=false;
 	@track jsonCertification = '';
 	initialized=false;
+	byPassScope=false;
 
 	@track certificationsWithoutCapab;
 	certificationName;
@@ -81,7 +83,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 						if(data){
 							this.mapScopeByCertStation = JSON.parse(JSON.parse(JSON.stringify(data)));
 							let recordId = this.recordId;
-							getCertificationWithoutCapabilities({recordId})
+							let validationPrograms = this.validationPrograms;
+							getCertificationWithoutCapabilities({recordId,validationPrograms})
 							.then(result => {
 								if (result) {
 									this.certificationsWithoutCapab = result;
@@ -169,8 +172,9 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 
 	getFacilityCertifications(recordId,stationRT){
+		const validationPrograms = this.validationPrograms;
 
-		getFacilityCertifications_({ facilityId: recordId, stationRT: stationRT }).then(data =>{
+		getFacilityCertifications_({ facilityId: recordId, stationRT: stationRT, validationPrograms: validationPrograms }).then(data =>{
 			if(data){
 				let dataParsed = JSON.parse(data);
 				this.filteredScopesByStation(dataParsed);
@@ -207,7 +211,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 
 	get isCanSave(){
-		return this.selectedScope === ''  ? true : false;
+		return (this.selectedScope === '' && !this.byPassScope) ? true : false;
 	}
 
 	get getCertificationName(){
@@ -240,7 +244,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 
 	checkRemainingCertifications(){
 		let stationRT = this.valueStationType;
-		getAllCertifications({stationRT}).then(response =>{
+		let validationPrograms = this.validationPrograms;
+		getAllCertifications({stationRT,validationPrograms}).then(response =>{
 			if(response){
 				this.certificationsRemaining = [];
 				this.certificationDropdowOptions = [];
@@ -251,7 +256,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 					let usedCert = [];
 					let valueItems = {
 						label : cert.Label__c,
-						value : cert.Id
+						value : cert.Id,
+						validationProgram : cert.ValidationPrograms__c
 					}
 					this.allcertificationDropdowOptions.push(valueItems);
 					//check used cert
@@ -269,7 +275,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 						this.certificationsRemaining.push(cert);
 						let option = {
 							label : cert.Label__c,
-							value : cert.Id
+							value : cert.Id,
+							validationProgram : cert.ValidationPrograms__c
 						}
 						this.certificationDropdowOptions.push(option);
 					}
@@ -304,29 +311,32 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				this.showScope = true;
 				this.scopeToUse = "SFOC_Scope__c";
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
+				this.byPassScope = false;
 			}
 			else if(selectedCertification[0].Name.toLowerCase().includes("ceiv_")){
 				this.scope = this.ceivScope;
 				this.showScope = true;
 				this.scopeToUse = "CEIV_Scope_List__c";
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
+				this.byPassScope = false;
 			}
 			else if(selectedCertification[0].Name.toLowerCase().includes("ienva_stage_")){
 				this.scope = this.ienvaScope;
 				this.showScope = true;
 				this.scopeToUse = "IENVA_Scope__c";
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
+				this.byPassScope = false;
 			}
 			else if(selectedCertification[0].Name.toLowerCase() === "united_for_wildlife"){
 				this.scope = this.ienvaScope;
 				this.showScope = true;
 				this.scopeToUse = "IENVA_Scope__c";
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
+				this.byPassScope = false;
 			}
 			else{
-				this.scope = this.ceivScope;
-				this.showScope = false;
-				this.scopeToUse = "SFOC_Scope__c";
+				this.showScope = true;
+				this.byPassScope = true;
 			}
 			this.newCertificationId = nextCertiID;
 			this.certificationName = selectedCertification[0].Label__c;
@@ -501,7 +511,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	refreshCertificationsRenewed(){
 		const facilityId = this.recordId;
 		const stationRT = this.valueStationType;
-		refreshFacilityCertifications({facilityId,stationRT}).then(response =>{
+		const validationPrograms = this.validationPrograms;
+		refreshFacilityCertifications({facilityId,stationRT,validationPrograms}).then(response =>{
 			if(response){
 				let dataParsed = JSON.parse(response);
 				this.refreshCertifications(dataParsed);
@@ -545,6 +556,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				})
 				scope = scopeInput;
 				scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
+				this.byPassScope = false;
 			}
 			else if(certification.ICG_Certification__r.Name.toLowerCase() === "smart_facility_operational_capacity"){
 				scopeToUse = "SFOC_Scope__c";
@@ -565,6 +577,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				})
 				scope = scopeInput;
 				scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
+				this.byPassScope = false;
 			}
 			else if(certification.ICG_Certification__r.Name.toLowerCase().includes("ienva_stage_") || (certification.ICG_Certification__r.Name.toLowerCase() === "united_for_wildlife")){
 				scopeToUse = "IENVA_Scope__c";
@@ -585,9 +598,11 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				})
 				scope = scopeInput;
 				scopeLabel = scopeLabel.substring(0, scopeLabel.length - 1);
+				this.byPassScope = false;
 			}			
 			else{
 				scope = null;
+				this.byPassScope = true;
 			}
 			let certInfo = {
 				id : certification.Id,
@@ -605,7 +620,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				scopeToUse : scopeToUse,
 				status : certification.Status__c,
 				expirationPeriod : certification.ICG_Certification__r.Expiration_Period__c,
-				booked : certification.Is_Booked__c
+				booked : certification.Is_Booked__c,
+				byPassScope : this.byPassScope
 			}
 			let usedCert = {
 				id : certification.ICG_Certification__c,

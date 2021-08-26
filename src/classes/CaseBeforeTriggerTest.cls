@@ -1495,6 +1495,7 @@ private class CaseBeforeTriggerTest {
 												Subject = 'TestCase Sidra Small Amount ' + c,
 												Origin = 'Web',
 												RecordTypeId = SidraPcaseRecordTypeID,
+												IRR_Withdrawal_Reason__c = 'IATA Charges',
 												Description = 'description ' + c++,
 												Billing_Amount__c = 20000,
 												Short_Payment_Amount__c = 50,
@@ -2463,8 +2464,8 @@ private class CaseBeforeTriggerTest {
 		caseParent.IFAP_Financial_Year__c = '2012';
 		caseParent.firstFAnonComplianceDate__c = date.today();
 		caseParent.secondFAnonComplianceDate__c = null;
-		caseParent.Deadline_Date__c = date.newinstance(2021, 06, 29);
-		caseParent.FA_Second_Deadline_Date__c = date.newinstance(2021, 06, 30);
+		caseParent.Deadline_Date__c = date.newinstance(2023, 06, 29);
+		caseParent.FA_Second_Deadline_Date__c = date.newinstance(2023, 06, 30);
 		insert caseParent;
 
 	Case caseChild3 = new case ();
@@ -2520,6 +2521,7 @@ private class CaseBeforeTriggerTest {
 			SIDRA_exchange_rate_updated__c = true, BSP_CASS__c = 'BSP', Late_Payment_Date__c = Date.today(), IRR_Withdrawal_Reason__c = 'Bank Error',
 			IRR_Withdrawal_Approval_Rejection_Date__c = System.today()));
 		
+		cases.add(cases.get(0).clone());
 		cases.add(cases.get(0).clone());
 		cases.add(cases.get(0).clone());
 		cases.add(cases.get(0).clone()); // 4 cases with bank error in the last 365 days

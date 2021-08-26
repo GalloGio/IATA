@@ -284,7 +284,7 @@ public class ISSP_ANG_RHC_Test {
 		s1.ANG_Accredited_Agents_Only__c = false;
 		s1.Agency__c = true;
 
-		Portal_Applications__c s2 = portalApplicationList.get(0);
+		Portal_Applications__c s2 = portalApplicationList.get(1);
 		s2.Name = ISSP_ANG_RHC.ICE_SERVICE;
 		s2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
 		s2.ANG_Accredited_Agents_Only__c = false;

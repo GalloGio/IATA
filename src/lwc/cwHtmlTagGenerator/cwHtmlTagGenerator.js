@@ -1,6 +1,7 @@
 import { LightningElement, api, track } from "lwc";
 import ICG_RESOURCES from "@salesforce/resourceUrl/ICG_Resources";
 import { hideHover } from "c/cwUtilities";
+import getDateExtraData from "@salesforce/apex/CW_FacilityCapabilitiesController.getDateExtraData";
 
 export default class CwHtmlTagGenerator extends LightningElement {
 	defaultcheckedIconFilename = "ic-tic-green.svg";
@@ -15,6 +16,8 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	@track tooltipToDisplay = "";
 	@track tooltipObject;
 	@track selectedOption;
+	toolTipsDates;
+	activeToolTipExtraData = "Contract_Management__c;Quality_Control_Compliance__c;Screeners_Performance__c;Security_Equipment__c;System_Assurance__c;";
 
 	@api isHeader = false;
 
@@ -36,6 +39,15 @@ export default class CwHtmlTagGenerator extends LightningElement {
 		if(this.item.options && this.item.options.length === 1 && this.item.options[0].value.includes("STATUS_TO_BE_REPLACED_BY")){	
 			this.selectedOption = this.item.options[0].value;
 		}
+
+		if (this.item && this.item.id){
+			getDateExtraData({capabilityId: this.item.id}).then(result => {
+				if (result){
+					this.toolTipsDates = JSON.parse(result);
+				}
+			})
+			.catch(err => console.error(err));
+		}
 	}
 
 	@api propertyName = "";
@@ -49,7 +61,13 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	get isComparisonFacilityView() {
 		return this.viewType === "comparison-facility-view";
 	}
-
+	get getValueAsText() {
+		if (this.propertyName.toLowerCase() === 'year_of_manufacture__c'){
+			return this.item[this.propertyName].toString();
+		} else {
+			return '-';
+		}
+	}
 	get getValue() {
 		if(this.isTypeTrueFalse){
 			return this.item[this.propertyName];
@@ -59,14 +77,6 @@ export default class CwHtmlTagGenerator extends LightningElement {
 			? this.item[this.propertyName].toString()
 			: "-";
 
-		let maxChars = isNaN(Number(this.maxCharacters))
-			? 0
-			: Number(this.maxCharacters);
-
-		if (maxChars > 0 && value.length > maxChars) {
-			return value.substring(0, maxChars) + "...";
-		}
-
 		return value;
 	}
 	
@@ -75,6 +85,9 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	}
 
 	get getValueNumber() {
+		if (this.propertyName.toLowerCase() === 'year_of_manufacture__c'){
+			return false;
+		}
 		let value = this.item[this.propertyName]
 			? this.item[this.propertyName].toString()
 			: false;
@@ -90,13 +103,66 @@ export default class CwHtmlTagGenerator extends LightningElement {
 
 	getTooltip() {
 		let forceShowTooltip = false;
-		let value = this.item[this.propertyName]
-			? this.item[this.propertyName].toString()
-			: "";
+
+		let value = this.item[this.propertyName] ? this.item[this.propertyName].toString() : "";
+
+		// tooltip date 
+		if (this.activeToolTipExtraData.split(';').indexOf(this.propertyName)){
+			if (!this.toolTipsDates || this.isCommunity == false){
+				return "";
+			}
+
+			if (this.item.tooltips && this.propertyName in this.item.tooltips) {
+				forceShowTooltip = true;
+				value = this.item.tooltips[this.propertyName];
+
+				if (value.indexOf('{') > 0 && value.indexOf('}') > 0){
+					let valueToBeReplaced = value.split('{')[1].split('}')[0];
+
+					if (value && this.toolTipsDates){
+						let dates = JSON.parse(JSON.stringify(this.toolTipsDates));
+
+						var date;
+						if (valueToBeReplaced === 'Contract_Management_Date__c'){
+							date = dates.Contract_Management_Date;
+						}
+						else if (valueToBeReplaced === 'Quality_Control_Compliance_Date__c'){
+							date = dates.Quality_Control_Compliance_Date;
+						}
+						else if (valueToBeReplaced === 'Screeners_Performance_Date__c'){
+							date = dates.Screeners_Performance_Date;
+						}
+						else if (valueToBeReplaced === 'Security_Equipment_Date__c'){
+							date = dates.Security_Equipment_Date;
+						}
+						else if (valueToBeReplaced === 'System_Assurance_Date__c'){
+							date = dates.System_Assurance_Date;
+						}
+
+						if (date){
+							value = value.split('{')[0] + date + value.split('}')[1];
+							return value;
+						}
+						else{
+							return "";
+						}
+					}
+				}
+			}
+		}
 
 		if (this.item.tooltips && this.propertyName in this.item.tooltips) {
 			forceShowTooltip = true;
 			value = this.item.tooltips[this.propertyName];
+		}
+		else{
+			for (let property in this.item.tooltips) {
+				if (property == (this.propertyName + '#' + this.item[this.propertyName].toLowerCase().replace(' ','_').replaceAll('.',''))) {
+					forceShowTooltip = true;
+					value = this.item.tooltips[this.propertyName + '#' + this.item[this.propertyName].toLowerCase().replace(' ','_').replaceAll('.','')];
+				}
+			}
+
 		}
 
 		let maxChars = isNaN(Number(this.maxCharacters))
@@ -122,11 +188,17 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	get getRowIndexAddOne() {
 		return this.rowIndex + 1;
 	}
+
+	get containsManufacturerField(){
+		return this.item['sc_manufacturer__c'] ? true : false;
+	}
+	
 	get isAuxTypeDefined() {
 		return (
 			this.isAuxTypeStandardTemperatureRanges ||
 			this.isAuxTypeCustomTemperatureRanges ||
-			this.isAuxTypeTemperatureControlledGroundServiceEq
+			this.isAuxTypeTemperatureControlledGroundServiceEq ||
+			this.isAuxTypeHandlingEquipmentInfrastructure
 		);
 	}
 	get isAuxTypeStandardTemperatureRanges() {
@@ -137,6 +209,9 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	}
 	get isAuxTypeTemperatureControlledGroundServiceEq() {
 		return this.auxType === "temperature_controlled_ground_service_eq";
+	}
+	get isAuxTypeHandlingEquipmentInfrastructure(){
+		return this.auxType === "handling_equipment_infrastructure";
 	}
 	get isAuxFieldDefined() {
 		return this.isTchaTemperatureRangeField;
@@ -187,12 +262,11 @@ export default class CwHtmlTagGenerator extends LightningElement {
 		let tooltipObject = {
 			item: item,
 			text: text,
-			marginLeft: -50,
-			marginTop: 32
+			marginLeft: (text.length > 20) ? -220 : -100,
+			marginTop: 20
 		}
 
 		this.tooltipObject = tooltipObject;
-
 	}
 
 	hidePopover() {
@@ -254,7 +328,11 @@ export default class CwHtmlTagGenerator extends LightningElement {
 		}
 
 		if(this.isAuxTypeStandardTemperatureRanges || this.isAuxTypeCustomTemperatureRanges){
-			return this.label.room + " " + this.getRowIndexAddOne;
+			if (this.item.sc_manufacturer__c) {
+				return this.item.sc_manufacturer__c;
+			} else {
+				return this.label.room + " " + this.getRowIndexAddOne;
+			}
 		}
 
 		if(this.isAuxTypeTemperatureControlledGroundServiceEq){

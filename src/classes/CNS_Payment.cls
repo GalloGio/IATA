@@ -113,8 +113,8 @@ public class CNS_Payment {
 
         cyberSrcData.put('profile_id', profile_id);
         cyberSrcData.put('access_key', access_key);
-        cyberSrcData.put('signed_date_time', DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
-        cyberSrcData.put('transaction_uuid', String.ValueOf(con.Id) + DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
+        cyberSrcData.put('signed_date_time', DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'', 'GMT'));
+        cyberSrcData.put('transaction_uuid', String.ValueOf(con.Id) + DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'', 'GMT'));
         cyberSrcData.put('currency', 'usd');
         cyberSrcData.put('amount', amount);
         cyberSrcData.put('reference_number', invoiceNumber);

@@ -60,6 +60,7 @@ import CSP_Emergency_Selected_Reason1 from '@salesforce/label/c.CSP_Emergency_Se
 import CSP_Emergency_Selected_Reason4 from '@salesforce/label/c.CSP_Emergency_Selected_Reason4';
 import CSP_Emergency_Selected_Reason3 from '@salesforce/label/c.CSP_Emergency_Selected_Reason3';
 import CSP_Emergency_Selected_Reason2 from '@salesforce/label/c.CSP_Emergency_Selected_Reason2';
+import CSP_Emergency_Selected_Reason5 from '@salesforce/label/c.CSP_Emergency_Selected_Reason5';
 import CSP_Emergency_Selected_Message from '@salesforce/label/c.CSP_Emergency_Selected_Message';
 import CSP_Call_Tile_SubLabel from '@salesforce/label/c.CSP_Call_Tile_SubLabel';
 import LVA_CallUsDial from '@salesforce/label/c.LVA_CallUsDial';
@@ -178,6 +179,7 @@ export default class PortalSupportReachUs extends NavigationMixin(LightningEleme
 		CSP_Emergency_Selected_Reason4,
 		CSP_Emergency_Selected_Reason3,
 		CSP_Emergency_Selected_Reason2,
+		CSP_Emergency_Selected_Reason5,
 		CSP_Emergency_Selected_Message,
 		CSP_Call_Tile_SubLabel,
 		LVA_CallUsDial,

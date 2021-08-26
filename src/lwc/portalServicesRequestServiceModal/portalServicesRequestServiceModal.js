@@ -238,6 +238,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track ShowICCSModal = false;
     @track ShowSSWSModal = false;
     @track ShowTDModal = false;
+	@track ShowLabRegistryModal = false;
 
     //tracks loading message IEP
     @track loadingMessage = '';
@@ -271,6 +272,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.ShowIEPModal = false;
             this.ShowICCSModal = false;
             this.ShowSSWSModal = false;
+			this.ShowLabRegistryModal = false;
             this.TDSuccessModal = false;
             this.ShowTDModal = false;
             this.showButtons = true;
@@ -437,6 +439,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         + '<br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel2;
                 }
             }
+			else if(this.serviceName.includes('IATA Lab Network')){
+				this.ShowLabRegistryModal = true;
+				this.defaultMessage = false;
+				this.DefaultRequestButton = false;
+				this.showButtons = false;
+			}
 
             //get the parameters for this page  
             this.pageParams = getParamsFromPage();
@@ -730,47 +738,59 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     handleSubmitRequest() {
         this.showConfirm = false; //hides confirm box
-        //displays popup with active spinner
-        this.showPopUp = true;
-        this.showSpinner = true;
-        let serviceNameaux = this.serviceName;
-        if(this.serviceName == 'E&F APPS'){
-            this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
-        } else {
-            this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
-        }
+        //displays popup with active spinner (only if the service does not require approval)
+		//if the service requires service administrator approval, then this will be managed
+		//by the "<service> User Access" process builder for that service
+		if(!this.isServiceAdminApproved){
+			this.showPopUp = true;
+			this.showSpinner = true;
+			let serviceNameaux = this.serviceName;
+			if(this.serviceName == 'E&F APPS'){
+				this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
+			} else {
+				this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
+			}
+		}
 
-        requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
-            .then(() => {
-                //Show toas with confirmation            
-                if(this.serviceName == 'E&F APPS'){
-                    this.showSpinner = false;
-                    this.showPopUp = true; // for e&f success box
-                    this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
-                } else {
-                   // for admins or if service admin approval not required
+		requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
+			.then(() => {
+				//Show toas with confirmation            
+				if(this.serviceName == 'E&F APPS'){
+					this.showSpinner = false;
+					this.showPopUp = true; // for e&f success box
+					this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
+				} else {
+					// for admins or if service admin approval not required
 					// don't send approval email nor show user the pending approval popup
-					if (this.isAdmin || !this.isServiceAdminApproved) {
-                        this.showPopUp = false; 
+					if (this.isAdmin) {
+						this.showPopUp = false; 
 						this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
 						this.navigateToServicesPage();
-                    } else {
-                        this.showSpinner = false;
-                    }
-                }
-            }).catch(error => {
-                console.error(error);
-                this.showSpinner = false;
-                this.showPopUp = false;
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: 'Error',
-                        message: JSON.parse(JSON.stringify(error)).body.message,
-                        variant: 'error',
-                        mode: 'pester'
-                    })
-                );
-            });
+					} else {
+						this.showSpinner = false;
+						if(this.isServiceAdminApproved){
+							this[NavigationMixin.Navigate]({
+								type: 'standard__namedPage',
+								attributes: {
+									pageName: 'home'
+								},
+							});
+						}
+					}
+				}
+			}).catch(error => {
+				console.error(error);
+				this.showSpinner = false;
+				this.showPopUp = false;
+				this.dispatchEvent(
+					new ShowToastEvent({
+						title: 'Error',
+						message: JSON.parse(JSON.stringify(error)).body.message,
+						variant: 'error',
+						mode: 'pester'
+					})
+				);
+			});
     }
 
     navigateToServicesPage() {
@@ -799,4 +819,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             window.history.pushState(null, null, windowURL);
         }
     }
+
+	get tabModalWidth() { 
+		return this.ShowLabRegistryModal ? 'customPopupInteriorThreeQuartersScreenCentered' : 'customPopupInteriorHalfScreenCentered';
+	}
+
+	get tabModalWidthDefaultMessage() { 
+		return this.ShowLabRegistryModal ? '' : 'customPopupInteriorHalfScreenCentered defaultMessage';
+	}
 }
+

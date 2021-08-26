@@ -2,13 +2,14 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Notify_on_Operational_Improvement_Creation</fullName>
+        <ccEmails>GDCQuality@iata.org</ccEmails>
         <description>Notify on Operational Improvement Creation</description>
         <protected>false</protected>
         <recipients>
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Creation_Notification</template>
+        <template>Quality/Continuous_Improvement_Process_Creation_Notification</template>
     </alerts>
     <alerts>
         <fullName>OI_Approval_notification</fullName>
@@ -18,7 +19,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Approved_by_RPM</template>
+        <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
     <alerts>
         <fullName>OI_Approved_by_RPM</fullName>
@@ -176,6 +177,26 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_Closed_Date</fullName>
+        <description>Set the OI closed date to NOW</description>
+        <field>Date_Time_Closed__c</field>
+        <formula>NOW()</formula>
+        <name>Set Closed Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Set_QRM_Analysis_Conclusions_to_N_A</fullName>
+        <description>Set the field &quot;QRM Analysis Conclusions&quot; to &quot;N/A&quot;</description>
+        <field>QRM_Analysis_Conclusions__c</field>
+        <formula>&quot;N/A&quot;</formula>
+        <name>Set QRM Analysis Conclusions to N/A</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Terminate_OI</fullName>
         <description>Set today as Termination Date to set the status as Terminated</description>
         <field>Terminated_Date__c</field>
@@ -212,6 +233,19 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Autoclosed_when_approved_by_CPSManager</fullName>
+        <actions>
+            <name>Set_QRM_Analysis_Conclusions_to_N_A</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When a Improvement is approved by a CPS Manager it is closed automatically
+
+Note: Custom Metadata are not yet available for Workflows, when available replace the regex string by $CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_N_A.Value__c</description>
+        <formula>AND(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISCHANGED(OI_Approval_date__c),   NOT(ISBLANK(OI_Approval_date__c)),   REGEX(TEXT(Issue_Sub_Category__c),&quot;Active AL Withholding|Agent Adjustment|Agent Termination late|AL instruction|Bank.Reg.Legal|Banking details|Calendar changes|Default Exceeding  .500k|Delay trf EP to Hinge|Delayed recovery adj|Financial Security timing|HAR.*|ICCS Settlement|Irregularity .Default|Late AL settlement .External .|Late AL settlement .External. &lt; .1k|Matching|Non Hinge &gt; 6 mths|Sanctions|Settlement adjustment|Signatories|Suspended AL|Value Date&quot;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Notify on OI creation</fullName>
         <actions>
             <name>Notify_on_Operational_Improvement_Creation</name>
@@ -223,6 +257,30 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
             <operation>notEqual</operation>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
+    </rules>
+    <rules>
+        <fullName>OI Completed</fullName>
+        <actions>
+            <name>Set_Closed_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Action done when an OI is being completed</description>
+        <formula>AND(   OR(     RecordType.DeveloperName=&apos;Data_Governance&apos;,     RecordType.DeveloperName=&apos;Operational_Improvements&apos;   ),   NOT(ISBLANK(TEXT(Action_Plan_Effectiveness_Assessment__c))) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>QRM_Analysis_Conclusions_NA</fullName>
+        <actions>
+            <name>Set_Closed_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>After CPS Manager approval “QRM Analysis Conclusions” is set to N/A.
+
+Note: Custom Metadata are not yet available for Workflows, when available replace the regex string by $CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_No.Value__c</description>
+        <formula>AND(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISCHANGED(OI_Approval_date__c),   NOT(ISBLANK(OI_Approval_date__c)),   REGEX(TEXT(Issue_Sub_Category__c),&apos;AG &gt; 6 mths|AL .Bank mandates.  &gt; 6 mths|AL .Legal.   &gt; 6 mths|AL  .Other . &gt; 6 months|AL .Sanctions.   &gt; 6 mths|AL .Suspension.   &gt; 6 mths|Authorisation procedures|IATA AL.AG unbalanced &gt; 1 mth|Unidentified &gt;1&lt;3 mths|Unidentified &gt; 3 mths&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Reset approval date</fullName>
@@ -242,8 +300,9 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <description>Fills the field &apos;OI Status (WF)&apos; with current calculated status</description>
-        <formula>OR(	ISNEW(), 	AND(NOT(ISNEW()), 		OR( 			ISCHANGED(Date_Time_Closed__c), 			ISCHANGED(Extension_approved_date__c), 			ISCHANGED(Submission_for_extension_date__c), 			ISCHANGED(Submission_for_Approval_Date__c), 			ISCHANGED(Overall_Deadline__c), 			ISCHANGED(Pending_eff_validation_date__c), 			ISCHANGED(Terminated_Date__c), 			ISCHANGED(OI_Approval_date__c), 			ISCHANGED(Conclusion_Date__c), 			ISCHANGED(Extension_rejected_date__c) 		) 	) )</formula>
+        <description>Fills the field &apos;OI Status (WF)&apos; with current calculated status.
+Only for RT &apos;CPS Checks&apos;</description>
+        <formula>OR(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISNEW(),   AND(     NOT(ISNEW()),     OR(       ISCHANGED(Date_Time_Closed__c),       ISCHANGED(Extension_approved_date__c),       ISCHANGED(Submission_for_extension_date__c),       ISCHANGED(Submission_for_Approval_Date__c),       ISCHANGED(Overall_Deadline__c),       ISCHANGED(Pending_eff_validation_date__c),       ISCHANGED(Terminated_Date__c),       ISCHANGED(OI_Approval_date__c),       ISCHANGED(Conclusion_Date__c),       ISCHANGED(Extension_rejected_date__c)     )   ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

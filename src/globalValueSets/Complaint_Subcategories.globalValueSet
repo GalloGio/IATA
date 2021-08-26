@@ -1,0 +1,922 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Access issues</fullName>
+        <default>false</default>
+        <label>Access issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Accreditation Fees</fullName>
+        <default>false</default>
+        <label>Accreditation Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>Adjustments</fullName>
+        <default>false</default>
+        <label>Adjustments</label>
+    </customValue>
+    <customValue>
+        <fullName>ADM / ACM  issue</fullName>
+        <default>false</default>
+        <label>ADM / ACM  issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline/Operator Data Changes</fullName>
+        <default>false</default>
+        <label>Airline/Operator Data Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Error</fullName>
+        <default>false</default>
+        <label>Airline Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline settlemenet adjustment (FR)</fullName>
+        <default>false</default>
+        <label>Airline settlemenet adjustment (FR)</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline settlement</fullName>
+        <default>false</default>
+        <label>Airline settlement</label>
+    </customValue>
+    <customValue>
+        <fullName>Airlines reconciliation</fullName>
+        <default>false</default>
+        <label>Airlines reconciliation</label>
+    </customValue>
+    <customValue>
+        <fullName>AIRS / CAIRS Bulletin</fullName>
+        <default>false</default>
+        <label>AIRS / CAIRS Bulletin</label>
+    </customValue>
+    <customValue>
+        <fullName>Annual Fee</fullName>
+        <default>false</default>
+        <label>Annual Fee</label>
+    </customValue>
+    <customValue>
+        <fullName>Application</fullName>
+        <default>false</default>
+        <label>Application</label>
+    </customValue>
+    <customValue>
+        <fullName>Application/Order/Subscription</fullName>
+        <default>false</default>
+        <label>Application/Order/Subscription</label>
+    </customValue>
+    <customValue>
+        <fullName>APS (Advance Payment Solution)</fullName>
+        <default>false</default>
+        <label>APS (Advance Payment Solution)</label>
+    </customValue>
+    <customValue>
+        <fullName>ATC Instructor</fullName>
+        <default>false</default>
+        <label>ATC Instructor</label>
+    </customValue>
+    <customValue>
+        <fullName>Bank account changes</fullName>
+        <default>false</default>
+        <label>Bank account changes</label>
+    </customValue>
+    <customValue>
+        <fullName>BCP</fullName>
+        <default>false</default>
+        <label>BCP</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Adjustments</fullName>
+        <default>false</default>
+        <label>Billing Adjustments</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Query</fullName>
+        <default>false</default>
+        <label>Billing Query</label>
+    </customValue>
+    <customValue>
+        <fullName>Billing Rerun</fullName>
+        <default>false</default>
+        <label>Billing Rerun</label>
+    </customValue>
+    <customValue>
+        <fullName>BPM</fullName>
+        <default>false</default>
+        <label>BPM</label>
+    </customValue>
+    <customValue>
+        <fullName>BSP billing discrepancies</fullName>
+        <default>false</default>
+        <label>BSP billing discrepancies</label>
+    </customValue>
+    <customValue>
+        <fullName>BSPlink</fullName>
+        <default>false</default>
+        <label>BSPlink</label>
+    </customValue>
+    <customValue>
+        <fullName>Calendar error</fullName>
+        <default>false</default>
+        <label>Calendar error</label>
+    </customValue>
+    <customValue>
+        <fullName>Calendars</fullName>
+        <default>false</default>
+        <label>Calendars</label>
+    </customValue>
+    <customValue>
+        <fullName>Case management</fullName>
+        <default>false</default>
+        <label>Case management</label>
+    </customValue>
+    <customValue>
+        <fullName>CASS billing discrepancies</fullName>
+        <default>false</default>
+        <label>CASS billing discrepancies</label>
+    </customValue>
+    <customValue>
+        <fullName>CASSlink</fullName>
+        <default>false</default>
+        <label>CASSlink</label>
+    </customValue>
+    <customValue>
+        <fullName>CASS Output</fullName>
+        <default>false</default>
+        <label>CASS Output</label>
+    </customValue>
+    <customValue>
+        <fullName>Certificate</fullName>
+        <default>false</default>
+        <label>Certificate</label>
+    </customValue>
+    <customValue>
+        <fullName>Change Management Process</fullName>
+        <default>false</default>
+        <label>Change Management Process</label>
+    </customValue>
+    <customValue>
+        <fullName>Changes</fullName>
+        <default>false</default>
+        <label>Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Changes/updates</fullName>
+        <default>false</default>
+        <label>Changes/updates</label>
+    </customValue>
+    <customValue>
+        <fullName>Changes / updates</fullName>
+        <default>false</default>
+        <label>Changes / updates</label>
+    </customValue>
+    <customValue>
+        <fullName>Clearing bank account change</fullName>
+        <default>false</default>
+        <label>Clearing bank account change</label>
+    </customValue>
+    <customValue>
+        <fullName>Closure</fullName>
+        <default>false</default>
+        <label>Closure</label>
+    </customValue>
+    <customValue>
+        <fullName>Closure / cancellation</fullName>
+        <default>false</default>
+        <label>Closure / cancellation</label>
+    </customValue>
+    <customValue>
+        <fullName>Code Administration</fullName>
+        <default>false</default>
+        <label>Code Administration</label>
+    </customValue>
+    <customValue>
+        <fullName>Complaints</fullName>
+        <default>false</default>
+        <label>Complaints</label>
+    </customValue>
+    <customValue>
+        <fullName>Compliance related</fullName>
+        <default>false</default>
+        <label>Compliance related</label>
+    </customValue>
+    <customValue>
+        <fullName>Configuration / Service Account</fullName>
+        <default>false</default>
+        <label>Configuration / Service Account</label>
+    </customValue>
+    <customValue>
+        <fullName>Content enquiry</fullName>
+        <default>false</default>
+        <label>Content enquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>Continuous Improvement</fullName>
+        <default>false</default>
+        <label>Continuous Improvement</label>
+    </customValue>
+    <customValue>
+        <fullName>Course and Exam content/quality</fullName>
+        <default>false</default>
+        <label>Course and Exam content/quality</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Support</fullName>
+        <default>false</default>
+        <label>Customer Support</label>
+    </customValue>
+    <customValue>
+        <fullName>Daily Airline Settlement</fullName>
+        <default>false</default>
+        <label>Daily Airline Settlement</label>
+    </customValue>
+    <customValue>
+        <fullName>Daily Direct Debit</fullName>
+        <default>false</default>
+        <label>Daily Direct Debit</label>
+    </customValue>
+    <customValue>
+        <fullName>Data privacy</fullName>
+        <default>false</default>
+        <label>Data privacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Debt Recovery</fullName>
+        <default>false</default>
+        <label>Debt Recovery</label>
+    </customValue>
+    <customValue>
+        <fullName>Default / Irregularity</fullName>
+        <default>false</default>
+        <label>Default / Irregularity</label>
+    </customValue>
+    <customValue>
+        <fullName>Default / Irregularity/Risk Event</fullName>
+        <default>false</default>
+        <label>Default / Irregularity/Risk Event</label>
+    </customValue>
+    <customValue>
+        <fullName>Default proration</fullName>
+        <default>false</default>
+        <label>Default proration</label>
+    </customValue>
+    <customValue>
+        <fullName>Delivery Issues</fullName>
+        <default>false</default>
+        <label>Delivery Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct Debit</fullName>
+        <default>false</default>
+        <label>Direct Debit</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct Debit related</fullName>
+        <default>false</default>
+        <label>Direct Debit related</label>
+    </customValue>
+    <customValue>
+        <fullName>Dispute</fullName>
+        <default>false</default>
+        <label>Dispute</label>
+    </customValue>
+    <customValue>
+        <fullName>Documentation</fullName>
+        <default>false</default>
+        <label>Documentation</label>
+    </customValue>
+    <customValue>
+        <fullName>Documentation management</fullName>
+        <default>false</default>
+        <label>Documentation management</label>
+    </customValue>
+    <customValue>
+        <fullName>Document Reporting</fullName>
+        <default>false</default>
+        <label>Document Reporting</label>
+    </customValue>
+    <customValue>
+        <fullName>DPC Products</fullName>
+        <default>false</default>
+        <label>DPC Products</label>
+    </customValue>
+    <customValue>
+        <fullName>EasyPay</fullName>
+        <default>false</default>
+        <label>EasyPay</label>
+    </customValue>
+    <customValue>
+        <fullName>Exceptions</fullName>
+        <default>false</default>
+        <label>Exceptions</label>
+    </customValue>
+    <customValue>
+        <fullName>Excess payment refund</fullName>
+        <default>false</default>
+        <label>Excess payment refund</label>
+    </customValue>
+    <customValue>
+        <fullName>Fees</fullName>
+        <default>false</default>
+        <label>Fees</label>
+    </customValue>
+    <customValue>
+        <fullName>File processing / retrieval</fullName>
+        <default>false</default>
+        <label>File processing / retrieval</label>
+    </customValue>
+    <customValue>
+        <fullName>Financial Review</fullName>
+        <default>false</default>
+        <label>Financial Review</label>
+    </customValue>
+    <customValue>
+        <fullName>Financial Security Information</fullName>
+        <default>false</default>
+        <label>Financial Security Information</label>
+    </customValue>
+    <customValue>
+        <fullName>Financial Security Release</fullName>
+        <default>false</default>
+        <label>Financial Security Release</label>
+    </customValue>
+    <customValue>
+        <fullName>Financial Security Request</fullName>
+        <default>false</default>
+        <label>Financial Security Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Form of Payment</fullName>
+        <default>false</default>
+        <label>Form of Payment</label>
+    </customValue>
+    <customValue>
+        <fullName>Fraud</fullName>
+        <default>false</default>
+        <label>Fraud</label>
+    </customValue>
+    <customValue>
+        <fullName>Funds Management</fullName>
+        <default>false</default>
+        <label>Funds Management</label>
+    </customValue>
+    <customValue>
+        <fullName>FX rate issue</fullName>
+        <default>false</default>
+        <label>FX rate issue</label>
+    </customValue>
+    <customValue>
+        <fullName>General R&amp;S process</fullName>
+        <default>false</default>
+        <label>General R&amp;S process</label>
+    </customValue>
+    <customValue>
+        <fullName>GSA / MSO code managament</fullName>
+        <default>false</default>
+        <label>GSA / MSO code managament</label>
+    </customValue>
+    <customValue>
+        <fullName>GSA / MSO - Non-portal related</fullName>
+        <default>false</default>
+        <label>GSA / MSO - Non-portal related</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA certificate</fullName>
+        <default>false</default>
+        <label>IATA certificate</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Cust. Portal</fullName>
+        <default>false</default>
+        <label>IATA Cust. Portal</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA fees</fullName>
+        <default>false</default>
+        <label>IATA fees</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Local (Exam) Coordinator/Supervisor</fullName>
+        <default>false</default>
+        <label>IATA Local (Exam) Coordinator/Supervisor</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA store</fullName>
+        <default>false</default>
+        <label>IATA store</label>
+    </customValue>
+    <customValue>
+        <fullName>ICCS related</fullName>
+        <default>false</default>
+        <label>ICCS related</label>
+    </customValue>
+    <customValue>
+        <fullName>ICE</fullName>
+        <default>false</default>
+        <label>ICE</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH Finance</fullName>
+        <default>false</default>
+        <label>ICH Finance</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH General</fullName>
+        <default>false</default>
+        <label>ICH General</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH Membership</fullName>
+        <default>false</default>
+        <label>ICH Membership</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH Operations</fullName>
+        <default>false</default>
+        <label>ICH Operations</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH related</fullName>
+        <default>false</default>
+        <label>ICH related</label>
+    </customValue>
+    <customValue>
+        <fullName>IFAP</fullName>
+        <default>false</default>
+        <label>IFAP</label>
+    </customValue>
+    <customValue>
+        <fullName>IFAP issue</fullName>
+        <default>false</default>
+        <label>IFAP issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Immediate suspension (non-RHC related)</fullName>
+        <default>false</default>
+        <label>Immediate suspension (non-RHC related)</label>
+    </customValue>
+    <customValue>
+        <fullName>Incidents</fullName>
+        <default>false</default>
+        <label>Incidents</label>
+    </customValue>
+    <customValue>
+        <fullName>Incoming payment related</fullName>
+        <default>false</default>
+        <label>Incoming payment related</label>
+    </customValue>
+    <customValue>
+        <fullName>Incorrect Charges / Credit</fullName>
+        <default>false</default>
+        <label>Incorrect Charges / Credit</label>
+    </customValue>
+    <customValue>
+        <fullName>Instructor</fullName>
+        <default>false</default>
+        <label>Instructor</label>
+    </customValue>
+    <customValue>
+        <fullName>Integrated connectivity issues</fullName>
+        <default>false</default>
+        <label>Integrated connectivity issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoice / Credit Note Layout</fullName>
+        <default>false</default>
+        <label>Invoice / Credit Note Layout</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoicing</fullName>
+        <default>false</default>
+        <label>Invoicing</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoicing / billing issues</fullName>
+        <default>false</default>
+        <label>Invoicing / billing issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoicing / payment</fullName>
+        <default>false</default>
+        <label>Invoicing / payment</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoicing / Refund  issues</fullName>
+        <default>false</default>
+        <label>Invoicing / Refund  issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoicing Issue</fullName>
+        <default>false</default>
+        <label>Invoicing Issue</label>
+    </customValue>
+    <customValue>
+        <fullName>IP infringement</fullName>
+        <default>false</default>
+        <label>IP infringement</label>
+    </customValue>
+    <customValue>
+        <fullName>ISO / Service Charter</fullName>
+        <default>false</default>
+        <label>ISO / Service Charter</label>
+    </customValue>
+    <customValue>
+        <fullName>ISS Joining</fullName>
+        <default>false</default>
+        <label>ISS Joining</label>
+    </customValue>
+    <customValue>
+        <fullName>Local language not spoken</fullName>
+        <default>false</default>
+        <label>Local language not spoken</label>
+    </customValue>
+    <customValue>
+        <fullName>Major Changes</fullName>
+        <default>false</default>
+        <label>Major Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Matching error</fullName>
+        <default>false</default>
+        <label>Matching error</label>
+    </customValue>
+    <customValue>
+        <fullName>Membership Processes</fullName>
+        <default>false</default>
+        <label>Membership Processes</label>
+    </customValue>
+    <customValue>
+        <fullName>MInor Changes</fullName>
+        <default>false</default>
+        <label>MInor Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing / delayed outputs</fullName>
+        <default>false</default>
+        <label>Missing / delayed outputs</label>
+    </customValue>
+    <customValue>
+        <fullName>Missing invoice / credit note</fullName>
+        <default>false</default>
+        <label>Missing invoice / credit note</label>
+    </customValue>
+    <customValue>
+        <fullName>MITA &amp; BIETA</fullName>
+        <default>false</default>
+        <label>MITA &amp; BIETA</label>
+    </customValue>
+    <customValue>
+        <fullName>MITA related</fullName>
+        <default>false</default>
+        <label>MITA related</label>
+    </customValue>
+    <customValue>
+        <fullName>Negative Sales Refund</fullName>
+        <default>false</default>
+        <label>Negative Sales Refund</label>
+    </customValue>
+    <customValue>
+        <fullName>New Airline/Operator</fullName>
+        <default>false</default>
+        <label>New Airline/Operator</label>
+    </customValue>
+    <customValue>
+        <fullName>New Application</fullName>
+        <default>false</default>
+        <label>New Application</label>
+    </customValue>
+    <customValue>
+        <fullName>Order / Subscription Issues</fullName>
+        <default>false</default>
+        <label>Order / Subscription Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Order / Subscription request</fullName>
+        <default>false</default>
+        <label>Order / Subscription request</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Outgoing payment related</fullName>
+        <default>false</default>
+        <label>Outgoing payment related</label>
+    </customValue>
+    <customValue>
+        <fullName>Participation Changes</fullName>
+        <default>false</default>
+        <label>Participation Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Payment/ Refund issues</fullName>
+        <default>false</default>
+        <label>Payment/ Refund issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Payment /Refund Issues</fullName>
+        <default>false</default>
+        <label>Payment /Refund Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Payment / Refund Issues</fullName>
+        <default>false</default>
+        <label>Payment / Refund Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Payment issues</fullName>
+        <default>false</default>
+        <label>Payment issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Payments</fullName>
+        <default>false</default>
+        <label>Payments</label>
+    </customValue>
+    <customValue>
+        <fullName>PBD (Post Billing Dispute)</fullName>
+        <default>false</default>
+        <label>PBD (Post Billing Dispute)</label>
+    </customValue>
+    <customValue>
+        <fullName>PCI DSS</fullName>
+        <default>false</default>
+        <label>PCI DSS</label>
+    </customValue>
+    <customValue>
+        <fullName>Penny test (agent)</fullName>
+        <default>false</default>
+        <label>Penny test (agent)</label>
+    </customValue>
+    <customValue>
+        <fullName>Penny test (airline)</fullName>
+        <default>false</default>
+        <label>Penny test (airline)</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Default actions</fullName>
+        <default>false</default>
+        <label>Post-Default actions</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-Default Recovery</fullName>
+        <default>false</default>
+        <label>Post-Default Recovery</label>
+    </customValue>
+    <customValue>
+        <fullName>Post-termination</fullName>
+        <default>false</default>
+        <label>Post-termination</label>
+    </customValue>
+    <customValue>
+        <fullName>Price List</fullName>
+        <default>false</default>
+        <label>Price List</label>
+    </customValue>
+    <customValue>
+        <fullName>Product</fullName>
+        <default>false</default>
+        <label>Product</label>
+    </customValue>
+    <customValue>
+        <fullName>Product/System  issues</fullName>
+        <default>false</default>
+        <label>Product/System  issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Product issues</fullName>
+        <default>false</default>
+        <label>Product issues</label>
+    </customValue>
+    <customValue>
+        <fullName>Publications and Reports</fullName>
+        <default>false</default>
+        <label>Publications and Reports</label>
+    </customValue>
+    <customValue>
+        <fullName>Query Management</fullName>
+        <default>false</default>
+        <label>Query Management</label>
+    </customValue>
+    <customValue>
+        <fullName>R&amp;S Procedures</fullName>
+        <default>false</default>
+        <label>R&amp;S Procedures</label>
+    </customValue>
+    <customValue>
+        <fullName>Recall / Reinstatement</fullName>
+        <default>false</default>
+        <label>Recall / Reinstatement</label>
+    </customValue>
+    <customValue>
+        <fullName>Reconciliation</fullName>
+        <default>false</default>
+        <label>Reconciliation</label>
+    </customValue>
+    <customValue>
+        <fullName>Refund process</fullName>
+        <default>false</default>
+        <label>Refund process</label>
+    </customValue>
+    <customValue>
+        <fullName>Registration</fullName>
+        <default>false</default>
+        <label>Registration</label>
+    </customValue>
+    <customValue>
+        <fullName>Reinstatement</fullName>
+        <default>false</default>
+        <label>Reinstatement</label>
+    </customValue>
+    <customValue>
+        <fullName>Reinstatement / Default / Irregularities</fullName>
+        <default>false</default>
+        <label>Reinstatement / Default / Irregularities</label>
+    </customValue>
+    <customValue>
+        <fullName>Remittance frequency</fullName>
+        <default>false</default>
+        <label>Remittance frequency</label>
+    </customValue>
+    <customValue>
+        <fullName>Report issue</fullName>
+        <default>false</default>
+        <label>Report issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Reports</fullName>
+        <default>false</default>
+        <label>Reports</label>
+    </customValue>
+    <customValue>
+        <fullName>Request / Setup not done</fullName>
+        <default>false</default>
+        <label>Request / Setup not done</label>
+    </customValue>
+    <customValue>
+        <fullName>RHC</fullName>
+        <default>false</default>
+        <label>RHC</label>
+    </customValue>
+    <customValue>
+        <fullName>Settlement</fullName>
+        <default>false</default>
+        <label>Settlement</label>
+    </customValue>
+    <customValue>
+        <fullName>SIS related</fullName>
+        <default>false</default>
+        <label>SIS related</label>
+    </customValue>
+    <customValue>
+        <fullName>SOP</fullName>
+        <default>false</default>
+        <label>SOP</label>
+    </customValue>
+    <customValue>
+        <fullName>Suspension / Risk Event</fullName>
+        <default>false</default>
+        <label>Suspension / Risk Event</label>
+    </customValue>
+    <customValue>
+        <fullName>Suspension &amp; Reinstatement</fullName>
+        <default>false</default>
+        <label>Suspension &amp; Reinstatement</label>
+    </customValue>
+    <customValue>
+        <fullName>System</fullName>
+        <default>false</default>
+        <label>System</label>
+    </customValue>
+    <customValue>
+        <fullName>System Discrepancies</fullName>
+        <default>false</default>
+        <label>System Discrepancies</label>
+    </customValue>
+    <customValue>
+        <fullName>Ticketing issues</fullName>
+        <default>false</default>
+        <label>Ticketing issues</label>
+    </customValue>
+    <customValue>
+        <fullName>TIDS</fullName>
+        <default>false</default>
+        <label>TIDS</label>
+    </customValue>
+    <customValue>
+        <fullName>Training Partner</fullName>
+        <default>false</default>
+        <label>Training Partner</label>
+    </customValue>
+    <customValue>
+        <fullName>Unclear answer</fullName>
+        <default>false</default>
+        <label>Unclear answer</label>
+    </customValue>
+    <customValue>
+        <fullName>Unclear procedures communications</fullName>
+        <default>false</default>
+        <label>Unclear procedures communications</label>
+    </customValue>
+    <customValue>
+        <fullName>Unpaid Invoices</fullName>
+        <default>false</default>
+        <label>Unpaid Invoices</label>
+    </customValue>
+    <customValue>
+        <fullName>User Management</fullName>
+        <default>false</default>
+        <label>User Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Venue/session logistics</fullName>
+        <default>false</default>
+        <label>Venue/session logistics</label>
+    </customValue>
+    <customValue>
+        <fullName>Voluntary Relinquishment issue</fullName>
+        <default>false</default>
+        <label>Voluntary Relinquishment issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Voluntary Withdrawal</fullName>
+        <default>false</default>
+        <label>Voluntary Withdrawal</label>
+    </customValue>
+    <customValue>
+        <fullName>Web interface</fullName>
+        <default>false</default>
+        <label>Web interface</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline suspension</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Airline suspension</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline changes</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Airline changes</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline leaving</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Airline leaving</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline joining</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Airline joining</label>
+    </customValue>
+    <customValue>
+        <fullName>Market communication</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Market communication</label>
+    </customValue>
+    <customValue>
+        <fullName>Validation management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Validation management</label>
+    </customValue>
+    <customValue>
+        <fullName>Yearly Review</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Yearly Review</label>
+    </customValue>
+    <customValue>
+        <fullName>AIMS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>AIMS</label>
+    </customValue>
+    <customValue>
+        <fullName>ISIS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ISIS</label>
+    </customValue>
+    <customValue>
+        <fullName>Maestro</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Maestro</label>
+    </customValue>
+    <customValue>
+        <fullName>myIATA</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>myIATA</label>
+    </customValue>
+    <description>Values used for Case complaint subcategories and Continuous Improvement Process subcategories</description>
+    <masterLabel>Complaint Subcategories</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

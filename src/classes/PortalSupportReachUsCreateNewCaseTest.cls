@@ -114,7 +114,13 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
 
 			String profile = PortalSupportReachUsCreateNewCaseCtrl.getProfile();
 
-
+			Contact contSG = new Contact(
+				FirstName = 'Agent',
+				LastName = 'Singapore',
+				Email = 'agent.singapore@test.com'
+			);
+	
+			insert contSG;
 			Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'DPC_Service_Request');
 			newcase.RecordTypeId = recordTypeId;
 			newcase.BSPCountry__c = 'GB';
@@ -122,6 +128,7 @@ public with sharing class PortalSupportReachUsCreateNewCaseTest {
 			newcase.Description = 'test';
 			List<String> lstRecipient = new List<String>();
 			lstRecipient.add('Test@test11.com');
+			lstRecipient.add('agent.singapore@test.com');
 
 			Case insertedcase =  PortalSupportReachUsCreateNewCaseCtrl.insertCase(newcase,lstRecipient);
 		}

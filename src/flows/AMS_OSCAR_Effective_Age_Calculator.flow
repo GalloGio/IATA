@@ -102,7 +102,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
-                <operator>LessThan</operator>
+                <operator>LessThanOrEqualTo</operator>
                 <rightValue>
                     <elementReference>BankGuaranteeOrAgreementDate</elementReference>
                 </rightValue>
@@ -264,7 +264,7 @@
     <formulas>
         <name>BankGuaranteeOrAgreementDate</name>
         <dataType>Date</dataType>
-        <expression>IF({!oscar.Bank_Guarantee_requested__c} &gt; {!oscar.Agreement_requested__c}, {!oscar.Bank_Guarantee_requested__c} , {!oscar.Agreement_requested__c})</expression>
+        <expression>IF(OR(ISBLANK({!oscar.Agreement_requested__c}), {!oscar.Bank_Guarantee_requested__c} &gt; {!oscar.Agreement_requested__c}), {!oscar.Bank_Guarantee_requested__c} , {!oscar.Agreement_requested__c})</expression>
     </formulas>
     <formulas>
         <name>BankGuaranteeTime</name>
@@ -342,6 +342,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>

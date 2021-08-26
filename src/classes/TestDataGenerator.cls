@@ -392,7 +392,7 @@ public with sharing class TestDataGenerator
 		if (listProfile != null && listProfile.size() > 0) {
 			usr = new User(FirstName=uniqueID, LastName=uniqueID + contactId, Alias=uniqueID.right(8)
 						 , UserName=uniqueID + contactId + '@testclass.com', ProfileId=listProfile[0].Id
-						 , Email=UserInfo.getUserEmail(), TimeZoneSidKey=String.valueOf(UserInfo.getTimeZone())
+						 , Email='testemail@testemail.com.invalid', TimeZoneSidKey=String.valueOf(UserInfo.getTimeZone())
 						 , LanguageLocaleKey=UserInfo.getLanguage(), LocaleSidKey=UserInfo.getLocale()
 						 , EmailEncodingKey='ISO-8859-1', IsActive=true, License_Cost_Center__c='ISF005CH01'
 						 , ContactId=contactId);

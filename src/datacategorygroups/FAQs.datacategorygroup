@@ -97,10 +97,6 @@
                     <name>New_Travel_Agency_Application</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>TIDS-Travel Industry Designator Service</label>
-                    <name>TIDS</name>
-                </dataCategory>
-                <dataCategory>
                     <label>Banking Information</label>
                     <name>PAX_Banking_Information</name>
                 </dataCategory>
@@ -347,6 +343,22 @@
                 <label>TASF</label>
                 <name>TASF</name>
             </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information TIDS</label>
+                    <name>General_Information_TIDS</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join TIDS</label>
+                    <name>Sign_Up_Join_TIDS</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Technical Issue</label>
+                    <name>Technical_Issue_TIDS</name>
+                </dataCategory>
+                <label>TIDS-Travel Industry Designator Service</label>
+                <name>TIDS</name>
+            </dataCategory>
             <label>Travel</label>
             <name>Travel</name>
         </dataCategory>
@@ -478,14 +490,6 @@
                 </dataCategory>
                 <label>IATA Annual Fees (BSP/CASS)</label>
                 <name>IATA_Annual_Fees_BSP_CASS_crg</name>
-            </dataCategory>
-            <dataCategory>
-                <dataCategory>
-                    <label>IFACP General Information</label>
-                    <name>IFACP_General_Information</name>
-                </dataCategory>
-                <label>IFACP Endorsed Forwarder</label>
-                <name>IFACP_Endorsed_Forwarder</name>
             </dataCategory>
             <label>Cargo</label>
             <name>Cargo</name>
@@ -1433,10 +1437,6 @@
                     <name>Product_delivery_IATA_Store</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_IATA_Store</name>
-                </dataCategory>
-                <dataCategory>
                     <label>User Management</label>
                     <name>User_Management_IATA_Store</name>
                 </dataCategory>
@@ -1657,6 +1657,10 @@
             </dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Two Factor Authentication</label>
+                    <name>Two_Factor_Authentication</name>
+                </dataCategory>
+                <dataCategory>
                     <label>General Information</label>
                     <name>PORTAL_General_Information</name>
                 </dataCategory>
@@ -1699,10 +1703,6 @@
                 <dataCategory>
                     <label>Product delivery</label>
                     <name>Product_delivery_eBroadcast</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_eBroadcast</name>
                 </dataCategory>
                 <label>eBroadcast</label>
                 <name>eBroadcast</name>
@@ -1883,10 +1883,6 @@
                 <dataCategory>
                     <label>Product delivery</label>
                     <name>Product_delivery_Weblink</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_Weblink</name>
                 </dataCategory>
                 <dataCategory>
                     <label>User Management</label>

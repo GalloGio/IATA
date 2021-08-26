@@ -1,0 +1,23 @@
+<aura:component access="public" controller="AccountDashboardCTIContentCtrl">
+	<aura:attribute name="accountId" type="Id" />
+	<aura:attribute name="contactId" type="Id" />
+	<aura:attribute name="canEdit" type="Boolean" />
+	<aura:attribute name="UIThemeDescription" type="String" />
+	<aura:attribute name="UIThemeisLEX" type="Boolean" />
+
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col slds-size_1-of-3">
+			<c:AccountDashboardCTIContentHeader accountId="{!v.accountId}" UIThemeDescription="{!v.UIThemeDescription}" UIThemeisLEX="{!v.UIThemeIsLEX}" />
+		</div>
+		<div class="slds-col slds-size_2-of-3">
+			<c:AccountDashboardCTIContentContacts accountId="{!v.accountId}" contactId="{!v.contactId}" UIThemeDescription="{!v.UIThemeDescription}" UIThemeisLEX="{!v.UIThemeIsLEX}" />
+		</div>
+	</div>
+	<div class="slds-grid slds-gutters">
+		<div class="slds-col">
+			<c:AccountDashboardCTIContentCases accountId="{!v.accountId}" UIThemeDescription="{!v.UIThemeDescription}" UIThemeisLEX="{!v.UIThemeIsLEX}" />
+		</div>
+	</div>
+</aura:component>

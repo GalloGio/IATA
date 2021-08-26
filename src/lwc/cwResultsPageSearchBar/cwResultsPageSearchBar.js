@@ -2,6 +2,7 @@ import { LightningElement, wire, track, api } from "lwc";
 import getCompanyNamesList from "@salesforce/apex/CW_LandingSearchBarController.getCompanyNamesList";
 import getCompanyTypes from "@salesforce/apex/CW_Utilities.getCompanyTypes";
 import getLocationsList from "@salesforce/apex/CW_LandingSearchBarController.getLocationsList";
+import getPicklistValues from '@salesforce/apex/CW_Utilities.getPicklistValues';
 
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import labels from "c/cwOneSourceLabels";
@@ -18,12 +19,13 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	deletecustom = resources + "/icons/delete-custom.svg";
 	locationwhite = resources + "/icons/ic-white-location.svg";
 	searchbycompanywhite = resources + "/icons/search-by-company-white.svg";
-	CertifiedAirline = resources + "/img/certifications/UfW_CertifiedAirline.png";
+	CertifiedAirline = resources + "/img/certifications/united_of_wildlife_stamp.png";
 	animatedBanner = resources + "/img/animated-banner.gif";
 	animatedBannerRegister = resources + "/img/animated-banner-register.gif";
 
 	companyNameInput = "companynameinput";
 	locationInput = "locationinput";
+	fieldsService = "Third_Party_Services__c;In_House_Services__c";
 
 	locationsItems = [];
 	@track lstFEICategories = [];
@@ -43,6 +45,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	@track searchSummaryList = [];
 	@track searchLocationList = [];
 	@track searchCompanyNameList = [];
+	@track services = [];
 	@track showFiltersTag = "Show More";
 	@api certifications;
 	@track companyTypes;
@@ -180,15 +183,26 @@ export default class CwResultsPageSearchBar extends LightningElement {
 		this.setSearchSummaryList();
 		for (let i = 0; i < inputs.length; i++) {
 			let searchObj = {};
+			
 			if (((inputs[i].type === "checkbox" && inputs[i].checked === true) || (inputs[i].type !== "checkbox" && inputs[i].value !== "" && inputs[i].value !== undefined)) && inputs[i].getAttribute("data-obj") != null && inputs[i].getAttribute("data-field") != null && inputs[i].getAttribute("data-operator") != null) {
-				searchObj.obj = inputs[i].getAttribute("data-obj");
-				searchObj.field = inputs[i].getAttribute("data-field");
-				searchObj.operator = inputs[i].getAttribute("data-operator");
-				if (inputs[i].getAttribute("data-relationfield")) {
-					searchObj.relationfield = inputs[i].getAttribute("data-relationfield");
+				let dataType = inputs[i].getAttribute("data-type");
+				if (dataType !== "service"){
+					searchObj.obj = inputs[i].getAttribute("data-obj");
+					searchObj.field = inputs[i].getAttribute("data-field");
+					searchObj.operator = inputs[i].getAttribute("data-operator");
+					if (inputs[i].getAttribute("data-relationfield")) {
+						searchObj.relationfield = inputs[i].getAttribute("data-relationfield");
+					}
+					searchObj.value = inputs[i].type === "checkbox" && inputs[i].value === "on" ? true : inputs[i].value;
+					this.searchObjects.push(searchObj);
 				}
-				searchObj.value = inputs[i].type === "checkbox" && inputs[i].value === "on" ? true : inputs[i].value;
-				this.searchObjects.push(searchObj);
+				else{
+					searchObj.obj = inputs[i].getAttribute("data-obj");
+					searchObj.field = this.fieldsService;
+					searchObj.operator = "includes";
+					searchObj.value = inputs[i].getAttribute("data-name");
+					this.searchObjects.push(searchObj);
+				}
 			}
 		}
 		this.searchLocationList.forEach(loc => {
@@ -493,9 +507,10 @@ export default class CwResultsPageSearchBar extends LightningElement {
 			});
 		})
 		inputs.forEach(input => {
+			let dataType = input.getAttribute("data-type");
 			if (input.type === "checkbox" && input.checked === true) {
 				this.searchSummaryList.push({
-					label: input.getAttribute("data-name"),
+					label: (dataType == 'service') ? input.getAttribute("data-label") : input.getAttribute("data-name"),
 					value: input.getAttribute("data-name")
 				});
 			}
@@ -578,6 +593,31 @@ export default class CwResultsPageSearchBar extends LightningElement {
 
 		this.isboxfocuscompanyname = false;
 		this._addFocusOnSearchListenerCompanyNames();
+
+		this.loadServices();
+	}
+
+	loadServices(){
+		let objectApi = "ICG_Account_Role_Detail__c";
+		let fieldApi = "In_House_Services__c";
+		getPicklistValues({objectApi,fieldApi}).then(response =>{
+			if(response){
+				let dataParsed = JSON.parse(response);
+				let services = [];
+				dataParsed.forEach(item => {
+					let service = {
+						name: item.api,
+						label: item.label,
+						selected: false,
+						enabled: true,
+						field: this.fieldsService,
+						obj: objectApi,
+						type: "service"
+					};
+					this.services.push(service);
+				});
+			}
+		});
 	}
 
 	callLocationsList() {
@@ -709,8 +749,10 @@ export default class CwResultsPageSearchBar extends LightningElement {
 						this.searchCompanyNameList.push({ label: elem.value });
 					}
 				}
-
 				for (let i = 0; i < inputs.length; i++) {
+					let dataType = inputs[i].getAttribute("data-type");
+					let dataName = inputs[i].getAttribute("data-name");
+
 					if (
 						inputs[i].getAttribute("data-obj") &&
 						inputs[i].getAttribute("data-field") &&
@@ -720,7 +762,13 @@ export default class CwResultsPageSearchBar extends LightningElement {
 						inputs[i].getAttribute("data-field").toUpperCase() === elem.field.toUpperCase() &&
 						inputs[i].getAttribute("data-operator").toUpperCase() === elem.operator.toUpperCase()
 					) {
-						if (elem.value && typeof elem.value === "string" && elem.value.toUpperCase() !== "TRUE") {
+						if (dataType && dataName && dataType === "service" && dataName.toUpperCase() === elem.value.toUpperCase()){
+							inputs[i].checked = true;
+							inputs[i].parentNode.classList.remove("itemUnselected");
+							inputs[i].parentNode.classList.add("itemSelected");
+							inputs[i].parentNode.setAttribute("selected", true);
+						} 
+						else if (elem.value && typeof elem.value === "string" && elem.value.toUpperCase() !== "TRUE") {
 							let values = elem.value ? elem.value.split(";") : elem.value;
 							values.forEach(value => {
 								if (inputs[i].type === "checkbox" && inputs[i].value && inputs[i].value.toUpperCase() === value.toUpperCase()) {

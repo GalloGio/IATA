@@ -2,7 +2,7 @@ public class ANG_AccountTriggerHandler {
 
 	public List<Account> triggerNew = (List<Account>) Trigger.new;
 	public List<Account> triggerOld = (List<Account>) Trigger.old;
-
+	private static final Set<String> VALID_CHANGE_CODES = new Set<String>{'CHA','CWD'};
 	public Map<Id, Account> newMap = (Map<Id,Account>) Trigger.newMap;
 	public Map<Id, Account> oldMap = (Map<Id,Account>) Trigger.oldMap;
 
@@ -268,7 +268,7 @@ public class ANG_AccountTriggerHandler {
 					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
 					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c, ANG_Accreditation_Model__c,
 					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c,
-					Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c //for the NewGen operation without a IEP Provider
+					Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c, Account__r.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c //for the NewGen operation without a IEP Provider
 					 FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId)
 					from Account where Id in :accountIds]);
 	}
@@ -393,6 +393,8 @@ public class ANG_AccountTriggerHandler {
 		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
+		map<Id,list<Agency_Applied_Change_code__c>> mapOfchangeCodesByAccount = new map<Id,list<Agency_Applied_Change_code__c>>();
+		map<String, Agency_Applied_Change_code__c> mapOfchangeCodesCWDByCaseNumber = new map<String, Agency_Applied_Change_code__c>();
 
 		//get just account ids where status changed to Terminated
 		for(Account a : triggerNew){
@@ -402,8 +404,29 @@ public class ANG_AccountTriggerHandler {
 				activeAccsIdSet.add(a.id);
 
 			/*When changing accreditation type from Cash to Cashless, any active Risk Event should be updated to status "Inactive_Cashless"*/
-			if(oldMap.get(a.id).ANG_Accreditation_Model__c == 'Cash' && a.ANG_Accreditation_Model__c == 'Cashless')
+			if(oldMap.get(a.id).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && a.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
 				inactivateAcctsSet.add(a.id);
+		}
+
+		// get all change codes to control update on related risk Events When changing accreditation type from Cash to Cashless
+		if(!inactivateAcctsSet.isEmpty()){
+			for( Agency_Applied_Change_code__c cc : [SELECT id, Account__c, Bulletin_Information__c, Change_Code__c, OSCAR__r.Name, OSCAR__r.ANG_Type_Of_Change__c, 
+															OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, CreatedDate 
+														FROM Agency_Applied_Change_code__c 
+														WHERE Account__c IN : inactivateAcctsSet 
+															AND Change_Code__c in : VALID_CHANGE_CODES 
+															AND CreatedDate <: Date.today()
+															ORDER BY CreatedDate DESC]){
+				if(cc.Change_Code__c == AMS_Utils.CHA_CHANGE_CODE){
+					if(mapOfchangeCodesByAccount.get(cc.Account__c) == null) {
+						mapOfchangeCodesByAccount.put(cc.Account__c, new List<Agency_Applied_Change_code__c>{cc});
+					}else{
+						mapOfchangeCodesByAccount.get(cc.Account__c).add(cc);
+					}
+				}else{
+					mapOfchangeCodesCWDByCaseNumber.put(cc.OSCAR__r.Name, cc);
+				}
+			}
 		}
 
 
@@ -415,8 +438,8 @@ public class ANG_AccountTriggerHandler {
 		//get all related risk Events
 		if(accIdSet.isEmpty())
 			return;
-
-		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
+			
+		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c, Applicable_for_re_activation__c, ANG_AccountId__r.Accreditation_date__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
 
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
 			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c)
@@ -427,11 +450,40 @@ public class ANG_AccountTriggerHandler {
 				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 			}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
 				re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
+				re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, mapOfchangeCodesCWDByCaseNumber);
 			}
-
 		}
 
 		update reToUpdateList;
+	}
+
+	public ANG_Agency_Risk_Event__c updateRiskEventCashAndCashless(map<Id,list<Agency_Applied_Change_code__c>> mapCCByAccount, ANG_Agency_Risk_Event__c re, map<String, Agency_Applied_Change_code__c> mapOfchangeCodesCWDByCaseNumber){
+		
+		Boolean checkRiskEventUpdated = false;
+		
+		if(mapCCByAccount.get(re.ANG_AccountId__c) != null){
+			for(Id idValue : mapCCByAccount.keyset()){
+				for(Agency_Applied_Change_code__c cc : mapCCByAccount.get(idValue)){
+					if(cc.OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
+							&& cc.OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH
+							&& cc.CreatedDate < = Date.today().addYears(-2)
+							&& mapOfchangeCodesCWDByCaseNumber.get(cc.OSCAR__r.Name) == null){
+						re.Applicable_for_re_activation__c = true;
+					}else{
+						if(mapOfchangeCodesCWDByCaseNumber.get(cc.OSCAR__r.Name) != null){
+							checkRiskEventUpdated = true;                        
+						}else{
+							checkRiskEventUpdated = false; 
+						}
+					}
+				}
+			}
+		}
+
+		if((mapCCByAccount.get(re.ANG_AccountId__c) == null || checkRiskEventUpdated) && (re.ANG_AccountId__r.Accreditation_date__c < = Date.today().addYears(-2))){
+			re.Applicable_for_re_activation__c = true;
+		}
+		return re;
 	}
 
 	private void updateRHCInformation() {
@@ -850,7 +902,7 @@ public class ANG_AccountTriggerHandler {
 				//INC516962 - When FOP Cash & Acc Model = Cashless - Status Non-Active
 				else if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA && currentAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
 					//Country active in Newgen but withoyut IEP should have Active CA form of payment
-					if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && string.isBlank(aa.Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c) && aa.Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c == AMS_Utils.IEPModel_PrePayment) aa.Status__c = 'Active';
+					if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && aa.Account__r.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c) aa.Status__c = 'Active';
 					else aa.Status__c = 'Non-Active';
  
 				else aa.Status__c = 'Active';

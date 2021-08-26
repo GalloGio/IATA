@@ -7,6 +7,7 @@
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>EasyUpload</customButtons>
+    <customButtons>Review_ITP_Application</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Share</excludeButtons>
@@ -314,7 +315,7 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Log_Phone_case_lightning</actionName>
+            <actionName>Case.Log_Phone_case_lwc</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>

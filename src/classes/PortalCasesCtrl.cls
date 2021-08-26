@@ -736,7 +736,7 @@ public with sharing class PortalCasesCtrl {
 	public static Boolean getHideForClosedCases(String caseId) {
 		set<String> validRecordtypes = new set<String> {
 			'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
-			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review'
+			'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review', 'Airline_Coding_Application'
 		};
 		Case newCase = getCaseById(caseId);
 		boolean isMSO = isMSOcase(newCase);
@@ -843,11 +843,8 @@ public with sharing class PortalCasesCtrl {
 
 		Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
 
-		List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
-												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
-												FROM CaseComment
-												WHERE ParentId = :caseId AND IsDeleted = false
-																						ORDER BY CreatedDate ASC];
+		PortalCasesCtrl.PortalCasesCtrl_WithoutSharing CasesNoSharing = new PortalCasesCtrl.PortalCasesCtrl_WithoutSharing();
+		List<CaseComment> lstCaseCommentsAux = CasesNoSharing.getCaseComments(caseId);
 
 		String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
 
@@ -1226,7 +1223,17 @@ public with sharing class PortalCasesCtrl {
 			return returnWrapper;
 		}
 
+		public List<CaseComment> getCaseComments(String caseId){
+			List<CaseComment> lstCaseComments =	[SELECT Id, ParentId, CommentBody, IsPublished,
+												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+												FROM CaseComment
+												WHERE ParentId = :caseId AND IsDeleted = false
+																						ORDER BY CreatedDate ASC];
+	
+			return lstCaseComments;
+		}
+
 	}
 
-
 }
+

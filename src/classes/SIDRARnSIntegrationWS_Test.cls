@@ -648,4 +648,44 @@ private class SIDRARnSIntegrationWS_Test {
 		SIDRARnSIntegrationWS.GetFSAmounts('Europe');
 		Test.stopTest();
 	}
+
+	@isTest
+	static void CreateSedaCaseWithAccount() {
+
+		IATA_ISO_Country__c country = TestDataFactory_IATAISOCountries.createDefaultIATAISOCountries(1)[0];
+		country.Name = 'France';
+		country.ISO_Code__c = 'FR';
+		insert country;
+
+		Account account = TestDataFactory_Accounts.createAirlineAccounts(1)[0];
+		account.IATA_ISO_Country__c = country.Id;
+		insert account;
+
+		Test.startTest();
+		//SIDRA case with description containing 'Follow up Settlement' is changed through a WF rule to SEDA
+		String resultXML = SIDRARnSIntegrationWS.CreateSidraCase('SIDRA', 'SIN', country.ISO_Code__c + ' 20210404W 297',
+															  'Follow up Settlement',country.Name, 'BSP', account.IATACode__c,
+															  'Group', '2021/02D', '2021-03-15 18:00:00', '2021-03-15 18:00:00', '2021-03-17 18:00:00', 'EUR', '17768.0',
+															  '17768.0', '0.0', '17768.0', '0.0', '', '20210404W 297', '2021-03-16 10:51:00', 'Approved',
+															  'Double Irregularity','Short Payment', '2021-03-15 18:00:00', '123.45', '678.90');
+		Test.stopTest();
+
+		Map<String,String> mapResult = getResultMap(resultXML);
+		System.assertEquals(SIDRARnSIntegrationWS.STATUSOK,mapResult.get('Status'), mapResult.get('ErrorMsg'));
+		System.assert(String.isNotEmpty(mapResult.get('SalesforceCaseNumber')));
+
+		Case cse = [SELECT Id,AccountId FROM Case WHERE CaseNumber = :mapResult.get('SalesforceCaseNumber')];
+		System.assertEquals(account.Id, cse.AccountId);
+	}
+
+	private static Map<String,String> getResultMap(String xml) {
+		system.assertNotEquals(xml, '');
+		DOM.Document doc = new DOM.Document();
+		doc.load(xml);
+		map<String,String> mapResult = new map<String,String>();
+		for (Dom.XMLNode child: doc.getRootElement().getChildElements()) {
+			mapResult.put(child.getName(), child.getText());
+		}
+		return mapResult;
+	}
 }

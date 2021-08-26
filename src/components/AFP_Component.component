@@ -32,11 +32,11 @@
 		  </div>
 		</header>
 
-		<div class="{!IF(wrapper.isChinaAgent, IF(wrapper.authQuantity == 2, 'col-md-6', IF(wrapper.authQuantity == 1, 'col-md-12', 'col-md-4')), 'col-md-4')} col-sm-12 text-center" style="display: {!IF(wrapper.isChinaAgent, IF(wrapper.isCashFlag, 'block', 'none') , 'block')}">     
+		<div class="{!IF(wrapper.isChinaAgent, IF(wrapper.authQuantity == 2, 'col-md-6', IF(wrapper.authQuantity == 1, 'col-md-12', 'col-md-4')), 'col-md-4')} col-sm-12 text-center" style="display: {!IF(wrapper.isChinaAgent, IF(OR(wrapper.isCashFlag, wrapper.isCashlessAgencyUsingCash), 'block', 'none') , 'block')}">     
 		  	<apex:image value="{!URLFOR($Resource.ISSP_RHC_Page_Icons,'img/cash.jpg')}" width="100" height="100"/>
 		  	<strong class="show">{!$Label.ISSP_RHC_HUB_AFP_Cash}</strong>
 		  	<i class="{!IF(wrapper.isCashFlag, 'glyphicon glyphicon-ok', 'glyphicon glyphicon-remove')}" aria-hidden="true" style="color:{!IF(wrapper.isCashFlag,'green','red')}; display: {!IF(wrapper.isChinaAgent, 'none', 'block')}"></i>
-		  	<apex:outputPanel rendered="{! AND(wrapper.isCashless, NOT(wrapper.isSearch))}">
+		  	<apex:outputPanel rendered="{! AND(wrapper.isCashless, NOT(wrapper.isCashlessAgencyUsingCash), NOT(wrapper.isSearch))}">
 				<apex:outputText escape="false" value="{! wrapper.cashlessMessage}"/>
 		  	</apex:outputPanel>      
 		</div>

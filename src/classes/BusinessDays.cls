@@ -177,7 +177,7 @@ public class BusinessDays {
 
 						updatedCase.Time_Escalated__c += timeSinceLastStatus;
 						if (oldCase.RecordTypeId == globalRT) {
-							updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
+							updatedCase.Time_Unassigned__c += unassignedTime;
 						}
 
 
@@ -187,7 +187,7 @@ public class BusinessDays {
 						updatedCase.Time_Escalated_Externally__c += timeSinceLastStatus;
 
 						if (oldCase.RecordTypeId == globalRT) {
-							updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
+							updatedCase.Time_Unassigned__c += unassignedTime;
 						}
 
 
@@ -195,7 +195,7 @@ public class BusinessDays {
 
 						updatedCase.Time_With_Support__c += timeSinceLastStatus;
 						if (oldCase.RecordTypeId == globalRT) {
-							updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
+							updatedCase.Time_Unassigned__c += unassignedTime;
 						}
 					}
 				}

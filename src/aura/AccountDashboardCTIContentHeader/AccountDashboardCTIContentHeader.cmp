@@ -1,0 +1,78 @@
+<aura:component controller="AccountDashboardCTIHeaderCtrl" access="public">
+	<aura:attribute name="accountId" type="Id" />
+	<aura:attribute name="record" type="Account" />
+	<aura:attribute name="UIThemeDescription" type="String" />
+	<aura:attribute name="UIThemeisLEX" type="Boolean" />
+
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+	<lightning:workspaceAPI aura:id="workspaceAccount" />
+	<div class="slds-page-header slds-box">
+		<div class="slds-box slds-box_x-small slds-align_absolute-center slds-clearfix">
+			<div class="slds-float_left">
+				<div class="slds-grid slds-clearfix">
+					<div class="slds-col"><h1 class="slds-text-heading_medium">{!v.record.Name}</h1></div>
+					<div class="slds-col"><lightning:button label="{!$Label.c.AccountCTI_Account_ATeam}" title="{!$Label.c.AccountCTI_Account_ATeam}" onclick="{!c.viewAccountTeam}" /></div>
+					<div class="slds-col">
+						<lightning:button label="{!$Label.c.AccountCTI_Account_ADetails}" title="{!$Label.c.AccountCTI_Account_ADetails}" onclick="{!c.viewAccountDetails}" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_Sector}</p>
+				<ui:outputText value="{!v.record.Sector__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_Category}</p>
+				<ui:outputText value="{!v.record.Category__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_IATACode}</p>
+				<ui:outputText value="{!v.record.IATACode__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_Status}</p>
+				<ui:outputText value="{!v.record.Status__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_Agency}</p>
+				<ui:outputText value="{!v.record.Location_Type__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_Ecomm}</p>
+				<ui:outputText value="{!v.record.Customer_Type__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_ServiceModel}</p>
+				<ui:outputText value="{!v.record.Service_Model__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_Segmentation}</p>
+				<ui:outputText value="{!v.record.Segmentation__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">{!$Label.c.AccountCTI_Account_Overall}</p>
+			</div>
+		</div>
+	</div>
+	<div aura:id="header-spinner" class="slds-hide">
+		<lightning:spinner class="slds-is-fixed" alternativeText="Loading" size="large" />
+	</div>
+</aura:component>

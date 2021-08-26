@@ -724,6 +724,11 @@
             <operation>equals</operation>
             <value>Standards Setting Workspace</value>
         </filters>
+        <filters>
+            <field>CREATEDBY_USER</field>
+            <operation>contains</operation>
+            <value>guerreiro</value>
+        </filters>
         <label>. mgo - kavy today</label>
         <language>en_US</language>
         <sharedTo>
@@ -775,4 +780,36 @@
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Retry_Call</fullName>
+        <availability>online</availability>
+        <description>Makes a new call using the same parameters as in the current log</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Retry Call</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/48.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/48.0/apex.js&quot;)}
+
+try{
+	if({!ISSP_Web_Service_Log__c.Success__c }) {
+		alert(&quot;A success cannot be resent&quot;);
+	} else if(!confirm(&quot;Do you want to send this call again?&quot;)) {
+
+	} else if (&quot;{!ISSP_Web_Service_Log__c.System__c}&quot; === &quot;SIS&quot;) {
+		let result = sforce.apex.execute(&quot;ISSP_WS_SIS_Callout_Common&quot;, &quot;retryCall&quot;, {logId: &quot;{!ISSP_Web_Service_Log__c.Id}&quot;});
+		if (result &amp;&amp; result.length==1) {
+			alert(&quot;Call finalized, redirecting to the new log.&quot;);
+			window.location.href = &quot;/&quot;+result[0];
+		}
+
+	} else {
+		alert(&quot;This service ({!ISSP_Web_Service_Log__c.Web_Service__c}) is not available to resend&quot;);
+	}
+
+} catch(e){
+	alert(&quot;An Error has Occurred. Error: &quot; + e);
+}</url>
+    </webLinks>
 </CustomObject>

@@ -6,7 +6,7 @@
         <type>owner</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>garciam@iata.org</submitter>
+        <submitter>mcewend.iata.org@partner.iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
@@ -23,6 +23,10 @@
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>rodriguezja@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>wana@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>

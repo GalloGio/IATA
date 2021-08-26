@@ -1045,66 +1045,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>202001</fullName>
-                    <default>false</default>
-                    <label>202001</label>
-                </value>
-                <value>
-                    <fullName>202002</fullName>
-                    <default>false</default>
-                    <label>202002</label>
-                </value>
-                <value>
-                    <fullName>202003</fullName>
-                    <default>false</default>
-                    <label>202003</label>
-                </value>
-                <value>
-                    <fullName>202004</fullName>
-                    <default>false</default>
-                    <label>202004</label>
-                </value>
-                <value>
-                    <fullName>202005</fullName>
-                    <default>false</default>
-                    <label>202005</label>
-                </value>
-                <value>
-                    <fullName>202006</fullName>
-                    <default>false</default>
-                    <label>202006</label>
-                </value>
-                <value>
-                    <fullName>202007</fullName>
-                    <default>false</default>
-                    <label>202007</label>
-                </value>
-                <value>
-                    <fullName>202008</fullName>
-                    <default>false</default>
-                    <label>202008</label>
-                </value>
-                <value>
-                    <fullName>202009</fullName>
-                    <default>false</default>
-                    <label>202009</label>
-                </value>
-                <value>
-                    <fullName>202010</fullName>
-                    <default>false</default>
-                    <label>202010</label>
-                </value>
-                <value>
-                    <fullName>202011</fullName>
-                    <default>false</default>
-                    <label>202011</label>
-                </value>
-                <value>
-                    <fullName>202012</fullName>
-                    <default>false</default>
-                    <label>202012</label>
-                </value>
-                <value>
                     <fullName>202101</fullName>
                     <default>false</default>
                     <label>202101</label>
@@ -1164,6 +1104,66 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <default>false</default>
                     <label>202112</label>
                 </value>
+                <value>
+                    <fullName>202201</fullName>
+                    <default>false</default>
+                    <label>202201</label>
+                </value>
+                <value>
+                    <fullName>202202</fullName>
+                    <default>false</default>
+                    <label>202202</label>
+                </value>
+                <value>
+                    <fullName>202203</fullName>
+                    <default>false</default>
+                    <label>202203</label>
+                </value>
+                <value>
+                    <fullName>202204</fullName>
+                    <default>false</default>
+                    <label>202204</label>
+                </value>
+                <value>
+                    <fullName>202205</fullName>
+                    <default>false</default>
+                    <label>202205</label>
+                </value>
+                <value>
+                    <fullName>202206</fullName>
+                    <default>false</default>
+                    <label>202206</label>
+                </value>
+                <value>
+                    <fullName>202207</fullName>
+                    <default>false</default>
+                    <label>202207</label>
+                </value>
+                <value>
+                    <fullName>202208</fullName>
+                    <default>false</default>
+                    <label>202208</label>
+                </value>
+                <value>
+                    <fullName>202209</fullName>
+                    <default>false</default>
+                    <label>202209</label>
+                </value>
+                <value>
+                    <fullName>202210</fullName>
+                    <default>false</default>
+                    <label>202210</label>
+                </value>
+                <value>
+                    <fullName>202211</fullName>
+                    <default>false</default>
+                    <label>202211</label>
+                </value>
+                <value>
+                    <fullName>202212</fullName>
+                    <default>false</default>
+                    <label>202212</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -1209,6 +1209,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <fullName>AIRSBL_PAIR</fullName>
                     <default>false</default>
                     <label>AIRSBL_PAIR</label>
+                </value>
+                <value>
+                    <fullName>SFTP_CASS - 801290</fullName>
+                    <default>false</default>
+                    <label>AISFTP_CASS - 801290</label>
                 </value>
                 <value>
                     <fullName>AISTLM_FILE</fullName>
@@ -1536,11 +1541,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>PDP / PTA Assignment Fee - 701924</label>
                 </value>
                 <value>
-                    <fullName>SFTP_CASS - 801290</fullName>
-                    <default>false</default>
-                    <label>SFTP_CASS - 801290</label>
-                </value>
-                <value>
                     <fullName>TAXRPT_CASS – 753034</fullName>
                     <default>false</default>
                     <label>TAXRPT_CASS – 753034</label>
@@ -1652,6 +1652,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>SFTP_CASS - 801290</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>CASFEE_DGRR1</valueName>
             </valueSettings>
             <valueSettings>
@@ -1702,10 +1706,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValue>CASS</controllingFieldValue>
                 <controllingFieldValue>CNS</controllingFieldValue>
                 <valueName>CNSFEE_JOIN</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>SFTP_CASS - 801290</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
@@ -2164,6 +2164,21 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                     <default>false</default>
                     <label>1.00</label>
                 </value>
+                <value>
+                    <fullName>350.00</fullName>
+                    <default>false</default>
+                    <label>350.00</label>
+                </value>
+                <value>
+                    <fullName>525.00</fullName>
+                    <default>false</default>
+                    <label>525.00</label>
+                </value>
+                <value>
+                    <fullName>375.00</fullName>
+                    <default>false</default>
+                    <label>375.00</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>TEST_FILE</controllingFieldValue>
@@ -2175,7 +2190,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>BSPFEE_ADMIN</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_RPACT</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_TRAIN</controllingFieldValue>
-                <controllingFieldValue>BSPLNK_MSG</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_LEGAL</controllingFieldValue>
                 <controllingFieldValue>VATTAX_CHARG</controllingFieldValue>
                 <controllingFieldValue>AIRSBL_CAIR</controllingFieldValue>
@@ -2293,6 +2307,14 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <valueName>4200.00</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>BSPLNK_MSG</controllingFieldValue>
+                <valueName>350.00</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>BSPLNK_MSG</controllingFieldValue>
+                <valueName>525.00</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>BSPFEE_JOIN</controllingFieldValue>
                 <valueName>5000.00</valueName>
             </valueSettings>
@@ -2355,6 +2377,10 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_ADHOC</controllingFieldValue>
                 <valueName>48.60</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AI_ADHOC - 800990</controllingFieldValue>
+                <valueName>375.00</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>BSPFEE_PALMF - 800351</controllingFieldValue>

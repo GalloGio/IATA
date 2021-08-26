@@ -213,6 +213,18 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ANG_Country_Coverage_2__c</fullName>
+        <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
+        <externalId>false</externalId>
+        <label>Country Coverage 2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ANG_Country_Coverage__c</fullName>
         <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
         <externalId>false</externalId>
@@ -228,19 +240,31 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <fullName>ANG_Flag_Country_Coverage__c</fullName>
         <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL(Country_Visibility_Control__c, &quot;SHOW_ALL&quot;), TRUE,
-OR (
-AND(
-IF(
-     ISPICKVAL(Country_Visibility_Control__c, &quot;HIDE&quot;),
-        NOT(CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)),
-     CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)
-     ),
-TRIM(ANG_Country_Coverage__c) != &quot;&quot;
-),
-TRIM(ANG_Country_Coverage__c) = &quot;&quot;
-)
-)</formula>
+        <formula>IF(
+            ISPICKVAL(Country_Visibility_Control__c, &quot;SHOW_ALL&quot;), 
+            TRUE,
+            OR (
+            AND(
+            IF(
+            ISPICKVAL(Country_Visibility_Control__c, &quot;HIDE&quot;),
+            AND(
+            NOT(CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c)),
+            NOT(CONTAINS(ANG_Country_Coverage_2__c, $User.ANG_Customer_Country_ISO__c))
+            ),
+            OR(
+            CONTAINS(ANG_Country_Coverage__c, $User.ANG_Customer_Country_ISO__c),
+            CONTAINS(ANG_Country_Coverage_2__c, $User.ANG_Customer_Country_ISO__c)
+            )
+            ),
+            OR(
+            TRIM(ANG_Country_Coverage__c) != &quot;&quot;,
+            TRIM(ANG_Country_Coverage_2__c) != &quot;&quot;
+            )
+            ),
+            TRIM(ANG_Country_Coverage__c) = &quot;&quot;,
+            TRIM(ANG_Country_Coverage_2__c) = &quot;&quot;
+            )
+            )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Country Coverage</label>
         <trackHistory>false</trackHistory>
@@ -364,6 +388,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <fullName>Cashless</fullName>
                     <default>false</default>
                     <label>Cashless</label>
+                </value>
+                <value>
+                    <fullName>Multicountry</fullName>
+                    <default>false</default>
+                    <label>Multicountry</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1497,6 +1526,10 @@ IF(OR(
                 <fullName>Cashless</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ANG_Restrict_by_Agency_Category__c</picklist>
@@ -1812,6 +1845,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>Lab Registry</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Local Industry Groups</fullName>
                 <default>false</default>
             </values>
@@ -1829,6 +1866,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>MedAire</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OAG</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1881,6 +1922,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>

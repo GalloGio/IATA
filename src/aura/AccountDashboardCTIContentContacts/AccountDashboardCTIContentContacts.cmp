@@ -1,0 +1,149 @@
+<aura:component controller="AccountDashboardCTIContactsCtrl" access="public">
+	<aura:attribute name="accountId" type="Id" />
+	<aura:attribute name="contactId" type="Id" />
+	<aura:attribute name="contactIdSelected" type="Id" />
+	<aura:attribute name="data" type="List" />
+	<aura:attribute name="filteredData" type="List" />
+	<aura:attribute name="columns" type="List" />
+	<aura:attribute name="sortField" type="String" default="Name" />
+	<aura:attribute name="ascOrder" type="Boolean" default="true" />
+	<aura:attribute name="portalServicesForContact" type="List" />
+	<aura:attribute name="columnsPortalServices" type="List" />
+	<aura:attribute name="UIThemeDescription" type="String" />
+	<aura:attribute name="UIThemeisLEX" type="Boolean" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+	<lightning:workspaceAPI aura:id="workspaceContact" />
+	<div class="slds-p-around_medium">
+		<div class="slds-box slds-p-around_none slds-theme_shade">
+			<lightning:card class="bckColor" title="Contacts" iconName="standard:contact">
+				<aura:set attribute="actions">
+					<div class="slds-grid slds-gutters_direct slds-grid_vertical-align-end">
+						<div class="slds-col">
+							<div class="slds-grid">
+								<div class="slds-col">
+									<lightning:button
+										class="slds-col"
+										label="{!$Label.c.AccountCTI_Contact_AllContacts}"
+										title="{!$Label.c.AccountCTI_Contact_AllContacts}"
+										onclick="{!c.gotoAllContacts}"
+									/>
+									<lightning:button
+										class="slds-col"
+										label="{!$Label.c.AccountCTI_Contact_CreateCase}"
+										title="{!$Label.c.AccountCTI_Contact_CreateCase}"
+										onclick="{!c.createNewCase}"
+									/>
+								</div>
+								<div class="slds-col">
+									<lightning:helptext class="slds-p-left_x-small" content="{!$Label.c.AccountCTI_Contact_ChooseContact}" iconName="utility:info" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</aura:set>
+
+				<div class="slds-p-around_none slds-m-around_medium">
+					<table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+						<thead>
+							<tr>
+								<aura:iteration items="{!v.columns}" var="item">
+									<th scope="col">
+										<div class="sortColumn" title="{!item.title}" onclick="{!c.sortContacts}" data-sortable="{!item.sortable}" data-fieldname="{!item.fieldname}">
+											<lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="{!item.title}" />
+											<aura:if isTrue="{!and(v.sortField == item.title, item.sortable)}">
+												<aura:if isTrue="{!v.ascOrder}">
+													<lightning:icon iconName="utility:arrowup" size="x-small" class="slds-p-left_small" />
+													<aura:set attribute="else">
+														<lightning:icon iconName="utility:arrowdown" size="x-small" class="slds-p-left_small" />
+													</aura:set>
+												</aura:if>
+											</aura:if>
+										</div>
+									</th>
+								</aura:iteration>
+							</tr>
+						</thead>
+						<tbody>
+							<aura:iteration items="{!v.filteredData}" var="item">
+								<tr class="slds-hint-parent">
+									<th data-label="" scope="row" class="slds-cell-wrap">
+										<ui:inputRadio
+											aura:id="{!item.contactId}"
+											text="{!item.contactId}"
+											name="contactRadioGroup"
+											label=""
+											change="{!c.showContactPortalServices}"
+											value="{!item.selected}"
+										/>
+									</th>
+									<th data-label="Name" scope="row" class="slds-cell-wrap">
+										<div onclick="{!c.openContact}" data-value="{!item.contactId}" style="cursor: pointer; color: rgb(1, 118, 211)">
+											<lightning:formattedText value="{!item.contactName}" />
+										</div>
+									</th>
+									<th data-label="Type" scope="row" class="slds-cell-wrap">
+										<lightning:formattedRichText value="{!item.contactType}" />
+									</th>
+									<th data-label="Status" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.status}" />
+									</th>
+									<th data-label="Title" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.title}" />
+									</th>
+									<th data-label="Email" scope="row" class="slds-cell-wrap">
+										<lightning:formattedEmail value="{!item.email}" />
+									</th>
+									<th data-label="Phone" scope="row" class="slds-cell-wrap">
+										<lightning:formattedPhone value="{!item.phone}" />
+									</th>
+									<th data-label="Last Activity Date" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.lastActivityDate}" />
+									</th>
+								</tr>
+							</aura:iteration>
+						</tbody>
+					</table>
+				</div>
+			</lightning:card>
+		</div>
+	</div>
+	<div aura:id="portalServicesArea">
+		<div class="slds-p-around_medium">
+			<div class="slds-box slds-p-around_none slds-theme_shade">
+				<lightning:card class="bckColor" title="{!$Label.c.AccountCTI_Contact_PortalServices}" iconName="standard:contact">
+					<div class="slds-p-around_none slds-m-around_medium">
+						<table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+							<thead>
+								<tr>
+									<aura:iteration items="{!v.columnsPortalServices}" var="item">
+										<th scope="col">
+											<div class="sortColumn" title="{!item.title}" data-sortable="{!item.sortable}" data-fieldname="{!item.fieldname}">
+												<lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="{!item.title}" />
+											</div>
+										</th>
+									</aura:iteration>
+								</tr>
+							</thead>
+							<tbody>
+								<aura:iteration items="{!v.portalServicesForContact}" var="item">
+									<tr class="slds-hint-parent">
+										<th data-label="Portal Service" scope="row" class="slds-cell-wrap">
+											<lightning:formattedRichText value="{!item.Application_Name__c}" />
+										</th>
+										<th data-label="Access Status" scope="row" class="slds-cell-wrap">
+											<lightning:formattedText value="{!item.Right__c}" />
+										</th>
+									</tr>
+								</aura:iteration>
+							</tbody>
+						</table>
+					</div>
+				</lightning:card>
+			</div>
+		</div>
+	</div>
+	<div aura:id="contacts-spinner" class="slds-hide">
+		<lightning:spinner class="slds-is-fixed" alternativeText="Loading" size="large" />
+	</div>
+</aura:component>

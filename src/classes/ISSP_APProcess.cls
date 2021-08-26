@@ -3136,7 +3136,7 @@ global without sharing class ISSP_APProcess {
 		Returns true if the account meets the conditions to show Upload Bank Mandate section
 	**/
 	public Boolean getShowUploadBankMandate() {
-		return getShowBankMandateSection() && ICCSProductCountry!=null && newForm.Type_of_Settlement__c == 'Local Bank';
+		return getShowBankMandateSection() && newForm.Type_of_Settlement__c == 'Local Bank';
 	}
 
 	/**

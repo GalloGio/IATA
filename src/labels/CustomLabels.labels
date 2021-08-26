@@ -1033,6 +1033,13 @@
         <value>Confirm full hierarchy conversion to GoStandard</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP52</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP52</shortDescription>
+        <value>Re-activate Risk Event</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -1326,7 +1333,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ChangeContactHierarchyError</shortDescription>
-        <value>Please deny this contact&apos;s access to the IATA EasyPay Portal Service before moving it to another Agency hierarchy.</value>
+        <value>This contact has access to a Portal Service for which Contact relocation under a different Account is restricted. This operation cannot be saved.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</fullName>
@@ -2661,6 +2668,134 @@ ASD is an innovative, internet-based system, which facilitates these interaction
         <value>Account:</value>
     </labels>
     <labels>
+        <fullName>AccountCTI_Account_ADetails</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ADetails</shortDescription>
+        <value>Account Details</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_ATeam</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ATeam</shortDescription>
+        <value>Account Team</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Agency</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Agency</shortDescription>
+        <value>Agency Loc. Type</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Category</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Ecomm</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Ecomm</shortDescription>
+        <value>Ecomm C. type</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_IATACode</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - IATACode</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Overall</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Overall</shortDescription>
+        <value>Overall sat. (YTD)</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Sector</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Sector</shortDescription>
+        <value>Sector</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Segmentation</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Segmentation</shortDescription>
+        <value>Segmentation</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_ServiceModel</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ServiceModel</shortDescription>
+        <value>Service Model</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Status</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Cases_Interactions</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Cases - Interactions</shortDescription>
+        <value>Contact/Customer Interactions</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_AllContacts</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - AllContacts</shortDescription>
+        <value>All Contacts</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_ChooseContact</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - Choose Contact</shortDescription>
+        <value>Choose the correct Contact before to create the Case</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_CreateCase</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - Create Case</shortDescription>
+        <value>Create Case</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_PortalServices</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI_Contact PortalServices</shortDescription>
+        <value>Portal Services</value>
+    </labels>
+    <labels>
         <fullName>AccountContextActivationEmailBody</fullName>
         <categories>Account Context Activation</categories>
         <language>en_US</language>
@@ -3642,6 +3777,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Add All</value>
     </labels>
     <labels>
+        <fullName>CSP_Add_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Add Contact</shortDescription>
+        <value>Add Contact</value>
+    </labels>
+    <labels>
         <fullName>CSP_Add_New_Documents</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -3843,6 +3986,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_MyProfile_Title</shortDescription>
         <value>User Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Business_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Business Email</shortDescription>
+        <value>Business Email (in case you have one)</value>
     </labels>
     <labels>
         <fullName>CSP_Buy_Online</fullName>
@@ -4156,12 +4307,36 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be found under your</value>
     </labels>
     <labels>
+        <fullName>CSP_Contact_Added</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Added</shortDescription>
+        <value>Contact Added</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Deleted</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Deleted</shortDescription>
+        <value>Contact deleted</value>
+    </labels>
+    <labels>
         <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Contact Id Card Error Msg</shortDescription>
         <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Contact_Updated</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Updated</shortDescription>
+        <value>Contact Updated</value>
     </labels>
     <labels>
         <fullName>CSP_Contact_Us_Banner_Msg</fullName>
@@ -4313,6 +4488,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Write a brief summary of feedback</value>
     </labels>
     <labels>
+        <fullName>CSP_Details</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Details</shortDescription>
+        <value>Details</value>
+    </labels>
+    <labels>
         <fullName>CSP_DocumentBookmarkAdded</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4397,6 +4580,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_EditTrainingDetails</shortDescription>
         <value>Edit Training Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Edit_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Edit Contact</shortDescription>
+        <value>Edit Contact</value>
     </labels>
     <labels>
         <fullName>CSP_Email</fullName>
@@ -4763,6 +4954,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Suspicion of fraudulent activity</value>
     </labels>
     <labels>
+        <fullName>CSP_Emergency_Selected_Reason5</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Rebooking of your IATA Training exam (Distance Learning)</value>
+    </labels>
+    <labels>
         <fullName>CSP_Emergency_Tooltip</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4951,6 +5150,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Filtered</shortDescription>
         <value>Filtered</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Find_Document</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Find Document</shortDescription>
+        <value>Find Document</value>
     </labels>
     <labels>
         <fullName>CSP_First_Login_Desc</fullName>
@@ -6675,6 +6882,379 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_L_WorkPhone_LMS</shortDescription>
         <value>Personal Phone</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_AdditionalCertInPlace</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_AdditionalCertInPlace</shortDescription>
+        <value>Do you have any additional certifications in place?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_CompleteDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_CompleteDetails</shortDescription>
+        <value>Complete your laboratory details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_ConfirmationMessage</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_ConfirmationMessage</shortDescription>
+        <value>You are only one step away from updating your profile. Please check the information provided and click submit if everything is correct.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_CountryLabs</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_CountryLabs</shortDescription>
+        <value>Country Labs</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Describe_SLA_Nature</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Describe_SLA_Nature</shortDescription>
+        <value>Describe the nature of your SLA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_DownloadTemplate</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_DownloadTemplate</shortDescription>
+        <value>Download template</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Download_CSV</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Download_CSV</shortDescription>
+        <value>Download the template file and complete&lt;br/&gt; the information required</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Download_Instructions</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Download_Instructions</shortDescription>
+        <value>Download Instructions</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_FormNotCompleted</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_FormNotCompleted</shortDescription>
+        <value>The form is not fully compiled. All answers will be lost.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_HowManyLabs</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_HowManyLabs</shortDescription>
+        <value>List the region/countries you are operating in/ your partner is operating in for COVID 19 testing. Indicate how many labs/partners you have per location indicated.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_How_Long_In_Business</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_How_Long_In_Business</shortDescription>
+        <value>How long have you been in the business?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_InitialQuestion</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_InitialQuestion</shortDescription>
+        <value>Please indicate your business model within the following categories:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_InitialQuestionDescription</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_InitialQuestionDescription</shortDescription>
+        <value>&amp;lt;b&amp;gt;Independent Labs&amp;lt;/b&amp;gt;: Labs that are not part of a lab network such as Clinics, medical centers and hospitals. Often have their collections sites as part of the infrastructure.&amp;lt;br/&amp;gt;
+&amp;lt;b&amp;gt;Lab Network&amp;lt;/b&amp;gt;: under a common brand, a Lab network share common practices, process and mostly same IT infrastructure under a Head office coordination.&amp;lt;br/&amp;gt;
+&amp;lt;b&amp;gt;Lab Aggregator&amp;lt;/b&amp;gt;: A lab aggregator often partners with Lab Networks and independent labs to maximize reach and geographical coverage of collection sites.&amp;lt;br/&amp;gt;
+&amp;lt;b&amp;gt;Lab IT Integrator&amp;lt;/b&amp;gt;: Mainly aggregates Laboratories / collection sites by providing a common IT platform (often for booking or for the Laboratory Information System).</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_National_Govern_Platform</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_National_Govern_Platform</shortDescription>
+        <value>Are your labs part of any national platform/endorsed by a government?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_NumberOfLocations</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_NumberOfLocations</shortDescription>
+        <value>Number of Locations</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Operating_Brand</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Operating_Brand</shortDescription>
+        <value>Are you operating under your own brand or another brand name?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_OwnFacilities</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_OwnFacilities</shortDescription>
+        <value>Are they your own facilities or partner labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SLA_InPlace</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SLA_InPlace</shortDescription>
+        <value>Do you have SLAs in place with your partner labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Intro</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Intro</shortDescription>
+        <value>By requesting access to the IATA Lab Network service, you will be asked to go through the below steps before your request can be submitted.
+These steps are approximated to take 5-10 minutes to complete.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step1</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step1</shortDescription>
+        <value>You will be requested to indicate your business model from a preset list. Based on your selection, you will be asked a series of questions. This will allow us to better review and support you once you submit your answers. These questions will cover the nature of your business, your relationship with certain platforms, booking capabilities, certifications, etc.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step2</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step2</shortDescription>
+        <value>This section will prompt you to indicate the locations in you which you are operating.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step3</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step3</shortDescription>
+        <value>You will be asked if you have any existing airline partners. If you have indicated that you have airline partners, then you will be able to select which airlines you are in partnership with.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step4</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step4</shortDescription>
+        <value>This final step will allow you to review the answers you have provided, and submit. 
+By submitting, you will receive a case number and our engagement team will be in contact with you to finalize your registration.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Start</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Start</shortDescription>
+        <value>Start</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Step</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Step</shortDescription>
+        <value>Step</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Step2Intro</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Step2Intro</shortDescription>
+        <value>Please indicate the locations in you which you are operating.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Step_Locations</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Step_Locations</shortDescription>
+        <value>Locations</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_ThankYouForRequestingService</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_ThankYouForRequestingService</shortDescription>
+        <value>Thank you for subscribing to this new service, your request is being processed.&lt;br/&gt;We will come back to you shortly concerning the next steps following a review of your information</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_TypeOfLab</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_TypeOfLab</shortDescription>
+        <value>Please indicate the nature of the lab you are operating</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadCSVBtn</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadCSVBtn</shortDescription>
+        <value>Upload the CSV</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadCompleted</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadCompleted</shortDescription>
+        <value>Thank you for uploading your labs. Our team will contact you to confirm once your labs are added to the IATA Lab Network.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadDetails</shortDescription>
+        <value>Upload your Laboratory details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadFileHelpText</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadFileHelpText</shortDescription>
+        <value>We only accept CSV format. Please make sure to export your completed file to CSV by clicking the provided button in the template</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadFilledCSV</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadFilledCSV</shortDescription>
+        <value>Upload the completed template with&lt;br/&gt;the information completed</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadHere</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadHere</shortDescription>
+        <value>You can upload the filled CSV template here.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_WhichAirlines</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_WhichAirlines</shortDescription>
+        <value>Which Airlines?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Which_One</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Which_One</shortDescription>
+        <value>Which one?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_airlinePartnershipSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_airlinePartnershipSelection</shortDescription>
+        <value>Do you have existing partnership(s) with airlines?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_confirmDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_confirmDetails</shortDescription>
+        <value>Please check your details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_issueTestResultsSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_issueTestResultsSelection</shortDescription>
+        <value>Do you issue test results for all locations indicated?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_labsPartOfNationalPlatform</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_labsPartOfNationalPlatform</shortDescription>
+        <value>Is there a National Platform in place that you need to communicate tests results to?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_manageBookingSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_manageBookingSelection</shortDescription>
+        <value>Do you manage test appointment booking for all the locations indicated?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_nationalAccreditationSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_nationalAccreditationSelection</shortDescription>
+        <value>Do you have a National accreditation for all the labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabRegistry</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry</shortDescription>
+        <value>IATA Lab Network</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabRegistry_LabDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry_LabDetails</shortDescription>
+        <value>Laboratory Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabRegistry_service_desc</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry_service_desc</shortDescription>
+        <value>By joining the IATA Lab Network, your lab can issue digital test results to passengers and be accessible through the IATA Travel Pass App as well as other third party partners.</value>
     </labels>
     <labels>
         <fullName>CSP_LastUpdate</fullName>
@@ -8457,6 +9037,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Type of case</value>
     </labels>
     <labels>
+        <fullName>CSP_Undo</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Undo</shortDescription>
+        <value>Undo</value>
+    </labels>
+    <labels>
         <fullName>CSP_Unexcepted_Error</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8739,11 +9327,75 @@ IATA Customer Portal</value>
         <value>Working Areas</value>
     </labels>
     <labels>
+        <fullName>CSP_labReg_Step_Airline_Agreements</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_labReg_Step_Airline_Agreements</shortDescription>
+        <value>Airline Agreements</value>
+    </labels>
+    <labels>
+        <fullName>CSP_labReg_Step_GeneralInformation</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_labReg_Step_GeneralInformation</shortDescription>
+        <value>General Information</value>
+    </labels>
+    <labels>
         <fullName>CSP_selectReason</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_selectReason</shortDescription>
         <value>Select Reason</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Addittional_Recipients_Body</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Addittional Recipients Body</shortDescription>
+        <value>added you as a participant to case</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Addittional_Recipients_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Addittional Recipients Subject</shortDescription>
+        <value>IATA Customer Portal - You were added to case</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Addittional_Recipients_URL_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS_Portal_Addittional_Recipients_URL_Description</shortDescription>
+        <value>to go to the portal to view the full details and engage in the communication.</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Countries_PickList_Value</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Countries PickList Value</shortDescription>
+        <value>View per Market(s)</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Download_csv</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Download csv</shortDescription>
+        <value>Extract details for all locations to CSV file</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Popup_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Popup Title</shortDescription>
+        <value>Confirm details for Multiple Locations</value>
     </labels>
     <labels>
         <fullName>Campaign_already_created</fullName>
@@ -8838,21 +9490,21 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX,IATA Pay</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, New BSPlink, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX,IATA Pay, Transparency in Payments (TIP)</value>
     </labels>
     <labels>
-        <fullName>CaseValidation_Area2</fullName>
+        <fullName>CaseValidation_Area_in_Case_Global</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange, MRO SmartHub, IATA Travel Pass</value>
+        <shortDescription>CaseValidation - Area in Case Global</shortDescription>
+        <value>Airline and Location Coding,AirportIS,Airsat,BIETA,CargoIS,CheckACode,Digital ID Card (Mobile App),Direct Data Solutions (DDS),Distance Learning,E&amp;F Operations,eBroadcast,FDC,FFP,GAP,Global Agency Directory,Global System Solution,IASC,IATA AgentExperience,IATAN,ICCS,ICH,ID Card,iiNet,IMX,Instructor-led Training (groups),Instructor-led Training (individual),MarketIS,MITA,NDClink,PaxIS,SIS,TACT,TIMATIC,Travel Agency Data Products,Treasury Dashboard,Weblink,IDX - Incident Data Exchange,YMQ Publications,MRO SmartHub,IATA Travel Pass,TIDS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - InDepthArea</shortDescription>
-        <value>Invoicing,Remittance &amp; Settlement</value>
+        <value>Remittance &amp; Settlement</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Reason</fullName>
@@ -8866,7 +9518,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - RecordType</shortDescription>
-        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global</value>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope</value>
     </labels>
     <labels>
         <fullName>Case_Area_ICH</fullName>
@@ -11459,6 +12111,13 @@ You can use this Portal service to obtain more information on GDI or request a q
         <value>Country</value>
     </labels>
     <labels>
+        <fullName>General_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>General Error Message</shortDescription>
+        <value>An error has occured, please contact your administrator</value>
+    </labels>
+    <labels>
         <fullName>Generate_Quote</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -11689,6 +12348,486 @@ Spain</value>
         <value>IATA offers over 400 titles consisting of standards, manuals and guidelines that cover a variety of aviation topics, from Safety, Passenger, Cargo, to Security and more directly through the IATA Store.
 
 Browse through our extensive catalogue or purchase any of the IATA publications, data &amp; statistics or even IATA Branded Merchandise.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Action_Reverted</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Action Reverted</shortDescription>
+        <value>Action reverted</value>
+    </labels>
+    <labels>
+        <fullName>IA_Activation_Date</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Activation Date</shortDescription>
+        <value>Activation Date</value>
+    </labels>
+    <labels>
+        <fullName>IA_Add_Contact_Disclaimer</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Add Contact Disclaimer</shortDescription>
+        <value>Only MITA Contact Type can be changed here, to make changed to other contact information like Name, Email or Phone Number, please contact your IATA Portal Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement</shortDescription>
+        <value>Agreement</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Accepted</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Accepted</shortDescription>
+        <value>Agreement Accepted</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Details</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Details</shortDescription>
+        <value>Agreement Details</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_History</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement History</shortDescription>
+        <value>Agreement History</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Name</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Name</shortDescription>
+        <value>Agreement Name</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Rejected</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Rejected</shortDescription>
+        <value>Agreement Rejected</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Requested</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Requested</shortDescription>
+        <value>Agreement Requested</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Requests</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Requests</shortDescription>
+        <value>Agreement Requests</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Status</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Status</shortDescription>
+        <value>Agreement Status</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Type</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Type</shortDescription>
+        <value>Agreement Type</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreement_Withdrawn</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreement Withdrawn</shortDescription>
+        <value>Agreement Withdrawn</value>
+    </labels>
+    <labels>
+        <fullName>IA_Agreements</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Agreements</shortDescription>
+        <value>Agreements</value>
+    </labels>
+    <labels>
+        <fullName>IA_Airline_Contact</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Airline Contact</shortDescription>
+        <value>Airline Contact</value>
+    </labels>
+    <labels>
+        <fullName>IA_Airline_Contacts</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Airline Contacts</shortDescription>
+        <value>Airline Contacts</value>
+    </labels>
+    <labels>
+        <fullName>IA_All_agreements</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA All agreements</shortDescription>
+        <value>All agreements</value>
+    </labels>
+    <labels>
+        <fullName>IA_Approver_Airline</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Approver Airline</shortDescription>
+        <value>Approver Airline</value>
+    </labels>
+    <labels>
+        <fullName>IA_Approving_Problem</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Approving Problem</shortDescription>
+        <value>There was a problem when approving the agreement</value>
+    </labels>
+    <labels>
+        <fullName>IA_Choose_agreement_name</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Choose agreement name</shortDescription>
+        <value>Choose agreement name</value>
+    </labels>
+    <labels>
+        <fullName>IA_Choose_agreement_type</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Choose agreement type</shortDescription>
+        <value>Choose agreement type</value>
+    </labels>
+    <labels>
+        <fullName>IA_Choose_status</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Choose status</shortDescription>
+        <value>Choose status</value>
+    </labels>
+    <labels>
+        <fullName>IA_Contact_Save_Problem</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Contact Save Problem</shortDescription>
+        <value>There was a problem saving the contact</value>
+    </labels>
+    <labels>
+        <fullName>IA_Delete_Message1</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Delete Message1</shortDescription>
+        <value>By clicking on remove, all MITA Contact types will be cleared from this contact and the contact will be removed from the “Active MITA Contact list.”</value>
+    </labels>
+    <labels>
+        <fullName>IA_Delete_Message2</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Delete Message2</shortDescription>
+        <value>Removing the contact here will not delete the contact from the airline account in Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Interline_Airline_Generic_Contact</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Interline Airline Generic Contact</shortDescription>
+        <value>Formerly CGO / PAX Correspondence</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Interline_Cargo_Agreement_Manager</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Interline Cargo Agreement Manager</shortDescription>
+        <value>Formerly CGO Billing</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Interline_Passenger_Agreement_Manager</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Interline Passenger Agreement Manager</shortDescription>
+        <value>Formerly PAX Billing</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Passenger_Protection_Manager</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Passenger Protection Manager</shortDescription>
+        <value>New created contact to address issues on operational side</value>
+    </labels>
+    <labels>
+        <fullName>IA_Expiry_Date</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Expiry Date</shortDescription>
+        <value>Expiry Date</value>
+    </labels>
+    <labels>
+        <fullName>IA_Find_Airline_or_Agreement</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Find Airline or Agreement</shortDescription>
+        <value>Find Airline or Agreement</value>
+    </labels>
+    <labels>
+        <fullName>IA_Interline_Agreement_Contacts</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Interline Agreement Contacts</shortDescription>
+        <value>Interline Agreement Contacts</value>
+    </labels>
+    <labels>
+        <fullName>IA_Interline_Agreements</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Interline Agreements</shortDescription>
+        <value>Interline Agreements</value>
+    </labels>
+    <labels>
+        <fullName>IA_Interline_Agreements_For_Approval</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Interline Agreements For Approval</shortDescription>
+        <value>Interline Agreements For Approval</value>
+    </labels>
+    <labels>
+        <fullName>IA_Interline_Available_Agreements</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Interline Available Agreements</shortDescription>
+        <value>Interline Available Agreements</value>
+    </labels>
+    <labels>
+        <fullName>IA_MITA_Contact_Type</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA MITA Contact Type</shortDescription>
+        <value>MITA Contact Type</value>
+    </labels>
+    <labels>
+        <fullName>IA_Memorandum</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Memorandum</shortDescription>
+        <value>Memorandum</value>
+    </labels>
+    <labels>
+        <fullName>IA_Memorandums</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Memorandums</shortDescription>
+        <value>Memorandums</value>
+    </labels>
+    <labels>
+        <fullName>IA_New_Agreement</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA New Agreement</shortDescription>
+        <value>New Agreement</value>
+    </labels>
+    <labels>
+        <fullName>IA_New_Agreement_Subtitle</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA New Agreement Subtitle</shortDescription>
+        <value>Choose details below to send the request to the airline.</value>
+    </labels>
+    <labels>
+        <fullName>IA_New_Agreements_Empty</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA New Agreements Empty</shortDescription>
+        <value>Your airline do not have any&lt;br/&gt;Interline Agreements yet.&lt;br/&gt;Click below to start an agreement process.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Rejecting_Problem</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Rejecting Problem</shortDescription>
+        <value>There was a problem when rejecting the agreement</value>
+    </labels>
+    <labels>
+        <fullName>IA_Request_Agreements_Empty</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Request Agreements Empty</shortDescription>
+        <value>You don&apos;t have any pending&lt;br/&gt;requests right now.&lt;br/&gt;Click below to start an agreement process.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Request_Approved</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Request Approved</shortDescription>
+        <value>Request has been approved.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Request_Rejected</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Request Rejected</shortDescription>
+        <value>Request has been rejected.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Request_Submitted</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Request Submitted</shortDescription>
+        <value>Your request has been submitted.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Request_Submitted_Message</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Request Submitted Message</shortDescription>
+        <value>Once the counterpart accepts the request,&lt;br/&gt;the agreement will be activated on the effective date.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Requester_Airline</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Requester Airline</shortDescription>
+        <value>Requester Airline</value>
+    </labels>
+    <labels>
+        <fullName>IA_Requesting_Problem</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Requesting Problem</shortDescription>
+        <value>There was a problem when requesting the agreement</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_not_active_yet</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status not active yet</shortDescription>
+        <value>Not Active Yet</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_pending_withdrawal</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status pending withdrawal</shortDescription>
+        <value>Pending Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_rejected</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status rejected</shortDescription>
+        <value>Rejected</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_withdrawn</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status withdrawn</shortDescription>
+        <value>Withdrawn</value>
+    </labels>
+    <labels>
+        <fullName>IA_Undo_Agreement_Accepted</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Undo Agreement Accepted</shortDescription>
+        <value>Undo Agreement Accepted</value>
+    </labels>
+    <labels>
+        <fullName>IA_Undo_Agreement_Rejected</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Undo Agreement Rejected</shortDescription>
+        <value>Undo Agreement Rejected</value>
+    </labels>
+    <labels>
+        <fullName>IA_Undoing_Problem</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Undoing Problem</shortDescription>
+        <value>There was a problem when undoing the action</value>
+    </labels>
+    <labels>
+        <fullName>IA_Withdraw</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Withdraw</shortDescription>
+        <value>Withdraw</value>
+    </labels>
+    <labels>
+        <fullName>IA_Withdrawal_Message</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Withdrawal Message</shortDescription>
+        <value>Withdrawal Date (at least {0} days from today)</value>
+    </labels>
+    <labels>
+        <fullName>IA_Withdrawal_Submitted</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Withdrawal Submitted</shortDescription>
+        <value>Withdrawal submitted</value>
     </labels>
     <labels>
         <fullName>ICAddressDoctor_adns</fullName>
@@ -22046,7 +23185,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Case Attach Limit</shortDescription>
-        <value>Max. file size 50Mb. Accepted file types are: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</value>
+        <value>Max. file size 30Mb. Accepted file types are: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Case_Change_Description</fullName>
@@ -26445,7 +27584,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred</shortDescription>
-        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Agency.</value>
+        <value>Please note that online accreditation applications must be submitted by an Authorized Signatory of the Agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_CNS</fullName>
@@ -26453,7 +27592,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred CNS</shortDescription>
-        <value>Please note that online endorsement applications must be submitted by an Authorised Signatory of the Agency.</value>
+        <value>Please note that online endorsement applications must be submitted by an Authorized Signatory of the Agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_Msg</fullName>
@@ -26469,14 +27608,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred New</shortDescription>
-        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Company.</value>
+        <value>Please note that online accreditation applications must be submitted by an Authorized Signatory of the Company.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_PASS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step0_Intro_Accred_PASS</shortDescription>
-        <value>Please note that online applications must be submitted by an Authorised Signatory of the Company.</value>
+        <value>Please note that online applications must be submitted by an Authorized Signatory of the Company.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
@@ -26744,7 +27883,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step1_PCI</shortDescription>
-        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;IATA Code Selection</value>
+        <value>A. IATA Code Selection</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step1_ProgressBar</fullName>
@@ -30031,7 +31170,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>STEP 1 - Annual Revalidation</shortDescription>
-        <value>STEP A - Confirm Agency Details</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Confirm Agency Details</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step1_HE</fullName>
@@ -30069,7 +31208,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>STEP 2 - Annual Revalidation</shortDescription>
-        <value>STEP B - Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>
@@ -42509,6 +43648,13 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <value>{0} service have new requests to be approved/rejected.</value>
     </labels>
     <labels>
+        <fullName>New_Opportunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New Opportunity</shortDescription>
+        <value>New Opportunity</value>
+    </labels>
+    <labels>
         <fullName>New_password</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -42650,7 +43796,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OAG_Service_Description</shortDescription>
-        <value>OAG Analyzer – a comprehensive airline schedules platform providing in-depth insight into frequency and capacity trends. Includes a spectrum of possibilities and different ways  to analyze and pull  the schedules data, including interactive visual graphs, charts and maps and ability to create your own custom reports. The data is updated on a weekly basis ensuring your business is always planning the most accurate airline schedules.</value>
+        <value>OAG Analyzer – a comprehensive airline schedules platform providing in-depth insight into frequency and capacity trends. Includes a spectrum of possibilities and different ways to analyze and pull the schedules data, including interactive visual graphs, charts and maps and ability to create your own custom reports. The data is updated on a weekly basis ensuring your business is always planning the most accurate airline schedules.</value>
     </labels>
     <labels>
         <fullName>OSCAR_RISK_WARNING</fullName>
@@ -45969,6 +47115,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <value>Prejudiced Collection of Funds</value>
     </labels>
     <labels>
+        <fullName>Reactivate_Risk_Event_warning_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reactivate Risk Event warning message</shortDescription>
+        <value>This agency meets the conditions of being GoStandard for more than 2 years and subsequently being GoLite for less than 6 months and is therefore eligible to trade as GoStandard under their previous Risk Status, RHC, Risk Events, and Financial Security.</value>
+    </labels>
+    <labels>
         <fullName>Reader_Main_Content</fullName>
         <categories>Content</categories>
         <language>en_US</language>
@@ -46081,6 +47234,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <value>Reset your password?</value>
     </labels>
     <labels>
+        <fullName>Resource_Center_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resource Center Service Description</shortDescription>
+        <value>Through the Resource Center, you will gain access to all required documentation from IATA. The Resource Center contains key information for agencies interested in becoming IATA Accredited.</value>
+    </labels>
+    <labels>
         <fullName>Response_message</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
@@ -46118,6 +47278,14 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIDRA_GE_Info</shortDescription>
         <value>This SIDRA case is related to Multicountry Agent</value>
+    </labels>
+    <labels>
+        <fullName>SIDRA_Repayment_Instalments_not_allowed_for_CASS</fullName>
+        <categories>SIDRA CASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIDRA Repayment Instalments not allowed for CASS</shortDescription>
+        <value>As per resolution, Repayment Plan is not allowed for CASS Agents.</value>
     </labels>
     <labels>
         <fullName>SIS</fullName>
@@ -46189,6 +47357,17 @@ Country {8}</value>
         <value>SIS L2 Customer Support</value>
     </labels>
     <labels>
+        <fullName>SIS_Notify_Change_in_SIS_3digit_Code</fullName>
+        <categories>SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIS Notify Change in SIS 3digit Code</shortDescription>
+        <value>SIS 3-digit code changed in account {0}: {1}
+	from:	{2}
+	to:	{3}
+	SAP ID:	{4}</value>
+    </labels>
+    <labels>
         <fullName>SIS_Operations</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -46247,6 +47426,13 @@ Automated process from a new account activation</value>
         <protected>false</protected>
         <shortDescription>Save</shortDescription>
         <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>SaveClose</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save &amp; Close</shortDescription>
+        <value>Save &amp; Close</value>
     </labels>
     <labels>
         <fullName>Search</fullName>
@@ -48025,6 +49211,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Anyone else to be informed?</value>
     </labels>
     <labels>
+        <fullName>csp_Remove_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remove Contact</shortDescription>
+        <value>Remove Contact</value>
+    </labels>
+    <labels>
         <fullName>csp_RequestService_ContactPortalAdmin_Alt</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -48478,7 +49672,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg account create take several days</shortDescription>
-        <value>Account Creation Process takes several days, please proceed to enter the Station details for the One Source Station Profile.</value>
+        <value>Account Creation Process takes several days, please proceed to enter the Station details for the ONE Source Station Profile.</value>
     </labels>
     <labels>
         <fullName>icg_account_creation</fullName>
@@ -48998,7 +50192,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg_capab_message_to_show</shortDescription>
-        <value>There are not capabilities to edit</value>
+        <value>There are no capabilities to edit</value>
     </labels>
     <labels>
         <fullName>icg_capability_management</fullName>
@@ -49014,7 +50208,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg capability validated by</shortDescription>
-        <value>Capability validated by</value>
+        <value>Capability Validated by</value>
     </labels>
     <labels>
         <fullName>icg_cargo_commodities</fullName>
@@ -49454,7 +50648,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>You don´t have permission</shortDescription>
-        <value>Date</value>
+        <value>You don´t have permission</value>
     </labels>
     <labels>
         <fullName>icg_date</fullName>
@@ -49841,6 +51035,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>There are no records in this section.</value>
     </labels>
     <labels>
+        <fullName>icg_handling_services</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg handling services</shortDescription>
+        <value>Handling Services</value>
+    </labels>
+    <labels>
         <fullName>icg_has_been_approved</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -49943,6 +51145,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg in</shortDescription>
         <value>in</value>
+    </labels>
+    <labels>
+        <fullName>icg_in_house</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg in house</shortDescription>
+        <value>Provided In House</value>
     </labels>
     <labels>
         <fullName>icg_in_progress</fullName>
@@ -50150,7 +51360,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg languages spoken</shortDescription>
-        <value>Languages Spoken</value>
+        <value>Supported Languages</value>
     </labels>
     <labels>
         <fullName>icg_lastname</fullName>
@@ -50270,7 +51480,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage photos</shortDescription>
-        <value>Supporting Documentation</value>
+        <value>Manage Photos</value>
     </labels>
     <labels>
         <fullName>icg_manage_remote_validations</fullName>
@@ -50294,7 +51504,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manager user permission</shortDescription>
-        <value>Manager User Permission</value>
+        <value>Manage User Permissions</value>
     </labels>
     <labels>
         <fullName>icg_members_airlines</fullName>
@@ -50438,7 +51648,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg nearest airport</shortDescription>
-        <value>Nearest Airport</value>
+        <value>Airport</value>
     </labels>
     <labels>
         <fullName>icg_nearest_airport_description</fullName>
@@ -50801,6 +52011,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>In order to create a new physical address, please proceed to request the creation of the new Account</value>
     </labels>
     <labels>
+        <fullName>icg_others</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg others</shortDescription>
+        <value>OTHERS</value>
+    </labels>
+    <labels>
         <fullName>icg_overall_aiport_size</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -50991,6 +52209,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg process finished</shortDescription>
         <value>Process Finished</value>
+    </labels>
+    <labels>
+        <fullName>icg_provided_bythird_party</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg provided bythird party</shortDescription>
+        <value>Provided by 3rd party</value>
     </labels>
     <labels>
         <fullName>icg_public_area</fullName>
@@ -51545,6 +52771,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility.</value>
     </labels>
     <labels>
+        <fullName>icg_smart_facility_remote_validation_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation url</shortDescription>
+        <value>https://www.iata.org/en/programs/cargo/cargo-operations/smart-facility/remote-validation/</value>
+    </labels>
+    <labels>
         <fullName>icg_smart_facility_url</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -51889,6 +53123,22 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>To</value>
     </labels>
     <labels>
+        <fullName>icg_tooltip_service_info1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg tooltip service info1</shortDescription>
+        <value>Click once = Service provided in house</value>
+    </labels>
+    <labels>
+        <fullName>icg_tooltip_service_info2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg tooltip service info2</shortDescription>
+        <value>Click twice = Service provided by third party</value>
+    </labels>
+    <labels>
         <fullName>icg_total_facility_space</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -51983,6 +53233,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg validation management</shortDescription>
         <value>Audits and Certifications</value>
+    </labels>
+    <labels>
+        <fullName>icg_validation_services_message</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg validation services message</shortDescription>
+        <value>The items selected in the list &quot;In-House Service&quot; cannot belong to the list &quot;Third party Services&quot; or vice versa.</value>
     </labels>
     <labels>
         <fullName>icg_watch_video</fullName>

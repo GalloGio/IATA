@@ -26,34 +26,12 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Email__c</fullName>
-        <description>Pardot integration user email</description>
+        <fullName>Pardot_Business_Unit__c</fullName>
+        <description>take value from salesforce marketing setup -&gt; pardot account setup</description>
         <externalId>false</externalId>
-        <label>Email</label>
-        <length>255</length>
-        <required>true</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Password__c</fullName>
-        <description>Pardot integration user password</description>
-        <externalId>false</externalId>
-        <label>Password</label>
-        <length>255</length>
-        <required>true</required>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>User_Key__c</fullName>
-        <description>Pardot integration user api key</description>
-        <externalId>false</externalId>
-        <label>User Key</label>
-        <length>255</length>
-        <required>true</required>
+        <label>Pardot Business Unit</label>
+        <length>18</length>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>

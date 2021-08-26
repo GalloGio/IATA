@@ -1,4 +1,4 @@
-public with sharing class PortalLoginCtrl {
+public without sharing class PortalLoginCtrl {
 
 	public class LoginConfig{
 		@AuraEnabled public Boolean isUsernamePasswordEnabled{get;set;}

@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Environmental_Compliance</value>
+        <value xsi:type="xsd:string">Environmental_Compliance;Hold_Baggage_Security_System_Classification;Security_Program_Information</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

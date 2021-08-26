@@ -517,7 +517,7 @@ lightning-datatable .slds-th__action {
   }
 
 .customPopupInteriorHalfScreenCentered {
-  background-color: #f7f8fa;
+  background-color: #ffffff;
   width: 35%;
   margin: auto;
   box-shadow: 5px 5px 20px #808080;
@@ -526,7 +526,7 @@ lightning-datatable .slds-th__action {
 }
 
 .customPopupInteriorThreeQuartersScreenCentered {
-  background-color: #f7f8fa;
+  background-color: #ffffff;
   width: 60%;
   margin: auto;
   box-shadow: 5px 5px 20px #808080;
@@ -535,7 +535,7 @@ lightning-datatable .slds-th__action {
 }
 
 .customPopupInteriorNinetyScreenCentered {
-    background-color: #f7f8fa;
+    background-color: #ffffff;
     width: 90%;
     margin: auto;
     box-shadow: 5px 5px 20px #808080;
@@ -1665,7 +1665,7 @@ lightning-datatable .slds-th__action {
 }
 
 .textValue input{
-    background-color: #f7f8fa !important;
+    background-color: #ffffff !important;
     border-radius: 1px !important;
     border: solid 1px #e6e6e6 !important;
     color:#333333 !important;

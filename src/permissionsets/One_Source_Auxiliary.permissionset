@@ -2328,6 +2328,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_Account_Role_Detail__c.In_House_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_Account_Role_Detail__c.Third_Party_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>OrderItem.IEC_Is_Paid__c</field>
         <readable>true</readable>
     </fieldPermissions>

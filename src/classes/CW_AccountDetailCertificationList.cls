@@ -7,6 +7,11 @@ public with sharing class CW_AccountDetailCertificationList {
 	 */
 	@AuraEnabled(cacheable=true)
 	public static Map<Boolean, List<wrapperCert>> getCertificationList(String accountId, String accountType) {
+		List<String> listValidationPrograms = new List<String>();
+		if(String.isNotBlank(CW_Utilities.VALIDATION_PROGRAMS)){
+			listValidationPrograms = CW_Utilities.VALIDATION_PROGRAMS.split(',');
+		}
+
 		Set<String> certificationsNameList = new Set<String>();
 		Map<String, ICG_Capability_Assignment_Group__c> accRolDetCerMap = new Map<String, ICG_Capability_Assignment_Group__c>();
 
@@ -17,6 +22,7 @@ public with sharing class CW_AccountDetailCertificationList {
 																WHERE ICG_Account_Role_Detail__r.Id = :accountId
 																AND Is_Active__c = true
 																AND Is_Expired__c = false
+																AND ICG_Certification__r.ValidationPrograms__c IN : listValidationPrograms
 																];
 
 		for (ICG_Capability_Assignment_Group__c accRoleCert : asgmtGroup) {
@@ -24,7 +30,7 @@ public with sharing class CW_AccountDetailCertificationList {
 		}
 		List<ICG_Certification__c> allCertifictations = [SELECT Id, Name, Label__c, Expiration_Period__c, Image__c, Order__c 
 										FROM ICG_Certification__c WHERE is_visible__C = true 
-												AND Applicable_to__c INCLUDES (:accountType) ORDER BY Order__c];
+												AND Applicable_to__c INCLUDES (:accountType) AND ValidationPrograms__c IN : listValidationPrograms ORDER BY Order__c];
 
 		Map<Boolean, List<wrapperCert>> returnMap = new Map<Boolean, List<wrapperCert>>();
 		for (ICG_Certification__c cert : allCertifictations) {

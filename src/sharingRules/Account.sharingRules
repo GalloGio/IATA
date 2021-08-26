@@ -387,24 +387,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>IDCard_Site_user</fullName>
-        <accessLevel>Read</accessLevel>
-        <accountSettings>
-            <caseAccessLevel>None</caseAccessLevel>
-            <contactAccessLevel>Edit</contactAccessLevel>
-            <opportunityAccessLevel>None</opportunityAccessLevel>
-        </accountSettings>
-        <label>IDCard Site user</label>
-        <sharedTo>
-            <group>ID_Card_portal_user_group</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Agency</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>IW_external_read_only_access</fullName>
         <accessLevel>Read</accessLevel>
         <accountSettings>
@@ -684,20 +666,6 @@
             <value>MSO Member Sales Office</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingGuestRules>
-        <fullName>IDCard_Account_Share_guest_permissions</fullName>
-        <accessLevel>Read</accessLevel>
-        <description>IDCard_Account_Share_guest_permissions</description>
-        <label>IDCard Account Share guest permissions</label>
-        <sharedTo>
-            <guestUser>IATA_IDCard</guestUser>
-        </sharedTo>
-        <criteriaItems>
-            <field>CreatedById</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-    </sharingGuestRules>
     <sharingOwnerRules>
         <fullName>Timba_Survey_Account_Sharing_Rule</fullName>
         <accessLevel>Read</accessLevel>

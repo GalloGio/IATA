@@ -5,11 +5,7 @@
     <name>Triage</name>
     <queueMembers>
         <users>
-            <user>constantin.buzduga@b-i.com.prod</user>
-            <user>fkroppenstedt@iata.org</user>
-            <user>garciam@iata.org</user>
             <user>nunesr@iata.org.prod</user>
-            <user>venkatsr@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

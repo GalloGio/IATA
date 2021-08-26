@@ -146,6 +146,25 @@
             </template>
         </div>
     </div>
+    <div class="panel-filter-result"><button class="collapsible active">
+            <label class="filters-label">{label.icg_handling_services}</label><img src={chevronup}
+                class="expand-collapse-filter" /></button>
+        <div class="content max-height-100">
+            <template for:each={services} for:item="item">
+                <template if:true={item.enabled}>
+                    <div key={item.name} onclick={onClickItem} data-tosca={item.name} data-name={item.name}  data-label={item.label}
+                        data-type="service" data-operator="includes" data-obj={item.obj} data-field={item.field}
+                        class="itemBase itemUnselected ">
+                        <img key={item.name} data-tosca={item.name} src={tickSelection} class="cargoTick"
+                            width="15px">&nbsp;&nbsp;<span class="item-filter">{item.label}</span>
+                        <input type="checkbox" key={item.name} data-name={item.name} data-label={item.label} data-tosca={item.name}
+                            data-type="service" data-operator="includes" data-obj={item.obj} data-field={item.field}
+                            class="hidden" />
+                    </div>
+                </template>
+            </template>
+        </div>
+    </div>
     <div class="panel-filter-result">
         <button class="collapsible active">
             <label class="filters-label">{label.station_types}</label>

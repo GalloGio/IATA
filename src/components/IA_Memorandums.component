@@ -1,0 +1,79 @@
+<apex:component id="sectionMemorandums" controller="IA_MemosController" >
+
+
+	<script>
+		ready(function() {
+			let table = document.getElementById("memorandumsTable");
+			let box = document.getElementById("memorandumsTablePaginator");
+			let xtable = Xtable(table,box);
+			xtable.initPagination();
+
+			// get all input filters to fitler the All agreements table
+			applyMemorandumsFilter = function() {
+				const filterSearch = document.getElementById('searchMemorandumsTable');
+				const filterSearchClean = document.getElementById('searchMemorandumsTableClean');
+				
+				const searches = [];
+				if(filterSearch.value > '') searches.push(filterSearch.value);
+				filterSearchClean.hidden = filterSearch.value === '';
+
+				xtable.filter(searches);
+			}
+			//clear search input
+			clearSearchMemorandumsFilter = function() {
+				document.getElementById('searchMemorandumsTable').value = "";
+				applyMemorandumsFilter();
+			}
+		});
+	</script>
+
+	<!-- TABLE Memorandums -->
+	<div class="IA-TabLayout">
+		<div class="container IA-TableFilters">
+			<div class="row">
+				<div class="IA-SearchContainer col-sm-4">
+					<input id="searchMemorandumsTable" class="IA-SearchInput" placeholder="{!$Label.CSP_Find_Document}" onkeyup="applyMemorandumsFilter();"/>
+					<span id="searchMemorandumsTableClean" class="IA-SearchInputClean" onclick="clearSearchMemorandumsFilter();" hidden="true"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="container IA-TableContainer">
+			<div class="row IA-Table" >
+				<div class="table">
+					<table id="memorandumsTable" class="table table-hover table-condensed">
+						<tbody>
+							<apex:repeat var="doc" value="{!listDocuments}">
+								<tr searchable="true">
+									<td>
+										<span class="IA-view" onclick="viewContentFile('{!doc.docId}')">{!$Label.View}</span>
+									</td>
+									<td>
+										<apex:outputText value="{!doc.docname}"/>
+									</td>
+									<td>
+										<apex:outputText value="{!doc.doctype}"/>
+									</td>
+									<td>
+										<apex:outputText value="{!doc.docdate}"/>
+									</td>
+									<td>
+										<span class="IA-download" style="opacity: 50%;" onclick="downloadContentFile('{!doc.docId}')"></span>
+									</td>
+								</tr>
+							</apex:repeat>
+						</tbody>
+					</table>
+
+					<div id="memorandumsTablePaginator" class="IA-Pagination"></div>
+
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
+	<!-- /TABLE Memorandums -->
+
+</apex:component>

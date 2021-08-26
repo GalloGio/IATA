@@ -18,7 +18,7 @@ import getUserFacilities from "@salesforce/apex/CW_PrivateAreaController.getUser
 import getUserCompanyInfo from "@salesforce/apex/CW_PrivateAreaController.getUserCompanyInfo";
 import { loadStyle } from "lightning/platformResourceLoader";
 import { NavigationMixin } from "lightning/navigation";
-
+import getAllServicesAvailable from "@salesforce/apex/CW_Utilities.getAllServicesAvailableJson"; 
 
 export default class CwCreateFacilityComponent extends NavigationMixin(
 	LightningElement
@@ -47,6 +47,11 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	@track openingHours;
 	@track activeInfoWindow;
 	@track setFacilityNameAndType;
+
+	@track handlingServicesEdit = {isCreateView: true , isSummary: false, facilityHandlingService: []};
+	@track handlingServicesSummary = {isCreateView: true , isSummary: true};
+	inHouseServicesValue = '';
+	thirdPartyServicesValue = '';
 	
 	logoInfoObject;
 	geoLocationInfoObject;
@@ -563,6 +568,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		if(this.setFacilityNameAndType){
 			this.initializeRtAndNameModal();
 		}
+		this.loadHandlingService();
 	}
 	addEventListeners() {
 		let elems = this.template.querySelectorAll(".stationhover");
@@ -794,6 +800,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			this.selectRt = true;
 			this.selectStationName=false;
 		}
+		this.loadHandlingService();
 	}
 
 	setGeocoordinates(event){
@@ -936,10 +943,13 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			Pharmaceuticals__c : this.additionalData.pharmaceuticals,
 			Road_Feeder_Services__c : this.additionalData.roadFeederServices
 		}
-
-		let accountId = this.parentCompany
-		? this.parentCompany
-		: this.userInfo.AccountId;
+		
+		if (this.showRampHours()){
+			station.In_House_Services__c = this.inHouseServicesValue;
+			station.Third_Party_Services__c = this.thirdPartyServicesValue;
+		}
+		
+		let accountId = this.parentCompany ? this.parentCompany : this.userInfo.AccountId;
 		if(this.geoLocationInfoObject){
 			this.geoLocationInfoObject.companyId = accountId;
 		}
@@ -1844,6 +1854,9 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	get showNearestAirport() {
 		return true;
 	}
+	get showRampHandler() {
+		return this.companyType === "Ramp_Handler";
+	}
 
 	get companyTypeInput(){
 		return this.companyType.replaceAll('_', ' ');
@@ -2052,6 +2065,40 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		let fieldToFocus = this.template.querySelector('.inputName');
 		if(fieldToFocus){
 			fieldToFocus.focus();
+		}
+	}
+
+	loadHandlingService(){
+		if (this.showRampHours()){
+			if (this.handlingServicesEdit.facilityHandlingService && !this.handlingServicesEdit.facilityHandlingService.allServices){
+				getAllServicesAvailable().then(result =>{
+					this.handlingServicesEdit.facilityHandlingService.allServices = JSON.parse(result);
+					this.handlingServicesEdit.facilityHandlingService.thirdPartyServices = [];
+					this.handlingServicesEdit.facilityHandlingService.inHouseServices = [];
+				});
+			}
+		}
+	}
+
+	updateFacility(event) {
+		this.handlingServicesEdit.facilityHandlingService.thirdPartyServices = event.detail.thirdPartyServices;
+		this.handlingServicesEdit.facilityHandlingService.inHouseServices = event.detail.inHouseServices;
+
+		this.inHouseServicesValue = '';
+		this.thirdPartyServicesValue = '';
+
+		if (this.handlingServicesEdit.facilityHandlingService.inHouseServices.length > 0)
+		{
+			this.handlingServicesEdit.facilityHandlingService.inHouseServices.forEach(item => {
+				this.inHouseServicesValue += item.api +';';
+			});
+		}
+		
+		if (this.handlingServicesEdit.facilityHandlingService.thirdPartyServices.length > 0)
+		{
+			this.handlingServicesEdit.facilityHandlingService.thirdPartyServices.forEach(item => {
+				this.thirdPartyServicesValue += item.api +';';
+			});
 		}
 	}
 }

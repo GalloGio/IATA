@@ -163,8 +163,15 @@ public with sharing class CW_CapabilitiesUtilities {
 		// Reorganice data in Super Categories and Sections
 		List<Map<String, Object>> superCategories = new List<Map<String, Object>>();
 
+		Map<String, List<String>> tooltipsBySuperCategory = CW_FacilityCapabilitiesController.getMapTooltipBySuperCategory();
+		Map<String, List<String>> tooltipsBySection = CW_FacilityCapabilitiesController.getMapTooltipBySection();
+
 		for (Map<String, Object> currentSuperCategory : CW_FacilityCapabilitiesController.getMapSectionsBySupercategory()) {
 			Map<String, Object> currentSuperCategoryMap = new Map<String, Object>{ 'label' => currentSuperCategory.get('label'), 'order' => currentSuperCategory.get('order'), CW_CapabilitiesUtilities.SECTIONS => new List<Object>(), CW_CapabilitiesUtilities.CATEGORIES_AVAILABLE => 0, CW_CapabilitiesUtilities.CONTAINS_DATA => false };
+			if (tooltipsBySuperCategory.containsKey(((String)currentSuperCategory.get('label')).toLowerCase())) {
+				currentSuperCategoryMap.put('iconPath', tooltipsBySuperCategory.get(((String)currentSuperCategory.get('label')).toLowerCase())[0]);
+				currentSuperCategoryMap.put('iconTooltip', tooltipsBySuperCategory.get(((String)currentSuperCategory.get('label')).toLowerCase())[1]);
+			}
 			List<String> sectionsInCurrentSuperCategory = (List<String>) currentSuperCategory.get(CW_CapabilitiesUtilities.SECTIONS);
 			Boolean containDataSuperCategory = false;
 
@@ -172,7 +179,8 @@ public with sharing class CW_CapabilitiesUtilities {
 			List<Map<String, Object>> currentSections = new List<Map<String, Object>>();
 			List<Map<String, Object>> mapRecordTypesBySection = CW_FacilityCapabilitiesController.getMapRecordTypesBySection();
 			for (Map<String, Object> cSection : mapRecordTypesBySection) {
-				Boolean includeSection = sectionsInCurrentSuperCategory.contains((String) cSection.get('label'));
+				String cSectionLabel = (String) cSection.get('label');
+				Boolean includeSection = sectionsInCurrentSuperCategory.contains(cSectionLabel);
 
 				if (includeSection) {
 					Boolean containDataSection = false;
@@ -191,9 +199,13 @@ public with sharing class CW_CapabilitiesUtilities {
 								}
 							}
 
-							Map<String, Object> currentSectionObject = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', (String) cSection.get('label'));
+							Map<String, Object> currentSectionObject = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', cSectionLabel);
 							if (currentSectionObject == null) {
-								currentSectionObject = new Map<String, Object>{ 'label' => (String) cSection.get('label'), CW_CapabilitiesUtilities.CAPABILITIES => new List<Map<String, Object>>(), CW_CapabilitiesUtilities.CONTAINS_DATA => false };
+								currentSectionObject = new Map<String, Object>{ 'label' => cSectionLabel, CW_CapabilitiesUtilities.CAPABILITIES => new List<Map<String, Object>>(), CW_CapabilitiesUtilities.CONTAINS_DATA => false };
+								if (tooltipsBySection.containsKey(cSectionLabel.toLowerCase())) {
+									currentSectionObject.put('iconPath', tooltipsBySection.get(cSectionLabel.toLowerCase())[0]);
+									currentSectionObject.put('iconTooltip', tooltipsBySection.get(cSectionLabel.toLowerCase())[1]);
+								}
 								currentSections.add(currentSectionObject);
 							}
 							if (listSectionsIncluded.contains(currentRecordType)) {
@@ -208,7 +220,7 @@ public with sharing class CW_CapabilitiesUtilities {
 					}
 					//If it contains any sections from a capability
 					if (containDataSection) {
-						currentSections.get(currentSections.indexOf((Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', (String) cSection.get('label')))).put(CW_CapabilitiesUtilities.CONTAINS_DATA, true);
+						currentSections.get(currentSections.indexOf((Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', cSectionLabel))).put(CW_CapabilitiesUtilities.CONTAINS_DATA, true);
 					}
 				}
 			}
@@ -231,16 +243,32 @@ public with sharing class CW_CapabilitiesUtilities {
 	 * @param			currentObject <Current object>
 	 * @return			Generated tooltip map
 	 */
-	private static Map<String, String> generateTooltips(Map<String, List<String>> mapTooltipFieldsByField, Account_Role_Detail_Capability__c currentDetail, Map<String, Object> currentObject) {
-		Map<String, String> tooltips = new Map<String, String>();
+	private static Map<String, String> generateTooltips(Map<String, List<String>> mapTooltipFieldsByField, SObject currentDetail, Map<String, Object> currentObject) {        
+        Map<String, String> tooltips = new Map<String, String>();
+		Map<String,Schema.SObjectField> mfields = Schema.getGlobalDescribe().get(currentDetail.getSObjectType().getDescribe().getName()).getDescribe().fields.getMap();
 		for (String tooltipFieldKey : mapTooltipFieldsByField.keySet()) {
-			tooltipFieldKey = tooltipFieldKey.toLowerCase();
-			if (currentObject.containsKey(tooltipFieldKey)) {
+			String tooltipKey = tooltipFieldKey;
+			String tooltipValue;
+
+			// The tooltip must have field and value
+			if (tooltipFieldKey.contains('#')) {
+				tooltipKey = tooltipFieldKey.split('#')[0];
+				tooltipValue = tooltipFieldKey.split('#')[1];
+			}
+			if (currentObject.containsKey(tooltipKey)) {
 				String tooltip = '';
 				for (String tooltipField : mapTooltipFieldsByField.get(tooltipFieldKey)) {
-					tooltip += currentDetail.get(tooltipField);
+					if (mfields.containsKey(tooltipField)) {
+						if ((tooltipValue == null || ((String)currentDetail.get(tooltipField)).toLowerCase() == tooltipValue.toLowerCase())) {
+							// Get the value from other field
+							tooltip += currentDetail.get(tooltipField);
+						}
+					} else{
+						// Set text defined in metadata
+						tooltip += tooltipField;
+					}
 				}
-				tooltips.put(tooltipFieldKey, tooltip);
+				tooltips.put(tooltipFieldKey.toLowerCase(), tooltip);
 			}
 		}
 		return (tooltips.size() > 0) ? tooltips : null;
@@ -310,9 +338,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentCapatibility.put(CW_CapabilitiesUtilities.CATEGORIES, new List<Map<String, Object>>());
 		currentCapatibility.put('summary', new List<Map<String, Object>>());
 		currentCapatibility.put(CW_CapabilitiesUtilities.CONTAINS_DATA, false);
-		if (CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES != null) {
-			currentCapatibility.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
-		}
+		currentCapatibility.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.containsKey(rtDevNameLC));
 
 		// Categories
 		for (String currentCategory : mapCategoriesByRecordTypeDevName.get(rtDevNameLC)) {
@@ -397,7 +423,7 @@ public with sharing class CW_CapabilitiesUtilities {
 			}
 
 			categoryFound.put('isMultirecord', isMultiRecordCapabilities);
-			categoryFound.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
+			categoryFound.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.containsKey(rtDevNameLC));
 		}
 
 		return categoryFound;
@@ -447,7 +473,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		List<String> requiredFields = CW_CapabilitiesManagerController.getRequiredFieldsForCapability(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
 		currentObject.put('requiredFields', requiredFields);
 
-		Boolean isEditableRecordType = CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC);
+		Boolean isEditableRecordType = CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.containsKey(rtDevNameLC);
 
 		// Set processed info.
 		currentObject.put('id', currentDetailId);
@@ -501,15 +527,18 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentObject.put('isEditableRecordType', isEditableRecordType);
 		currentObject.put('isNotCertiRequired', currentAssignmentRT == RT_NO_CERTIFICATION_REQUIRED);
 
-		if(!userHasPermissionToEdit){
-			for(CW_Utilities.AsgmtGroupWrapper cert : (List<CW_Utilities.AsgmtGroupWrapper>)certifications){
-				if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
-					userHasPermissionToEdit=true;
-					break;
-				}
+		Boolean isValidationWithoutCertification=false;
+		for(CW_Utilities.AsgmtGroupWrapper cert : (List<CW_Utilities.AsgmtGroupWrapper>)certifications){
+			if(String.isNotBlank(cert.validationProgram) && !cert.validationProgram.toLowerCase().contains('iata')){
+				isValidationWithoutCertification=true;
+			}
+			if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
+				userHasPermissionToEdit=true;
+				break;
 			}
 		}
 		currentObject.put('isPermissionByDepartment',userHasPermissionToEdit);
+		currentObject.put('isValidationWithoutCertification', isValidationWithoutCertification);
 
 		return currentObject;
 	}
@@ -519,25 +548,32 @@ public with sharing class CW_CapabilitiesUtilities {
 	 * @param			stationRT <ICG_Account_Role_Detail__c record type>
 	 * @return			List of certifications
 	 */
-	public static List<String> getCertificationsAllowedByDepartments(String stationRT) {
+	public static List<String> getCertificationsAllowedByDepartments(String stationRT, String validationPrograms) {
 
 		List<String> lstDepts = new List<String>();
 		List<String> lstCertiAllowed = new List<String>();
 		List<ICG_Certification__c> lstCerti;
+		List<String> listValidationPrograms = new List<String>();
+		if (String.isBlank(validationPrograms)){
+			validationPrograms = 'NONE';
+		}
+		if(String.isNotBlank(validationPrograms)){
+			listValidationPrograms = validationPrograms.split(',');
+		}
 
 		if (CW_Utilities.hasSpecialPermissionsToEdit()) {
-			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c INCLUDES (:stationRT)];
+			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c INCLUDES (:stationRT) AND ValidationPrograms__c IN :listValidationPrograms];
 			lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
 		} else {
-			List<Group> lstGroup = [SELECT Name FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())];
+			List<Group> lstGroup = [SELECT Name, DeveloperName FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())];
 			Boolean existSFRM = false;
 			for (Group g : lstGroup) {
-				lstDepts.add(g.Name);
-				if (g.Name == SFRV_MANAGERS) {
+				lstDepts.add(g.DeveloperName);
+				if (g.DeveloperName == SFRV_MANAGERS) {
 					existSFRM = true;
 				}
 			}
-			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c INCLUDES (:stationRT)];
+			lstCerti = [SELECT Name FROM ICG_Certification__c WHERE Department__c IN :lstDepts AND ValidationPrograms__c IN :listValidationPrograms];
 			if (existSFRM) {
 				lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
 			}

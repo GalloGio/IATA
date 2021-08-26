@@ -72,6 +72,11 @@
         <label>Actioned -No Response – Will Call Again</label>
     </standardValue>
     <standardValue>
+        <fullName>Action Needed</fullName>
+        <default>false</default>
+        <label>Action Needed</label>
+    </standardValue>
+    <standardValue>
         <fullName>Actual Sale</fullName>
         <default>false</default>
         <label>Actual Sale</label>
@@ -345,6 +350,11 @@
         <fullName>Email Sent</fullName>
         <default>false</default>
         <label>Email Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Escalated Internally</fullName>
+        <default>false</default>
+        <label>Escalated Internally</label>
     </standardValue>
     <standardValue>
         <fullName>Existing SP</fullName>
@@ -867,6 +877,11 @@
         <label>NI - Cost</label>
     </standardValue>
     <standardValue>
+        <fullName>NI- Cost</fullName>
+        <default>false</default>
+        <label>NI- Cost</label>
+    </standardValue>
+    <standardValue>
         <fullName>NI - Cost/Budget</fullName>
         <default>false</default>
         <label>NI - Cost/Budget</label>
@@ -1242,6 +1257,11 @@
         <label>Participated</label>
     </standardValue>
     <standardValue>
+        <fullName>Pending Customer</fullName>
+        <default>false</default>
+        <label>Pending Customer</label>
+    </standardValue>
+    <standardValue>
         <fullName>Pending Fixes</fullName>
         <default>false</default>
         <label>Pending Fixes</label>
@@ -1385,6 +1405,16 @@
         <fullName>Renewal Sent</fullName>
         <default>false</default>
         <label>Renewal Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Replaced by a New Contact</fullName>
+        <default>false</default>
+        <label>Replaced by a New Contact</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Replaced by New Contact</fullName>
+        <default>false</default>
+        <label>Replaced by New Contact</label>
     </standardValue>
     <standardValue>
         <fullName>Responded</fullName>

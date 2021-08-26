@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Baggage_Handling</fullName>
+        <default>false</default>
+        <label>Baggage Handling</label>
+    </customValue>
+    <customValue>
+        <fullName>Marshalling</fullName>
+        <default>false</default>
+        <label>Marshalling</label>
+    </customValue>
+    <customValue>
+        <fullName>Parking</fullName>
+        <default>false</default>
+        <label>Parking</label>
+    </customValue>
+    <customValue>
+        <fullName>Ancillary_Items</fullName>
+        <default>false</default>
+        <label>Ancillary Items</label>
+    </customValue>
+    <customValue>
+        <fullName>Ramp_to_Flight_Deck_Communication</fullName>
+        <default>false</default>
+        <label>Ramp to Flight Deck Communication</label>
+    </customValue>
+    <customValue>
+        <fullName>Loading_and_Unloading</fullName>
+        <default>false</default>
+        <label>Loading and Unloading</label>
+    </customValue>
+    <customValue>
+        <fullName>Safety_Measures</fullName>
+        <default>false</default>
+        <label>Safety Measures</label>
+    </customValue>
+    <customValue>
+        <fullName>Moving_of_Aircraft</fullName>
+        <default>false</default>
+        <label>Moving of Aircraft</label>
+    </customValue>
+    <customValue>
+        <fullName>Exterior_Cleaning</fullName>
+        <default>false</default>
+        <label>Exterior Cleaning</label>
+    </customValue>
+    <customValue>
+        <fullName>Interior_Cleaning</fullName>
+        <default>false</default>
+        <label>Interior Cleaning</label>
+    </customValue>
+    <customValue>
+        <fullName>Toilet_Service</fullName>
+        <default>false</default>
+        <label>Toilet Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Water_Service</fullName>
+        <default>false</default>
+        <label>Water Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Cabin_Equipment</fullName>
+        <default>false</default>
+        <label>Cabin Equipment</label>
+    </customValue>
+    <customValue>
+        <fullName>Storage_of_Cabin_Material</fullName>
+        <default>false</default>
+        <label>Storage of Cabin Material</label>
+    </customValue>
+    <customValue>
+        <fullName>Catering_Ramp_Handling</fullName>
+        <default>false</default>
+        <label>Catering Ramp Handling</label>
+    </customValue>
+    <customValue>
+        <fullName>De-Icing/Anti-Icing_Services_and_Snow/Ice_Removal</fullName>
+        <default>false</default>
+        <label>De-Icing/Anti-Icing Services and Snow/Ice Removal</label>
+    </customValue>
+    <masterLabel>ONE Source Handling Services</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -62,13 +62,23 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 		for (Auto_Queue__c a : aAutoQueue)
 			sAutoQueueId.add(a.Queue_ID__c);
 
-	case[] aCases=[select id, First_Business_Day__c from Case where status in ('Reopen', 'Open', 'Action Needed', 'In progress') AND RecordType.Name <> 'Invoicing_Collection_Cases' AND RecordType.Name <> 'SIDRA' AND OwnerId in :sAutoQueueId ORDER BY CreatedDate ASC LIMIT 1000]; // RDJ:1000
+	case[] aCases=[select id, BusinessHoursId, CreatedDate from Case where status in ('Reopen', 'Open', 'Action Needed', 'In progress') AND RecordType.Name <> 'Invoicing_Collection_Cases' AND RecordType.Name <> 'SIDRA' AND OwnerId in :sAutoQueueId ORDER BY CreatedDate ASC LIMIT 1000]; // RDJ:1000
 
 		boolean isFirstBusinessDayInPast;
 		List<Case> cId = new List<Case> {};
+		dateTime firstBusinessDay;
+
 		for (Case c : aCases) {
-			if (c.First_Business_Day__c != null) {
-				if (System.currentTimeMillis() - c.First_Business_Day__c.getTime() >= 0)
+
+			if(businessHours.isWithin(c.BusinessHoursId, c.CreatedDate) && businessHours.isWithin(c.BusinessHoursId, c.CreatedDate.addHours(1))){
+				firstBusinessDay = c.CreatedDate;
+			}
+			else {
+				firstBusinessDay =  businessHours.nextStartDate( c.BusinessHoursId, c.CreatedDate.addHours(1));
+			}
+
+			if (firstBusinessDay != null) {
+				if (System.currentTimeMillis() - firstBusinessDay.getTime() >= 0)
 					isFirstBusinessDayInPast = true;
 				else
 					isFirstBusinessDayInPast = false;

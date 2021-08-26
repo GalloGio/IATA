@@ -1074,11 +1074,31 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			ctrl.confirmDetails();
 			ctrl.newCase.Region__c = 'Europe';
 			ctrl.newCase.ownerId=userIcc.Id;
-			Test.stopTest();
+
+			ctrl.childsAccounts.add(account);
+			ctrl.childsAccountsWrapperList.add(new ISSP_ANG_ANNUAL_REVALIDATION.childsAccountsWrapper(account, ctrl.getIcon(account.IATACode__c), true));
+			ctrl.childsAccountsWrapperList[0].checked = true;
+			ctrl.childsAccountsWrapperList[0].isOwnershipCompleted = true;
+			ctrl.childsAccountsWrapperList[0].icon = 'test';
+			ctrl.childsAccountsWrapperList[0].showMe = true;
+			ctrl.allChildsAccountsWrapperSelected = true;
+			ctrl.csvAccountsExport();
+			ctrl.ListOfCountries.add('test');
+			ctrl.getCountriesByChildsAccounts();
+			ctrl.closePopup();
+			ctrl.showPopup();
+			ctrl.checkAllChildsAccountsWrapper();
+			ctrl.countrySelected = 'test';
+			ctrl.addValueCountry();
+			ctrl.massConfirmDetails();
+			ctrl.removeValueCountry();
+			string aux = ctrl.countryInfoByCountryNameMapString;
+			
 			ctrl.submitForm();
 			system.assertEquals(AMS_Utils.CASE_STATUS_CLOSED, ctrl.oscar.Status__c, 'Case should be closed after all accounts be confirmed and submited.');
 		}
 
+		Test.stopTest();
 	}
 
 }

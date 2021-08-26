@@ -10,6 +10,7 @@ import updateCapabilitiesEdited_ from "@salesforce/apex/CW_CapabilitiesManagerCo
 import editAllCapabilitiesFromStation_ from "@salesforce/apex/CW_CapabilitiesManagerController.editAllCapabilitiesFromStation";
 import labels from "c/cwOneSourceLabels";
 import pubsub from "c/cwPubSub";
+import { requiredFieldsMissingResult } from "c/cwUtilities";
 import { loadStyle } from "lightning/platformResourceLoader";
 
 export default class CwCapabilitiesManagerContainer extends LightningElement {
@@ -50,6 +51,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	@api certificationName = "";
 	@api groupId = "";
 	@api renewMode = false;
+	@api validationPrograms = "";
 
 	newCertification = {};
 	@api
@@ -142,6 +144,10 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.dispatchEvent(evt);
 	}
 	//end notification toast
+	
+	get isCommunity() {
+		return false;
+	}
 
 	get dataInformed() {
 		return this.data != null ? true : false;
@@ -516,8 +522,8 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		}
 	}
 
-	getCapabilitiesFromCertification(id, certiId, groupId) {
-		getCapabilitiesForFacilityCertificationId({ id, certiId, groupId })
+	getCapabilitiesFromCertification(id, certiId, groupId,validationPrograms) {
+		getCapabilitiesForFacilityCertificationId({ id, certiId, groupId,validationPrograms })
 			.then(result => {
 				this.data = result;
 				this.existsRows = this.getexistsRows();
@@ -644,6 +650,17 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				}
 			}
 		});
+		
+		//update child control
+        if (this.columnsToRowSelected){
+            let columns = this.columnsToRowSelected;
+            let fieldsByColumns = columns[columns.length - 1];
+            fieldsByColumns.forEach(element => {
+                if(element.name != 'equipment__c' && !element.isformula){
+                    this.rowSelected[data.field] = data.value;
+                }
+            });
+        }
 
 	}
 
@@ -674,7 +691,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 								}
 								else{
 									row.certifications.forEach(function(cert, n) {
-										if ((row.isAssigned === false && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && cert.id === groupId) || (!row.isAssigned && row.isPeviouslyCertified && row.isPermissionByDepartment && !isTabEditCapabilities)) {
+										if ((row.isAssigned && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && cert.id === groupId) || (row.isAssigned && row.isPeviouslyCertified && row.isPermissionByDepartment && !isTabEditCapabilities)) {											
 											let positionRow = {
 												superCategoriesIndex: i,
 												sectionIndex: j,
@@ -689,6 +706,11 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 											}
 										}
 									});
+
+									let toFindCert = row.certifications.filter(cert => cert.id === groupId);
+									if (toFindCert.length === 0) {
+										row.isAssigned = false;
+									}
 								}
 							});
 						});
@@ -762,7 +784,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: row[element.name] != null ? (element.type === "MULTIPICKLIST" ? row[element.name].join(";") : (element.type === "DOUBLE") ? Number(row[element.name]) : row[element.name]): "",
+						value: this.transformValue(row, element),
 						label: element.label,
 						required: row.requiredFields.includes(element.name)
 					};
@@ -803,6 +825,20 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			});
 		}
 		this.loading = false;
+	}
+
+	transformValue(rowData, element) {
+		let newValue = "";
+		if (rowData[element.name] && element.type === "MULTIPICKLIST") {
+			newValue = rowData[element.name].join(";");
+		}
+		else if (rowData[element.name] && element.type === "DOUBLE") {
+			newValue = Number(rowData[element.name]);
+		}
+		else if (rowData[element.name] && rowData[element.name] != null) {
+			newValue = rowData[element.name];
+		}
+		return newValue;
 	}
 
 	assigntCapability(event) {
@@ -859,7 +895,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: this.rowSelected[element.name] != null ? (element.type === "MULTIPICKLIST" ? this.rowSelected[element.name].join(";") : (element.type === "DOUBLE") ? Number(this.rowSelected[element.name]) : this.rowSelected[element.name]): "",
+						value: this.transformValue(this.rowSelected, element),
 						label: element.label,
 						required: this.rowSelected.requiredFields.includes(element.name)
 					};
@@ -988,7 +1024,12 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 		fieldsByColumns.forEach(element => {
 			if(element.name != 'equipment__c' && !element.isformula){
-				this.rowSelected[element.name] = '';
+				if (typeof this.rowSelected[element.name] !== 'boolean'){
+					this.rowSelected[element.name] = '';
+				}
+				else{
+					this.rowSelected[element.name] = false;
+				}
 			}
 		});
 
@@ -1005,61 +1046,17 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		
 	}
 
-	get checkRequiredFields() {
-		let obligationLinkField = 'more_info_link__c';
-		let uploadDocumentationField = 'more_info_document__c';
-
-		let listFieldByEquipments = [];
-		let returnValue = true;
-		this.listAddedRows.forEach(element => {
-			let fieldByEquipmentRequired = {
-				equipment: "",
-				fields: []
-			};
-			element.fields.forEach(field => {
-				if (field.required.toString() === "true" && field.field != "equipment__c") {
-					if (field.value === "") {
-						if(field.field === obligationLinkField || field.field === uploadDocumentationField){
-							if(field.field === obligationLinkField){
-								let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
-
-								returnValue = selectField[0].value != null ? true :  false;
-							}
-							else if(field.field === uploadDocumentationField){
-								let selectField = element.fields.filter(row => row.field === obligationLinkField);
-								returnValue = selectField[0].value != null ? true :  false;
-							}
-						}						
-						else{
-							returnValue = false;
-						}
-						fieldByEquipmentRequired.equipment = element.equipment_label;
-						fieldByEquipmentRequired.fields.push(field.label);
-					}
-				}
-			});
-			if (returnValue === false) {
-				listFieldByEquipments.push(fieldByEquipmentRequired);
-				returnValue=true;
-			}
-		});
-
-		return listFieldByEquipments;
-	}
-
 	saveCapabilities() {
 		this.actionToExecute.action = "save";
 		this.actionToExecute.result = true;
 
-		let listFieldByEquipments = this.checkRequiredFields;
+		let listFieldByEquipments = requiredFieldsMissingResult(this.listAddedRows);
 		let result = listFieldByEquipments.length > 0 ? false : true;
 		if (result === "false" || result === false) {
 			if (listFieldByEquipments.length > 0) {
 				listFieldByEquipments.forEach(elem => {
 					let message = 'The Equipment: "' + elem.equipment + '" required the Fields: ';
-					elem.fields.forEach(f => {
-						message += f + " ,";
-					});
+					message += elem.fields.join(', ');
 					this._title = "Error";
 					this._message = message;
 					this._variant = "error";

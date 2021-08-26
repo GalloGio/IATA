@@ -9,6 +9,7 @@ let lstLocationTypes = {};
 let lstLocations = [];
 let lstValidationPrograms = [];
 let lstCommodities = [];
+let lstServices = [];
 let lstCompanyTypes = [];
 let lstFEICategories = [];
 export default class CwAdvancedSearchContainer extends LightningElement {
@@ -32,6 +33,7 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 		lstLocations = [];
 		lstValidationPrograms = [];
 		lstCommodities = [];
+		lstServices = [];
 		lstCompanyTypes = [];
 		lstFEICategories = [];
 		if (window.LZString === undefined) {
@@ -50,6 +52,12 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 
 		if (lstCommodities){
 			lstCommodities.forEach(item => {
+				filters.push({'label': item.name, 'value': item.name});
+			});
+		}
+
+		if (lstServices){
+			lstServices.forEach(item => {
 				filters.push({'label': item.name, 'value': item.name});
 			});
 		}
@@ -147,6 +155,22 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 		this.updateAndCheckFiltersLimitReached();
 	}
 
+	setServices(event) {
+		const serviceInput = event.detail;
+
+		serviceInput.forEach(element => {
+			if (element.selected) {
+				let itemFound = lstServices.find( obj => { return obj.name === element.name; }, element);
+				if (!itemFound){
+					lstServices.push(element);
+				}
+			} else {
+				lstServices = removeFromArray(lstServices, element);
+			}
+		});
+		this.updateAndCheckFiltersLimitReached();
+	}
+
 	setSelectedLocations(event) {
 		const locationInput = event.detail;
 		if (locationInput.action === "add") {
@@ -198,6 +222,7 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 			searchList = this._getCompanyNames(searchList);
 			searchList = this._getCerts(searchList);
 			searchList = this._getCommodities(searchList);
+			searchList = this._getServices(searchList);
 			searchList = this._getFEIEquipmentsPerCategory(searchList);
 
 
@@ -246,6 +271,20 @@ export default class CwAdvancedSearchContainer extends LightningElement {
 					obj: lstCommodities[element].obj,
 					relationfield: lstCommodities[element].relationfield,
 					field: lstCommodities[element].field
+				};
+				searchList.push(searchObject);
+			}
+		});
+		return searchList;
+	}
+	_getServices(searchList) {
+		Object.keys(lstServices).forEach(element => {
+			if (lstServices[element].selected) {
+				const searchObject = {
+					value: lstServices[element].name,
+					operator: "includes",
+					obj: lstServices[element].obj,
+					field: lstServices[element].field
 				};
 				searchList.push(searchObject);
 			}

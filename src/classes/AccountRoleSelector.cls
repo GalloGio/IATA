@@ -25,4 +25,18 @@ public class AccountRoleSelector {
 		' IN :conditionInputSet';
 		return Database.query(query);
 	}
+
+	public static Map<Id, Account_Role__c> selectAccountRoleWithRelatedAccountRolesByAccountRoleIdSet(Set<Id> accountRoleIdSet){
+		return new Map<Id, Account_Role__c>(
+			[SELECT Id, Status__c, Functional_Role__c, 
+			(SELECT Id, Status__c, Account_Role__c FROM Account_Contacts_Role__r) 
+			FROM Account_Role__c WHERE Id IN :accountRoleIdSet]);
+	}
+
+	public static Map<Id, Account_Role__c> selectAccountRoleWithRelatedAccountRolesByFunctionalRoleSet(Set<String> functionalRoleSet){
+		return new Map<Id, Account_Role__c>(
+			[SELECT Id, Account__c, Functional_Role__c, Status__c, 
+			(SELECT Id, Status__c, Functional_Role__c, Contact__c FROM Account_Contacts_Role__r WHERE Functional_Role__c IN :functionalRoleSet) 
+			FROM Account_Role__c WHERE Functional_Role__c IN :functionalRoleSet]);
+	}
 }

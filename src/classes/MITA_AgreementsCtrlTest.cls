@@ -91,7 +91,7 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agr = new MITA_Agreement__c(
 			Airline_1__c = account1.Id,
 			Airline_2__c = account2.Id,
-			MITAorBIETA__c = 'MITA'
+			MITAorBIETA__c = IA_util.MITA
 		);
 		insert agr;
 
@@ -367,7 +367,7 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agr = new MITA_Agreement__c(
 			Airline_1__c = account1.Id,
 			Airline_2__c = account2.Id,
-			MITAorBIETA__c = 'MITA'
+			MITAorBIETA__c = IA_util.MITA
 		);
 		insert agr;
 		controller.selectAccount();
@@ -391,7 +391,7 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agr = new MITA_Agreement__c(
 			Airline_1__c = account1.Id,
 			Airline_2__c = account2.Id,
-			MITAorBIETA__c = 'MITA'
+			MITAorBIETA__c = IA_util.MITA
 		);
 		insert agr;
 		controller.selectAccount();
@@ -448,7 +448,8 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agr = new MITA_Agreement__c(
 			Airline_1__c = account1.Id,
 			Airline_2__c = account2.Id,
-			MITAorBIETA__c = 'MITA',
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_processed_date__c = Date.today(),
 			Effective_date__c = Date.today()
 		);
 		insert agr;
@@ -486,8 +487,9 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agr = new MITA_Agreement__c(
 		Airline_1__c = account1.Id,
 		Airline_2__c = account2.Id,
-		MITAorBIETA__c = 'MITA',
-		Agreement_type__c = 'The Passenger Interline Agreement',
+		MITAorBIETA__c = IA_util.MITA,
+		Agreement_type__c = IA_util.TYPE_PAX,
+		Agreement_processed_date__c = Date.today(),
 		Effective_date__c = Date.today()
 		);
 
@@ -496,7 +498,7 @@ private class MITA_AgreementsCtrlTest {
 		wrapper.checkMixAgreement(null);
 		//System.assertEquals(wrapper.checkMixAgreement(), false);
 		wrapper.viewSeparated = false;
-		wrapper.save(true);
+		wrapper.save(IA_util.MITA);
 		Id resultId = wrapper.getId();
 		wrapper.getOtherDesignatorCode();
 		wrapper.getOtherAirlineName();
@@ -519,8 +521,9 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agrPAX = new MITA_Agreement__c(
 			Airline_1__c = account1.Id,
 			Airline_2__c = account2.Id,
-			MITAorBIETA__c = 'MITA',
-			Agreement_type__c = 'The Passenger Interline Agreement',
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_type__c = IA_util.TYPE_PAX,
+			Agreement_processed_date__c = Date.today(),
 			Effective_date__c = Date.today()
 		);
 		insert agrPAX;
@@ -531,8 +534,9 @@ private class MITA_AgreementsCtrlTest {
 		MITA_Agreement__c agrCARGO = new MITA_Agreement__c(
 			Airline_1__c = account1.Id,
 			Airline_2__c = account2.Id,
-			MITAorBIETA__c = 'MITA',
-			Agreement_type__c = 'The Cargo Interline Agreement',
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_type__c = IA_util.TYPE_CARGO,
+			Agreement_processed_date__c = Date.today(),
 			Effective_date__c = Date.today()
 		);
 		insert agrCARGO;
@@ -540,17 +544,17 @@ private class MITA_AgreementsCtrlTest {
 			Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c
 			from MITA_Agreement__c where id =:agrCARGO.Id];
 
-		System.assertEquals(true, agrPAX.Active__c);
-		System.assertEquals(true, agrCARGO.Active__c);
-		System.assertEquals('MITA', agrPAX.MITAorBIETA__c);
-		System.assertEquals('MITA', agrCARGO.MITAorBIETA__c);
+		System.assertEquals(true, agrPAX.Active__c, 'Status ' + agrPAX.Status__c);
+		System.assertEquals(true, agrCARGO.Active__c, 'Status ' + agrPAX.Status__c);
+		System.assertEquals(IA_util.MITA, agrPAX.MITAorBIETA__c);
+		System.assertEquals(IA_util.MITA, agrCARGO.MITAorBIETA__c);
 
 		Test.startTest();
 		MITA_AgreementsCtrl.WrapperAgreement wrapper = new MITA_AgreementsCtrl.WrapperAgreement(agrPAX, account1);
 		Boolean result = wrapper.checkMixAgreement(agrCARGO);
 		System.assertEquals(true, result);
 
-		wrapper.save(true);
+		wrapper.save(IA_util.BIETA);
 
 		MITA_Agreement__c resultAgr = wrapper.getAgreement();
 		wrapper.getId();

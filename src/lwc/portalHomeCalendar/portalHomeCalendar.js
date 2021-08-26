@@ -13,7 +13,7 @@ import ISSP_Weekday_Short_Thursday from '@salesforce/label/c.ISSP_Weekday_Short_
 import ISSP_Weekday_Short_Friday from '@salesforce/label/c.ISSP_Weekday_Short_Friday';
 import ISSP_Weekday_Short_Saturday from '@salesforce/label/c.ISSP_Weekday_Short_Saturday';
 import CSP_OperationalCalendar_HomeTileTitle from '@salesforce/label/c.CSP_OperationalCalendar_HomeTileTitle';
-import CSP_OperationalCalendar_SeeMonthlyLink from '@salesforce/label/c.CSP_OperationalCalendar_SeeMonthlyLink';
+import CSP_SeeAll from '@salesforce/label/c.CSP_SeeAll';
 
 export default class PortalHomeCalendar extends LightningElement {
 
@@ -27,7 +27,7 @@ export default class PortalHomeCalendar extends LightningElement {
         ISSP_Weekday_Short_Friday,
         ISSP_Weekday_Short_Saturday,
         CSP_OperationalCalendar_HomeTileTitle,
-        CSP_OperationalCalendar_SeeMonthlyLink
+        CSP_SeeAll
     };
 
     @track loading = true;

@@ -227,37 +227,6 @@
                                     </div>
                                 </lightning-layout-item>
                             </template>
-
-                            <!-- Category -->
-                            <template if:true={category.display}>
-                                <lightning-layout-item size="12">
-                                    <div class="formElementContainer">
-                                        <div class="formLabelContainer">
-                                            <div style="width:100%;" class="text-xxsmall">
-                                                <abbr class="slds-required" title="required">*</abbr>
-                                                {category.label}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </lightning-layout-item>
-                                <lightning-layout-item size="12">
-                                    <div class="slds-form-element__control registrationComboBox custTextInputSmall">
-                                        <lightning-combobox class="" placeholder=" "
-                                                            name="categoryCbx" label="" required
-                                                            variant="label-hidden"
-                                                            value={registrationForm.category}
-                                                            options={category.options}
-                                                            onchange={handleCategoryChange}
-                                                            message-when-value-missing=" "
-                                                            disabled={customerTypeSelectionEnabled}>
-                                        </lightning-combobox>
-                                    </div>
-                                </lightning-layout-item>
-                                <lightning-layout-item size="12">
-                                    <div class="formElementSpacer">
-                                    </div>
-                                </lightning-layout-item>
-                            </template>
                             <!------------------------------------------      Preferred Portal Language      --------------------------------------------->
                             <lightning-layout-item size="12">
                                 <div class="formElementContainer">

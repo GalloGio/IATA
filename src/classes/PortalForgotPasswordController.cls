@@ -47,4 +47,31 @@ public without sharing class PortalForgotPasswordController {
 		return result;
 	}
 
+	@AuraEnabled
+	public static Boolean handleResetPassword2(String email, Map<String,String> params){
+		PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword(email);
+		if(result.success == true){
+			try{
+				String link = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword', params);
+				Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(result.user, link);
+				return PortalPasswordHandler.sendEmail(result.user.id, 'CSP_Forgot_Password_Email_VF', emailMap);
+			}catch(exception e){
+				return false;
+			}
+		}
+
+		return false;
+	}
+
+	//used when user is created internally via contact button "change user portal status"
+	@Future
+	public static void handleResetPasswordFuture(String email, Map<String,String> params){
+		PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword(email);
+		if(result.success == true){
+			String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword', params);
+			Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(result.user, link);			
+			result.success               = PortalPasswordHandler.sendEmail(result.user.id, 'CSP_New_Member_Confirmation_Email_VF', emailMap);
+		}
+	}
+
 }

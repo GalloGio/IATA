@@ -135,7 +135,7 @@
                 <field>BSPCountry__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Origin</field>
             </layoutItems>
             <layoutItems>
@@ -224,7 +224,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Complaint_Description__c</field>
             </layoutItems>
             <layoutItems>
@@ -232,11 +232,11 @@
                 <field>Complaint_Analysis__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Complaint_Recommendations__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Correct_Resolution__c</field>
             </layoutItems>
         </layoutColumns>

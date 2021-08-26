@@ -185,6 +185,7 @@
         <externalId>false</externalId>
         <label>Link to Station Account</label>
         <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>OS Stations</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -994,6 +995,7 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>OS Stations</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1019,6 +1021,21 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>In_House_Services__c</fullName>
+        <description>Provided services in-house</description>
+        <externalId>false</externalId>
+        <label>In-House Services</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ONE_Source_Handling_Services</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Is_Direct_Ramp_Access__c</fullName>
@@ -1070,6 +1087,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <externalId>false</externalId>
         <label>Nearest Airport</label>
         <referenceTo>Airport_Detail__c</referenceTo>
+        <relationshipLabel>OS Stations</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1346,6 +1364,21 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Third_Party_Services__c</fullName>
+        <description>Third party services from Ramp Handler</description>
+        <externalId>false</externalId>
+        <label>Third Party Services</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ONE_Source_Handling_Services</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Website__c</fullName>
@@ -2136,6 +2169,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -2151,6 +2191,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2603,6 +2650,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -2618,6 +2672,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3070,6 +3131,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -3085,6 +3153,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3537,6 +3612,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -3552,6 +3634,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4004,6 +4093,73 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Catering_Ramp_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>De-Icing%2FAnti-Icing_Services_and_Snow%2FIce_Removal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exterior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loading_and_Unloading</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marshalling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moving_of_Aircraft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramp_to_Flight_Deck_Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage_of_Cabin_Material</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Toilet_Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Water_Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -4019,6 +4175,73 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Catering_Ramp_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>De-Icing%2FAnti-Icing_Services_and_Snow%2FIce_Removal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exterior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loading_and_Unloading</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marshalling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moving_of_Aircraft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramp_to_Flight_Deck_Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage_of_Cabin_Material</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Toilet_Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Water_Service</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4471,6 +4694,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -4486,6 +4716,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4938,6 +5175,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -4953,6 +5197,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

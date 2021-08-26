@@ -1,12 +1,14 @@
 public without sharing class CW_HandledAirlinesController {
-	@AuraEnabled(cacheable = true)
+	@AuraEnabled
 	public static string getAllAirlines() {
 		List<CW_SearchEngine.HandledElement> handledItems = new List<CW_SearchEngine.HandledElement>();
-		for (Account currentItem : [SELECT  Id, Name FROM Account  WHERE Recordtype.DeveloperName IN ('IATA_Airline', 'Operator') AND Airline_designator__c != 'XB' AND Airline_designator__c != 'XB*' ORDER BY Name ASC NULLS LAST]) {
+		for (Account currentItem : [SELECT  Id, Name, Airline_designator__c FROM Account  WHERE Recordtype.DeveloperName IN ('IATA_Airline', 'Operator') AND Airline_designator__c != 'XB' AND Airline_designator__c != 'XB*' ORDER BY Name ASC NULLS LAST]) {
 			CW_SearchEngine.HandledElement handleItemToAdd = new CW_SearchEngine.HandledElement();
 			handleItemToAdd.selected = false;
 			handleItemToAdd.value = currentItem.Id;
-			handleItemToAdd.label = currentItem.Name;
+			handleItemToAdd.label = 
+				currentItem.Name + 
+				(String.isNotBlank(currentItem.Airline_designator__c) ? ' [' + currentItem.Airline_designator__c + ']' : '');
 			handledItems.add(handleItemToAdd);
 		}
 		return JSON.serialize(handledItems);

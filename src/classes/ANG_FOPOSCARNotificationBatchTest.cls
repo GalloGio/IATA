@@ -32,6 +32,13 @@ private class ANG_FOPOSCARNotificationBatchTest {
 				Expire_in_days__c = 30, 
 				Subject__c = 'Non compliance - Request for PCI DSS Attestation of Compliance / Nil Credit Card Self-Declaration',
 				Type__c = 'Information', 
+				Message__c = 'Test #CONTACTNAME# #IATACODE#'),
+
+			new Notification_template__c(Language__c = 'English', 
+				Identifier__c = ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID,
+				Expire_in_days__c = 30, 
+				Subject__c = 'Non compliance - Renewal FOP Non Compliance',
+				Type__c = 'Information', 
 				Message__c = 'Test #CONTACTNAME# #IATACODE#')
 		};
 
@@ -57,6 +64,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			Location_Class__c= AMS_Utils.LC_PASSENGER,
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId= AMS_Utils.RECTYPE_IATAAGENCY,
+			ANG_PCI_compliance_expiry_date__c = System.today(),
 			Is_PCI_compliant__c = null,
 			Location_Type__c = AMS_Utils.HO);
 
@@ -68,6 +76,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			IATACode__c = '12345677',
 			status__c = Ams_Utils.ACC_S9_APPROVED,
 			IATA_ISO_Country__c = country.Id,
+			ANG_PCI_compliance_expiry_date__c = System.today(),
 			Location_Class__c = 'P',
 			Reason__c = 'Annual Revalidation - Name');
 
@@ -134,7 +143,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			AccountId = account.Id,
 			OSCAR__c  = oscar.Id,
 			ContactId = contact.Id,
-			Reason1__c = 'Annual revalidation',
+			Reason1__c = ANG_FOPOSCARNotificationBatch.ANN_REV_REASON,
 			Region__c = 'Europe',
 			RecordTypeId = caseRT,
 			Subject = 'Annual Revalidation',
@@ -152,7 +161,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			Subject = 'FoP Management - ',
 			Type = 'Case',
 			Type_of_customer__c = 'IATA Travel Agent',
-			Origin = 'Massive FOP Creation',
+			Origin = ANG_FOPOSCARNotificationBatch.MASSIVE_FOP_ORIGIN,
 			CaseArea__c = 'Accreditation Process',
 			BSPCountry__c = 'BSPCountry__c');
 
@@ -184,9 +193,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 	static void testReminderFOPMassNotificationError() {
 		Case fopCase = [SELECT Id
 			FROM Case
-			WHERE Origin = 'Massive FOP Creation'];
-
-		fopCase.ContactId = null;
+			WHERE Origin = :ANG_FOPOSCARNotificationBatch.MASSIVE_FOP_ORIGIN];
 
 		Test.setCreatedDate(fopCase.Id, Datetime.now().addDays(-15));
 		update fopCase;
@@ -202,7 +209,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 	static void testReminderFOPMassNotification() {
 		Case fopCase = [SELECT Id
 			FROM Case
-			WHERE Origin = 'Massive FOP Creation'];
+			WHERE Origin = :ANG_FOPOSCARNotificationBatch.MASSIVE_FOP_ORIGIN];
 
 		Contact co1 = [SELECT Id
 			FROM Contact
@@ -228,7 +235,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 	static void testNonComplianceFOPMassNotification() {
 		Case fopCase = [SELECT Id
 			FROM Case
-			WHERE Origin = 'Massive FOP Creation'];
+			WHERE Origin = :ANG_FOPOSCARNotificationBatch.MASSIVE_FOP_ORIGIN];
 
 		Contact co1 = [SELECT Id
 			FROM Contact
@@ -251,6 +258,36 @@ private class ANG_FOPOSCARNotificationBatchTest {
 	}
 
 	@isTest
+	static void testAutoRenewalFOPMassNotification() {
+		Case fopCase = [SELECT Id
+			FROM Case
+			WHERE Origin = :ANG_FOPOSCARNotificationBatch.MASSIVE_FOP_ORIGIN];
+
+		fopCase.Origin = ANG_FOPOSCARNotificationBatch.AUTOMATIC_RENEWAL_FOP_ORIGIN;
+		update fopCase;
+
+		Contact co1 = [SELECT Id
+			FROM Contact
+			WHERE LastName = 'test1'];
+
+		Test.setCreatedDate(fopCase.Id, Datetime.now().addDays(-30));
+		update fopCase;
+
+		Test.startTest();
+
+		Database.executeBatch(new ANG_FOPOSCARNotificationBatch(), 200);
+
+		Test.stopTest();
+
+		List<Notification__c> notificationCreated = [SELECT Id, Subject__c
+			FROM Notification__c 
+			WHERE Contact__c = :co1.Id
+			AND Subject__c = 'Non compliance - Renewal FOP Non Compliance'];
+
+		System.assert(notificationCreated.size() == 1, 'No Non Compliance Notification created');
+	}
+
+	@isTest
 	public static void testBatchScheduler(){
 		Test.startTest();
 		ANG_FOPOSCARNotificationScheduler sch = new ANG_FOPOSCARNotificationScheduler ();
@@ -263,7 +300,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 	static void testReminderAnnualRevalidation() {
 		Case annRevCase = [SELECT Id
 			FROM Case
-			WHERE Reason1__c = 'Annual revalidation'];
+			WHERE Reason1__c = :ANG_FOPOSCARNotificationBatch.ANN_REV_REASON];
 
 		Contact con = [SELECT Id
 			FROM Contact

@@ -221,11 +221,6 @@
         <label>IFTP</label>
     </customValue>
     <customValue>
-        <fullName>Startup Hotlist</fullName>
-        <default>false</default>
-        <label>Startup Hotlist</label>
-    </customValue>
-    <customValue>
         <fullName>Insurance Providers</fullName>
         <default>false</default>
         <label>Insurance Providers</label>
@@ -244,6 +239,11 @@
         <fullName>Join SIS e-Invoicing</fullName>
         <default>false</default>
         <label>Join SIS e-Invoicing</label>
+    </customValue>
+    <customValue>
+        <fullName>Lab Registry</fullName>
+        <default>false</default>
+        <label>Lab Registry</label>
     </customValue>
     <customValue>
         <fullName>Local Industry Groups</fullName>
@@ -269,6 +269,11 @@
         <fullName>MSO Management</fullName>
         <default>false</default>
         <label>MSO Management</label>
+    </customValue>
+    <customValue>
+        <fullName>OAG</fullName>
+        <default>false</default>
+        <label>OAG</label>
     </customValue>
     <customValue>
         <fullName>One Id NDC Matchmaker</fullName>
@@ -321,9 +326,19 @@
         <label>Standards Setting Workspace</label>
     </customValue>
     <customValue>
+        <fullName>Startup Hotlist</fullName>
+        <default>false</default>
+        <label>Startup Hotlist</label>
+    </customValue>
+    <customValue>
         <fullName>TIDS</fullName>
         <default>false</default>
         <label>TIDS</label>
+    </customValue>
+    <customValue>
+        <fullName>Timatic</fullName>
+        <default>false</default>
+        <label>Timatic</label>
     </customValue>
     <customValue>
         <fullName>TIP Reports</fullName>

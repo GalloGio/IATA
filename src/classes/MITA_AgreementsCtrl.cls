@@ -2,29 +2,6 @@ public with sharing class MITA_AgreementsCtrl {
 
 	public class MITAException extends Exception {}
 
-	private static final String TYPE_PAX_CARGO = 'The Passenger and Cargo Interline Traffic Agreement';
-	private static final String TYPE_PAX = 'The Passenger Interline Agreement';
-	private static final String TYPE_CARGO = 'The Cargo Interline Agreement';
-
-	private static final String TYPE_ISSUING_AIRLINE = 'The One Way Issuing Airline';
-	private static final String TYPE_PARTICIPATING_AIRLINE = 'The One Way Participating Airline';
-
-	private static final String TYPE_BILATERAL = 'Bilateral, both carriers can issue electronic tickets';
-	private static final String TYPE_PAX_ISSUING_AIRLINE = 'One Way Passenger Issuing Airline';
-	private static final String TYPE_PAX_PARTICIPATING_AIRLINE = 'One Way Passenger Participating';
-
-	private static final String TYPE_IMOD_ISSUING_AIRLINE = 'One Way Intermodal Issuing Date';
-	private static final String TYPE_IMOD_PARTICIPATING_AIRLINE = 'One Way Intermodal Participating Date';
-
-	private static final map<String, String> MAP_ONE_WAY_TYPES = new map<String,String>{
-		TYPE_ISSUING_AIRLINE => TYPE_PARTICIPATING_AIRLINE,
-		TYPE_PARTICIPATING_AIRLINE => TYPE_ISSUING_AIRLINE,
-		TYPE_PAX_ISSUING_AIRLINE => TYPE_PAX_PARTICIPATING_AIRLINE,
-		TYPE_PAX_PARTICIPATING_AIRLINE => TYPE_PAX_ISSUING_AIRLINE,
-		TYPE_IMOD_ISSUING_AIRLINE => TYPE_IMOD_PARTICIPATING_AIRLINE,
-		TYPE_IMOD_PARTICIPATING_AIRLINE => TYPE_IMOD_ISSUING_AIRLINE
-	};
-
 	public Account acc {get;set;}
 	public Contact c {get;set;}
 	public WrapperAgreement wrapper {get; set;}
@@ -32,14 +9,17 @@ public with sharing class MITA_AgreementsCtrl {
 	public String contactid {get;set;}
 	public String MITAagreementid {get;set;}
 	public String BIETAagreementid {get;set;}
+	public String EMDagreementid {get;set;}
 	public boolean chosenAccount {get;set;}
 	public boolean chosenContact {get;set;}
 	public boolean chosenMITAAgreement {get;set;}
 	public boolean chosenBIETAAgreement {get;set;}
+	public boolean chosenEMDAgreement {get;set;}
 	public boolean editAccountMode {get;set;}
 	public boolean editContactMode {get;set;}
 	public boolean editMITAAgreementMode {get;set;}
 	public boolean editBIETAAgreementMode {get;set;}
+	public boolean editEMDAgreementMode {get;set;}
 
 	public boolean searchContactMode {get;set;}
 	public boolean duplicateContactMode {get;set;}
@@ -55,6 +35,7 @@ public with sharing class MITA_AgreementsCtrl {
 		chosenAccount=false;
 		chosenMITAAgreement=false;
 		chosenBIETAAgreement=false;
+		chosenEMDAgreement=false;
 		searchContactMode=false;
 		confirmMoveContactMode=false;
 
@@ -77,14 +58,17 @@ public with sharing class MITA_AgreementsCtrl {
 		chosenContact = false;
 		chosenMITAAgreement=false;
 		chosenBIETAAgreement=false;
+		chosenEMDAgreement=false;
 
 		editAccountMode = false;
 		editContactMode = false;
 		editMITAAgreementMode = false;
 		editBIETAAgreementMode = false;
+		editEMDAgreementMode = false;
 
 		this.MITAagreementid = null;
 		this.BIETAagreementid = null;
+		this.EMDagreementid = null;
 		this.wrapper = null;
 
 		// fill the agreements map
@@ -191,32 +175,34 @@ public with sharing class MITA_AgreementsCtrl {
 	/////////////////////////////
 	///// AGREEMENT METHODS /////
 
-	public String getMITAAgreementTypes(){  return getAgreementTypes(true); }
-	public String getBIETAAgreementTypes(){ return getAgreementTypes(false);}
-	public String getAgreementTypes(boolean isMITA){
-		String datatype = 'data-type="'+(isMITA ? 'MITA' : 'BIETA')+'"';
-		String agreementTypes = '<input type="radio" name="'+(isMITA ? 'MITA' : 'BIETA')+'agreementtype" class="agreementtypefilter" data-value="" '+datatype+' checked="true"/>Show all the agreements<br/>';
+	public String getMITAAgreementTypes(){  return getAgreementTypes(IA_util.MITA); }
+	public String getBIETAAgreementTypes(){ return getAgreementTypes(IA_util.BIETA);}
+	public String getEMDAgreementTypes(){ return getAgreementTypes(IA_util.EMD);}
+	private String getAgreementTypes(String type){
+		String datatype = 'data-type="'+type+'"';
+		String agreementTypes = '<input type="radio" name="'+type+'agreementtype" class="agreementtypefilter" data-value="" '+datatype+' checked="true"/>Show all the agreements<br/>';
 		Set<String> agrtypes= new Set<String>();
 		for(WrapperAgreement wrapper : agreements.values()) {
 			MITA_Agreement__c mag = wrapper.getAgreement();
-			if((isMITA && mag.MITAorBIETA__c=='MITA') || (!isMITA && mag.MITAorBIETA__c=='BIETA')) {
+			if(mag.MITAorBIETA__c == type) {
 				agrtypes.add(mag.Agreement_type__c);
 			}
 		}
 		for(String s : agrtypes)
-			agreementTypes += '<input type="radio" name="'+(isMITA ? 'MITA' : 'BIETA')+'agreementtype" class="agreementtypefilter" data-value="'+s+'" '+datatype+' />'+s+'<br/>';
+			agreementTypes += '<input type="radio" name="'+type+'agreementtype" class="agreementtypefilter" data-value="'+s+'" '+datatype+' />'+s+'<br/>';
 		return agreementTypes;
 	}
 
 
-	public String getMITAAgreementTable(){  return getAgreementTable(true); }
-	public String getBIETAAgreementTable(){ return getAgreementTable(false);}
-	public String getAgreementTable(boolean isMITA){
+	public String getMITAAgreementTable(){  return getAgreementTable(IA_util.MITA); }
+	public String getBIETAAgreementTable(){ return getAgreementTable(IA_util.BIETA);}
+	public String getEMDAgreementTable(){ return getAgreementTable(IA_util.EMD);}
+	private String getAgreementTable(String type){
 		String agTable = '';
-		system.debug('getAgreementTable() --> agreements size = '+agreements.size());
 		for(WrapperAgreement wrapper : agreements.values()){
 			MITA_Agreement__c ag = wrapper.getAgreement();
-			if((isMITA && ag.MITAorBIETA__c=='MITA') || (!isMITA && ag.MITAorBIETA__c=='BIETA')) {
+			
+			if(ag.MITAorBIETA__c == type) {
 				agTable += '<tr id="'+wrapper.getId()+'">'+
 								'<td>'+escape(wrapper.getOtherDesignatorCode())+'</td>'+
 								'<td>'+escape(wrapper.getOtherAirlineName())+ '</td>'+
@@ -235,11 +221,21 @@ public with sharing class MITA_AgreementsCtrl {
 	}
 
 	//Methods for edit and save the agreement
-	public void selectMITAAgreement(){selectAgreement(true);}
-	public void selectBIETAAgreement(){selectAgreement(false);}
-	public void selectAgreement(boolean isMITA){
+	public void selectMITAAgreement(){selectAgreement(IA_util.MITA);}
+	public void selectBIETAAgreement(){selectAgreement(IA_util.BIETA);}
+	public void selectEMDAgreement(){selectAgreement(IA_util.EMD);}
+	private void selectAgreement(String type){
 		try {
-			String agreementId = isMITA ? MITAagreementid : BIETAagreementid;
+			String agreementId;
+			if(type == IA_util.MITA){
+				agreementId = MITAagreementId;
+			}
+			if(type == IA_util.BIETA){
+				agreementId = BIETAagreementId;
+			}
+			if(type == IA_util.EMD){
+				agreementId = EMDagreementId;
+			}
 			list<MITA_Agreement__c> listAgr = [
 				SELECT Airline_1__c, Airline_2__c, Active__c, Status__c, Cancellation_Reason__c, Agreement_type__c, Cancellation_date__c, Created_date__c, Effective_date__c, Airline_1__r.Name_on_AOC__c , Airline_2__r.Name_on_AOC__c , Airline1_designator_code__c , Airline2_designator_code__c , MITAorBIETA__c, Withdrawal_Request_Reception_Date__c, Agreement_processed_date__c, Cancellation_processed_date__c
 				From MITA_Agreement__c m
@@ -254,79 +250,75 @@ public with sharing class MITA_AgreementsCtrl {
 			System.debug('EXCEPTION selectAgreement ' + e.getMessage());
 		}
 
-		if(isMITA){
+		if(type == IA_util.MITA){
 			chosenMITAAgreement = true;
 			editMITAAgreementMode = false;
-		}else{
+		}
+		if(type == IA_util.BIETA){
 			chosenBIETAAgreement = true;
 			editBIETAAgreementMode = false;
 		}
+		if(type == IA_util.EMD){
+			chosenEMDAgreement = true;
+			editEMDAgreementMode = false;
+		}
 	}
 
 
-	public void newMITAAgreement(){newAgreement(true);}
-	public void newBIETAAgreement(){newAgreement(false);}
-	public void newAgreement(boolean isMITA){
-		MITA_Agreement__c agr = new MITA_Agreement__c(Airline_1__c = this.acc.Id, MITAorBIETA__c = isMITA ? 'MITA' : 'BIETA');
+	public void newMITAAgreement(){newAgreement(IA_util.MITA);}
+	public void newBIETAAgreement(){newAgreement(IA_util.BIETA);}
+	public void newEMDAgreement(){newAgreement(IA_util.EMD);}
+	private void newAgreement(String type){
+		MITA_Agreement__c agr = new MITA_Agreement__c(Airline_1__c = this.acc.Id, MITAorBIETA__c = type);
 		this.wrapper = new WrapperAgreement(agr, this.acc);
-		//editAgreementMode = true;
-		if(isMITA){
-			if(editBIETAAgreementMode){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'It\'s not possible to create or edit an agreement in MITA and BIETA section at the same time. Please save the open one and try again.'));
-				return;
-			}
-			this.editMITAAgreementMode  = true;
-			this.chosenMITAAgreement = true;
-		}else{
-			if(editMITAAgreementMode){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'It\'s not possible to create or edit an agreement in MITA and BIETA section at the same time. Please save the open one and try again.'));
-				return;
-			}
-			this.editBIETAAgreementMode  = true;
-			this.chosenBIETAAgreement = true;
-		}
+
+		this.editMITAAgreementMode  = (type == IA_util.MITA);
+		this.chosenMITAAgreement = (type == IA_util.MITA);
+		this.editBIETAAgreementMode  = (type == IA_util.BIETA);
+		this.chosenBIETAAgreement = (type == IA_util.BIETA);
+		this.editEMDAgreementMode  = (type == IA_util.EMD);
+		this.chosenEMDAgreement = (type == IA_util.EMD);
 	}
-	public void editMITAAgreement(){editAgreement(true);}
-	public void editBIETAAgreement(){editAgreement(false);}
-	public void editAgreement(boolean isMITA){
-		if(isMITA){
-			if(editBIETAAgreementMode){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'It\'s not possible to create or edit an agreement in MITA and BIETA section at the same time. Please save the open one and try again.'));
-				return;
-			}
-			editMITAAgreementMode = true;
-		}else{
-			if(editMITAAgreementMode){
-				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'It\'s not possible to create or edit an agreement in MITA and BIETA section at the same time. Please save the open one and try again.'));
-				return;
-			}
-			editBIETAAgreementMode = true;
-		}
+	public void editMITAAgreement(){editAgreement(IA_util.MITA);}
+	public void editBIETAAgreement(){editAgreement(IA_util.BIETA);}
+	public void editEMDAgreement(){editAgreement(IA_util.EMD);}
+	private void editAgreement(String type){
+		editMITAAgreementMode = (type==IA_util.MITA);
+		editBIETAAgreementMode = (type==IA_util.BIETA);
+		editEMDAgreementMode = (type==IA_util.EMD);
 	}
 
-	public void resetMITAAgreement(){resetAgreement(true);}
-	public void resetBIETAAgreement(){resetAgreement(false);}
-	public void resetAgreement(boolean isMITA){
-		if(isMITA){
+	public void resetMITAAgreement(){resetAgreement(IA_util.MITA);}
+	public void resetBIETAAgreement(){resetAgreement(IA_util.BIETA);}
+	public void resetEMDAgreement(){resetAgreement(IA_util.EMD);}
+	private void resetAgreement(String type){
+		if(type == IA_util.MITA){
 			editMITAAgreementMode = false;
 			if(this.wrapper.getId() == null){
 				this.wrapper = null;
 				chosenMITAAgreement = false;
 			}
-		}else{
+		}else if(type == IA_util.BIETA){
 			editBIETAAgreementMode = false;
 			if(this.wrapper.getId() == null){
 				this.wrapper = null;
 				chosenBIETAAgreement = false;
 			}
+		}else if(type == IA_util.EMD){
+			editEMDAgreementMode = false;
+			if(this.wrapper.getId() == null){
+				this.wrapper = null;
+				chosenEMDAgreement = false;
+			}
 		}
 
 	}
 
-	public void saveMITAAgreement(){saveAgreement(true);}
-	public void saveBIETAAgreement(){saveAgreement(false);}
-	public void saveAgreement(boolean isMITA){
-		this.wrapper.save(isMITA);
+	public void saveMITAAgreement(){saveAgreement(IA_util.MITA);}
+	public void saveBIETAAgreement(){saveAgreement(IA_util.BIETA);}
+	public void saveEMDAgreement(){saveAgreement(IA_util.EMD);}
+	public void saveAgreement(String type){
+		this.wrapper.save(type);
 	}
 
 	////////////////////////////////
@@ -480,7 +472,7 @@ public with sharing class MITA_AgreementsCtrl {
 	public class WrapperAgreement {
 		public MITA_Agreement__c agreement {get; set;}
 		public Boolean isMixed {get; set;}
-		public Boolean isMITA {get; set;}
+		public String type {get; set;}
 		public Boolean isNew {get; set;}
 		public Boolean viewSeparated {get; set;}
 		public MITA_Agreement__c agreementPax {get; set;}
@@ -495,12 +487,12 @@ public with sharing class MITA_AgreementsCtrl {
 			this.sourceAccount = sourceAccount;
 			this.isMixed = false;
 			this.isNew = agreement.Id == null;
-			this.isMITA = agreement.MITAorBIETA__c=='MITA';
+			this.type = agreement.MITAorBIETA__c;
 			this.viewSeparated = true;
-			if ( agreement.Agreement_type__c == TYPE_PAX ) {
+			if ( agreement.Agreement_type__c == IA_util.TYPE_PAX ) {
 				this.agreementPax = agreement;
 			}
-			if ( agreement.Agreement_type__c == TYPE_CARGO ) {
+			if ( agreement.Agreement_type__c == IA_util.TYPE_CARGO ) {
 				this.agreementCargo = agreement;
 			}
 		}
@@ -513,13 +505,13 @@ public with sharing class MITA_AgreementsCtrl {
 					(this.agreement.Airline_1__c == newAgreement.Airline_2__c && this.agreement.Airline_2__c == newAgreement.Airline_1__c)
 				)
 			) {
-				if ( this.agreement.Agreement_type__c == TYPE_PAX  && newAgreement.Agreement_type__c == TYPE_CARGO) {
+				if ( this.agreement.Agreement_type__c == IA_util.TYPE_PAX  && newAgreement.Agreement_type__c == IA_util.TYPE_CARGO) {
 					this.agreementPax = this.agreement;
 					this.agreementCargo = newAgreement;
 					mixAgreement();
 					return true;
 				}
-				if ( this.agreement.Agreement_type__c == TYPE_CARGO  && newAgreement.Agreement_type__c == TYPE_PAX) {
+				if ( this.agreement.Agreement_type__c == IA_util.TYPE_CARGO  && newAgreement.Agreement_type__c == IA_util.TYPE_PAX) {
 					this.agreementPax = newAgreement;
 					this.agreementCargo = this.agreement;
 					mixAgreement();
@@ -533,7 +525,7 @@ public with sharing class MITA_AgreementsCtrl {
 			this.agreement.MITAorBIETA__c = this.agreementPax.MITAorBIETA__c;
 			this.agreement.Airline_1__c = this.agreementPax.Airline_1__c;
 			this.agreement.Airline_2__c = this.agreementPax.Airline_2__c;
-			this.agreement.Agreement_type__c = TYPE_PAX_CARGO;
+			this.agreement.Agreement_type__c = IA_util.TYPE_PAX_CARGO;
 			this.agreement.Created_date__c = maxDate(this.agreementPax.Created_date__c, this.agreementCargo.Created_date__c);
 			this.agreement.Effective_date__c = maxDate(this.agreementPax.Effective_date__c, this.agreementCargo.Effective_date__c);
 			this.agreement.Withdrawal_Request_Reception_Date__c = maxDate(this.agreementPax.Withdrawal_Request_Reception_Date__c, this.agreementCargo.Withdrawal_Request_Reception_Date__c);
@@ -580,9 +572,9 @@ public with sharing class MITA_AgreementsCtrl {
 			}
 		}
 		public String getAgreementType() {
-			// change agreement type for all one way agreements (each side of the agreement has a different name, defined in MAP_ONE_WAY_TYPES)
+			// change agreement type for all one way agreements (each side of the agreement has a different name, defined in IA_util.MAP_ONE_WAY_TYPES)
 			if (this.agreement.Airline_2__c == this.sourceAccount.Id) {
-				String newAgreementType = MAP_ONE_WAY_TYPES.get(this.agreement.Agreement_type__c);
+				String newAgreementType = IA_util.MAP_ONE_WAY_TYPES.get(this.agreement.Agreement_type__c);
 				if (newAgreementType!= null) {
 					return newAgreementType;
 				}
@@ -599,18 +591,18 @@ public with sharing class MITA_AgreementsCtrl {
 			return this.agreement.Id == null? this.agreementPax.Active__c:this.agreement.Active__c;
 		}
 
-		public void save(boolean isMITA) {
-			this.agreement.MITAorBIETA__c = isMITA? 'MITA': 'BIETA';
+		public void save(String type) {
+			this.agreement.MITAorBIETA__c = type;
 
 			system.savepoint sp = Database.setSavePoint();
 			try {
 				// if a new agreemnt of type Pax and cargo is saved,
 				// it must be separated in two different agreements
-				if (this.isNew && this.agreement.Agreement_type__c == TYPE_PAX_CARGO) {
+				if (this.isNew && this.agreement.Agreement_type__c == IA_util.TYPE_PAX_CARGO) {
 					this.agreementPax = this.agreement.clone();
-					this.agreementPax.Agreement_type__c = TYPE_PAX;
+					this.agreementPax.Agreement_type__c = IA_util.TYPE_PAX;
 					this.agreementCargo = this.agreement.clone();
-					this.agreementCargo.Agreement_type__c = TYPE_CARGO;
+					this.agreementCargo.Agreement_type__c = IA_util.TYPE_CARGO;
 					saveSingleAgreement(this.agreementPax);
 					saveSingleAgreement(this.agreementCargo);
 
@@ -672,7 +664,7 @@ public with sharing class MITA_AgreementsCtrl {
 				if (agreement.Agreement_Type__c == otherAgr.Agreement_Type__c ) {
 					throw new MITAException( firstAirlineName  +' has already an active agreement of type '+agreement.Agreement_Type__c +' with the airline ' + secondAirlineName);
 				}
-				if (agreement.Agreement_Type__c == TYPE_ISSUING_AIRLINE && otherAgr.Agreement_Type__c == TYPE_PARTICIPATING_AIRLINE ) {
+				if (agreement.Agreement_Type__c == IA_util.TYPE_ISSUING_AIRLINE && otherAgr.Agreement_Type__c == IA_util.TYPE_PARTICIPATING_AIRLINE ) {
 					throw new MITAException( firstAirlineName  +' has already an active One Way agreement of type '+agreement.Agreement_Type__c +' with the airline ' + secondAirlineName);
 				}
 			}
@@ -687,11 +679,11 @@ public with sharing class MITA_AgreementsCtrl {
 	public String deactivateType {get;set;}
 
 	public void showDeactivateMITAPanel(){
-		this.deactivateType = 'MITA';
+		this.deactivateType = IA_util.MITA;
 		showDeactivatePanel();
 	}
 	public void showDeactivateBIETAPanel(){
-		this.deactivateType = 'BIETA';
+		this.deactivateType = IA_util.BIETA;
 		showDeactivatePanel();
 	}
 	private void showDeactivatePanel() {
@@ -714,10 +706,8 @@ public with sharing class MITA_AgreementsCtrl {
 				listAgreements.add(wrapper.getAgreement());
 			}
 		}
-		System.debug('*** listAgreements ' + listAgreements);
 		for ( MITA_Agreement__c agreement: listAgreements ) {
 			if (agreement.MITAorBIETA__c.equals(this.deactivateType) && agreement.Active__c ) {
-				System.debug('*** agreement ' + agreement);
 				agreement.Cancellation_date__c = cancellationDate;
 				agreement.Cancellation_processed_date__c = Date.today();
 				if (this.acc.Id == agreement.Airline_1__c) {

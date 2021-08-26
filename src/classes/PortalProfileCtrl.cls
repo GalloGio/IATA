@@ -626,7 +626,7 @@ public static Contact contactInfo = new Contact();
 			List<Case> revCases = [SELECT Id FROM Case
 			WHERE (AccountId = :myContact.AccountId OR AccountId = :myContact.Account.Top_Parent__c)
 			AND Reason1__c = 'Annual revalidation'
-			AND (NOT Status LIKE 'Closed%')];
+			AND IsClosed = false];
 
 			return !revCases.isEmpty();
 		}

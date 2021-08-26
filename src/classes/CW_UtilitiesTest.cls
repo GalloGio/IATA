@@ -9,55 +9,64 @@ public class CW_UtilitiesTest {
 		Integer RandomId = Integer.valueOf(Math.rint(Math.random() * 1000000));
 		String uniqueName = orgId + dateString + RandomId;
 
-		IATA_ISO_Country__c country = CW_TestDataFactory.newISOCountry();
-		insert country;
+		User sysAdminUser = [SELECT Id, UserRoleId FROM User Where IsActive = TRUE AND Profile.Name='System Administrator' Limit 1];
+		UserRole userRole = [SELECT Id, DeveloperName FROM UserRole Where DeveloperName = 'DirectorGeneral' Limit 1];
+		sysAdminUser.UserRoleId = userRole.Id;
+		update sysAdminUser;
 
-		IATA_ISO_State__c state = new IATA_ISO_State__c(IEC_Valid_SAP__c = true, IATA_ISO_Country__c = country.Id, Name = 'Ontario', ISO_Code__c = 'CA-ON');
-		insert state;
+		Contact con1;
+		Account_Role__c accRole;
+		Account_Role__c accRole2;
+		Account acc;
+		System.runAs(sysAdminUser) {
 
-		IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Madrid', IATA_ISO_State__c = state.id, Status__c = 'Verified', GeonameName__c = 'Madrid');
-		insert city;
+			IATA_ISO_Country__c country = CW_TestDataFactory.newISOCountry();
+			insert country;
+	
+			IATA_ISO_State__c state = new IATA_ISO_State__c(IEC_Valid_SAP__c = true, IATA_ISO_Country__c = country.Id, Name = 'Ontario', ISO_Code__c = 'CA-ON');
+			insert state;
+	
+			IATA_ISO_City__c city = new IATA_ISO_City__c(Name = 'Madrid', IATA_ISO_State__c = state.id, Status__c = 'Verified', GeonameName__c = 'Madrid');
+			insert city;
 
-		Account acc = CW_TestDataFactory.TestAccount(country.Id);
-		acc.Business_City__c = city.Id;
-		Account ac2 = new Account(Name = 'Account02', IATA_ISO_Country__c = country.Id, Business_City_Name__c = 'Madrid');
-		insert new List<Account>{acc, ac2};
+			acc = CW_TestDataFactory.TestAccount(country.Id);
+			acc.Business_City__c = city.Id;
+			Account ac2 = new Account(Name = 'Account02', IATA_ISO_Country__c = country.Id, Business_City_Name__c = 'Madrid');
+			insert new List<Account>{acc, ac2};
 
-		Airport_Detail__c airport = CW_TestDataFactory.newAirport(country.Id, acc.Id);
-		insert airport;
+			Airport_Detail__c airport = CW_TestDataFactory.newAirport(country.Id, acc.Id);
+			insert airport;
 
-		Contact con1 = CW_TestDataFactory.testContact(acc.id);
-		insert con1;
+			con1 = CW_TestDataFactory.testContact(acc.id);
+			insert con1;
 
+			accRole = CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
+			accRole2 = CW_TestDataFactory.testAccountRole(ac2.Id, 'Test2');
+			insert new List<Account_Role__c>{accRole, accRole2};
+
+			ICG_Account_Role_Detail__c stationOne = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
+			stationOne.Name = 'Test 1';
+			ICG_Account_Role_Detail__c stationTwo = CW_TestDataFactory.testICGAccountRoleDetail(accRole2.Id, airport);
+			stationTwo.Name = 'Test 2';
+			ICG_Account_Role_Detail__c stationThree = CW_TestDataFactory.testICGAccountRoleDetailPendingForApproval(accRole2.Id, airport);
+			stationThree.Name = 'Test 3';
+			insert new List<ICG_Account_Role_Detail__c>{stationOne, stationTwo, stationThree};
 		
-		Account_Role__c accRole = CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
-		Account_Role__c accRole2 = CW_TestDataFactory.testAccountRole(ac2.Id, 'Test2');
-		insert new List<Account_Role__c>{accRole, accRole2};
+			User uu = CW_TestDataFactory.testUser('IATAICGACB', 'IATAICGXYZ', uniqueName, orgId, pf.Id, con1.id);
+			User uu2 = new User(firstname = 'IATATESTQUEUE', 
+							lastName = 'IATAQUEUETEST', 
+							email = uniqueName + '2@test' + orgId + '.org', 
+							Username = uniqueName + '2@test' + orgId + '.org', 
+							EmailEncodingKey = 'ISO-8859-1', 
+							Alias = uniqueName.substring(18, 23), 
+							TimeZoneSidKey = 'America/Los_Angeles', 
+							LocaleSidKey = 'en_US', 
+							LanguageLocaleKey = 'en_US', 
+							ProfileId = pf2.Id,
+							License_Cost_Center__c = 'XSMW01JO01'
+							);
+			insert new List<User>{uu, uu2};
 
-		ICG_Account_Role_Detail__c stationOne = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
-		stationOne.Name = 'Test 1';
-		ICG_Account_Role_Detail__c stationTwo = CW_TestDataFactory.testICGAccountRoleDetail(accRole2.Id, airport);
-		stationTwo.Name = 'Test 2';
-		ICG_Account_Role_Detail__c stationThree = CW_TestDataFactory.testICGAccountRoleDetailPendingForApproval(accRole2.Id, airport);
-		stationThree.Name = 'Test 3';
-		insert new List<ICG_Account_Role_Detail__c>{stationOne, stationTwo, stationThree};
-		
-		User uu = CW_TestDataFactory.testUser('IATAICGACB', 'IATAICGXYZ', uniqueName, orgId, pf.Id, con1.id);
-		User uu2 = new User(firstname = 'IATATESTQUEUE', 
-						   lastName = 'IATAQUEUETEST', 
-						   email = uniqueName + '2@test' + orgId + '.org', 
-						   Username = uniqueName + '2@test' + orgId + '.org', 
-						   EmailEncodingKey = 'ISO-8859-1', 
-						   Alias = uniqueName.substring(18, 23), 
-						   TimeZoneSidKey = 'America/Los_Angeles', 
-						   LocaleSidKey = 'en_US', 
-						   LanguageLocaleKey = 'en_US', 
-						   ProfileId = pf2.Id,
-						   License_Cost_Center__c = 'XSMW01JO01'
-						);
-		insert new List<User>{uu, uu2};
-
-		System.runAs(uu2) {
 			List<Group> groupLst = new List<Group>();
 			Group testQueue = new Group(Name = 'Fresh_Test_Queue', Type = 'Queue');
 			Group testPublicGroup = new Group(Name = 'Fresh_Test_PublicGroup', Type = 'Regular');
@@ -71,42 +80,42 @@ public class CW_UtilitiesTest {
 			groupMembership.add(new GroupMember(UserOrGroupId = testPublicGroup.Id, GroupId = testQueue.Id));
 			groupMembership.add(new GroupMember(UserOrGroupId = testPublicGroup.Id, GroupId = testQueue.Id));
 			insert groupMembership;
+
+			Account_Contact_Role__c acr = CW_TestDataFactory.testAccountContactRole(accRole.Id, acc.Id, con1.Id);
+			insert acr;
+
+			ISSP_CS__c icgUralBase = new ISSP_CS__c(Name = 'ICG_URL_Base', Value__c = 'https://theurl.com/s/');
+			ISSP_CS__c hotIEC = new ISSP_CS__c(Name = 'HostIEC', Value__c = 'customer-portal-iata.force.com');
+			insert new List<ISSP_CS__c>{icgUralBase, hotIEC};
+
+			IEC_Settings__c iecSettings = new IEC_Settings__c(Name = 'Test', Account_Owner_Id__c = '', CAC_Web_Service_API_Gateway__c = '0000000',
+															CAC_Web_Service_Usage_Url__c = 'https://test.saelsforce.com', Cart_cookie_session_timeout__c = -1,
+															Contact_Owner_Id__c = '', Customer_Permission_Set_Id__c = '00000000',
+															EBC_ExactTarget_Password__c = '', EBC_ExactTarget_Username__c = '',
+															EBC_Send_From_Email__c = '', eBroadcast_Counter_AWS_API_KEY__c = '',
+															eBroadcast_Counter_AWS_URL__c = '', eBroadcast_Counter_Switch__c = false,
+															Encryption_Algorythm__c = 'AES128', Encryption_Key__c = 'Kg0m2vAj4VmBBviGAUehrw',
+															Error_Log_Keep_Duration__c = 2, IEC_Contact_Us_Email__c = 'settingstext@test.com',
+															IEC_Contact_Us_Subject__c = '', IEC_User_Portal_URL__c = 'https://iec-customer-portal-iata.cs17.force.com/iec',
+															IEC_Web_Service_Endpoint__c = 'https://test.salesforce.com/services/Soap/u/30.0', 
+															IEC_Web_Service_Password__c = 'blahblahgOTfA5SIlgvzVsjEKmfPoEPSW',
+															IEC_Web_Service_Username__c = 'systemintegrations@iata.org.ecom', 
+															InvoiceTemplate_Bank_Transfer_Zuora_ID__c = '',
+															InvoiceTemplate_Check_Zuora_ID__c = '00000000', InvoiceTemplate_Credit_Card_Zuora_ID__c = '00000000',
+															InvoiceTemplate_Other_Zuora_ID__c = '', PaymentMethod_Bank_Transfer_Zuora_ID__c = '00000000',
+															PaymentMethod_Check_Zuora_ID__c = '', PaymentMethod_ICH_Zuora_ID__c = '4028e6992e836e4a012e914e1dd85e22',
+															PaymentMethod_Other_Zuora_ID__c = '00000000', Prod_CACPro__c = '',
+															Prod_CACWeb__c = '', Prod_EBro__c = '', Prod_GAD__c = '', Prod_GSS__c = '',
+															Prod_MDP__c = '', Quote_Template_ID_New_Subscription__c = '00000000',
+															Quote_Template_Zuora_ID_New_Subscription__c = '000000', SchdlCACWSUsageUpdate_Class_ID__c = '0000000',
+															SchdlIECCompileUsage_Class_ID__c = '000000', Server_API_URL__c = 'https://iata--ecom.cs18.my.salesforce.com/services/Soap/u/10.0/00D110000005PWM',
+															SF_Partner_Web_Service_endpoint__c = '', Zuora_Generate_Quote_PDF_URL__c = '');
+			insert iecSettings;
+
+			Account_Role_Relationship__c arr = new Account_Role_Relationship__c(From__c = accRole.Id, To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
+			Account_Role_Relationship__c arr2 = new Account_Role_Relationship__c(From__c = accRole2.Id, Relationship_Name__c = 'TestNameRelationship', To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
+			insert new List<Account_Role_Relationship__c>{arr, arr2};
 		}
-
-		Account_Contact_Role__c acr = CW_TestDataFactory.testAccountContactRole(accRole.Id, acc.Id, con1.Id);
-		insert acr;
-
-		ISSP_CS__c icgUralBase = new ISSP_CS__c(Name = 'ICG_URL_Base', Value__c = 'https://theurl.com/s/');
-		ISSP_CS__c hotIEC = new ISSP_CS__c(Name = 'HostIEC', Value__c = 'customer-portal-iata.force.com');
-		insert new List<ISSP_CS__c>{icgUralBase, hotIEC};
-
-		IEC_Settings__c iecSettings = new IEC_Settings__c(Name = 'Test', Account_Owner_Id__c = '', CAC_Web_Service_API_Gateway__c = '0000000',
-														CAC_Web_Service_Usage_Url__c = 'https://test.saelsforce.com', Cart_cookie_session_timeout__c = -1,
-														Contact_Owner_Id__c = '', Customer_Permission_Set_Id__c = '00000000',
-														EBC_ExactTarget_Password__c = '', EBC_ExactTarget_Username__c = '',
-														EBC_Send_From_Email__c = '', eBroadcast_Counter_AWS_API_KEY__c = '',
-														eBroadcast_Counter_AWS_URL__c = '', eBroadcast_Counter_Switch__c = false,
-														Encryption_Algorythm__c = 'AES128', Encryption_Key__c = 'Kg0m2vAj4VmBBviGAUehrw',
-														Error_Log_Keep_Duration__c = 2, IEC_Contact_Us_Email__c = 'settingstext@test.com',
-														IEC_Contact_Us_Subject__c = '', IEC_User_Portal_URL__c = 'https://iec-customer-portal-iata.cs17.force.com/iec',
-														IEC_Web_Service_Endpoint__c = 'https://test.salesforce.com/services/Soap/u/30.0', 
-														IEC_Web_Service_Password__c = 'blahblahgOTfA5SIlgvzVsjEKmfPoEPSW',
-														IEC_Web_Service_Username__c = 'systemintegrations@iata.org.ecom', 
-														InvoiceTemplate_Bank_Transfer_Zuora_ID__c = '',
-														InvoiceTemplate_Check_Zuora_ID__c = '00000000', InvoiceTemplate_Credit_Card_Zuora_ID__c = '00000000',
-														InvoiceTemplate_Other_Zuora_ID__c = '', PaymentMethod_Bank_Transfer_Zuora_ID__c = '00000000',
-														PaymentMethod_Check_Zuora_ID__c = '', PaymentMethod_ICH_Zuora_ID__c = '4028e6992e836e4a012e914e1dd85e22',
-														PaymentMethod_Other_Zuora_ID__c = '00000000', Prod_CACPro__c = '',
-														Prod_CACWeb__c = '', Prod_EBro__c = '', Prod_GAD__c = '', Prod_GSS__c = '',
-														Prod_MDP__c = '', Quote_Template_ID_New_Subscription__c = '00000000',
-														Quote_Template_Zuora_ID_New_Subscription__c = '000000', SchdlCACWSUsageUpdate_Class_ID__c = '0000000',
-														SchdlIECCompileUsage_Class_ID__c = '000000', Server_API_URL__c = 'https://iata--ecom.cs18.my.salesforce.com/services/Soap/u/10.0/00D110000005PWM',
-														SF_Partner_Web_Service_endpoint__c = '', Zuora_Generate_Quote_PDF_URL__c = '');
-		insert iecSettings;
-
-		Account_Role_Relationship__c arr = new Account_Role_Relationship__c(From__c = accRole.Id, To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
-		Account_Role_Relationship__c arr2 = new Account_Role_Relationship__c(From__c = accRole2.Id, Relationship_Name__c = 'TestNameRelationship', To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
-		insert new List<Account_Role_Relationship__c>{arr, arr2};
 	}
 	/*
 	 * @author
@@ -901,6 +910,12 @@ public class CW_UtilitiesTest {
 		}
 	}
 
+	@isTest
+	static void getAllServicesAvailableTest(){
+		List<CW_Utilities.PicklistVal> historyLst = CW_Utilities.getAllServicesAvailable();
+		System.assertEquals(false, historyLst.isEmpty(), 'ERROR: List of services available for ramp handler are empty');
+	}
+	
 	/*********************************************************************************************************
 	 * @name			getFacilityHistoryByUserTest
 	 * @author			Daniel Mendoza <daniel.mendoza@nextlinksolutions.ch>
@@ -966,5 +981,48 @@ public class CW_UtilitiesTest {
 		List<ICG_Contact_Role_Detail__c> crds = CW_Utilities.getContactRoleDetailsToInsert(accRole.Account__c, station.Id, usr.ContactId, 'Approved');
 		test.stopTest();
 		System.assert(!crds.isEmpty(), 'ERROR: crds should not be empty');
+	}
+
+
+	/*********************************************************************************************************
+	 * @name			getAllHandlingServicesAvailableJsonTest
+	 * @description		Test method for getAllServicesAvailableJson method
+	 * @param			-
+	 * @return			-
+	**********************************************************************************************************/
+	@isTest
+	static void getAllHandlingServicesAvailableJsonTest(){
+		String services = CW_Utilities.getAllServicesAvailableJson();
+		System.assert(string.isNotBlank(services), 'ERROR: services not be empty');
+	}
+
+	@isTest
+	public static void isCurrentUserSystemAdministratorTest() {
+		Test.startTest();
+		
+		Boolean result = CW_Utilities.isCurrentUserSystemAdministrator();
+		system.assertEquals(true, result);
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void getCurrentUserPermissionSetsTest() {
+		Test.startTest();
+		
+		List<String> result = CW_Utilities.getCurrentUserPermissionSets();
+		system.assertNotEquals(null, result);
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void hasSpecialPermissionsToEditTest() {
+		Test.startTest();
+		
+		Boolean result = CW_Utilities.hasSpecialPermissionsToEdit();
+		system.assertEquals(true, result);
+		
+		Test.stopTest();
 	}
 }

@@ -22,7 +22,7 @@ export default class CwSimpleTooltip extends LightningElement {
     }
 
     get cssClass(){
-        let cssClasses = "slds-nubbin_top-left popover-custom";
+        let cssClasses = "slds-float_top slds-nubbin_top-left popover-custom";
         const isTooltipToShow = this.tooltipObject && (this.tooltipToDisplay === this.tooltipObject.item) && (this.tooltipToDisplay === this.itemId);
         const hasText = this.tooltipObject && this.tooltipObject.text;
         cssClasses += hasText && isTooltipToShow ? " slds-popover" : " slds-popover_hide"; 

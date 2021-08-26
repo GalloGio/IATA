@@ -102,7 +102,7 @@ public class ISSP_ANG_CodeSearch {
 			for (Account a: [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
 								ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
 								Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, IATA_ISO_Country__r.BSP_Country_free_text__c,
-								Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c,
+								Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,
 								Field_Head_Office__c, Category__c
 							FROM Account
 							WHERE (Sector__c = :sector
@@ -135,7 +135,7 @@ public class ISSP_ANG_CodeSearch {
 					rhcAgencyInfo = rhcInfos[0];
 				}
 
-				if(reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
+				if(reqAgency.Location_Type__c == Ams_Utils.AW || reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 					if(reqAgency.Location_Type__c == Ams_Utils.AE || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
 					} else {
@@ -153,7 +153,7 @@ public class ISSP_ANG_CodeSearch {
 					Account parentAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
 													 ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c, Category__c,
 													 Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.BSP_Country_free_text__c,
-													 ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c
+													 ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
 											FROM Account
 											WHERE Id = :reqAgency.Top_Parent__c];
 
@@ -196,17 +196,21 @@ public class ISSP_ANG_CodeSearch {
 
 				Boolean countryFound = false;
 
-				for (Services_Rendered__c service :[SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c
-														 FROM Services_Rendered__c
-														 WHERE Services_Rendered_Type__c LIKE :serviceRenderendType
-														AND Services_Rendered_Status__c = 'Active'
-													 	AND Services_Rendered_By__c = :airline.Id]) {
-					if (service.ISO_Country_Code__c == this.agency.IATA_ISO_Country__r.BSP_Country_free_text__c) {
-						countryFound = true;
-						break;
+				if(reqAgency.Location_Type__c == Ams_Utils.GE){
+					countryFound = true;
+				}else{
+					for (Services_Rendered__c service :[SELECT Id, ISO_Country_formula__c, ISO_Country_Code__c
+															FROM Services_Rendered__c
+															WHERE Services_Rendered_Type__c LIKE :serviceRenderendType
+															AND Services_Rendered_Status__c = 'Active'
+															AND Services_Rendered_By__c = :airline.Id]) {
+						if (service.ISO_Country_Code__c == reqAgency.IATA_ISO_Country__r.BSP_Country_free_text__c) {
+							countryFound = true;
+							break;
+						}
 					}
 				}
-
+								
 				if (countryFound) {
 					if (this.agency.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
 						afpWrapper = new ANG_ISSP_AfpWrapper(this.agency);
@@ -229,9 +233,9 @@ public class ISSP_ANG_CodeSearch {
 					this.activeError = true;
 
 					if (sector == Ams_Utils.SECTOR_CARGO) {
-						this.errorMessage = 'Information not available: Your Airline has no CASS Participation in the country of this IATA Code ' + this.agency.IATA_ISO_Country__r.Name;
+						this.errorMessage = 'Information not available: Your Airline has no CASS Participation in the country of this IATA Code ' + reqAgency.IATA_ISO_Country__r.Name;
 					} else if (sector == Ams_Utils.SECTOR_PASSENGER) {
-						this.errorMessage = 'Information not available: Your Airline has no BSP Participation in the country of this IATA Code ' + this.agency.IATA_ISO_Country__r.Name;
+						this.errorMessage = 'Information not available: Your Airline has no BSP Participation in the country of this IATA Code ' + reqAgency.IATA_ISO_Country__r.Name;
 					}
 				}
 

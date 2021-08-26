@@ -296,8 +296,6 @@ public with sharing class clsMassCaseCreationController {
 		String agentStatus = Apexpages.currentPage().getParameters().get('agentstatus');
 
 		String country = aISOCountry.IATA_ISO_Country__c;
-		system.debug('country on class : ' + country);
-		system.debug('country page new : ' + Apexpages.currentPage().getParameters().get('ISOcountry'));
 		selectedCountry = country;
 		String email = Apexpages.currentPage().getParameters().get('email');
 		String yearend = Apexpages.currentPage().getParameters().get('yearend');  //phase 1 release 2
@@ -325,16 +323,14 @@ public with sharing class clsMassCaseCreationController {
 			IsSelectedCountryIsSpain = false;
 		} else {
 			soql = 'select Account.name, Account.IATACode__c, Account.Status__c, Account.Type, Account.BillingCountry, Account.Location_Type__c, account.CCG_Participant__c , account.CCG_IRR_Distribution_list__c, account.ANG_FA_Opt_out__c , Account.Number_of_open_Financial_Review_Cases__c, FirstName, LastName, Email, Account.Region__c, ID, Financial_Assessment_Contact__c, Name from contact where account.name != null and Account.IATACode__c != null and Financial_Assessment_Contact__c = true';
-			//if (!country.equals('')) {
-				//soql += ' and Account.BillingCountry LIKE \''+String.escapeSingleQuotes(country)+'%\'';
+		
+			soql += ' and Account.IATA_ISO_Country__c = \'' + aISOCountry.IATA_ISO_Country__c + '\'';
 
-				system.debug('aISOCountry.IATA_ISO_Country__c  '+aISOCountry.IATA_ISO_Country__c); // country id
-				soql += ' and Account.IATA_ISO_Country__c = \'' + aISOCountry.IATA_ISO_Country__c + '\'';
-				system.debug('soql  '+soql);
-
-				if (country.toUpperCase().equals('SPAIN')) IsSelectedCountryIsSpain = true;
+			//exclude accounts with FinancialSecurity Security_type__c = 'CCG' and security_status__c = 'Active'
+			soql += ' and AccountId NOT IN (SELECT Account__c FROM Financial_Security__c WHERE Security_type__c = \'CCG\' and security_status__c = \'Active\')';
+			if (country.toUpperCase().equals('SPAIN')) IsSelectedCountryIsSpain = true;
 				else IsSelectedCountryIsSpain = false;
-			//}
+
 			if (!agentType.equals('') ) {
 
 				string[] aType = String.escapeSingleQuotes(agentType).split('-', 12);
@@ -373,14 +369,10 @@ public with sharing class clsMassCaseCreationController {
 			}
 			if (email.equals('1')) {
 				soql += ' and Email != null';
-				//isSendEmailIsDisabled = false;
 			} else if (email.equals('2')) {
 				soql += ' and Email = null';
-				//isSendEmailIsDisabled = true;
-			}//else isSendEmailIsDisabled = true;
-
-			//if (!yearend.equals('') && !yearend.equals('--All--'))   //phase 1 release 2
-			//    soql += ' and Account.Financial_Year_End__c LIKE \''+String.escapeSingleQuotes(yearend)+'%\'';
+			}
+			
 			if (yearend != '' && yearend.equals('--All--'))
 				soql += ' and Account.Fin_statements_submission_deadline__c != \'\'';
 			else if (yearend != '')
@@ -395,9 +387,6 @@ public with sharing class clsMassCaseCreationController {
 			else if (exclOpenCases.equals('false'))
 				soql += ' and (Account.Has_Financial_Review_Open_Cases__c = true or Account.Has_Financial_Review_Open_Cases__c = false)';
 			// else we ignore the flag
-
-			// construct link to report (no need to pass the hardcoded parameter, only the dynamic ones)
-			//openCasesReportURL = '/00OR0000000k0QE?';   //'/00OR0000000k06s?';  // ID of the report
 
 			if(exclFAOptOut.equals('true'))
 				soql += ' and Account.ANG_FA_Opt_out__c = false';
@@ -419,10 +408,9 @@ public with sharing class clsMassCaseCreationController {
 				openCasesReportURL += 'pn5=ne'; // not equals
 			else if (email.equals('2'))
 				openCasesReportURL += 'pn5=e';  // equals
-			//openCasesReportURL += 'pv6=';     // Email equals/not equals null
+			
 			List<IATA_ISO_Country__c> couutryName = IATAIsoCountryDAO.getIsoCountriesByIds(new Set<String>{country});
 
-			//openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(country).trim(), 'UTF-8'); // provide the country
 			openCasesReportURL += '&pv6=' + EncodingUtil.urlEncode(String.escapeSingleQuotes(couutryName[0].Name).trim(), 'UTF-8'); // provide the country
 			string[] agentTypes = String.escapeSingleQuotes(agentType).trim().split('-', 4);
 			string joinedAgentTypes = String.join(agentTypes, '%2C');
@@ -591,6 +579,8 @@ public with sharing class clsMassCaseCreationController {
 			From Case c
 			Where c.RecordTypeId = '01220000000Q4Yd'
 			and (c.Status <> 'Closed'
+			AND c.Status <> 'Closed Opt-out'
+			AND c.Status <> 'Closed_Non compliance'
 			AND c.Status <> 'Assessment Cancelled')
 			AND c.ContactId IN :selectedID]) {
 				// Find the contact of the case

@@ -3081,9 +3081,9 @@ public without sharing class ISSP_AMS_Accreditation {
 					locationClass = 'Q';
 				}
 			}else{
-				if(con.Account.Category__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT){
+				if(newForm.Agent_Type__c == AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_HO){
 					locationClass = 'C';
-				}else if(con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == AMS_Utils.CATEGORY_NON_IATA_FREIGHT_FORWARDER){
+				}else if(newForm.Agent_Type__c == AMS_Utils.CNS_AGENT_TYPE_REQUESTED_CNS_CASS_NEW_COMERCIAL_HO || con.Account.Category__c == AMS_Utils.CATEGORY_NON_IATA_FREIGHT_FORWARDER){
 					locationClass = 'R';
 				}
 			}

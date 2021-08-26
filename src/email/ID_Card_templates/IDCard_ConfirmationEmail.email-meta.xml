@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>27.0</apiVersion>
+    <available>true</available>
+    <description>Confirmation for New application, Reissue, Replacement and Renewal Automated message sent by Salesforce for the submission of an application or request for reissue, replacement and renewal containing info on the fee applicable (details see template encloses) and triggered by hitting the ‘next’ button of the respective form</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IDCard_ConfirmationEmail</name>
+    <style>none</style>
+    <subject>Confirmation IATA/IATAN ID Card  Application</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

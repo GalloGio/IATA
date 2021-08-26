@@ -48,6 +48,7 @@ private class LogPhoneCaseControllerTest {
 			Test.setCurrentPage(pageRef);
 
 			LogPhoneCaseController controller = new LogPhoneCaseController();
+			LogPhoneCaseController.listCaseRecordtypesJSON();
 			controller.getlstRecordTypes();
 			controller.newcase.CaseArea__c = 'Airline Management';
 			controller.newcase.Reason1__c = 'Airline data changes';

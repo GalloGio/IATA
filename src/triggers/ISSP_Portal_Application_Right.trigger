@@ -1,9 +1,9 @@
-trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after insert, after update, before delete, after delete) {
+trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (before insert, after insert, after update, before delete, after delete) {
 
 	if (PortalServiceAccessTriggerHandler.avoidAppTrigger) return;
 
 	//we skip this trigger if IFAP portal service so we avoid too many SOQL queries
-	if (!trigger.isDelete) {
+	if (!trigger.isDelete && !trigger.isBefore) {
 		for (Portal_Application_Right__c access : trigger.new) {
 			if (access.Application_Name__c == 'IFAP' )
 				return;
@@ -58,7 +58,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	//end of ANG
 
 	//Logic migrated from WF - Application uniqueness for contact | Biller Direct Rights -> to trigger 
-	if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert();
+	if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert(trigger.new);
 	if(Trigger.isBefore && Trigger.isUpdate) handler.onBeforeUpdate();
 
 	//E&F APPS
@@ -71,7 +71,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	List<Portal_Application_Right__c> passGrantPortalRights = new List<Portal_Application_Right__c>();
 	List<Portal_Application_Right__c> passReGrantPortalRights = new List<Portal_Application_Right__c>();
 	List<Portal_Application_Right__c> passDenyPortalRights = new List<Portal_Application_Right__c>();
-	if(!Trigger.isDelete && trigger.new!=null && Trigger.isUpdate){
+	if(trigger.new!=null && Trigger.isUpdate){
 		for(Portal_Application_Right__c portal : trigger.new){
 
 			if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Granted' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Requested')){
@@ -112,366 +112,331 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	}
 	//methods below this line should not run for delete cases
 
-	for (Portal_Application_Right__c access : trigger.new) {
-		system.debug('ONE RECORD');
-		system.debug('APP NAME: ' + access.Application_Name__c);
-		if (access.Application_Name__c == 'SIS') {
-			if (trigger.isInsert && access.Right__c == 'Access Granted') {
-				system.debug('IS INSERT AND GRANTED');
-				contactIdSet.add(access.Contact__c);
-			}
-			else if (trigger.isUpdate){
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == 'Access Granted') {
-						system.debug('IS UPDATE AND GRANTED');
-						contactIdSet.add(access.Contact__c);
+	if (!trigger.isDelete && !trigger.isBefore) {
+		for (Portal_Application_Right__c access : trigger.new) {
+			system.debug('ONE RECORD');
+			system.debug('APP NAME: ' + access.Application_Name__c);
+			if (access.Application_Name__c == 'SIS') {
+				if (trigger.isInsert && access.Right__c == 'Access Granted') {
+					system.debug('IS INSERT AND GRANTED');
+					contactIdSet.add(access.Contact__c);
+				}
+				else if (trigger.isUpdate){
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == 'Access Granted') {
+							system.debug('IS UPDATE AND GRANTED');
+							contactIdSet.add(access.Contact__c);
+						}
+						else if (access.Right__c == 'Access Denied'){
+							system.debug('IS UPDATE AND DENIED');
+							contactRemoveIdSet.add(access.Contact__c);
+						}
 					}
-					else if (access.Right__c == 'Access Denied'){
-						system.debug('IS UPDATE AND DENIED');
-						contactRemoveIdSet.add(access.Contact__c);
+				}
+			}
+			//MConde -IFG ACCESS APPROVAL HANDLE - ADD/Remove Permission SET
+			else if (SCIMServProvManager.isSCIMUserServiceProv(access)) {
+	
+				if (trigger.isInsert && access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_GRANTED) {
+					system.debug('mconde IS INSERT AND GRANTED');
+					system.debug('mconde - Add permission SET SCIM to Grant list - APP Trigger insert');
+					//contactSCIMIdSet.add(access.Contact__c);
+					SCIMServProvManager.SCIMProvisioningRow aScimRow =
+						new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
+								SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
+								access.id,
+								LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
+					scimElements.add(aScimRow);
+				}
+				else if (trigger.isUpdate){
+					system.debug('basto1p - Add or remove permission SET IFG APP Trigger Update');
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_GRANTED) {
+							system.debug('basto1p - Add permission SET IFG to GRant list - APP Trigger Update');
+							//contactSCIMIdSet.add(access.Contact__c);
+							SCIMServProvManager.SCIMProvisioningRow aScimRow =
+								new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
+										SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
+										access.id,
+										LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
+							scimElements.add(aScimRow);
+						}
+						else if (access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_DENIED){
+							system.debug('basto1p - Remove permission SET IFG add to Deny list -   APP Trigger Update');
+							//contactSCIMRemoveIdSet.add(access.Contact__c);
+							SCIMServProvManager.SCIMProvisioningRow aScimRow =
+								new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
+										SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
+										access.id,
+										LightningConnectedAppHelper.OID_USER_APP_ACTION_REMOVE);
+							scimElements.add(aScimRow);
+	
+						}
+					}
+				}
+			}
+			else if (access.Application_Name__c.startsWith('Treasury Dashboard')){
+				String tdAppName = '';
+				if (access.Application_Name__c == 'Treasury Dashboard') {
+					tdAppName = 'ISSP_Treasury_Dashboard_Basic';
+				}
+				else{
+					tdAppName = 'ISSP_Treasury_Dashboard_Premium';
+				}
+				if (trigger.isInsert && access.Right__c == 'Access Granted') {
+					system.debug('Adding id from insert');
+					contactFedIdMap.put(access.Contact__c, tdAppName);
+					contactFedIdSet.add(access.Contact__c);
+					manageAccessTDidSet.add(access.Id);
+				}
+				else if (trigger.isUpdate){
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == 'Access Denied') {
+							contactRemove2FAIdSet.add(access.Contact__c);
+						}
+						else if (access.Right__c == 'Access Granted'){
+							system.debug('Adding id from update');
+							contactFedIdMap.put(access.Contact__c, tdAppName);
+							contactFedIdSet.add(access.Contact__c);
+							manageAccessTDidSet.add(access.Id);
+						}
+					}
+				} else if (Trigger.isDelete) {
+					contactRemove2FAIdSet.add(trigger.oldMap.get(access.Id).Contact__c);
+				}
+			}
+			else if (access.Application_Name__c == 'Baggage Proration'){
+				if (trigger.isInsert && access.Right__c == 'Access Granted') {
+					contactBaggageAdd.add(access.Contact__c);
+				}
+				else if (trigger.isUpdate){
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == 'Access Granted') {
+							contactBaggageAdd.add(access.Contact__c);
+						}
+						else if (access.Right__c == 'Access Denied'){
+							contactBaggageRemove.add(access.Contact__c);
+						}
+					}
+				}
+			}
+			else if (access.Application_Name__c == 'Standards Setting Workspace'){
+				if (trigger.isInsert && access.Right__c == 'Access Granted') {
+					contactKaviAdd.add(access.Contact__c);
+				}
+				else if (trigger.isUpdate){
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == 'Access Granted') {
+							contactKaviAdd.add(access.Contact__c);
+						}else if (access.Right__c == 'Access Denied'){
+							//Should update user status in Higherlogic status to inactive (below9)
+							removeKaviPermissionSet.add(access.Contact__c);
+						}
+					}
+				}
+			}
+			else if (access.Application_Name__c.startsWith('IATA Accreditation')){
+	
+				if (trigger.isInsert && access.Right__c == 'Access Granted') {
+					system.debug('IS INSERT AND GRANTED');
+					contactIdIATAAccreditationSet.add(access.Contact__c);
+				}
+				else if (trigger.isUpdate){
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == 'Access Granted') {
+							system.debug('IS UPDATE AND GRANTED');
+							contactIdIATAAccreditationSet.add(access.Contact__c);
+						}
+						else if (access.Right__c == 'Access Denied'){
+							system.debug('IS UPDATE AND DENIED');
+							contactIdRemoveIATAAccreditationSet.add(access.Contact__c);
+						}
+					}
+				}
+			}
+			else if (access.Application_Name__c.contains('Bulletin')){
+	
+				if (trigger.isUpdate) {
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == 'Access Denied') {
+							system.debug('IS UPDATE AND DENIED');
+							//disable the ebulletin profiles for the user
+							ebulletinServices.add(access);
+						}
+					}
+				}
+			}
+			//PASS
+			else if (access.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService)){
+	
+				if (trigger.isInsert && access.Right__c == 'Access Granted') {
+					system.debug('IS INSERT AND GRANTED');
+					contactIdPASSAccreditationSet.add(access.Contact__c);
+				}
+				else if (trigger.isUpdate){
+					Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
+					if (access.Right__c != oldAccess.Right__c) {
+						if (access.Right__c == 'Access Granted') {
+							system.debug('IS UPDATE AND GRANTED');
+							contactIdPASSAccreditationSet.add(access.Contact__c);
+						}
+						else if (access.Right__c == 'Access Denied'){
+							system.debug('IS UPDATE AND DENIED');
+							contactIdRemovePASSAccreditationSet.add(access.Contact__c);
+						}
 					}
 				}
 			}
 		}
-		//MConde -IFG ACCESS APPROVAL HANDLE - ADD/Remove Permission SET
-		else if (SCIMServProvManager.isSCIMUserServiceProv(access)) {
-
-			if (trigger.isInsert && access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_GRANTED) {
-				system.debug('mconde IS INSERT AND GRANTED');
-				system.debug('mconde - Add permission SET SCIM to Grant list - APP Trigger insert');
-				//contactSCIMIdSet.add(access.Contact__c);
-				SCIMServProvManager.SCIMProvisioningRow aScimRow =
-					new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
-							SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
-							access.id,
-							LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
-				scimElements.add(aScimRow);
+	
+		//disable the ebulletin profiles for the user
+		if (!ebulletinServices.isEmpty()) {
+	
+			Set<Id> contactsId = new Set<Id>();
+			List<User> usersWithAccess = new List<User>();
+			List<AMS_eBulletin_Profile__c> bProfiles = new List<AMS_eBulletin_Profile__c>();
+			List<AMS_eBulletin_Profile__c> bProfilesToUpdate = new List<AMS_eBulletin_Profile__c>();
+	
+			for (Portal_Application_Right__c service : ebulletinServices) {
+				contactsId.add(service.Contact__c);
 			}
-			else if (trigger.isUpdate){
-				system.debug('basto1p - Add or remove permission SET IFG APP Trigger Update');
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_GRANTED) {
-						system.debug('basto1p - Add permission SET IFG to GRant list - APP Trigger Update');
-						//contactSCIMIdSet.add(access.Contact__c);
-						SCIMServProvManager.SCIMProvisioningRow aScimRow =
-							new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
-									SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
-									access.id,
-									LightningConnectedAppHelper.OID_USER_APP_ACTION_ADD);
-						scimElements.add(aScimRow);
+	
+			if (!contactsId.isEmpty()) {
+	
+				usersWithAccess = [SELECT id FROM User WHERE contactid IN :contactsId];
+	
+				if (!usersWithAccess.isEmpty()) {
+	
+					bProfiles = [SELECT id, Opt_in__c, Opt_out_Bulletin__c FROM AMS_eBulletin_Profile__c WHERE User__c IN :usersWithAccess AND Opt_in__c = true AND Opt_out_Bulletin__c = false];
+	
+					if (!bProfiles.isEmpty()) {
+	
+						for (AMS_eBulletin_Profile__c ebProf : bProfiles) {
+							ebProf.Opt_in__c = false;
+							ebProf.Opt_out_Bulletin__c = true;
+							bProfilesToUpdate.add(ebProf);
+						}
+	
+						if (!bProfilesToUpdate.isEmpty()) {
+							System.debug('ISSP_Portal_Application_Right - trigger - eBulletin Profiles to Update: ' + bProfilesToUpdate);
+							update bProfilesToUpdate;
+						}
+	
 					}
-					else if (access.Right__c == SCIMServProvManager.IATA_STS_ACCESS_DENIED){
-						system.debug('basto1p - Remove permission SET IFG add to Deny list -   APP Trigger Update');
-						//contactSCIMRemoveIdSet.add(access.Contact__c);
-						SCIMServProvManager.SCIMProvisioningRow aScimRow =
-							new SCIMServProvManager.SCIMProvisioningRow(access.Contact__c,
-									SCIMServProvManager.getSCIMAppNameFromId(access.Portal_Application__c),
-									access.id,
-									LightningConnectedAppHelper.OID_USER_APP_ACTION_REMOVE);
-						scimElements.add(aScimRow);
-
-					}
+	
 				}
+	
 			}
 		}
-		else if (access.Application_Name__c.startsWith('Treasury Dashboard')){
-			String tdAppName = '';
-			if (access.Application_Name__c == 'Treasury Dashboard') {
-				tdAppName = 'ISSP_Treasury_Dashboard_Basic';
+	
+		if (!contactIdSet.isEmpty() || !contactRemoveIdSet.isEmpty()) {
+			system.debug('WILL START FUTURE METHOD');
+			if (!ISSP_UserTriggerHandler.preventSISIntegration) {
+				//call external WS to update SIS user
+				ISSP_UserTriggerHandler.calloutSIS_ActivateDeactivateUsers(contactIdSet, contactRemoveIdSet);
 			}
-			else{
-				tdAppName = 'ISSP_Treasury_Dashboard_Premium';
+			ISSP_UserTriggerHandler.preventSISIntegration = true;
+			if (!ISSP_UserTriggerHandler.preventTrigger) {
+				ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
 			}
-			if (trigger.isInsert && access.Right__c == 'Access Granted') {
-				system.debug('Adding id from insert');
-				contactFedIdMap.put(access.Contact__c, tdAppName);
-				contactFedIdSet.add(access.Contact__c);
-				manageAccessTDidSet.add(access.Id);
-			}
-			else if (trigger.isUpdate){
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == 'Access Denied') {
-						contactRemove2FAIdSet.add(access.Contact__c);
-					}
-					else if (access.Right__c == 'Access Granted'){
-						system.debug('Adding id from update');
-						contactFedIdMap.put(access.Contact__c, tdAppName);
-						contactFedIdSet.add(access.Contact__c);
-						manageAccessTDidSet.add(access.Id);
-					}
-				}
-			} else if (Trigger.isDelete) {
-				contactRemove2FAIdSet.add(trigger.oldMap.get(access.Id).Contact__c);
-			}
-		}
-		else if (access.Application_Name__c == 'Baggage Proration'){
-			if (trigger.isInsert && access.Right__c == 'Access Granted') {
-				contactBaggageAdd.add(access.Contact__c);
-			}
-			else if (trigger.isUpdate){
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == 'Access Granted') {
-						contactBaggageAdd.add(access.Contact__c);
-					}
-					else if (access.Right__c == 'Access Denied'){
-						contactBaggageRemove.add(access.Contact__c);
-					}
-				}
-			}
-		}
-		else if (access.Application_Name__c == 'Standards Setting Workspace'){
-			if (trigger.isInsert && access.Right__c == 'Access Granted') {
-				contactKaviAdd.add(access.Contact__c);
-			}
-			else if (trigger.isUpdate){
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == 'Access Granted') {
-						contactKaviAdd.add(access.Contact__c);
-					}else if (access.Right__c == 'Access Denied'){
-						//Should update user status in Higherlogic status to inactive (below9)
-						removeKaviPermissionSet.add(access.Contact__c);
-					}
-				}
-			}
-		}
-		else if (access.Application_Name__c.startsWith('IATA Accreditation')){
-
-			if (trigger.isInsert && access.Right__c == 'Access Granted') {
-				system.debug('IS INSERT AND GRANTED');
-				contactIdIATAAccreditationSet.add(access.Contact__c);
-			}
-			else if (trigger.isUpdate){
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == 'Access Granted') {
-						system.debug('IS UPDATE AND GRANTED');
-						contactIdIATAAccreditationSet.add(access.Contact__c);
-					}
-					else if (access.Right__c == 'Access Denied'){
-						system.debug('IS UPDATE AND DENIED');
-						contactIdRemoveIATAAccreditationSet.add(access.Contact__c);
-					}
-				}
-			}
-		}
-		else if (access.Application_Name__c.contains('Bulletin')){
-
-			if (trigger.isUpdate) {
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == 'Access Denied') {
-						system.debug('IS UPDATE AND DENIED');
-						//disable the ebulletin profiles for the user
-						ebulletinServices.add(access);
-					}
-				}
-			}
-		}
-		//PASS
-		else if (access.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService)){
-
-			if (trigger.isInsert && access.Right__c == 'Access Granted') {
-				system.debug('IS INSERT AND GRANTED');
-				contactIdPASSAccreditationSet.add(access.Contact__c);
-			}
-			else if (trigger.isUpdate){
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				if (access.Right__c != oldAccess.Right__c) {
-					if (access.Right__c == 'Access Granted') {
-						system.debug('IS UPDATE AND GRANTED');
-						contactIdPASSAccreditationSet.add(access.Contact__c);
-					}
-					else if (access.Right__c == 'Access Denied'){
-						system.debug('IS UPDATE AND DENIED');
-						contactIdRemovePASSAccreditationSet.add(access.Contact__c);
-					}
-				}
-			}
-		}
-		/*
-		else if (access.Application_Name__c == 'ASD'){
-			system.debug('IS ASD');
-			if (trigger.isUpdate){
-				system.debug('IS UPDATE');
-				Portal_Application_Right__c oldAccess = trigger.oldMap.get(access.Id);
-				system.debug('CURRENT: ' + access.Right__c);
-				system.debug('OLD: ' + oldAccess.Right__c);
-				if (access.Right__c != oldAccess.Right__c){
-					system.debug('DIFFERENT RIGHT');
-					if (access.Right__c == 'Access Denied'){
-						system.debug('IS REJECTED');
-						String contactId = String.valueOf(access.Contact__c);
-						contactId = contactId.substring(0,15);
-						system.debug('To call webservice: ' + contactId);
-						ISSP_WS_Utilities.invokeAsdDisableUser(contactId);
-					}
-				}
-			}
-		}
-		*/
-	}
-
-
-	//disable the ebulletin profiles for the user
-	if (!ebulletinServices.isEmpty()) {
-
-		Set<Id> contactsId = new Set<Id>();
-		List<User> usersWithAccess = new List<User>();
-		List<AMS_eBulletin_Profile__c> bProfiles = new List<AMS_eBulletin_Profile__c>();
-		List<AMS_eBulletin_Profile__c> bProfilesToUpdate = new List<AMS_eBulletin_Profile__c>();
-
-		for (Portal_Application_Right__c service : ebulletinServices) {
-			contactsId.add(service.Contact__c);
-		}
-
-		if (!contactsId.isEmpty()) {
-
-			usersWithAccess = [SELECT id FROM User WHERE contactid IN :contactsId];
-
-			if (!usersWithAccess.isEmpty()) {
-
-				bProfiles = [SELECT id, Opt_in__c, Opt_out_Bulletin__c FROM AMS_eBulletin_Profile__c WHERE User__c IN :usersWithAccess AND Opt_in__c = true AND Opt_out_Bulletin__c = false];
-
-				if (!bProfiles.isEmpty()) {
-
-					for (AMS_eBulletin_Profile__c ebProf : bProfiles) {
-						ebProf.Opt_in__c = false;
-						ebProf.Opt_out_Bulletin__c = true;
-						bProfilesToUpdate.add(ebProf);
-					}
-
-					if (!bProfilesToUpdate.isEmpty()) {
-						System.debug('ISSP_Portal_Application_Right - trigger - eBulletin Profiles to Update: ' + bProfilesToUpdate);
-						update bProfilesToUpdate;
-					}
-
-				}
-
-			}
-
-		}
-	}
-
-	if (!contactIdSet.isEmpty() || !contactRemoveIdSet.isEmpty()) {
-		system.debug('WILL START FUTURE METHOD');
-		if (!ISSP_UserTriggerHandler.preventSISIntegration) {
-			//call external WS to update SIS user
-			ISSP_UserTriggerHandler.calloutSIS_ActivateDeactivateUsers(contactIdSet, contactRemoveIdSet);
-		}
-		ISSP_UserTriggerHandler.preventSISIntegration = true;
-		if (!ISSP_UserTriggerHandler.preventTrigger) {
-			ISSP_UserTriggerHandler.updateSIS_permissionSet(contactIdSet, contactRemoveIdSet);
-		}
-		ISSP_UserTriggerHandler.preventTrigger = true;
-	}
-
-	//deleteTwoFactor
-	if (!contactRemove2FAIdSet.isEmpty()) {
-		ISSP_UserTriggerHandler.deleteTwoFactor(contactRemove2FAIdSet);
-	}
-
-	//update Federation
-	if (!contactFedIdMap.isEmpty()) {
-		ISSP_UserTriggerHandler.updateFederation(contactFedIdMap);
-	}
-
-	//Add NonTD Report Permission
-	if (!contactFedIdSet.isEmpty()) {
-		ISSP_UserTriggerHandler.addNonTdReportSharing(contactFedIdSet);
-	}
-
-	//Remove  NonTD Report Permission
-	if (!contactRemove2FAIdSet.isEmpty()) {
-		ISSP_UserTriggerHandler.removeNonTdReportSharing(contactRemove2FAIdSet);
-	}
-
-	if (!contactKaviAdd.isEmpty()){
-
-		String action = HigherLogicIntegrationHelper.PUSH_MEMBERS;
-
-		string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
-
-		if (kaviUser != null ){
-			action = HigherLogicIntegrationHelper.PUSH_INTERNAL_MEMBERS;
-		}
-
-		HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd);
-
-		//RN-ENHC0012059 grant and remove the permission set to the user
-		HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, HigherLogicIntegrationHelper.GRANT_ACCESS);
-
-	}
-
-	//RN-ENHC0012059 grant and remove the permission set to the user
-	if(!removeKaviPermissionSet.isEmpty()){
-		HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, removeKaviPermissionSet);
-		HigherLogicIntegrationHelper.assignHLPermissionSet(removeKaviPermissionSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
-	}
-
-	/*
-	if (!contactBaggageAdd.isEmpty()){
-		system.debug('calling addBaggageSharing');
-		ISSP_UserTriggerHandler.addBaggageSharing(contactBaggageAdd);
-		ISSP_UserTriggerHandler.giveBaggagePermissionSet(contactBaggageAdd);
-	}
-	if (!contactBaggageRemove.isEmpty()){
-		system.debug('calling removeBaggageSharing');
-		ISSP_UserTriggerHandler.removeBaggageSharing(contactBaggageRemove);
-		ISSP_UserTriggerHandler.removeBaggagePermissionSet(contactBaggageRemove);
-	}
-	*/
-
-	if (!manageAccessTDidSet.isEmpty()) {
-		system.debug('To manageAccessTD');
-		PortalServiceAccessTriggerHandler.manageAccessTD(manageAccessTDidSet, contactFedIdSet);
-	}
-
-	if (!contactIdIATAAccreditationSet.isEmpty() || !contactIdRemoveIATAAccreditationSet.isEmpty()) {
-		system.debug('WILL START FUTURE METHOD');
-
-		// Validate: Give permission set only to Accounts with record type == 'Standard Account'
-		List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name = 'Standard Account' and id in :contactIdIATAAccreditationSet];
-		contactIdIATAAccreditationSet = (new Map<Id, SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
-
-		if (!ISSP_UserTriggerHandler.preventTrigger)
-			ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
-		ISSP_UserTriggerHandler.preventTrigger = true;
-	}
-
-	if (!contactIdPASSAccreditationSet.isEmpty() || !contactIdRemovePASSAccreditationSet.isEmpty()) {
-		if (!ISSP_UserTriggerHandler.preventTrigger){
-			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
-			ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_SSO', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
-			PASS_UserProvisioningRequestHandler.createPassUserProvAccounts(contactIdPASSAccreditationSet);
-		}
-		ISSP_UserTriggerHandler.preventTrigger = true;
-	}
-
-	system.debug('basto1p - Before IFG handle - ISSP_UserTriggerHandler.preventTrigger=' + ISSP_UserTriggerHandler.preventTrigger);
-	//basto1p -IFG ACCESS APPROVAL HANDLE - ADD/REmove Permission SET
-	if (!scimElements.isEmpty()) {
-		system.debug('SCIM ELEMENTS =' + scimElements);
-		if (!ISSP_UserTriggerHandler.preventTrigger)
-		{
-			SCIMServProvManager worker = new SCIMServProvManager(scimElements);
-
-			//Fill federation Ids if they are empty
-			//since they are mandatory for user SCIM provisioning
-			worker.populateFederationIds();
-
-			//Handle users provisioning
-			worker.sendToSCIMProvisioning();
 			ISSP_UserTriggerHandler.preventTrigger = true;
-			system.debug('Call SCIM Manager');
 		}
-	}
-
-	if (!trigger.isDelete) {
+	
+		//deleteTwoFactor
+		if (!contactRemove2FAIdSet.isEmpty()) {
+			ISSP_UserTriggerHandler.deleteTwoFactor(contactRemove2FAIdSet);
+		}
+	
+		//update Federation
+		if (!contactFedIdMap.isEmpty()) {
+			ISSP_UserTriggerHandler.updateFederation(contactFedIdMap);
+		}
+	
+		//Add NonTD Report Permission
+		if (!contactFedIdSet.isEmpty()) {
+			ISSP_UserTriggerHandler.addNonTdReportSharing(contactFedIdSet);
+		}
+	
+		//Remove  NonTD Report Permission
+		if (!contactRemove2FAIdSet.isEmpty()) {
+			ISSP_UserTriggerHandler.removeNonTdReportSharing(contactRemove2FAIdSet);
+		}
+	
+		if (!contactKaviAdd.isEmpty()){
+	
+			String action = HigherLogicIntegrationHelper.PUSH_MEMBERS;
+	
+			string kaviUser = [SELECT Kavi_User__c from Contact where Id in:contactKaviAdd limit 1].Kavi_User__c;
+	
+			if (kaviUser != null ){
+				action = HigherLogicIntegrationHelper.PUSH_INTERNAL_MEMBERS;
+			}
+	
+			HigherLogicIntegrationHelper.pushPersonCompanyMembers(action, contactKaviAdd);
+	
+			//RN-ENHC0012059 grant and remove the permission set to the user
+			HigherLogicIntegrationHelper.assignHLPermissionSet(contactKaviAdd, HigherLogicIntegrationHelper.GRANT_ACCESS);
+	
+		}
+	
+		//RN-ENHC0012059 grant and remove the permission set to the user
+		if(!removeKaviPermissionSet.isEmpty()){
+			HigherLogicIntegrationHelper.pushPersonCompanyMembers(HigherLogicIntegrationHelper.PUSH_EXISTING_MEMBERS, removeKaviPermissionSet);
+			HigherLogicIntegrationHelper.assignHLPermissionSet(removeKaviPermissionSet, HigherLogicIntegrationHelper.REMOVE_ACCESS);
+		}
+	
+		if (!manageAccessTDidSet.isEmpty()) {
+			system.debug('To manageAccessTD');
+			PortalServiceAccessTriggerHandler.manageAccessTD(manageAccessTDidSet, contactFedIdSet);
+		}
+	
+		if (!contactIdIATAAccreditationSet.isEmpty() || !contactIdRemoveIATAAccreditationSet.isEmpty()) {
+			system.debug('WILL START FUTURE METHOD');
+	
+			// Validate: Give permission set only to Accounts with record type == 'Standard Account'
+			List<Contact> lsContact = [SELECT Id FROM Contact where Account.recordtype.name = 'Standard Account' and id in :contactIdIATAAccreditationSet];
+			contactIdIATAAccreditationSet = (new Map<Id, SObject>(lsContact)).keySet(); //Replace current set with the filtered results from the query
+	
+			if (!ISSP_UserTriggerHandler.preventTrigger)
+				ISSP_UserTriggerHandler.updateUserPermissionSet('ISSP_New_Agency_permission_set', contactIdIATAAccreditationSet, contactIdRemoveIATAAccreditationSet);
+			ISSP_UserTriggerHandler.preventTrigger = true;
+		}
+	
+		if (!contactIdPASSAccreditationSet.isEmpty() || !contactIdRemovePASSAccreditationSet.isEmpty()) {
+			if (!ISSP_UserTriggerHandler.preventTrigger){
+				ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_User_Prov', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+				UserProvisioningUtils.CreateUPRs(contactIdPASSAccreditationSet, 'PASS');
+				ISSP_UserTriggerHandler.updateUserPermissionSet('PASS_SSO', contactIdPASSAccreditationSet, contactIdRemovePASSAccreditationSet);
+				PASS_UserProvisioningRequestHandler.createPassUserProvAccounts(contactIdPASSAccreditationSet);
+			}
+			ISSP_UserTriggerHandler.preventTrigger = true;
+		}
+	
+		system.debug('basto1p - Before IFG handle - ISSP_UserTriggerHandler.preventTrigger=' + ISSP_UserTriggerHandler.preventTrigger);
+		//basto1p -IFG ACCESS APPROVAL HANDLE - ADD/REmove Permission SET
+		if (!scimElements.isEmpty()) {
+			system.debug('SCIM ELEMENTS =' + scimElements);
+			if (!ISSP_UserTriggerHandler.preventTrigger)
+			{
+				SCIMServProvManager worker = new SCIMServProvManager(scimElements);
+	
+				//Fill federation Ids if they are empty
+				//since they are mandatory for user SCIM provisioning
+				worker.populateFederationIds();
+	
+				//Handle users provisioning
+				worker.sendToSCIMProvisioning();
+				ISSP_UserTriggerHandler.preventTrigger = true;
+				system.debug('Call SCIM Manager');
+			}
+		}
 		if (Trigger.new.size() > 1)
 			return;
 

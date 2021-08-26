@@ -131,7 +131,14 @@
                     <elementReference>ProcessOrchestratorId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>counter</name>
+                <value>
+                    <elementReference>screenOpenCounter</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Additional_Confirmation_History</name>
@@ -254,7 +261,14 @@
                     <elementReference>ProcessOrchestratorId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>counter</name>
+                <value>
+                    <elementReference>screenOpenCounter</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Coding_Fee_History</name>
@@ -383,6 +397,12 @@
                     <elementReference>ProcessOrchestratorId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>counter</name>
+                <value>
+                    <elementReference>screenOpenCounter</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
         </fields>
         <fields>
@@ -475,7 +495,14 @@
                     <elementReference>ProcessOrchestratorId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>counter</name>
+                <value>
+                    <elementReference>screenOpenCounter</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Perform_Sanity_Check_History</name>
@@ -598,7 +625,14 @@
                     <elementReference>ProcessOrchestratorId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>counter</name>
+                <value>
+                    <elementReference>screenOpenCounter</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>Request_For_Approva_History</name>
@@ -718,7 +752,14 @@
                     <elementReference>ProcessOrchestratorId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>counter</name>
+                <value>
+                    <elementReference>screenOpenCounter</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
             <name>SIS_Registration_History</name>
@@ -812,6 +853,18 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>variable to store how many times a screen is opened</description>
+        <name>screenOpenCounter</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
     </variables>
     <variables>
         <name>Subject_DesignatorCode_SCHEDULED_NON_SCHEDULEDAIRLINES</name>

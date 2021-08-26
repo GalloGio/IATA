@@ -150,14 +150,6 @@
         <template>All/IDFS_Caseassignmentqueue</template>
     </alerts>
     <alerts>
-        <fullName>AlertsRSNBLocaloffice</fullName>
-        <ccEmails>financescan@iata.org</ccEmails>
-        <description>SCE: Alerts R&amp;S N&amp;B Local office</description>
-        <protected>false</protected>
-        <senderType>CurrentUser</senderType>
-        <template>All/IDFS_Caseassignmentqueue</template>
-    </alerts>
-    <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
         <ccEmails>iccso@iata.org,madcscmgr@iata.org,europs@iata.org,EF_CS@iata.org,EF_IA@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
@@ -185,7 +177,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>wangyy@iata.org</recipient>
+            <recipient>wangy@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -231,14 +223,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>All/ACR_for_BSPlink</template>
-    </alerts>
-    <alerts>
-        <fullName>Bankingcase</fullName>
-        <ccEmails>mad-gdc-banking@iata.org</ccEmails>
-        <description>SCE: New Banking case</description>
-        <protected>false</protected>
-        <senderType>CurrentUser</senderType>
-        <template>All/EUR_CaseassignmentBanking</template>
     </alerts>
     <alerts>
         <fullName>CNS_Deadline_Date_Reached</fullName>
@@ -323,42 +307,6 @@
         <template>All/Clicktools_Contact_Email_CX_AP_EN</template>
     </alerts>
     <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_DE</fullName>
-        <description>Clicktools Email for Instant survey_CX_DE</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_DE</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_EN</fullName>
-        <description>Clicktools Email for Instant survey_CX_EN</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_EN</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_EN_FR</fullName>
-        <description>Clicktools Email for Instant survey_CX_EN_FR</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_EN_FR</template>
-    </alerts>
-    <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_ES</fullName>
         <description>Clicktools Email for Instant survey_CX_ES</description>
         <protected>false</protected>
@@ -369,150 +317,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>All/Clicktools_Contact_Email_CX_ES</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_FR</fullName>
-        <description>Clicktools Email for Instant survey_CX_FR</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_FR</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_GR</fullName>
-        <description>Clicktools Email for Instant survey_CX_GR</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_GR</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_ID</fullName>
-        <description>Clicktools Email for Instant survey_CX_ID</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_ID</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_IT</fullName>
-        <description>Clicktools Email for Instant survey_CX_IT</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_IT</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_JA</fullName>
-        <description>Clicktools Email for Instant survey_CX_JA</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_JA</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_KO</fullName>
-        <description>Clicktools Email for Instant survey_CX_KO</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_KO</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_PT</fullName>
-        <description>Clicktools Email for Instant survey_CX_PT</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_PT</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_RO</fullName>
-        <description>Clicktools Email for Instant survey_CX_RO</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_RO</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_TH</fullName>
-        <description>Clicktools Email for Instant survey_CX_TH</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_TH</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_TR</fullName>
-        <description>Clicktools Email for Instant survey_CX_TR</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_TR</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_VI</fullName>
-        <description>Clicktools Email for Instant survey_CX_VI</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_VI</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_ZH</fullName>
-        <description>Clicktools Email for Instant survey_CX_ZH</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_ZH</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_DE</fullName>
@@ -751,18 +555,6 @@
         <template>All/Timba_Survey_template</template>
     </alerts>
     <alerts>
-        <fullName>Email_notification_dispute_Airline</fullName>
-        <description>SCE: Sends Email notification to the Airline Email entered in online Dispute form.</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Airline_E_mail__c</field>
-            <type>email</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>ISS_Portal/GCS_Dispute_Notification_Agent_Israel_VF</template>
-    </alerts>
-    <alerts>
         <fullName>FSM_Email_Reminder</fullName>
         <description>FSM Email Reminder</description>
         <protected>false</protected>
@@ -865,17 +657,6 @@
         <template>All/FAQ_proposal_rejection_to_submitter</template>
     </alerts>
     <alerts>
-        <fullName>IAPP_Notify_team_leader_case_has_been_set_as_Not_eligible</fullName>
-        <description>IAPP - Notify team leader case has been set as Not eligible</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>macneillb@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>AP_notification/IAPP_Notification_Dossier_ineligibility</template>
-    </alerts>
-    <alerts>
         <fullName>IAPP_Send_notification_on_New_docs_received</fullName>
         <description>IAPP_Send notification on New docs received</description>
         <protected>false</protected>
@@ -928,16 +709,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>All/SNOW_MITA_BIETA</template>
-    </alerts>
-    <alerts>
-        <fullName>IATA_iiNet_Service_Now</fullName>
-        <ccEmails>iata@service-now.com</ccEmails>
-        <ccEmails>iinetcare@iata.org</ccEmails>
-        <description>IATA iiNet Service Now</description>
-        <protected>false</protected>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>IATA_iiNet/IATA_iiNet_Create_Service_Now_Incident</template>
     </alerts>
     <alerts>
         <fullName>ICCS_Contact_Notification_case_open_for_15_days</fullName>
@@ -1978,17 +1749,6 @@
         <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_Request_to_CS_send_TER_notice</template>
     </alerts>
     <alerts>
-        <fullName>IDFS_SIDRA_TER_approved_email_to_R_S</fullName>
-        <description>IDFS_SIDRA_TER approved - email to R&amp;S</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>SIDRA R&amp;S</recipient>
-            <type>caseTeam</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_TER_approved_email_to_R_S</template>
-    </alerts>
-    <alerts>
         <fullName>IDFS_SIDRA_email_to_R_S_on_TER_date</fullName>
         <description>IDFS_SIDRA - email to R&amp;S on TER date</description>
         <protected>false</protected>
@@ -2279,14 +2039,6 @@
         <template>ID_Card_templates/IDCARD_ITDI_Email</template>
     </alerts>
     <alerts>
-        <fullName>Inform_Deskom_of_new_case_assignment_escalation</fullName>
-        <ccEmails>kupferm@iata.org.inactive</ccEmails>
-        <description>IW: Inform Deskom of new case assignment/escalation</description>
-        <protected>false</protected>
-        <senderType>CurrentUser</senderType>
-        <template>All/IW_Caseassignmentqueue</template>
-    </alerts>
-    <alerts>
         <fullName>InstantSurveyEmail</fullName>
         <description>SCE: Instant Survey Email</description>
         <protected>false</protected>
@@ -2310,53 +2062,12 @@
         <template>unfiled$public/NDC_Case_Assignment</template>
     </alerts>
     <alerts>
-        <fullName>NewALmanagementprocess</fullName>
-        <description>SCE: New Airline management process</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>garcias@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/EUR_CaseassignmentALMSCE</template>
-    </alerts>
-    <alerts>
-        <fullName>NewInvoicingcase</fullName>
-        <description>SCE: New Invoicing case</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>vargasg@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/EUR_CaseassignmentITInvoicing</template>
-    </alerts>
-    <alerts>
-        <fullName>NewReportingBillingcase</fullName>
-        <description>SCE: New Reporting &amp; Billing case</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>boceke@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/EUR_CaseassignmentITSCE</template>
-    </alerts>
-    <alerts>
         <fullName>New_DPC_ACR_Case_Notification</fullName>
         <ccEmails>isis2@iata.org.preprod</ccEmails>
         <description>New DPC ACR Case Notification</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
         <template>All/New_DPC_ACR_Case_Notification</template>
-    </alerts>
-    <alerts>
-        <fullName>New_DPC_ACR_for_ILDS_Notification</fullName>
-        <ccEmails>JIANGHT@iata.org, ZHOUJN@IATA.ORG , liuhy@iata.org</ccEmails>
-        <description>New DPC ACR for ILDS Notification</description>
-        <protected>false</protected>
-        <senderType>CurrentUser</senderType>
-        <template>All/New_DPC_ACR_for_ILDS_Notification</template>
     </alerts>
     <alerts>
         <fullName>Notification_new_comment_idpc_case</fullName>
@@ -2372,14 +2083,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>ISS_Portal/Owner_notification_of_new_comment</template>
-    </alerts>
-    <alerts>
-        <fullName>Notification_on_Priority_1_Case_for_InvoiceWorks</fullName>
-        <ccEmails>iataiwteam@iata.org</ccEmails>
-        <description>IW: Notification on Priority 1 Case for InvoiceWorks</description>
-        <protected>false</protected>
-        <senderType>CurrentUser</senderType>
-        <template>InvoiceWorks/Notification_of_P1_Case</template>
     </alerts>
     <alerts>
         <fullName>Notification_to_ICCS_AFRD_CitiDirect_Contact_upon_AFRD_Step1_Completion</fullName>
@@ -2683,18 +2386,6 @@
         <template>All/EUR_CaseassignementSAFsGreece</template>
     </alerts>
     <alerts>
-        <fullName>SCE_New_Communciation_Web_Upload_case</fullName>
-        <ccEmails>MADSCECSMGR@iata.org</ccEmails>
-        <description>SCE: New Communciation &amp; Web Upload case</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>borislavok@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/EUR_Case_assignment_Communication_WUpload_SCE</template>
-    </alerts>
-    <alerts>
         <fullName>SCE_New_Serial_Number_Allocation_case</fullName>
         <description>SCE: New Serial Number Allocation case</description>
         <protected>false</protected>
@@ -2706,68 +2397,12 @@
         <template>All/EUR_CaseassignmentITSCE_NumberAllocation</template>
     </alerts>
     <alerts>
-        <fullName>SCE_Notify_CS_queue_communication</fullName>
-        <description>SCE Notify CS queue communication</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>batagliaf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>paredesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>saremyt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/IDFS_Caseassignmentqueue</template>
-    </alerts>
-    <alerts>
-        <fullName>SEDA_Adjustment_done_Mail_to_CS</fullName>
-        <description>SEDA_Adjustment done - Mail to CS</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <field>CS_Rep_Contact_Customer__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>SEDA_E_Mail_Templates/SEDA_Inform_to_CS_for_the_Adjustment_done</template>
-    </alerts>
-    <alerts>
         <fullName>SEDA_Agent_Over_Remittance_inform_to_I_C_team</fullName>
         <ccEmails>IC_IDFS@iata.org</ccEmails>
         <description>SEDA_Agent Over Remittance_inform to I&amp;C team</description>
         <protected>false</protected>
         <senderType>CurrentUser</senderType>
         <template>SEDA_E_Mail_Templates/SEDA_Agent_Over_Remittance_inform_to_I_C</template>
-    </alerts>
-    <alerts>
-        <fullName>SEDA_Airline_non_Payment_inform_to_LO</fullName>
-        <description>SEDA_Airline non Payment - inform to LO</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>SIDRA LO BSP</recipient>
-            <type>caseTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>SIDRA LO BSP&amp;CASS</recipient>
-            <type>caseTeam</type>
-        </recipients>
-        <recipients>
-            <recipient>SIDRA LO CASS</recipient>
-            <type>caseTeam</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>SEDA_E_Mail_Templates/SEDA_Inform_to_Local_Office_for_airline_unpaid</template>
     </alerts>
     <alerts>
         <fullName>SEDA_Customer_Feedback_is_Refund_email_to_R_S</fullName>
@@ -3523,19 +3158,6 @@
         <template>SIS_Help_Desk/SIS_Escalated_Case_Notification_to_the_Customer</template>
     </alerts>
     <alerts>
-        <fullName>SIS_Escalated_case_notification_to_CS_Manager</fullName>
-        <ccEmails>simardd@iata.org</ccEmails>
-        <description>SIS Escalated case notification to CS Manager</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>IATASISCustomerSupport</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Escalated_Notification_to_CS_manager</template>
-    </alerts>
-    <alerts>
         <fullName>SIS_HD_New_case_comment_notification</fullName>
         <ccEmails>SIS_Servicedesk@kaleconsultants.com</ccEmails>
         <ccEmails>smitha@iata.org</ccEmails>
@@ -3565,30 +3187,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>SIS_Help_Desk/SIS_Case_Closure_Notification_to_the_customer</template>
-    </alerts>
-    <alerts>
-        <fullName>SIS_new_case_notification_to_SIS_customer_support_team</fullName>
-        <description>SIS new case notification to SIS customer support team</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>IATASISCustomerSupport</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Help_Desk_New_Case_Notification_Template_Web</template>
-    </alerts>
-    <alerts>
-        <fullName>SIS_new_case_notification_to_SIS_customer_support_team_web_details</fullName>
-        <description>SIS new case notification to SIS customer support team - web details</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>IATASISCustomerSupport</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Help_Desk_New_Case_Notification_Template_Web</template>
     </alerts>
     <alerts>
         <fullName>Salesforce_Change_Request_Approval_Request</fullName>
@@ -3767,17 +3365,6 @@
         <template>All/ACCA_Changed_Escalated_Status_ACCA</template>
     </alerts>
     <alerts>
-        <fullName>TEST_Email_Alert_on_IS_for_AM</fullName>
-        <description>TEST Email Alert on IS for AM</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>oueidatg2@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Salesforcetemplatesnotused/Test_for_IS_for_AM</template>
-    </alerts>
-    <alerts>
         <fullName>Used_to_inform_the_owner_that_the_CR_has_been_approved</fullName>
         <description>ACR: Used to inform the owner that the CR has been approved</description>
         <protected>false</protected>
@@ -3922,18 +3509,6 @@
         <template>ISS_Portal/Owner_notification_of_new_comment</template>
     </alerts>
     <alerts>
-        <fullName>X1st_email_on_CS_escalated_case</fullName>
-        <description>1st email on CS escalated case</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>Escalation_1st_level_CS_managers</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Escalated_cases/X1st_escalation</template>
-    </alerts>
-    <alerts>
         <fullName>sMAP_Inform_to_CM_Case_Owner</fullName>
         <description>sMAP - Deadline reached pending inputs inform CM &amp; Case Owner</description>
         <protected>false</protected>
@@ -3955,25 +3530,6 @@
         <senderType>CurrentUser</senderType>
         <template>All/sMAP_Inform_to_CM_Case_Owner</template>
     </alerts>
-    <alerts>
-        <fullName>sMAP_New_Inform_to_CM_CM_Backup</fullName>
-        <description>sMAP - New_Inform_to_CM &amp; CM Backup</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Country_Manager_Backup_2__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Country_Manager_Backup__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <recipients>
-            <field>Country_Manager__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/sMAP_Inform_to_CM_Backup_Contact</template>
-    </alerts>
     <fieldUpdates>
         <fullName>ACCA_CSR_Case_field_update</fullName>
         <field>Comments__c</field>
@@ -3981,53 +3537,6 @@
         <name>ACCA CSR Case field update</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ACCA_Date_Time_case_was_completed</fullName>
-        <description>Updates the ACCA: Date/Time Completed field with the time the case was completed by ACCA</description>
-        <field>ACCA_Date_Time_Completed__c</field>
-        <formula>NOW()</formula>
-        <name>ACCA: Date/Time case was completed</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ACCA_Date_Time_case_was_escalated</fullName>
-        <description>Updates the ACCA: Date/Time Opened field with the time the case was escalated to ACCA</description>
-        <field>ACCA_Date_Time_New__c</field>
-        <formula>NOW()</formula>
-        <name>ACCA: Date/Time case was escalated</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ACCA_Date_Time_case_was_scheduled</fullName>
-        <field>ACCA_Date_Time_Scheduled__c</field>
-        <formula>NOW()</formula>
-        <name>ACCA: Date/Time case was scheduled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>AccreditationCaseAreaACCProcess</fullName>
-        <field>CaseArea__c</field>
-        <literalValue>Accreditation Process</literalValue>
-        <name>Case Area=ACC Process</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>AccreditationDataEntryReason</fullName>
-        <field>Reason1__c</field>
-        <literalValue>AIMS Data Entry</literalValue>
-        <name>Accreditation - Data Entry - Reason</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -4062,25 +3571,6 @@
         <field>Reason1__c</field>
         <literalValue>Airline Master List and Details</literalValue>
         <name>Airline Master List</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Approval_Date_Today</fullName>
-        <description>Updates the Approval Date with today&apos;s date</description>
-        <field>Approval_Date_cr__c</field>
-        <formula>TODAY()</formula>
-        <name>Approval Date = Today</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Assign_ICCS_Team</fullName>
-        <field>Groups__c</field>
-        <literalValue>ICCS Team</literalValue>
-        <name>Assign ICCS Team</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -4244,24 +3734,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Case_Area_Risk_Management_process</fullName>
-        <field>CaseArea__c</field>
-        <literalValue>Risk Management Process</literalValue>
-        <name>Case Area = Risk Management process</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Case_Area_Salesforce_Web_and_KPIs</fullName>
-        <field>CaseArea__c</field>
-        <literalValue>Salesforce, Web and KPIs</literalValue>
-        <name>Case Area = Salesforce, Web and KPIs</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Case_Description</fullName>
         <description>Set the case description value to Something including the Financial Review Type for a given financial Year</description>
         <field>Description</field>
@@ -4269,15 +3741,6 @@
         <name>Case Description</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Case_Origin_Portal</fullName>
-        <field>Origin</field>
-        <literalValue>Portal</literalValue>
-        <name>Case Origin Portal</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -4393,15 +3856,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>ChangeCaseOrigintoFax</fullName>
-        <field>Origin</field>
-        <literalValue>Fax</literalValue>
-        <name>Change Case Origin to Fax</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ChangeIATACountrytoBELUX</fullName>
         <description>From Belgium to Belgium &amp; Luxembourg</description>
         <field>BSPCountry__c</field>
@@ -4426,33 +3880,6 @@
         <field>BSPCountry__c</field>
         <literalValue>Spain &amp; Andorra</literalValue>
         <name>Change IATA Country to ES</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ChangeIATACountrytoFR</fullName>
-        <field>BSPCountry__c</field>
-        <literalValue>France</literalValue>
-        <name>Change IATA Country to FR</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ChangeIATACountrytoIT</fullName>
-        <field>BSPCountry__c</field>
-        <literalValue>Italy</literalValue>
-        <name>Change IATA Country to IT</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ChangeIATACountrytoUK</fullName>
-        <field>BSPCountry__c</field>
-        <literalValue>United Kingdom</literalValue>
-        <name>Change IATA Country to UK</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -4686,15 +4113,6 @@
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Change_Reason_to_BankThird_party</fullName>
-        <field>Reason1__c</field>
-        <literalValue>Bank / 3rd party</literalValue>
-        <name>Change Reason to Bank/ Third party</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Change_Status_to_Reassessment_Approved</fullName>
         <field>Status</field>
         <literalValue>Quality Issue Request Approved</literalValue>
@@ -4719,16 +4137,6 @@
         <name>Change case status to open</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_owner_to_ACC_EUR_Risk_queue</fullName>
-        <field>OwnerId</field>
-        <lookupValue>CasesACCEuropeRisk</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Change owner to ACC EUR Risk queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -4819,16 +4227,6 @@
         <lookupValue>Knowledge_Management_A_P</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>Change owner to regional SIN KM queue</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_record_type_from_Europe_to_AME</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>CasesMENA</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Change record type from Europe to AME</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -5129,42 +4527,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Date_Time_Pending_Support_today</fullName>
-        <field>Date_Time_Pending_Support__c</field>
-        <formula>today()</formula>
-        <name>Date/Time Pending Support - today</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Date_Time_Stamp_Escalated</fullName>
-        <field>Date_Time_Escalated__c</field>
-        <formula>Now()</formula>
-        <name>Date/Time Stamp: Escalated</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Date_Time_Stamp_Pending_Customer</fullName>
-        <field>Date_Time_Pending_Customer__c</field>
-        <formula>Now()</formula>
-        <name>Date/Time Stamp: Pending Customer</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Date_Time_Stamp_Working</fullName>
-        <field>Date_Time_Accepting_Case__c</field>
-        <formula>NOW()</formula>
-        <name>Date/Time Stamp: In Progress</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Deployment_Date_Today2</fullName>
         <description>Updated Deployment Date with Today&apos;s date</description>
         <field>Deployment_date_to_acca__c</field>
@@ -5175,52 +4537,11 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Development_Start_Date_Today</fullName>
-        <description>Updates Development Start Date with Today&apos;s Data</description>
-        <field>Development_Start_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>Development Start Date = Today</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ESCCaseStatusEscalated</fullName>
-        <description>Update case status to escalated when checkboxes for Escalate to Level 2 or 3 are checked.</description>
-        <field>Status</field>
-        <literalValue>2.0 IE approved - Escalated DPC for PQ</literalValue>
-        <name>Case Status = Escalated</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ESCCaseStatusInProgress</fullName>
         <description>Update Case Status to In Progress once the Escalated Status is set to Completed.</description>
         <field>Status</field>
         <literalValue>In progress</literalValue>
         <name>Case Status = In Progress</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ESCEscalatedStatusACCAACCAInvesti</fullName>
-        <description>Updates Escalated Status ACCA to DPC Investigating once the ACCA Owner has been selected.</description>
-        <field>Escalated_Status_ACCA__c</field>
-        <literalValue>2.0 DPC Investigating</literalValue>
-        <name>Escalated Status DPC=DPC Investi</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ESCEscalatedStatusACCANew</fullName>
-        <description>Update Escalated Satus ACCA with New</description>
-        <field>Escalated_Status_ACCA__c</field>
-        <literalValue>2. New</literalValue>
-        <name>Escalated Status ACCA = New</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -5246,16 +4567,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Escalated_Status_ACCA_CR_Scheduled</fullName>
-        <description>Escalated Status ACCA shall be changed to &apos;CSR Scheduled&apos;</description>
-        <field>Escalated_Status_ACCA__c</field>
-        <literalValue>CSR Scheduled</literalValue>
-        <name>Escalated Status DPC = CSR Scheduled</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Escalated_Status_DPC_Quotation_approve</fullName>
         <description>Updates Escalated Status with Quotation Approved once the approval process is approved</description>
         <field>Escalated_Status_ACCA__c</field>
@@ -5263,17 +4574,6 @@
         <name>Escalated Status DPC = Quotation approve</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>External_OPS_Mgt_cases</fullName>
-        <description>Directing cases to OPS Mgt HO record type for external queries regarding TSP Cert, EMD Testing and BSPlink</description>
-        <field>RecordTypeId</field>
-        <lookupValue>Case_Operational_Management_Head_Office</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>External OPS Mgt cases</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -5322,16 +4622,6 @@
         <name>Flag workflow</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>IAPP_change_IAPP_case_owner_to_AP_HO_Q</fullName>
-        <field>OwnerId</field>
-        <lookupValue>AirlineParticipationHeadOffice</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>IAPP - change IAPP case owner to AP HO Q</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -5390,28 +4680,6 @@ TEXT(ICCS_Product__c)+
 TEXT(ICCS_Country__c)+
 TEXT(ICCS_Currencies__c)+&quot;Open&quot;)</formula>
         <name>ICCS Unique Case</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ICCS_Unique_Case_Closed</fullName>
-        <field>ICCS_Unique_Case__c</field>
-        <formula>CASESAFEID(Id)</formula>
-        <name>ICCS Unique Case - Closed</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ICCS_Unique_Case_Open</fullName>
-        <field>ICCS_Unique_Case__c</field>
-        <formula>CASESAFEID(Account.Id) +
-TEXT(ICCS_Product__c)+
-TEXT(ICCS_Country__c)+
-TEXT(ICCS_Currencies__c)+
-IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
-        <name>ICCS Unique Case - Open</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -5569,6 +4837,8 @@ IF(
   (IF( 
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;, 
   (IF( 
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+  (IF( 
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;), 
   &quot;Airline Management&quot;, 
   (IF(AND(
@@ -5582,7 +4852,7 @@ IF(
   ),
     &quot;IATA System&quot;,
   
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -5627,16 +4897,6 @@ IF(
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>IDFS_SIDRA_Currency_Conversion_2</fullName>
-        <field>CurrencyExchangeRateUSD__c</field>
-        <formula>CASE( Currency__c , &quot;LRD&quot;,84.5,&quot;LSL&quot;,11.55,&quot;LTL&quot;,3,&quot;LVL&quot;,0.51,&quot;LYD&quot;,1.23,&quot;MAD&quot;,9.44,&quot;MKD&quot;,53.25,&quot;MMK&quot;,1026.69,&quot;MNT&quot;,1937.98,&quot;MOP&quot;,7.99,&quot;MRO&quot;,291.63,&quot;MUR&quot;,32.49,&quot;MVR&quot;,15.44,&quot;MWK&quot;,458.3,&quot;MXN&quot;,14.65,&quot;MYR&quot;,3.6,&quot;MZN&quot;,32.31,&quot;NAD&quot;,11.55,&quot;NGN&quot;,188.61,&quot;NIO&quot;,26.53,&quot;NOK&quot;,7.64,&quot;NPR&quot;,98.59,&quot;NZD&quot;,1.31,&quot;OMR&quot;,0.38,&quot;PAB&quot;,1,&quot;PEN&quot;,3.01,&quot;PGK&quot;,2.61,&quot;PHP&quot;,44.37,&quot;PKR&quot;,100.68,&quot;PLN&quot;,3.73,&quot;PYG&quot;,4761.9,&quot;QAR&quot;,3.64,&quot;RON&quot;,3.91,&quot;RSD&quot;,106.25,&quot;RUB&quot;,64.95,&quot;RWF&quot;,689.66,&quot;SAR&quot;,3.76,&quot;SBD&quot;,7.56,&quot;SCR&quot;,14.11,&quot;SEK&quot;,8.17,&quot;SGD&quot;,1.34,&quot;SHP&quot;,0.6,&quot;SLL&quot;,4201.68,&quot;SOS&quot;,707.71,&quot;STD&quot;,21276.6,&quot;SVC&quot;,8.75,&quot;SYP&quot;,198.02,&quot;SZL&quot;,11.55,&quot;THB&quot;,32.6,&quot;TND&quot;,1.92,&quot;TOP&quot;,1.95,&quot;TRY&quot;,2.34,&quot;TTD&quot;,6.34,&quot;TWD&quot;,31.47,&quot;TZS&quot;,1808.32,&quot;UAH&quot;,15.84,&quot;UGX&quot;,2890.17,&quot;USD&quot;,1,&quot;UYU&quot;,24.56,&quot;VEF&quot;,12,&quot;VND&quot;,21276.6,&quot;VUV&quot;,103.07,&quot;WST&quot;,2.43,&quot;XAF&quot;,569.48,&quot;XCD&quot;,2.7,&quot;XOF&quot;,569.48,&quot;XPF&quot;,103.61,&quot;YER&quot;,215.01,&quot;ZAR&quot;,11.55,&quot;ZMW&quot;,6.46,-1)</formula>
-        <name>IDFS_SIDRA_Currency Conversion 2</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>IDFS_SIDRA_DEF05_Last_Default_Action_Dat</fullName>
@@ -5996,25 +5256,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>ISS_Portal_Make_case_invisible</fullName>
-        <field>Visible_on_ISS_Portal__c</field>
-        <literalValue>0</literalValue>
-        <name>ISS Portal - Make case invisible</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ISS_Portal_Make_case_visible</fullName>
-        <field>Visible_on_ISS_Portal__c</field>
-        <literalValue>1</literalValue>
-        <name>ISS Portal - Make case visible</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ISS_Portal_Set_visibility_to_Kale</fullName>
         <field>isKaleCase__c</field>
         <literalValue>1</literalValue>
@@ -6043,17 +5284,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Internal_OPS_Mgt_cases</fullName>
-        <description>Directing cases to Internal cases ISS record type for internal queries regarding TSP Cert, EMD Testing and BSPlink</description>
-        <field>RecordTypeId</field>
-        <lookupValue>InternalCasesEuropeSCE</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Internal OPS Mgt cases</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Invoice_Direction_Empty</fullName>
         <description>Invoice Direction must be empty</description>
         <field>Invoice_Direction__c</field>
@@ -6063,17 +5293,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Manager_ACR</fullName>
-        <field>Product_Manager_ACR__c</field>
-        <lookupValue>byrnej@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Manager ACR</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Move_to_Recycle_Bin_Europe</fullName>
         <field>OwnerId</field>
         <lookupValue>RecycleBinEurope</lookupValue>
@@ -6081,15 +5300,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <name>Move to Recycle Bin Europe</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>New_Attachment_From_Portal_User_False</fullName>
-        <field>New_Attachment_From_Portal_User__c</field>
-        <literalValue>0</literalValue>
-        <name>New Attachment From Portal User - False</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -6139,15 +5349,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Notification_Assesment</fullName>
-        <field>Notification_template__c</field>
-        <formula>&quot;NT-0018&quot;</formula>
-        <name>Notification Assesment</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Pending_approval</fullName>
         <field>Status</field>
         <literalValue>Awaiting Approval</literalValue>
@@ -6177,16 +5378,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
     </fieldUpdates>
     <fieldUpdates>
         <fullName>PwC_edit_RT</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>ISS_Portal_PwC_Edit</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>PwC edit RT</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>PwC_edit_RT1</fullName>
         <field>RecordTypeId</field>
         <lookupValue>ISS_Portal_PwC_Edit</lookupValue>
         <lookupValueType>RecordType</lookupValueType>
@@ -6238,28 +5429,10 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Reason_Financial_Security_update</fullName>
-        <field>Reason1__c</field>
-        <literalValue>Financial Security Renewal</literalValue>
-        <name>Reason = Financial Security renewal</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Reason_Key_controls</fullName>
         <field>Reason1__c</field>
         <literalValue>Key Controls</literalValue>
         <name>Reason - Key controls</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Reason_Maintenance</fullName>
-        <field>Reason1__c</field>
-        <literalValue>Maintenance</literalValue>
-        <name>Reason = Maintenance</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -6284,17 +5457,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Record_Type_ACR_DPC_ACCA</fullName>
-        <description>Changes the case record type to Application Change Request (DPC) - ACCA</description>
-        <field>RecordTypeId</field>
-        <lookupValue>Application_Change_Request_DPC_Systems_ACCA</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Record Type = ACR DPC ACCA</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Record_Type_ACR_DPC_locked</fullName>
         <description>Updated the Case Record Type with &apos;Application change request (dpc systems - locked)</description>
         <field>RecordTypeId</field>
@@ -6312,17 +5474,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <lookupValue>CasesEurope</lookupValue>
         <lookupValueType>RecordType</lookupValueType>
         <name>Record Type = Cases - Europe</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Record_type_Process_IDFS_ISS</fullName>
-        <description>changes the record type to process</description>
-        <field>RecordTypeId</field>
-        <lookupValue>ProcessEuropeSCE</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Record type = Process (IDFS ISS)</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -6493,16 +5644,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <field>ACC_team_member_IRIS_update__c</field>
         <formula>$User.FirstName &amp; &quot; &quot;&amp;  $User.LastName</formula>
         <name>SEDA update IRIS staff action</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SEDA_update_Initial_Discrepancy_Amount</fullName>
-        <description>Update Initial Discrepancy Amount in SEDA</description>
-        <field>Initial_Discrepancy_Amount__c</field>
-        <formula>Outstanding_Amount__c</formula>
-        <name>SEDA_update_Initial Discrepancy Amount</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -6739,16 +5880,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIDRA_R_S_feedback_Confirm_outs_amount</fullName>
-        <description>sets the R&amp;S feedback pending field to &quot;confirm outs. amounts&quot;</description>
-        <field>R_S_feedback_pending__c</field>
-        <literalValue>Confirm outs. amounts</literalValue>
-        <name>SIDRA R&amp;S feedback - Confirm outs amount</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIDRA_R_S_feedback_Tech_default</fullName>
         <description>sets R&amp;S feedback pending to &quot;Tech default detected&quot;</description>
         <field>R_S_feedback_pending__c</field>
@@ -6777,15 +5908,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIDRA_UpdateDateTimeDefaultApproval</fullName>
-        <field>DEF_Approval_Rejection_Date__c</field>
-        <formula>NOW()</formula>
-        <name>SIDRA_Update Date/Time Default Approval</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SIDRA_UpdateDateTimeIRRApproval</fullName>
         <field>IRR_Approval_Rejection_Date__c</field>
         <formula>NOW()</formula>
@@ -6811,37 +5933,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <name>SIDRA_Update Date/Time IRRWD Approval</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIDRA_currency_conversion_1</fullName>
-        <field>CurrencyExchangeRateUSD__c</field>
-        <formula>CASE( Currency__c ,&quot;AED&quot;,3.67,&quot;ALL&quot;,121.64,&quot;ANG&quot;,1.79,&quot;ARS&quot;,8.61,&quot;AUD&quot;,1.23,&quot;AWG&quot;,1.79,&quot;AZN&quot;,0.78,&quot;BAM&quot;,1.7,&quot;BBD&quot;,2,&quot;BDT&quot;,77.87,&quot;BGN&quot;,1.7,&quot;BHD&quot;,0.38,&quot;BIF&quot;,1567.4,&quot;BMD&quot;,1,&quot;BND&quot;,1.34,&quot;BOB&quot;,6.91,&quot;BRL&quot;,2.6,&quot;BSD&quot;,1,&quot;BTN&quot;,61.62,&quot;BWP&quot;,9.59,&quot;BZD&quot;,2,&quot;CAD&quot;,1.22,&quot;CHF&quot;,0.87,&quot;CLP&quot;,627.35,&quot;CNY&quot;,6.22,&quot;COP&quot;,2369.67,&quot;CRC&quot;,537.35,&quot;CUP&quot;,1,&quot;CVE&quot;,95.73,&quot;CZK&quot;,24.2,&quot;DJF&quot;,177.31,&quot;DKK&quot;,6.46,&quot;DOP&quot;,44.54,&quot;DZD&quot;,89.02,&quot;USD&quot;,1,&quot;EGP&quot;,7.34,&quot;ETB&quot;,20.25,&quot;EUR&quot;,0.87,&quot;FJD&quot;,2,&quot;FKP&quot;,0.66,&quot;GBP&quot;,0.66,&quot;GEL&quot;,1.97,&quot;GHS&quot;,3.28,&quot;GIP&quot;,0.66,&quot;GMD&quot;,43,&quot;GNF&quot;,7042.25,&quot;GTQ&quot;,7.65,&quot;GYD&quot;,206.23,&quot;HKD&quot;,7.75,&quot;HNL&quot;,21,&quot;HRK&quot;,6.68,&quot;HTG&quot;,46.25,&quot;HUF&quot;,273.82,&quot;IDR&quot;,12500,&quot;ILS&quot;,3.94,&quot;INR&quot;,61.62,&quot;IQD&quot;,1135.07,&quot;IRR&quot;,34482.76,&quot;ISK&quot;,132.5,&quot;JMD&quot;,115.14,&quot;JOD&quot;,0.71,&quot;JPY&quot;,117.87,&quot;KES&quot;,91.72,&quot;KHR&quot;,4065.04,&quot;KMF&quot;,427.17,&quot;KPW&quot;,103.46,&quot;KRW&quot;,1082.25,&quot;KWD&quot;,0.29,&quot;KYD&quot;,0.82,&quot;KZT&quot;,184.09,&quot;LAK&quot;,8130.08,&quot;LBP&quot;,1508.3,&quot;LKR&quot;,131.89,-1)</formula>
-        <name>IDFS_SIDRA currency conversion 1</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIDRA_exchange_rate_entered</fullName>
-        <field>SIDRA_exchange_rate_updated__c</field>
-        <literalValue>1</literalValue>
-        <name>SIDRA exchange rate entered</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Assign_Case_Record_Type</fullName>
-        <description>Assign Case Record Type as Cases - SIS Help Desk</description>
-        <field>RecordTypeId</field>
-        <lookupValue>Cases_SIS_Help_Desk</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS Assign Case Record Type</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -7013,7 +6104,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>Service_Level_2</fullName>
         <field>Service_Level__c</field>
-        <literalValue>2</literalValue>
+        <literalValue>3</literalValue>
         <name>Service Level = 2</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -7133,34 +6224,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>TTBS_Update_Case_Type_Internal</fullName>
-        <field>Type</field>
-        <literalValue>Internal</literalValue>
-        <name>TTBS Update Case Type Internal</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>TTBS_Update_case_record_type</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>Cases_TTBS</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>TTBS Update case record type</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>TTBS_Update_case_status</fullName>
-        <field>Status</field>
-        <literalValue>New</literalValue>
-        <name>TTBS Update case status</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Timestamp_on_date_survey_is_sent</fullName>
         <field>Instant_Survey_Last_survey_sent__c</field>
         <formula>Today()</formula>
@@ -7206,40 +6269,10 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>UAT_Date_Today</fullName>
-        <description>Updates the UAT Date with Today&apos;s date</description>
-        <field>UAT_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>UAT Date = Today</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>UncheckVisibleinSelfService</fullName>
-        <description>Uncheck Visible in Self-Service when cases with specified Record Types are created.</description>
-        <field>IsVisibleInSelfService</field>
-        <literalValue>0</literalValue>
-        <name>Uncheck Visible in Self-Service</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Uncheck_is_from_IfapRest_Checkbox</fullName>
         <field>From_IFAPRest__c</field>
         <literalValue>0</literalValue>
         <name>Uncheck is from IfapRest Checkbox</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>UnchecknewcommentforACCA</fullName>
-        <description>Removes case from ACCA: New comment added view when case is completed by ACCA</description>
-        <field>New_Comment_for_ACCA__c</field>
-        <literalValue>0</literalValue>
-        <name>Uncheck new comment for ACCA</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -7258,16 +6291,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <field>Region__c</field>
         <literalValue>Asia &amp; Pacific</literalValue>
         <name>Region = Asia &amp; Pacific</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_CSR_Status</fullName>
-        <description>&apos;CSR Status&apos; to &apos;Scheduled&apos;</description>
-        <field>CR_Status__c</field>
-        <literalValue>Scheduled</literalValue>
-        <name>CSR Status = Scheduled</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -7305,47 +6328,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <field>Instant_Survey_Feedback_requested__c</field>
         <literalValue>1</literalValue>
         <name>Update Instant Survey Feedback Requested</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Portal_Case_Origin</fullName>
-        <description>Update the case origin field while creating the case through portal</description>
-        <field>Origin</field>
-        <literalValue>Web</literalValue>
-        <name>Update Portal Case Origin</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Portal_Case_Owner</fullName>
-        <description>Case Owner updated to the queue Call Center (IATA IW Case)</description>
-        <field>OwnerId</field>
-        <lookupValue>CallCentreIATAIWCases</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Update Portal Case Owner</name>
-        <notifyAssignee>true</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Portal_Case_Priority</fullName>
-        <description>Update the Priority field while creating case through customer portal</description>
-        <field>Priority</field>
-        <literalValue>3</literalValue>
-        <name>Update Portal Case Priority</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Portal_Case_Status</fullName>
-        <description>Update the status field while creating the case through customer portal</description>
-        <field>Status</field>
-        <literalValue>New</literalValue>
-        <name>Update Portal Case Status</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -7393,16 +6375,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <field>Status</field>
         <literalValue>3.3 PQ approved - Stakeholder comm done</literalValue>
         <name>Update Status to PQ approved</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_case_Visible_field</fullName>
-        <description>updating the visible SSP field to true if the Case Record Type is External Cases (Invoice Works)</description>
-        <field>IsVisibleInSelfService</field>
-        <literalValue>1</literalValue>
-        <name>Update case Visible field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -7544,9 +6516,11 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,  
 (IF(
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+(IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -7655,80 +6629,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>ACCA%3A Change Case Status and Escalated Status when Case is escalated</fullName>
-        <actions>
-            <name>ESCCaseStatusEscalated</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ESCEscalatedStatusACCANew</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>2.0 IE approved - Escalated DPC for PQ</value>
-        </criteriaItems>
-        <description>Change Case Status to &apos;Escalated&apos;, and Escalated Status ACCA to &apos;New&apos; when the checkbox &apos;Escalate to ACCA&apos; is checked.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Date%2FTime case was completed</fullName>
-        <actions>
-            <name>ACCA_Date_Time_case_was_completed</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.CR_Status__c</field>
-            <operation>equals</operation>
-            <value>Completed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Escalated_Status_ACCA__c</field>
-            <operation>equals</operation>
-            <value>Completed</value>
-        </criteriaItems>
-        <description>Updates the ACCA: Date/Time Opened field with the time the case was escalated to ACCA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Date%2FTime case was escalated</fullName>
-        <actions>
-            <name>ACCA_Date_Time_case_was_escalated</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Escalate_to_ACCA__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Updates the ACCA: Date/Time Opened field with the time the case was escalated to ACCA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Date%2FTime case was scheduled</fullName>
-        <actions>
-            <name>ACCA_Date_Time_case_was_scheduled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.Planned_End_CR__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Planned_Start_CR__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Updates the ACCA: Date/Time Scheduled field with the time the case was scheduled</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ACCA%3A Notify team leaders of new cases</fullName>
         <active>true</active>
         <criteriaItems>
@@ -7751,177 +6651,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Uncheck new comment for ACCA</fullName>
-        <actions>
-            <name>UnchecknewcommentforACCA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Escalated_Status_ACCA__c</field>
-            <operation>equals</operation>
-            <value>Completed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.New_Comment_for_ACCA__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Removes case from ACCA: New comment added view when case is completed by ACCA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Update Case Status to In Progress when case is completed by ACCA</fullName>
-        <actions>
-            <name>ESCCaseStatusInProgress</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Escalated_Status_ACCA__c</field>
-            <operation>equals</operation>
-            <value>Completed</value>
-        </criteriaItems>
-        <description>Updates the &apos;Case Status&apos; to &apos;In Progress&apos;  once the Escalated Status DPC is set to Completed.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Update Case Status when ACCA case is reopened</fullName>
-        <actions>
-            <name>ESCCaseStatusEscalated</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Escalated_Status_ACCA__c</field>
-            <operation>equals</operation>
-            <value>Reopend by IATA</value>
-        </criteriaItems>
-        <description>Update the Case Status to Escalated when the Escalated Status DPC is set to &apos;Reopened by IATA&apos;</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Update Escalated Status DCP with DPC Investigating</fullName>
-        <actions>
-            <name>ESCEscalatedStatusACCAACCAInvesti</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.ACCA_Owner__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Updates the Escalated Status DPC &apos;DPC Investigating&apos; once the &apos;DPC Owner&apos; has been selected.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACCA%3A Update Escalated Status DPC with CSR Scheduled and CSR Status with Scheduled</fullName>
-        <actions>
-            <name>Escalated_Status_ACCA_CR_Scheduled</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_CSR_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2) and 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.Planned_Start_CR__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Planned_End_CR__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CR_Status__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>Once one or both the Planned Start (CR) and Planned End (CR) case fields are filled, the Escalated Status ACCA shall be changed to &apos;CR Scheduled&apos;, and the &apos;CR Status&apos; to &apos;Scheduled&apos;</description>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR AIMS%3A Update Approval Date</fullName>
-        <actions>
-            <name>Approval_Date_Today</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <description>Updates the Approval Date when the Case Status is changed to Approval</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR AIMS%3A Update Deployment Date</fullName>
-        <actions>
-            <name>Deployment_Date_Today2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Deployment</value>
-        </criteriaItems>
-        <description>Updates the Deployment Date when the Case Status is changed to Deployment</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR AIMS%3A Update Development Start Date</fullName>
-        <actions>
-            <name>Development_Start_Date_Today</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Development</value>
-        </criteriaItems>
-        <description>Updates the Development Start Date when the Case Status is changed to Development</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR AIMS%3A Update UAT Date</fullName>
-        <actions>
-            <name>UAT_Date_Today</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>UAT</value>
-        </criteriaItems>
-        <description>Updates the UAT Date when the Case Status is changed to UAT</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>ACR%3A Change in Escalated Status DPC</fullName>
@@ -7958,66 +6687,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </criteriaItems>
         <description>Workflow to inform IATA Owner that ACCA has changed the Escalated Status DPC for an ACR.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR%3A DPC Change Record Type</fullName>
-        <actions>
-            <name>Record_Type_ACR_DPC_locked</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (DPC System)</value>
-        </criteriaItems>
-        <description>Changes the Record Type of a CR for DPC to enable a page layout with the fields entered by the requestor locked from editing.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR%3A DPC Change Record Type for ACCA</fullName>
-        <actions>
-            <name>Record_Type_ACR_DPC_ACCA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (DPC Systems - locked),Application Change Request (DPC System)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>2.0 IE approved - Escalated DPC for PQ</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>equals</operation>
-            <value>IBSP1,IBSPs,IBSPs-D</value>
-        </criteriaItems>
-        <description>Used to change the case record type of a CR for DPC that is escalated to ACCA, to a record type and page layout that they can see.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR%3A Notification of new ACR to ITS BJS for ILDS</fullName>
-        <actions>
-            <name>New_DPC_ACR_for_ILDS_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (DPC System)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>equals</operation>
-            <value>ILDS</value>
-        </criteriaItems>
-        <description>Used to inform ITS BJS that a new ACR has been escalated to them. Also to notify any notification there after.</description>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>ACR%3A Notification on new ACR IBSPs%2F IBSPs-D to IATA migration team</fullName>
@@ -8119,98 +6788,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>AME Complaint assignment to Complaint team</fullName>
-        <actions>
-            <name>Case_status_Open</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Complaint_Update_owner_AME</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Complaint_open_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reset_reopen_reason2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_previous_owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Africa &amp; Middle East,Cases - Europe,Cases - Americas,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsComplaint__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Customer_recovery__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Topic__c</field>
-            <operation>notContain</operation>
-            <value>IATA Codes not applicable to Agents,TIESS,ICCS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subtopic__c</field>
-            <operation>notContain</operation>
-            <value>MITA Interline Agreements</value>
-        </criteriaItems>
-        <description>the query is reopened and assigned to: Cases - Complaints AME</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ASPMissingAlertOnNewJoiningCase</fullName>
-        <actions>
-            <name>ASP_missing_alert</name>
-            <type>Task</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND (4 OR 5)</booleanFilter>
-        <criteriaItems>
-            <field>Account.HQ_ASP_Effective_Date__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IDFS Airline Participation Process</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>Airline Joining</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>equals</operation>
-            <value>IDFS Airline Participation Supervisor - HO</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>equals</operation>
-            <value>IDFS Airline Participation Staff - HO</value>
-        </criteriaItems>
-        <description>Create an alert task for the case owner when a new airline joining case is created for an airline that has no ASP.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Accelya%3A Change DPC system and change owner_CSR</fullName>
         <actions>
             <name>DPC_System_BSPlink</name>
@@ -8298,35 +6875,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Airline E-mail notification</fullName>
-        <actions>
-            <name>Email_notification_dispute_Airline</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web,Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>Dispute</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Airline_E_mail__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Disputes (Israel only)</value>
-        </criteriaItems>
-        <description>Sends an email notification to the Airline Email entered in the Web to Case form at http://www.iata.org/customer_portal_europe/deduction-israel.htm.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Americas%3A Agency Management Case Area</fullName>
         <actions>
             <name>Case_Area_Agency_Management</name>
@@ -8345,56 +6893,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </criteriaItems>
         <description>workflow rule that can automatically populate the Case Area field with the value Agency Management</description>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Americas%3A Date%2FTime Stamp Escalated</fullName>
-        <actions>
-            <name>Date_Time_Stamp_Escalated</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Escalated&quot;))</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Americas%3A Date%2FTime Stamp In Progress</fullName>
-        <actions>
-            <name>Date_Time_Stamp_Working</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;In progress&quot;))</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Americas%3A Date%2FTime Stamp Pending Customer</fullName>
-        <actions>
-            <name>Date_Time_Stamp_Pending_Customer</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Pending customer&quot;))</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Americas%3A Date%2FTime Stamp Pending Support</fullName>
-        <actions>
-            <name>Date_Time_Pending_Support_today</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>PRIORVALUE(Status) = &quot;Pending support&quot;</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Americas%3A Date%2FTime Stamp Reopened</fullName>
-        <actions>
-            <name>update_Date_Time_Reopened</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND( ISCHANGED(Status ), ISPICKVAL(Status, &quot;Reopen&quot;))</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Americas%3A Email2case - Region Update</fullName>
@@ -8749,24 +7247,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Case Origin Portal</fullName>
-        <actions>
-            <name>Case_Origin_Portal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>contains</operation>
-            <value>ISS</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Case Origin to Web</fullName>
         <actions>
             <name>Case_Origin_Web</name>
@@ -8818,37 +7298,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Cases Escalated To SNOW</fullName>
-        <actions>
-            <name>IATA_iiNet_Service_Now</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <description>Cases Escalated To SNOW</description>
-        <formula>OwnerId = &apos;00G1r0000031kjM&apos;</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Change record type from Europe to AME</fullName>
-        <actions>
-            <name>Change_record_type_from_Europe_to_AME</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Comoros,Iran,&quot;Congo, the Democratic Republic of the&quot;,Syria,Libya,Sudan,Congo (Brazzaville),Algeria,&quot;Palestinian Territories, Occupied&quot;,Iraq</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Europe</value>
-        </criteriaItems>
-        <description>Some countries for which we2case cases are created in AME have Europe as record type. This rule changes to the AME record type.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Clear field tracking</fullName>
         <actions>
             <name>Clear_Case_New_Interaction_tracking</name>
@@ -8858,1309 +7307,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <description>clears field tracking message</description>
         <formula>ISPICKVAL(New_interaction__c,&apos;The case has been recently updated.&apos;) &amp;&amp; LastModifiedById==OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_CHINESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>People&apos;s Republic of China</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ZH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_ENGLISH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND ((2 AND 3 AND 4) OR (12 AND 13) OR (14 AND 15) OR (16 AND 17 AND 18) OR (19 AND 20)) AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11 AND 21 AND 22</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notEqual</operation>
-            <value>Russian Federation,France,Germany,Greece,Italy,Portugal,Romania &amp; Moldova,Spain &amp; Andorra,Turkey</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notContain</operation>
-            <value>CIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Asia &amp; Pacific</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Australia,Bangladesh,Cambodia,India,Malaysia,Nepal,New Zealand,Pakistan,Philippines,Singapore,Sri Lanka</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Chinese Taipei,&quot;Hong Kong SAR, China&quot;,Mongolia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notEqual</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),Côte d&apos;Ivoire,Equatorial Guinea,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notEqual</operation>
-            <value>Togo,Tunisia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Bermuda,Cayman Islands,Haiti,Jamaica,Trinidad and Tobago,Turks and Caicos Islands</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_ENGLISH_FRENCH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Canada</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN_FR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_FRENCH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo (Brazzaville),Côte d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_FR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_GERMAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Austria,Germany</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_DE</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_GREEK</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Cyprus,Greece</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_GR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_INDONESIAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Indonesia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ID</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_ITALIAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Italy</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_IT</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_JAPANESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Japan</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_JA</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_KOREAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>&quot;Korea, Republic of&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_KO</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_PORTUGUESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Brazil,Portugal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_PT</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_ROMANIAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Romania &amp; Moldova</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_RO</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_SPANISH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Argentina,Belize,Bolivia,Chile,Colombia,Costa Rica,Dominican Republic,Ecuador,El Salvador,Guatemala,Honduras,Nicaragua,Panama,Paraguay,Peru,Spain &amp; Andorra,Uruguay,Venezuela</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ES</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_THAI</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Thailand</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_TURKISH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Turkey</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_VIETNAMESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Vietnam</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>Clicktools Workflow_AP_CX_ENGLISH</fullName>
@@ -10212,1423 +7358,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <operation>equals</operation>
         </criteriaItems>
         <description>Workflow rule used to send IS for Airline participation processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_CHINESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>China,PEOPLE&apos;S REPUBLIC OF CHINA</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ZH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_ENGLISH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 17  AND ((6 AND 7) OR (8 AND 9) OR (10 AND 11) OR (12 AND 13 AND 14) OR (15 AND 16))</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>notEqual</operation>
-            <value>Spain,Andorra,Romania,Moldova,Moldova,Republic of,Russia,Russian Federation,France,Germany,Greece,Italy,Portugal,Romania &amp; Moldova,Spain &amp; Andorra,Turkey</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Asia &amp; Pacific</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Australia,Bangladesh,Cambodia,India,Malaysia,Nepal,New Zealand,Pakistan,Philippines,Singapore,Sri Lanka</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Chinese Taipei,&quot;Taiwan, Province of China&quot;,&quot;Hong Kong SAR, China&quot;,Mongolia,Hong Kong,&quot;HONG KONG (SAR), CHINA&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>notEqual</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo,&quot;CONGO, DEM. REP. OF&quot;,Côte d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>notEqual</operation>
-            <value>Togo,Tunisia,COTE D&apos;IVOIRE,GUINEA BISSAU,CHAD,FRENCH GUIANA,FRENCH POLYNESIA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Bermuda,Cayman Islands,Haiti,Jamaica,Trinidad and Tobago,Turks and Caicos Islands</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_ENGLISH_FRENCH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Canada</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN_FR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_FRENCH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Algeria,Benin,Burkina Faso,Cameroon,Cape Verde,Central African Republic,&quot;Congo, the Democratic Republic of the&quot;,Congo,&quot;CONGO, DEM. REP. OF&quot;,Côte d&apos;Ivoire,Equatorial Guinea,France,Gabon,Guinea,Guinea-Bissau,Mali,Mauritania,Morocco,Niger,Senegal,Tchad</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Togo,Tunisia,COTE D&apos;IVOIRE,GUINEA BISSAU,CHAD,FRENCH GUIANA,FRENCH POLYNESIA</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_FR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_GERMAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Austria,Germany</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_DE</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_GREEK</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Cyprus,Greece</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_GR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_INDONESIAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Indonesia</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ID</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_ITALIAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>ITALY</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_IT</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_JAPANESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>JAPAN</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_JA</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_KOREAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>&quot;Korea, Democratic People&apos;s Republic of&quot;,&quot;Korea, Republic of&quot;,KOREA DEM.PEOPLES REPUBLIC</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_KO</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_PORTUGUESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Brazil,Portugal</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_PT</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_ROMANIAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>ROMANIA,MOLDOVA,&quot;Moldova, Republic of&quot;</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_RO</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_SPANISH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Argentina,Belize,Bolivia,Chile,Colombia,Costa Rica,Dominican Republic,Ecuador,El Salvador,Guatemala,Honduras,Nicaragua,Panama,Paraguay,Peru,Spain &amp; Andorra,Uruguay,Venezuela,SPAIN,Andorra,&quot;Venezuela, Bolivarian Republic of&quot;</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ES</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_THAI</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>THAILAND</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_TURKISH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>TURKEY</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_VIETNAMESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>Viet Nam,Vietnam</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_VI</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_CHINESE</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND( NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;)) ), OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service&quot;),ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;People&apos;s Republic of China&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ZH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ENGLISH</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),ISPICKVAL(Status,&quot;Closed&quot;),  AND(NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))),  OR(Instant_Survey_Last_survey_sent__c=null,NOT(Instant_Survey_Feedback_requested__c)), ParentId=null, OR( ISNULL(Contact.Instant_Survey_Last_feedback_received__c),Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30), Contact.Instant_Survey_opt_out__c = null, AND( NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))),  OR( AND( CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;, OR( ISPICKVAL(BSPCountry__c,&quot;Philippines&quot;),ISPICKVAL(BSPCountry__c,&quot;India&quot;),ISPICKVAL(BSPCountry__c,&quot;Nepal&quot;),ISPICKVAL(BSPCountry__c,&quot;Bangladesh&quot;),ISPICKVAL(BSPCountry__c,&quot;Pakistan&quot;),ISPICKVAL(BSPCountry__c,&quot;Singapore&quot;),ISPICKVAL(BSPCountry__c,&quot;Sri Lanka&quot;),ISPICKVAL(BSPCountry__c,&quot;Cambodia&quot;),ISPICKVAL(BSPCountry__c,&quot;New Zealand&quot;),ISPICKVAL(BSPCountry__c,&quot;Malaysia&quot;)) ), AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;, NOT(ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Israel&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;France&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Germany&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Greece&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Italy&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Portugal&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Romania &amp; Moldova&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Spain &amp; Andorra&quot;)), NOT(ISPICKVAL(BSPCountry__c,&quot;Turkey&quot;)))  ), AND( NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c) ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ENGLISH_2</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),  ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(  AND(  CONTAINS($UserRole.Name,&quot;China &amp; N. Asia Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;China &amp; North Asia&quot;),  Case_Group__c = &quot;Query&quot;,  ISPICKVAL(BSPCountry__c,&quot;Mongolia&quot;), ISPICKVAL(BSPCountry__c,&quot;Chinese Taipei&quot;), ISPICKVAL(BSPCountry__c,&quot;Hong Kong (SAR), China&quot;) ),  AND(  OR(  CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;),  CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;)  ),  ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;),  Case_Group__c = &quot;Query&quot;,  AND(  NOT(ISPICKVAL(BSPCountry__c,&quot;Benin&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mali&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Niger&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Togo&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;)),  NOT(ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;))  )  )  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  )  )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ENGLISH_3</fullName>
-        <actions>
-            <name>Clicktools_Email_for_Instant_survey_CX_EN</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Timestamp_on_date_survey_is_sent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Instant_Survey_Feedback_Requested</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)),  ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(  AND(  CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;Americas&quot;),  Case_Group__c = &quot;Query&quot;,  OR(  ISPICKVAL(BSPCountry__c,&quot;HAITI&quot;),  ISPICKVAL(BSPCountry__c,&quot;JAMAICA&quot;),  ISPICKVAL(BSPCountry__c,&quot;CAYMAN ISLANDS&quot;),  ISPICKVAL(BSPCountry__c,&quot;TURKS AND CAICOS ISLANDS&quot;), ISPICKVAL(BSPCountry__c,&quot;Trinidad and Tobago&quot;), ISPICKVAL(BSPCountry__c,&quot;BERMUDA&quot;) )), AND(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,  OR(  ISPICKVAL(BSPCountry__c,&quot;Australia&quot;))) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)), NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)), NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)), NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)), NOT(ISPICKVAL(Origin,&quot;Email&quot;)), NOT(ISPICKVAL(Origin,&quot;Fax&quot;)), NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)), NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)), NOT(ISPICKVAL(Origin,&quot;Letter&quot;)), NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)), NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)), NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)), NOT(ISPICKVAL(Origin,&quot;OLS&quot;)), NOT(ISPICKVAL(Origin,&quot;Other&quot;)), NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)), NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)), NOT(Phone_Redirected_to_Web__c)  )  )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_EN_FR</fullName>
-        <actions>
-            <name>Clicktools_Email_for_Instant_survey_CX_EN_FR</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Timestamp_on_date_survey_is_sent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Instant_Survey_Feedback_Requested</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ), CONTAINS($UserRole.Name,&quot;Americas Customer Service&quot;), ISPICKVAL(Region__c,&quot;Americas&quot;), Case_Group__c = &quot;Query&quot;, ISPICKVAL(BSPCountry__c,&quot;Canada&quot;), AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)), NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)), NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)), NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)), NOT(ISPICKVAL(Origin,&quot;Email&quot;)), NOT(ISPICKVAL(Origin,&quot;Fax&quot;)), NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)), NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)), NOT(ISPICKVAL(Origin,&quot;Letter&quot;)), NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)), NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)), NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)), NOT(ISPICKVAL(Origin,&quot;OLS&quot;)), NOT(ISPICKVAL(Origin,&quot;Other&quot;)), NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)), NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)), NOT(Phone_Redirected_to_Web__c) ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_FRENCH</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ), OR(  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;France&quot;)  ), AND( OR( CONTAINS($UserRole.Name,&quot;Africa &amp; ME First Level CS&quot;), CONTAINS($UserRole.Name,&quot;Africa &amp; ME Second Level CS&quot;) ), ISPICKVAL(Region__c,&quot;Africa &amp; Middle East&quot;), Case_Group__c = &quot;Query&quot;, OR( ISPICKVAL(BSPCountry__c,&quot;Benin&quot;), ISPICKVAL(BSPCountry__c,&quot;Burkina Faso&quot;), ISPICKVAL(BSPCountry__c,&quot;Cameroon&quot;), ISPICKVAL(BSPCountry__c,&quot;Cape Verde&quot;), ISPICKVAL(BSPCountry__c,&quot;Tchad&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo, the Democratic Republic of the&quot;), ISPICKVAL(BSPCountry__c,&quot;Congo (Brazzaville)&quot;), ISPICKVAL(BSPCountry__c,&quot;Equatorial Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Gabon&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea&quot;), ISPICKVAL(BSPCountry__c,&quot;Guinea-Bissau&quot;), ISPICKVAL(BSPCountry__c,&quot;Côte d&apos;Ivoire&quot;), ISPICKVAL(BSPCountry__c,&quot;Mali&quot;), ISPICKVAL(BSPCountry__c,&quot;Mauritania&quot;), ISPICKVAL(BSPCountry__c,&quot;Niger&quot;), ISPICKVAL(BSPCountry__c,&quot;Central African Republic&quot;), ISPICKVAL(BSPCountry__c,&quot;Senegal&quot;), ISPICKVAL(BSPCountry__c,&quot;Togo&quot;), ISPICKVAL(BSPCountry__c,&quot;Morocco&quot;), ISPICKVAL(BSPCountry__c,&quot;Tunisia&quot;), ISPICKVAL(BSPCountry__c,&quot;Algeria&quot;)) ) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_FR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_GERMAN</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,OR(ISPICKVAL(BSPCountry__c,&quot;Austria&quot;),ISPICKVAL(BSPCountry__c,&quot;Germany&quot;))  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_DE</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_GREEK</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,OR(ISPICKVAL(BSPCountry__c,&quot;Greece&quot;),ISPICKVAL(BSPCountry__c,&quot;Cyprus&quot;))  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_GR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_INDONESIAN</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Indonesia&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Indonesia&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ID</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ITALIAN</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))   ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Italy&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_IT</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_JAPANESE</fullName>
-        <actions>
-            <name>Clicktools_Email_for_Instant_survey_CX_JA</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Timestamp_on_date_survey_is_sent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Instant_Survey_Feedback_Requested</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Japan&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Japan&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_KOREAN</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Thailand&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Korea, Republic of&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_KO</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_PORTUGUESE</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),   OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  OR(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Portugal&quot;)  ), AND(  CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;),  ISPICKVAL(Region__c,&quot;Americas&quot;),  Case_Group__c = &quot;Query&quot;,  OR(  ISPICKVAL(BSPCountry__c,&quot;Brazil&quot;) )  ),   AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_PT</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ROMANIAN</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Romania &amp; Moldova&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_RO</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_SPANISH</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))   ),  OR( AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;), ISPICKVAL(Region__c,&quot;Europe&quot;), Case_Group__c = &quot;Query&quot;, ISPICKVAL(BSPCountry__c,&quot;Spain &amp; Andorra&quot;)), AND( CONTAINS($UserRole.Name,&quot;Americas Customer Service Staff&quot;), ISPICKVAL(Region__c,&quot;Americas&quot;), Case_Group__c = &quot;Query&quot;,  OR( ISPICKVAL(BSPCountry__c,&quot;Ecuador&quot;), ISPICKVAL(BSPCountry__c,&quot;Costa Rica&quot;), ISPICKVAL(BSPCountry__c,&quot;Colombia&quot;), ISPICKVAL(BSPCountry__c,&quot;El Salvador&quot;), ISPICKVAL(BSPCountry__c,&quot;Belize&quot;), ISPICKVAL(BSPCountry__c,&quot;Panama&quot;), ISPICKVAL(BSPCountry__c,&quot;Guatemala&quot;), ISPICKVAL(BSPCountry__c,&quot;Nicaragua&quot;), ISPICKVAL(BSPCountry__c,&quot;Honduras&quot;), ISPICKVAL(BSPCountry__c,&quot;Chile&quot;), ISPICKVAL(BSPCountry__c,&quot;Dominican Republic&quot;), ISPICKVAL(BSPCountry__c,&quot;Mexico&quot;), ISPICKVAL(BSPCountry__c,&quot;Bolivia&quot;), ISPICKVAL(BSPCountry__c,&quot;Peru&quot;), ISPICKVAL(BSPCountry__c,&quot;Venezuela&quot;), ISPICKVAL(BSPCountry__c,&quot;Argentina&quot;), ISPICKVAL(BSPCountry__c,&quot;Paraguay&quot;), ISPICKVAL(BSPCountry__c,&quot;Uruguay&quot;) )) ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)), NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)), NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)), NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)), NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)), NOT(ISPICKVAL(Origin,&quot;Email&quot;)), NOT(ISPICKVAL(Origin,&quot;Fax&quot;)), NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)), NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)), NOT(ISPICKVAL(Origin,&quot;Letter&quot;)), NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)), NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)), NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)), NOT(ISPICKVAL(Origin,&quot;OLS&quot;)), NOT(ISPICKVAL(Origin,&quot;Other&quot;)), NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)), NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)), NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ES</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_THAI</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Thailand&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Thailand&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_TURKISH</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(CONTAINS($UserRole.Name,&quot;MAD Hub CS&quot;),ISPICKVAL(Region__c,&quot;Europe&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Turkey&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_VIETNAMESE</fullName>
-        <active>false</active>
-        <formula>AND  (  NOT(CONTAINS(Contact.Email,&quot;@iata.org&quot;)),  NOT(ISPICKVAL(Account.Status__c,&quot;Terminated&quot;)), ISPICKVAL(Status,&quot;Closed&quot;),  AND(  NOT(ISPICKVAL(Reason1__c,&quot;Documentation received (IN)&quot;)),  NOT(ISPICKVAL(Reason1__c,&quot;Irregularity / default / reinstatement&quot;)), NOT(ISPICKVAL(Reason1__c,&quot;Dispute&quot;))  ),  OR(Instant_Survey_Last_survey_sent__c=null,  NOT(Instant_Survey_Feedback_requested__c)),  ParentId=null,  OR(  ISNULL(Contact.Instant_Survey_Last_feedback_received__c),  Contact.Instant_Survey_Last_feedback_received__c &lt; TODAY() -30  ),  Contact.Instant_Survey_opt_out__c = null,  AND(  NOT(ISPICKVAL(Type_of_customer__c,&quot;Third Party&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Legal Entities&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Global Distribution System (GDS)&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Partner&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;IATA Employee&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;DPC&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;Non-IATA Travel Agent&quot;)), NOT(ISPICKVAL(Type_of_customer__c,&quot;Auditors&quot;)),  NOT(ISPICKVAL(Type_of_customer__c,&quot;General Public&quot;))  ),  AND(OR(CONTAINS($UserRole.Name,&quot;A&amp;P Customer Service Staff&quot;),CONTAINS($UserRole.Name,&quot;Staff - Vietnam&quot;)),ISPICKVAL(Region__c,&quot;Asia &amp; Pacific&quot;),Case_Group__c = &quot;Query&quot;,ISPICKVAL(BSPCountry__c,&quot;Vietnam&quot;)  ),  AND(  NOT(ISPICKVAL(Origin,&quot;Agent Financial Review Notification&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Participation&quot;)),NOT(ISPICKVAL(Origin,&quot;Airline Suspension&quot;)),NOT(ISPICKVAL(Origin,&quot;AIRS&quot;)),NOT(ISPICKVAL(Origin,&quot;Code Transfers and Mergers&quot;)),NOT(ISPICKVAL(Origin,&quot;Customer Portal&quot;)),NOT(ISPICKVAL(Origin,&quot;Email&quot;)),NOT(ISPICKVAL(Origin,&quot;Fax&quot;)),NOT(ISPICKVAL(Origin,&quot;Funds Management&quot;)),NOT(ISPICKVAL(Origin,&quot;Internal Case&quot;)),NOT(ISPICKVAL(Origin,&quot;Letter&quot;)),NOT(ISPICKVAL(Origin,&quot;Monthly Report&quot;)),NOT(ISPICKVAL(Origin,&quot;myIATA&quot;)),NOT(ISPICKVAL(Origin,&quot;New ISS Deployment&quot;)),NOT(ISPICKVAL(Origin,&quot;OLS&quot;)),NOT(ISPICKVAL(Origin,&quot;Other&quot;)),NOT(ISPICKVAL(Origin,&quot;Walk-in&quot;)),NOT(ISPICKVAL(Origin,&quot;Web SAF&quot;)),NOT(Phone_Redirected_to_Web__c)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_VI</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Customer Recovery Mgt %28NO SCE%29</fullName>
-        <actions>
-            <name>ESCCaseStatusInProgress</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reset_reopen_reason2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 and 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Africa &amp; Middle East,Cases - Americas,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Asia &amp; Pacific,China &amp; North Asia,Americas,Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Customer_recovery__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>The query is reopened (in progress)</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -11731,21 +7460,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>6.0 UAT Approval - DD - s/holder comm</value>
         </criteriaItems>
         <description>Create a communication task for the case owner (to inform about stakeholder impact communication) when the case status changes to 6.0 UAT Approval - DD - s/holder comm</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>DPC System Picklist</fullName>
-        <actions>
-            <name>Manager_ACR</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>equals</operation>
-            <value>Germany-D,Korea-D,Maestro-D</value>
-        </criteriaItems>
-        <description>Update ACR Manger when picklist Maestro-D / Korea-D /Germany-D</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12025,57 +7739,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Escalation case 1st email</fullName>
-        <actions>
-            <name>X1st_email_on_CS_escalated_case</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - Global,Cases - China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notContain</operation>
-            <value>Recycle</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Escalation</value>
-        </criteriaItems>
-        <description>Sends an email to CS managers when the case has origin &quot;Escalated&quot;</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>External split for OPS Mgt cases</fullName>
-        <actions>
-            <name>External_OPS_Mgt_cases</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.SuppliedEmail</field>
-            <operation>notContain</operation>
-            <value>iata</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - TSP Certification,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - Cargolink</value>
-        </criteriaItems>
-        <description>Rule to define if a case is an internal or external query.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>FDS Argentina - Rejected Check Cases</fullName>
         <actions>
             <name>New_interaction_Blank</name>
@@ -12116,7 +7779,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </actions>
         <active>true</active>
         <description>Clear New interaction field when Query is closed. It is necessary when query  had another Record Type with New Interaction Info</description>
-        <formula>AND(   OR (     RecordType.DeveloperName = &quot;Cases_Global&quot;,     RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,     RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,     RecordType.DeveloperName = &quot;CasesAmericas&quot;,     RecordType.DeveloperName = &quot;CasesEurope&quot;,     RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,     RecordType.DeveloperName = &quot;CasesMENA&quot; ,     RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,     RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,     RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,     RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,     RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,     RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,     RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,     RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;,     RecordType.DeveloperName = &quot;ID_Card_Application&quot;,     RecordType.DeveloperName = &apos;Airline_Coding_Application&apos;,     RecordType.DeveloperName = &apos;DPC_Service_Request&apos;,     RecordType.DeveloperName = &apos;CNS_Collection_Process&apos;   ) ,   OwnerId = LastModifiedById,   contains(TEXT(Status),&quot;Closed&quot;),   not(ispickval(New_interaction__c, &quot;&quot;)) )</formula>
+        <formula>AND(   OR (     RecordType.DeveloperName = &quot;Cases_Global&quot;,     RecordType.DeveloperName = &quot;OSCAR_Communication&quot;,     RecordType.DeveloperName = &quot;Invoicing_Collection_Cases&quot;,     RecordType.DeveloperName = &quot;CasesAmericas&quot;,     RecordType.DeveloperName = &quot;CasesEurope&quot;,     RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot; ,     RecordType.DeveloperName = &quot;CasesMENA&quot; ,     RecordType.DeveloperName = &quot;ExternalCasesIDFSglobal&quot;,     RecordType.DeveloperName = &quot;Cases_China_North_Asia&quot;,     RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,     RecordType.DeveloperName = &quot;sMAP_sales_Monitoring_Alert_Process&quot;,     RecordType.DeveloperName = &quot;ComplaintIDFS&quot;,     RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,     RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,     RecordType.DeveloperName = &quot;IATA_Financial_Review&quot;,     RecordType.DeveloperName = &quot;ID_Card_Application&quot;,     RecordType.DeveloperName = &quot;SEDA&quot;,RecordType.DeveloperName = &apos;Airline_Coding_Application&apos;,     RecordType.DeveloperName = &apos;DPC_Service_Request&apos;,     RecordType.DeveloperName = &apos;CNS_Collection_Process&apos;   ) ,   OwnerId = LastModifiedById,   contains(TEXT(Status),&quot;Closed&quot;),   not(ispickval(New_interaction__c, &quot;&quot;)) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -12294,29 +7957,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>IAPP - Reassign Not Eligible IAPP</fullName>
-        <actions>
-            <name>IAPP_Notify_team_leader_case_has_been_set_as_Not_eligible</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>IAPP_change_IAPP_case_owner_to_AP_HO_Q</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Eligibility_Documents_Checklist_approved__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IDFS Airline Participation Process</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>IAPP_New docs received notification</fullName>
         <actions>
             <name>IAPP_Send_notification_on_New_docs_received</name>
@@ -12344,44 +7984,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </actions>
         <active>true</active>
         <formula>RecordType.DeveloperName == &apos;FDS_ICCS_Product_Management&apos; &amp;&amp; ISCHANGED(IsClosed)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ICCS Unique Case - Closed</fullName>
-        <actions>
-            <name>ICCS_Unique_Case_Closed</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Product Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ICCS Unique Case - Open</fullName>
-        <actions>
-            <name>ICCS_Unique_Case_Open</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Product Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -13112,37 +8714,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>IDFS CS systems EUR %2F AME</fullName>
-        <actions>
-            <name>Case_Area_Salesforce_Web_and_KPIs</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ChangerecordtypetoInternalSCE</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reason_Maintenance</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Type_of_customer_IATA_employee</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>SFEUR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Spain</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>IDFS Complaint Classification</fullName>
         <actions>
             <name>ChangerecordtypetoInternalSCE</name>
@@ -13324,17 +8895,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>IDFS final resolution date - Process</fullName>
-        <actions>
-            <name>SCE_first_closure</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>TESTING</description>
-        <formula>and($RecordType.Name = &quot;Process (IDFS ISS)&quot;,  PRIORVALUE(Status) &lt;&gt; &quot;Reopen&quot;, OR(ISPICKVAL(Status, &quot;Closed&quot;),ISPICKVAL(Status, &quot;Closed_Withdrawn&quot;),ISPICKVAL(Status, &quot;Closed_Not Accepted&quot;)))</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <actions>
             <name>IDFS_CREATED_BY_ROLE</name>
@@ -13343,64 +8903,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <active>true</active>
         <formula>True</formula>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA currency conversion 1</fullName>
-        <actions>
-            <name>SIDRA_currency_conversion_1</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIDRA_exchange_rate_entered</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SEDA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Currency__c</field>
-            <operation>equals</operation>
-            <value>AED,ALL,ANG,ARS,AUD,AWG,AZN,BAM,BBD,BDT,BGN,BHD,BIF,BMD,BND,BOB,BRL,BSD,BTN,BWP,BZD,CAD,CHF,CLP,CNY,COP,CRC,CUP,CVE,CZK,DJF,DKK,DOP,DZD,USD,EGP,ETB,EUR,FJD,FKP,GBP,GEL,GHS,GIP,GMD,GNF,GTQ,GYD,HKD,HNL,HRK,HTG,HUF,IDR,ILS,INR,IQD,IRR,ISK,JMD,JOD,JPY,KES,KHR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Currency__c</field>
-            <operation>equals</operation>
-            <value>KMF,KPW,KRW,KWD,KYD,KZT,LAK,LBP,LKR</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA currency conversion 2</fullName>
-        <actions>
-            <name>IDFS_SIDRA_Currency_Conversion_2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIDRA_exchange_rate_entered</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND (2 OR 3)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SEDA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Currency__c</field>
-            <operation>equals</operation>
-            <value>LRD,LSL,LTL,LVL,LYD,MAD,MKD,MMK,MNT,MOP,MRO,MUR,MVR,MWK,MXN,MYR,MZN,NAD,NGN,NIO,NOK,NPR,NZD,OMR,PAB,PEN,PGK,PHP,PKR,PLN,PYG,QAR,RON,RSD,RUB,SAR,SBD,SCR,SEK,SGD,SHP,SLL,SOS,STD,SVC,SYP,SZL,THB,TND,TOP,TRY,TTD,TWD,TZS,UAH,UGX,USD,UYU,VEF,VND,VUV,WST,XAF,XCD</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Currency__c</field>
-            <operation>equals</operation>
-            <value>XOF,XPF,YER,ZAR,ZMK,ZWD,ZMW</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IDFS_SIDRA temp double update of propose def</fullName>
@@ -13581,17 +9083,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>IDFS_SIDRA_DEF00_Automate Date%2FTime Default Approval%2FDenial</fullName>
-        <actions>
-            <name>SIDRA_UpdateDateTimeDefaultApproval</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>SCE</description>
-        <formula>AND(OR(RecordType.DeveloperName=&apos;SIDRA_Lite&apos;,RecordType.DeveloperName=&apos;SIDRA&apos;),ISCHANGED(DEF_Approval_Rejection__c))</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>IDFS_SIDRA_DEF01 Confirmation of situation by R%26S - email to AM RPM %2F BSP</fullName>
         <actions>
             <name>IDFS_SIDRA_DEF01_Confirmation_of_situation_by_R_S_email_to_AM_RPM</name>
@@ -13653,90 +9144,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>CASS</value>
         </criteriaItems>
         <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA_DEF0101 Key account management Tech DEF</fullName>
-        <actions>
-            <name>SIDRA_DEF0101_Key_account_magament_Tech_DEF</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe,Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Confirmation_moneys_not_received__c</field>
-            <operation>greaterThan</operation>
-            <value>&quot;9/1/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DEF_Approval_Rejection__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.CCG_Participant__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason_for_Default__c</field>
-            <operation>equals</operation>
-            <value>Technical Default</value>
-        </criteriaItems>
-        <description>for key account management project in Europe</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA_DEF0102 Key account management Short payment DEF</fullName>
-        <actions>
-            <name>SIDRA_DEF0102_Key_account_magament_NP_DEF</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6 and 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe,Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Confirmation_moneys_not_received__c</field>
-            <operation>greaterThan</operation>
-            <value>&quot;9/1/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DEF_Approval_Rejection__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.CCG_Participant__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason_for_Default__c</field>
-            <operation>equals</operation>
-            <value>Non-payment,Short Payment</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Update_AIMS_DEF__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>for key account management project in Europe</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -14048,63 +9455,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>IDFS_SIDRA_DP01_KAM case created assign</fullName>
-        <actions>
-            <name>IDFS_SIDRA_DP01_KAM_case_created_assign</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>Change_owner_to_ACC_EUR_Risk_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8 and 9</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Region_formula__c</field>
-            <operation>equals</operation>
-            <value>Europe,Africa &amp; Middle East,Americas</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.CCG_Participant__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IRR_Withdrawal_Reason__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Propose_Irregularity__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.SIDRA_exchange_rate_updated__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Short_Payment_Amount_USD__c</field>
-            <operation>greaterOrEqual</operation>
-            <value>50</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.ANG_IsNewGenAgency__c</field>
-            <operation>notEqual</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>key account management in Europe</description>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>IDFS_SIDRA_EUR%2FAME%2FA1 change status to In progress</fullName>
         <actions>
             <name>ESCCaseStatusInProgress</name>
@@ -14128,47 +9478,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </criteriaItems>
         <description>changes the status of SIDRA cases from IRIS to in progress</description>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA_EURDEF_Default confirmation assign to ACC</fullName>
-        <actions>
-            <name>ChangeOwnertoACCqueue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ReopenCase</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>contains</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Confirmation_moneys_not_received__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DEF_Approval_Rejection__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>SCE</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <offsetFromField>Case.Propose_Default__c</offsetFromField>
-            <timeLength>2</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_IRIS manual_process</fullName>
@@ -14658,72 +9967,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>IDFS_SIDRA_TER approved - email to R%26S</fullName>
-        <actions>
-            <name>IDFS_SIDRA_TER_approved_email_to_R_S</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.TER_Approval_Rejection__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Update_AIMS_TER__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA_TER approved - email to R%26S new</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Update_AIMS_DEF__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Termination_date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.REI_ApprovalRejectin__c</field>
-            <operation>notEqual</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DEF_Withdrawal_Approval_Rejection__c</field>
-            <operation>notEqual</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>R_S_feedback_pending</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.Termination_date__c</offsetFromField>
-            <timeLength>-1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>IDFS_SIDRA_TER approved - email to R%26S v3</fullName>
         <actions>
             <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
@@ -14779,29 +10022,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>Approved,Rejected</value>
         </criteriaItems>
         <description>SCE</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA_TER03_R%26S feedback on outs%2E amount</fullName>
-        <actions>
-            <name>SIDRA_R_S_feedback_Confirm_outs_amount</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Update_AIMS_TER__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Outstanding_Amounts_Bankruptcy_del__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -15373,7 +10593,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
+            <value>shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Subject</field>
@@ -15419,355 +10639,8 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
+            <value>shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISS Portal - Make SIDRA Case Invisible</fullName>
-        <actions>
-            <name>ISS_Portal_Make_case_invisible</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.NOI_sent__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Update_AIMS_DEF__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Outs_Amount_equals_IATA_charges__c</field>
-            <operation>equals</operation>
-            <value>NO</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISS Portal - Make SIDRA Case Visible</fullName>
-        <actions>
-            <name>ISS_Portal_Make_case_visible</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 4 AND (2 OR 3)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.NOI_sent__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Update_AIMS_DEF__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;5/30/2016, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISS Portal - Make case invisible</fullName>
-        <actions>
-            <name>ISS_Portal_Make_case_invisible</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>25 AND (1 AND 2 AND 3 AND 4 AND (5 OR (6 AND 7)) AND (10 OR (11 AND 12 AND 13 AND 17 AND 20 AND (NOT(23) AND 15))) AND 16 AND 18 AND 19 AND 21 AND 22 AND NOT(23 AND 24)) OR 8 OR 9 OR (14 AND 15)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>ISS Portal PwC,ISS Portal PwC for IATA user,IATA Financial Review,Cases - SIS Help Desk,IDFS Airline Participation Process</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>DPC Service Request,IATA Service Request</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>Invoicing Collection Cases,Process,FDS ICCS Generic Request Management,Airline Coding Application,Inter DPCs</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked),Application Change Request (DPC Systems) - ACCA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>0. New - pending case assignment,1.0 IE - Case Assigned,1.1 IE - pending internal eval/approval,1.2 IE - pending DPCM eval/ approval,10. Rejected - before PQ</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked),Application Change Request (DPC Systems) - ACCA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>contains</operation>
-            <value>Recycle</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>Error portal - broken</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>SAAM,OSCAR Communication,SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SAAM,OSCAR Communication</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,Certificate DGR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Bank Detail Update,Major Change,Agency Changes,New MSO,New HE standard,New HE lite,New AE,New SA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>Invoicing Collection Cases</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Customer Charge Request,CHG – Data Maintenance</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>Cases - IFG</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>Request of PSSA / Agreement,GSA / MSO / Handling Agent,New GSA,Massive e-mail,Accreditation Type</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>IEP Bank account setup</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>FoP Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>PCI DSS Compliant,New HE Multicountry</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>Annual revalidation</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Membership Management,FDS ASP Management,FDS ICCS Bank Account Management,FDS ICCS Product Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>Cases - Global</value>
-        </criteriaItems>
-        <description>If the case should be invisible on the portal uncheck the field &quot;Visible on ISS Portal&quot;</description>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISS Portal - Make case visible</fullName>
-        <actions>
-            <name>ISS_Portal_Make_case_visible</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>25 OR (((1 OR 2 OR (3 AND (21 AND 22)) OR 4 OR (10 AND (11 OR 12 OR 16 OR 17 OR (23 AND 24)))) AND ((5 AND 6) OR (17 AND 18))) OR ((7 AND 8 AND 9) AND 6) OR (13 AND 14) OR 15) OR (10 AND 19 AND 20)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>ISS Portal PwC,ISS Portal PwC for IATA user,IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - SIS Help Desk,IDFS Airline Participation Process</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Service Request,Airline Coding Application,Inter DPCs</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>notEqual</operation>
-            <value>Internal Case,Phone,Chat,Voicemail</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notContain</operation>
-            <value>Recycle</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Invoicing Collection Cases</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>Collection</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Debt Recovery</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SAAM,OSCAR Communication</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHG – Data Maintenance,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,CLO - Closure,Direct Debit Setup/Update,IRIS Bank Detail Update,New BR / IP,New BR Abroad,New GSA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>New EAA - Application process for European Accredited Agent,New HO,New SA / CHV – New Code,Reconsideration,VMFR Setup/Update,PAX/CARGO Certificate,Certificate DGR,New TIDS,New MSO,New HE lite,New HE standard,New AE,GSA / MSO / Handling Agent</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>DPC Service Request</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>notEqual</operation>
-            <value>Maestro</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - IFG</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>FoP Management,Accreditation Type,Financial review opt-in / opt-out,Change of Trade Name,Change of Hierarchy,Annual revalidation</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>PCI DSS Compliant</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Internal Case</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Financial Security Request,Financial Security Reduction,Financial Security Update,Financial Security Renewal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Accepted_Pending BG</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>notEqual</operation>
-            <value>IDFS Airline Participation Process</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>notEqual</operation>
-            <value>IATA Easy Pay</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHG – Data Maintenance</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Global</value>
-        </criteriaItems>
-        <description>Enables the &quot;Visible on ISS Portal&quot;  checkbox for case record types that should by default be visible on the portal. Users can then change this option to hide the record on the portal.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ISS Portal - Make escalated case visible</fullName>
-        <actions>
-            <name>ISS_Portal_Make_case_visible</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (DPC System),Application Change Request (DPC Systems - locked),Application Change Request (DPC Systems) - ACCA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>notEqual</operation>
-            <value>0. New - pending case assignment,1.0 IE - Case Assigned,1.1 IE - pending internal eval/approval,1.2 IE - pending DPCM eval/ approval</value>
-        </criteriaItems>
-        <description>Enables the &quot;Visible on ISS Portal&quot; checkbox for escalated cases e.g. ACRs escalated by DPC, so that they will be visible on the portal.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -16014,25 +10887,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP IFAP Assesment done</fullName>
-        <actions>
-            <name>Notification_Assesment</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Assessment Performed</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP IFAP Notifictaion Ag%2E Notif email</fullName>
         <actions>
             <name>ISSP_IFAP_Notifictaion_Ag_Notif_email</name>
@@ -16080,85 +10934,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
             <value>Sanity Check Failure</value>
         </criteriaItems>
         <description>this should happen when IFAP case status has been changed to &apos;sanity check failure&apos;</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IW%3A Case assignement to Deskom</fullName>
-        <actions>
-            <name>Inform_Deskom_of_new_case_assignment_escalation</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>contains</operation>
-            <value>Deskom Escalations</value>
-        </criteriaItems>
-        <description>Informs Deskom that a case has been assigned/escalated to them
-
-Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IW%3A Customer Portal Case Rule</fullName>
-        <actions>
-            <name>Update_Portal_Case_Origin</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Portal_Case_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Portal_Case_Priority</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Portal_Case_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>equals</operation>
-            <value>Overage High Volume Customer Portal User Cloned,IW Customer Portal User</value>
-        </criteriaItems>
-        <description>This rule is used to update the Owner, Origin, Priority, Status fields in case object</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>IW%3A Customer portal visible rule</fullName>
-        <actions>
-            <name>Update_case_Visible_field</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>External Cases (InvoiceWorks)</value>
-        </criteriaItems>
-        <description>updating the visible self service portal field to be true</description>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>IW%3A Notification on prioirty 1 cases</fullName>
-        <actions>
-            <name>Notification_on_Priority_1_Case_for_InvoiceWorks</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>External Cases (InvoiceWorks)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Priority</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </criteriaItems>
-        <description>Sends an outbound message when there is a priority 1 case.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -16211,27 +10986,6 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         </criteriaItems>
         <description>When a web case is logged, the Region field in the Case is automatically updated based on IATA Country selected, and the applicable Record Type is updated.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Internal split for OPS Mgt cases</fullName>
-        <actions>
-            <name>Internal_OPS_Mgt_cases</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.SuppliedEmail</field>
-            <operation>contains</operation>
-            <value>iata</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - TSP Certification,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - Cargolink</value>
-        </criteriaItems>
-        <description>Rule to define if a case is an internal or external query.</description>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>NDC Matchmaker Team Notification</fullName>
@@ -16398,26 +11152,6 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>Notification to ICCS Contact%3A BA Creation Case created</fullName>
-        <actions>
-            <name>Notification_to_ICCS_Contact_BAC_Case_created</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Bank Account Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>ICCS – Create Bank Account</value>
-        </criteriaItems>
-        <description>Send a notification to the Contact when an FDS ICCS Bank Account Management Case with a &quot;Create&quot; case area has been opened</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Owner Checkbox to False</fullName>
         <actions>
             <name>Uncheck_is_from_IfapRest_Checkbox</name>
@@ -16426,99 +11160,6 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - no such case owner exists.</de
         <active>true</active>
         <formula>IF(From_IFAPRest__c,true,null)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Populate Case Groups picklist for ICCS Team</fullName>
-        <actions>
-            <name>Assign_ICCS_Team</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2) AND (3 OR 4 OR 5 OR 6 OR 7 OR 8)</booleanFilter>
-        <criteriaItems>
-            <field>User.Profile_Name__c</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Administrator</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.Profile_Name__c</field>
-            <operation>equals</operation>
-            <value>FDS ICCS User</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>Cases - Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>Cases - Africa &amp; Middle East</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>Cases - Americas</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>Cases - Asia &amp; Pacific</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>Cases - China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>Process</value>
-        </criteriaItems>
-        <description>Assign ICCS Team value on the Groups picklist on Case</description>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Portal - Uncheck Visible in Self-Service</fullName>
-        <actions>
-            <name>UncheckVisibleinSelfService</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 OR 2 OR 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Central Billing,Internal Cases Americas,Internal Cases Europe/SCE,SIDRA BSP,Disputes,SIDRA CASS,myIATA,Process Europe/SCE,Internal Cases (IDFS global),Fraud Cases Americas,Internal Cases Americas (R&amp;S-CASS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Africa,Cases - MENA,External Cases (IDFS global),Accreditation Cases (global),Internal Cases Americas (R&amp;S)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>External Cases (InvoiceWorks),External Cases (E&amp;F Services)</value>
-        </criteriaItems>
-        <description>Uncheck Visible in Self-Service when a new cases is created with the Record Types that relates to Internal Cases, SIDRA, Central Billing, myIATA and Process
-
-Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>PwC edit page layout</fullName>
-        <actions>
-            <name>PwC_edit_RT1</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>ISS Portal PwC</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>RecType Complaint %28IDFS ISS%29</fullName>
@@ -16681,161 +11322,6 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>SARA Renewal case classification</fullName>
-        <actions>
-            <name>Case_Area_Risk_Management_process</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reason_Financial_Security_update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Record_type_Process_IDFS_ISS</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>#SARA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - A&amp;ME Agency Mgmt,E-mail to Case - Service Centre Europe,E-mail to Case - MENA ACC</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SARA Renewal case classification - A1</fullName>
-        <actions>
-            <name>Case_Area_Risk_Management_process</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reason_Financial_Security_update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Record_type_Process_IDFS_ISS</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>UpdateRegionAmericas</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>#SARA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Americas Agy Risk Mgmt</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCA Complaint assignment to Complaint team</fullName>
-        <actions>
-            <name>Case_status_Open</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Complaint_Update_owner_SCA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Complaint_open_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reset_Reopened_case</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reset_reopen_reason2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_previous_owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 AND 7 AND (2 OR 3) AND 4) AND (5 AND 6)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,SAAM,Internal Cases (IDFS ISS),Process,Cases - Europe,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsComplaint__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Customer_recovery__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Topic__c</field>
-            <operation>notContain</operation>
-            <value>IATA Codes not applicable to Agents,TIESS,ICCS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subtopic__c</field>
-            <operation>notContain</operation>
-            <value>MITA Interline Agreements</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notEqual</operation>
-            <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Uruguay</value>
-        </criteriaItems>
-        <description>The query is reopened and assigned to Complaint Team</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE Airline management queue notification</fullName>
-        <actions>
-            <name>NewALmanagementprocess</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1</booleanFilter>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>equals</operation>
-            <value>Cases - Airline Management SCE</value>
-        </criteriaItems>
-        <description>SCE - informs reporting and billing team that a case has been assigned to their queue.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE Alert CS Managers queue Communication</fullName>
-        <actions>
-            <name>SCE_Notify_CS_queue_communication</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>equals</operation>
-            <value>Communication Requests - Europe</value>
-        </criteriaItems>
-        <description>Alert to send an email to R&amp;S team in MAD whenever a case is assigned to the queue &apos;Cases - R&amp;S&apos;</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SCE Alert Remittance %26 Settlement MAD Hub</fullName>
         <actions>
             <name>AlertsRSMADHub</name>
@@ -16848,94 +11334,6 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <value>Cases - R&amp;S</value>
         </criteriaItems>
         <description>Alert to send an email to R&amp;S team in MAD whenever a case is assigned to the queue &apos;Cases - R&amp;S&apos;</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE Bnaking queue notification</fullName>
-        <actions>
-            <name>Bankingcase</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1</booleanFilter>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>equals</operation>
-            <value>Banking Management - Europe</value>
-        </criteriaItems>
-        <description>SCE - informs banking team that a case has been assigned to their queue.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE Communication and Web Upload - Europe queue notification</fullName>
-        <actions>
-            <name>SCE_New_Communciation_Web_Upload_case</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>equals</operation>
-            <value>Communications &amp; Web Uploads - Europe</value>
-        </criteriaItems>
-        <description>SCE - informs communication and web upload team that a case has been assigned to their queue.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE Complaint assignment to OCIT</fullName>
-        <actions>
-            <name>Case_status_Open</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ComplaintUpdateowner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Complaint_open_date</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Reset_reopen_reason2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_previous_owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 AND (2 OR 6)) AND (3 AND 4 AND 5)</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Europe,ACCA Customer Service Request (External),Order of AWB / allocation (CASS),Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsComplaint__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Topic__c</field>
-            <operation>notContain</operation>
-            <value>IATA Codes not applicable to Agents,TIESS,ICCS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subtopic__c</field>
-            <operation>notContain</operation>
-            <value>MITA Interline Agreements</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Bermuda,Canada,Argentina,Mexico,Paraguay,Uruguay</value>
-        </criteriaItems>
-        <description>the query is reopened and assigned to OCIT</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -16973,36 +11371,6 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SCE Infofax cases</fullName>
-        <actions>
-            <name>ChangeCaseOrigintoFax</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>Infofax recibido desde:</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE Invoicing queue notification</fullName>
-        <actions>
-            <name>NewInvoicingcase</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1</booleanFilter>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>equals</operation>
-            <value>Cases - Invoicing CIS</value>
-        </criteriaItems>
-        <description>SCE - informs invoicing team that a case has been assigned to their queue.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SCE Reporting %26 Billing queue - Serial Number Allocation notification</fullName>
         <actions>
             <name>SCE_New_Serial_Number_Allocation_case</name>
@@ -17021,62 +11389,6 @@ Inactive (Miguel Guerreiro, 3/17/2016 12:59 PM) - self service is no longer used
             <value>SERIAL NUMBER ALLOCATION</value>
         </criteriaItems>
         <description>SCE - informs reporting and billing team that a serial number allocation case has been assigned to their queue.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE Reporting %26 Billing queue notification</fullName>
-        <actions>
-            <name>NewReportingBillingcase</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1</booleanFilter>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>equals</operation>
-            <value>Cases - Reporting &amp; Billing</value>
-        </criteriaItems>
-        <description>SCE - informs reporting and billing team that a case has been assigned to their queue.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Accreditation Europe - Data Entry</fullName>
-        <actions>
-            <name>AccreditationCaseAreaACCProcess</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>AccreditationDataEntryReason</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Accreditation Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>AIMS</value>
-        </criteriaItems>
-        <description>Madrid - Data Entry for Offshore countries needing AIMS Data entry</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Cases - Nordic %26 Baltic R%26S queue notification</fullName>
-        <actions>
-            <name>AlertsRSNBLocaloffice</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1</booleanFilter>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>equals</operation>
-            <value>Cases - Nordic &amp; Baltic R&amp;S</value>
-        </criteriaItems>
-        <description>to inform the N&amp;B staff that a case has been assigned to the N&amp;B R&amp;S queue.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -17189,29 +11501,6 @@ For cases coming from web forms</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SCE%3A Classify ATCAN files cases</fullName>
-        <actions>
-            <name>Change_Case_Area_Customer_Service</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Change_Reason_to_BankThird_party</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ChangerecordtypetoInternalSCE</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.SuppliedEmail</field>
-            <operation>equals</operation>
-            <value>uatpan@uatp.mconnect.aero</value>
-        </criteriaItems>
-        <description>workflow created for the automatic classification of ATCAN files</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SCE%3A Classify RET Control cases</fullName>
         <actions>
             <name>ChangeCaseAreatoOM</name>
@@ -17265,62 +11554,6 @@ For cases coming from web forms</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Ees</fullName>
-        <actions>
-            <name>ChangeIATACountrytoES</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Spain</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Efr</fullName>
-        <actions>
-            <name>ChangeIATACountrytoFR</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - France</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Eit</fullName>
-        <actions>
-            <name>ChangeIATACountrytoIT</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Italy</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Euk</fullName>
-        <actions>
-            <name>ChangeIATACountrytoUK</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - UK</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>SEDA update IRIS staff action</fullName>
         <actions>
             <name>SEDA_update_IRIS_staff_action</name>
@@ -17331,25 +11564,6 @@ For cases coming from web forms</description>
             <field>Case.IRIS_Updated_Date__c</field>
             <operation>notEqual</operation>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SEDA_Adjustment done - inform to CS</fullName>
-        <actions>
-            <name>SEDA_Adjustment_done_Mail_to_CS</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SEDA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Adjustment_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>SEDA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -17375,26 +11589,6 @@ For cases coming from web forms</description>
             <value>Asia &amp; Pacific</value>
         </criteriaItems>
         <description>SEDA (A&amp;P only)</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SEDA_Airline Unpayment - inform to LO</fullName>
-        <actions>
-            <name>SEDA_Airline_non_Payment_inform_to_LO</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SEDA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>Airline Unpaid Negative Settlement</value>
-        </criteriaItems>
-        <description>SEDA Airline Unpayment - inform to LO</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -17678,30 +11872,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </criteriaItems>
         <description>SEDA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SEDA_update Initial Discrepancy Amount</fullName>
-        <actions>
-            <name>SEDA_update_Initial_Discrepancy_Amount</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SEDA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Outstanding_Amount__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Initial_Discrepancy_Amount__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>SEDA</description>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SF ACR - Approval Request Reminder</fullName>
@@ -18281,29 +12451,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SIS Help Desk - Case escalation notification to CS Manager</fullName>
-        <actions>
-            <name>SIS_Escalated_case_notification_to_CS_Manager</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Escalated</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.External_Reference_Number__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SIS Help Desk - Change Case Owner to SIS L2 Customer Support queue</fullName>
         <actions>
             <name>SIS_Change_Case_Owner_to_L2_Customer_S</name>
@@ -18412,35 +12559,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SIS Help Desk - New Case</fullName>
-        <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Make_new_case_visible_in_CustPortal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web</value>
-        </criteriaItems>
-        <description>Whenever a new SIS case is created, assign case owner and notify, record type, case origin and notify SIS Customer Support team</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>SIS Help Desk - New Case Except Web</fullName>
         <actions>
             <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
@@ -18492,57 +12610,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Cases - SIS Help Desk</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS Help Desk - New Case web details</fullName>
-        <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Make_new_case_visible_in_CustPortal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 AND 2) AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS Help Desk - Re-assign rejected case to SIS Help Desk queue</fullName>
-        <actions>
-            <name>SIS_Update_Assigned_to_SIS_Agent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - SIS Help Desk</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Rejected</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>SIS Help Desk - Reassign case to SIS HD queue when reviewed and accepted</fullName>
@@ -18696,30 +12763,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Send email notification for all Cases when is added a new attachment by a portal user</fullName>
-        <actions>
-            <name>Send_email_notification_for_a_new_attachment_on_a_case</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>New_Attachment_From_Portal_User_False</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.New_Attachment_From_Portal_User__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.UserType</field>
-            <operation>equals</operation>
-            <value>Partner</value>
-        </criteriaItems>
-        <description>Send email notification on all Cases when is added a new attachment by a portal user</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Send email notification for all Cases when is added a new comment by a portal user</fullName>
         <actions>
             <name>Send_email_notification_for_a_new_comment_on_a_case</name>
@@ -18765,49 +12808,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </criteriaItems>
         <description>DPC DSR: this WF allow to modify the status to scheduled when DPC user fill planned start and planned end fields</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TTBS Update Case Type Internal</fullName>
-        <actions>
-            <name>TTBS_Update_Case_Type_Internal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2) AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - TTBS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>TTBS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.SuppliedEmail</field>
-            <operation>contains</operation>
-            <value>@iata.org</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>TTBS Update new case details</fullName>
-        <actions>
-            <name>TTBS_Update_case_record_type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>TTBS_Update_case_status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>TTBS</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Update %22Escalate to DPC%22_Checked</fullName>
@@ -18864,30 +12864,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <description>Updates field tracking field if a case is updated by someone who is not the case owner</description>
         <formula>CONTAINS($Label.CaseRTtrackedByCS,RecordType.DeveloperName) &amp;&amp; ( ISCHANGED(CaseArea__c)|| ISCHANGED(Reason1__c)|| ISCHANGED(BSPCountry__c)|| ISCHANGED(Case_Remarks__c)|| ISCHANGED(Attachment_received_possible_POP__c)|| ISCHANGED(Region__c)|| ISCHANGED(AccountId)|| ISCHANGED(ContactId)|| ISCHANGED(Origin)|| ISCHANGED(ParentId)|| ISCHANGED(Priority)|| ISCHANGED(Subject)|| ISCHANGED(Status)  ) &amp;&amp; LastModifiedById&lt;&gt;OwnerId</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Web - Change Case Area to Accreditation</fullName>
-        <actions>
-            <name>Case_Area_Accreditation</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>notEqual</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>Accreditation Products</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Product_Category_ID__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>For all regions except Europe, change the Case Area from Accreditation Products to Accreditation.  Excludes Case with &quot;Product Category ID&quot; NOT null because they are to do with IATA Certificate purchase and their Case Area should be Accreditation Process</description>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>Web - SAFs - Greece</fullName>
@@ -19013,51 +12989,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Web,Portal</value>
         </criteriaItems>
         <description>When a web case is logged, the Region field and Case Record Type in the Case is automatically updated based on IATA Country selected. Or if an email2case is received.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Web - Update Region - Africa %26 Middle East</fullName>
-        <actions>
-            <name>Case_Record_Type_MENA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Region_MENA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 4 OR 5 OR 6) AND 2 AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Central African Republic,Ghana,Nigeria,&quot;Congo, the Democratic Republic of the&quot;,Saudi Arabia,Mali,Gambia,Burkina Faso,Togo,Gabon,Tchad,Mauritania,Liberia,Niger,Equatorial Guinea,Senegal,Chad,Guinea,Benin,Guinea-Bissau,Cape Verde,Sierra Leone,Cameroon</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web,Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Angola,Comoros,&quot;Tanzania, United Republic of&quot;,Tanzania,Réunion,Lesotho,Kenya,Ethiopia,Malawi,South Africa,Namibia,Burundi,Uganda,Seychelles,Sudan,Rwanda,Swaziland,Zambia,Mauritius,Mozambique,Botswana,Congo (Brazzaville),Congo,Côte d&apos;Ivoire,Zimbabwe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>United Arab Emirates,Qatar,Saudi Arabia,Morocco,Syria,Oman,Lebanon,Libya,Iraq,Egypt,Sao Tome,Bahrain,Mauritius,Jordan,Reunion,&quot;Iran, Islamic Republic of&quot;,Eritrea,Kuwait,Djibouti,&quot;Palestinian Territories, Occupied&quot;,Algeria,Madagascar,Somalia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Tunisia,Yemen,Afghanistan</value>
-        </criteriaItems>
-        <description>When a web case is logged, the Region field in the Case is automatically updated based on IATA Country selected, and the applicable Record Type is updated.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -19232,156 +13163,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ZZZ_IDFS_SIDRA_IRR01Technical default Americas - email to R%26S</fullName>
-        <actions>
-            <name>IDFS_SIDRA_IRR01Technical_default_detected_email_to_R_S</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>SIDRA_R_S_feedback_Tech_default</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 9 AND ((4 AND 8) OR (5 AND ((2 AND 7) OR (3 AND 6))))</booleanFilter>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notContain</operation>
-            <value>Uruguay,Paraguay,Argentina</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Uruguay,Paraguay,Argentina</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>CASS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>BSP</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>8</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>6</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>4</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ZZZ_IDFS_SIDRA_IRR01Technical default N%2EASIA - email to R%26S</fullName>
-        <actions>
-            <name>IDFS_SIDRA_IRR01Technical_default_detected_email_to_R_S</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>SIDRA_R_S_feedback_Tech_default</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 4 AND ((2 AND 8) OR (3 AND 5 AND 8) OR (3 AND 6 AND 7))</booleanFilter>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notEqual</operation>
-            <value>People&apos;s Republic of China</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>People&apos;s Republic of China</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>CASS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>BSP</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>10</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>4</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ZZZ_IDFS_SIDRA_IRR01_Technical default EUR - email to R%26S</fullName>
-        <actions>
-            <name>SIDRA_DEF01_Tech_Def_detected_by_ACC</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>SIDRA_R_S_feedback_Tech_default</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>4</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.REI_Previous_12_Months_CASS_only__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>contains</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>dgAI2__DG_Capture_Analytics_Closed_Case</fullName>
         <actions>
             <name>dgAI2__DG_Capture_Analytics_Closed_Case_Update</name>
@@ -19417,21 +13198,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>sMAP - New_Inform_to_CM %26 Backup Contact</fullName>
-        <actions>
-            <name>sMAP_New_Inform_to_CM_CM_Backup</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>sMAP(sales Monitoring Alert Process)</value>
-        </criteriaItems>
-        <description>When sMAP is created, the automatic notification to CM&amp;CM backup contact</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>sMAP_Update_Decision Date</fullName>
         <actions>
             <name>sMAP_Update_Decision_Date</name>
@@ -19463,17 +13229,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <protected>false</protected>
         <status>Not Started</status>
         <subject>FDS ASP Case created - Status to be updated in MDM</subject>
-    </tasks>
-    <tasks>
-        <fullName>ASP_missing_alert</fullName>
-        <assignedToType>owner</assignedToType>
-        <description>This is the first joining of this airline and there is no Authorized Signatories Package on the Airline HQ account. Please request an ASP.</description>
-        <dueDateOffset>1</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>Not Started</status>
-        <subject>ASP missing alert</subject>
     </tasks>
     <tasks>
         <fullName>Confirmation_IATA_IATAN_ID_Card_Application</fullName>

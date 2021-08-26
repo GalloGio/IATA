@@ -16,7 +16,7 @@ public class ANG_AgencyChangesHelperTest {
 		}
 		insert bspAttrLst;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[0].id)  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[0].id, Allow_Cash_FOP_for_Cashless_Agencies__c = false)  ;
 		insert ctry ;
 
 		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
@@ -1104,9 +1104,6 @@ public class ANG_AgencyChangesHelperTest {
 		oscar.Backup_In_Progress__c = false;
 		update oscar;
 
-		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-		update oscar;
-
 		Test.stopTest();
 
 		Agency_Authorization__c movedAuthorization = [SELECT Id, Status__c
@@ -1114,7 +1111,7 @@ public class ANG_AgencyChangesHelperTest {
 													WHERE Account__r.Name = 'MC Account 1 HE GB'
 													LIMIT 1];
 
-		System.assertEquals('Active', movedAuthorization.Status__c, 'Cash forms of payment should be the same of the new Parent after approval');
+		System.assertEquals('Non-Active', movedAuthorization.Status__c, 'Cash forms of payment should be the same of the new Parent after approval');
 	}
 
 	@isTest 
@@ -1221,12 +1218,9 @@ public class ANG_AgencyChangesHelperTest {
 		update oscar;
 
         Test.stopTest();
-
-		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-		update oscar;
 		
 	
-		System.assertEquals('Active', [SELECT Id, Status__c, Account__r.Name FROM Agency_Authorization__c LIMIT 1].Status__c, 'Cash forms of payment should be active after approval');
+		System.assertEquals('Non-Active', [SELECT Id, Status__c, Account__r.Name FROM Agency_Authorization__c LIMIT 1].Status__c, 'Cash forms of payment should be active after approval');
 	}
 
 	@isTest static void performChangeOfFields(){
@@ -1863,7 +1857,7 @@ public class ANG_AgencyChangesHelperTest {
 
 		List<Agency_Authorization__c> aaList = [Select Id , Status__c from Agency_Authorization__c where ANG_FormOfPayment_ID__c = 'CA' and Status__c = 'Active' and RecordType.DeveloperName = 'FormOfPayment'];
 
-		System.assertEquals(4,aaList.size());
+		System.assertEquals(0,aaList.size());
 
 		Test.stopTest();
 
@@ -3086,11 +3080,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_DISAPPROVAL;
 		update oscar;
-
-		oscar.ANG_FA_Opt_out__c = 'Not Applicable';
-		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
-		update oscar;
-
 
 		Test.stopTest();
 

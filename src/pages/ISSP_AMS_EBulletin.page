@@ -882,6 +882,28 @@
                                                 </apex:pageBlockSectionItem>
                                              </apex:pageBlockSection>    
                                             <apex:outputField value="{!newFormDaily.Agency_Info_Reinstatements__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_Reinstatements}"/>
+                                            
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_New_Aplication_Processes__c}" id="WeeklyNewApps"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_NewApplicationProcesses}" for="WeeklyNewApps"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_NewApplications_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="false"/>
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_New_Aplication_Processes__c}" rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_NewApplicationProcesses}"/>
+                                       
+                                            <apex:pageBlockSection columns="1" rendered="{!IF(NOT(newFormDaily.Opt_in__c) ,'false','true')}">
+                                                <apex:pageBlockSectionItem labelStyle="width:5%">
+                                                    <apex:inputCheckBox value="{!newFormDaily.Agency_Info_Agency_Changes__c}" id="WeeklyChanges"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_AgencyChanges}" for="WeeklyChanges"/>
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_AgencyChanges_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="false"/>
+                                                    </apex:outputPanel>
+                                                </apex:pageBlockSectionItem>
+                                            </apex:pageBlockSection>
+                                            <apex:outputField value="{!newFormDaily.Agency_Info_Agency_Changes__c}"  rendered="{!IF(newFormDaily.Opt_in__c ,'false','true')}" label="{!$Label.ISSP_AMS_eBulletin_AgencyChanges}"/>
 
                                             <apex:pageBlockSection columns="1" rendered="{!newFormDaily.Opt_in__c}">
                                                 <apex:pageBlockSectionItem labelStyle="width:5%">
@@ -1453,6 +1475,28 @@
                                                     <apex:outputPanel >
                                                     <apex:outputField value="{!newFormDaily.Agency_Info_Reinstatements__c}"/>
                                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_Reviews_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="False"/>
+                                                    </apex:outputPanel>
+                                                    </apex:pageBlockSectionItem>
+                                               </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:pageBlockSectionItem >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_NewApplicationProcesses}"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputField value="{!newFormDaily.Agency_Info_New_Aplication_Processes__c}" />
+                                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_NewApplications_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="false"/>
+                                                    </apex:outputPanel>
+                                                    </apex:pageBlockSectionItem>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:pageBlockSectionItem >
+                                                    <apex:outputLabel value="{!$Label.ISSP_AMS_eBulletin_AgencyChanges}"/>
+                                                    <apex:outputPanel >
+                                                    <apex:outputField value="{!newFormDaily.Agency_Info_Agency_Changes__c}" />
+                                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!$Label.ISSP_AMS_eBulletin_AgencyChanges_HelpText}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" rendered="false"/>
                                                     </apex:outputPanel>
                                                     </apex:pageBlockSectionItem>
                                                </td>

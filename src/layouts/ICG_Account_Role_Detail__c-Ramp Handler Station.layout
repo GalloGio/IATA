@@ -99,6 +99,25 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Handling Services</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>In_House_Services__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Third_Party_Services__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Station Overview</label>
         <layoutColumns>
             <layoutItems>
@@ -206,6 +225,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Contact_Email__c</fields>
+        <fields>Account_Name__c</fields>
+        <fields>Account_Role__c</fields>
         <fields>Contact_Name__c</fields>
         <fields>ICG_Role__c</fields>
         <fields>Status__c</fields>

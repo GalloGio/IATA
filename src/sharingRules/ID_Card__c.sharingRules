@@ -1,17 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
-    <sharingGuestRules>
-        <fullName>IDCard_Share_guest_permissions_for_ID_CARD</fullName>
-        <accessLevel>Read</accessLevel>
-        <description>IDCard Share guest permissions for ID CARD</description>
-        <label>IDCard Share guest permissions for ID CARD</label>
-        <sharedTo>
-            <guestUser>IATA_IDCard</guestUser>
-        </sharedTo>
-        <criteriaItems>
-            <field>CreatedById</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-    </sharingGuestRules>
-</SharingRules>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata"/>
+

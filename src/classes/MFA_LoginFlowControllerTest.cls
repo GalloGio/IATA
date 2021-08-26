@@ -46,10 +46,8 @@ public with sharing class MFA_LoginFlowControllerTest {
 			Profile adminProfile = new List<Profile>([SELECT Id FROM Profile WHERE Name = 'System Administrator' LIMIT 1]).get(0);
 
 			//Create contact
-			List<Contact> contactLst = TestDataFactory_Contacts.createDefaultContact(1);
-			Contact partnerContact = contactLst.get(0);
-			partnerContact.AccountId = testAcc.id;
-			insert partnerContact;
+			List<Contact> contactLst = TestDataFactory_Contacts.createDefaultContact(testAcc.id,1);
+			insert contactLst;
 
 			//Create test users
 			List<User> testUsers = new List<User>();

@@ -295,6 +295,11 @@
                     <label>CEIV Security</label>
                 </value>
                 <value>
+                    <fullName>Ground_Ops_Managers</fullName>
+                    <default>false</default>
+                    <label>Ground Ops Managers</label>
+                </value>
+                <value>
                     <fullName>IEnvA_Managers</fullName>
                     <default>false</default>
                     <label>IEnvA</label>
@@ -408,6 +413,32 @@
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ValidationPrograms__c</fullName>
+        <description>Indicates the validating certification entity</description>
+        <externalId>false</externalId>
+        <label>Validation Programs</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IATA</fullName>
+                    <default>false</default>
+                    <label>IATA</label>
+                </value>
+                <value>
+                    <fullName>NONE</fullName>
+                    <default>false</default>
+                    <label>NONE</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>link__c</fullName>

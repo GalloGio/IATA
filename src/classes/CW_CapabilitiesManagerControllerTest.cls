@@ -115,10 +115,10 @@ public class CW_CapabilitiesManagerControllerTest {
 		
 		Test.startTest();
 		
-		Map<String, Object> responseByCerti = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, ardcert.ICG_Certification__c, ardcert.id);
+		Map<String, Object> responseByCerti = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, ardcert.ICG_Certification__c, ardcert.id, null);
 		system.assertEquals(true, responseByCerti.containsKey(CW_CapabilitiesUtilities.SUPERCATEGORIES), 'No superCategories found for this Account Role Detail');
 		
-		Map<String, Object> responseAllCapab = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, null, null);
+		Map<String, Object> responseAllCapab = CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, null, null, null);
 		system.assertEquals(true, responseAllCapab.containsKey(CW_CapabilitiesUtilities.SUPERCATEGORIES), 'No superCategories found for this Account Role Detail');
 		
 		Test.stopTest();
@@ -267,7 +267,7 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		Test.startTest();
 		
-		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id), capvalcert.id);
+		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id), capvalcert.id, null);
 		
 		String response = CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities(ardid, cert.id, listCap, jsonCertificationToAdd);
 		CW_Utilities.ResponseBody resp = (CW_Utilities.ResponseBody) System.JSON.deserialize(response, CW_Utilities.ResponseBody.class);

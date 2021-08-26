@@ -75,7 +75,7 @@
                 <leftValueReference>myVariable_current.Issue_Date__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <elementReference>formula_2_myRule_1_1854456933</elementReference>
+                    <elementReference>formula_2_myRule_1_7336346323</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -149,7 +149,7 @@
                 <leftValueReference>myVariable_current.Issue_Date__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <elementReference>formula_2_myRule_1_1854456933</elementReference>
+                    <elementReference>formula_2_myRule_1_7336346323</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -213,7 +213,7 @@
                 <leftValueReference>myVariable_old.Issue_Date__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>
-                    <elementReference>formula_3_myRule_1_pmetrule_6614417335</elementReference>
+                    <elementReference>formula_3_myRule_1_pmetrule_8317756381</elementReference>
                 </rightValue>
             </conditions>
             <label>Previously Met - Prev</label>
@@ -227,7 +227,7 @@
                 <stringValue>Today()</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_1854456933</name>
+        <name>formula_2_myRule_1_7336346323</name>
         <dataType>Date</dataType>
         <expression>Today()</expression>
     </formulas>
@@ -238,22 +238,11 @@
                 <stringValue>Today()</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_pmetrule_6614417335</name>
+        <name>formula_3_myRule_1_pmetrule_8317756381</name>
         <dataType>Date</dataType>
         <expression>Today()</expression>
     </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>TODAY()</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_4_myWaitEvent_myWait_myRule_1_event_0_SA1_4220885004</name>
-        <dataType>Date</dataType>
-        <expression>TODAY()</expression>
-    </formulas>
-    <interviewLabel>ICG_Set_Active_Future_Certification-2_InterviewLabel</interviewLabel>
+    <interviewLabel>ICG_Set_Active_Future_Certification-3_InterviewLabel</interviewLabel>
     <label>ONE Source Set Active Future Certification</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -372,55 +361,6 @@
             <operator>NotEqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>inputDataType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Issue Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>operatorDataType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Formula</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Issue_Date__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>formula_4_myWaitEvent_myWait_myRule_1_event_0_SA1_4220885004</elementReference>
             </value>
         </filters>
         <inputAssignments>

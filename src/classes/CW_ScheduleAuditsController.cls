@@ -129,8 +129,10 @@ public without sharing class CW_ScheduleAuditsController {
 	}
 
 	private static Map<String, Set<Id>> generateQueuesToGet(Set<Id> selectedCertifications){
+		List<String> listValidationPrograms = String.isNotBlank(CW_Utilities.VALIDATION_PROGRAMS) ? CW_Utilities.VALIDATION_PROGRAMS.split(',') : new List<String>();
+
 		Map<String, Set<Id>> queuesToGet = new Map<String, Set<Id>>();
-		for (ICG_Certification__c cert : [SELECT id, Name, Department__c FROM ICG_Certification__c WHERE Id IN :selectedCertifications]) {
+		for (ICG_Certification__c cert : [SELECT id, Name, Department__c FROM ICG_Certification__c WHERE Id IN :selectedCertifications AND ValidationPrograms__c IN: listValidationPrograms]) {
 			if (cert.Department__c != null) {
 				Set<Id> certIds = queuesToGet.get(cert.Department__c) != null ? queuesToGet.get(cert.Department__c) : new Set<Id>();
 				certIds.add(cert.Id);

@@ -230,7 +230,7 @@
             <operation>equals</operation>
             <value>TODAY,LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_CompletedTasks}</label>
+        <label>Completed Tasks</label>
     </listViews>
     <listViews>
         <fullName>DelegatedTasks</fullName>
@@ -245,6 +245,24 @@
         <columns>UPDATEDBY_USER.ALIAS</columns>
         <filterScope>Delegated</filterScope>
         <label>Delegated Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>L3_TACT_Operations_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>L3-TACT-Operations</label>
+        <queue>L3_TACT_Operations</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>L3_TACT_ProductMgmt_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>L3-TACT-ProductMgmt</label>
+        <queue>L3_TACT_ProductMgmt</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>Medaire_Approvals_Task</fullName>
@@ -282,7 +300,7 @@
             <operation>greaterOrEqual</operation>
             <value>LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_OpenTasks}</label>
+        <label>OpenTasks</label>
     </listViews>
     <listViews>
         <fullName>OverdueTasks</fullName>
@@ -311,7 +329,7 @@
             <operation>lessThan</operation>
             <value>TODAY</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_OverdueTasks}</label>
+        <label>OverdueTasks</label>
     </listViews>
     <listViews>
         <fullName>RecurringTasks</fullName>
@@ -359,7 +377,7 @@
             <operation>equals</operation>
             <value>TODAY,LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.z_TodaysTasks}</label>
+        <label>TodaysTasks</label>
     </listViews>
     <listViews>
         <fullName>UnscheduledTasks</fullName>
@@ -387,7 +405,7 @@
             <field>DUE_DATE</field>
             <operation>equals</operation>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_UnscheduledTasks}</label>
+        <label>Unscheduled Tasks</label>
     </listViews>
     <recordTypes>
         <fullName>Airlines_Industry_Communication</fullName>
@@ -433,6 +451,48 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -686,6 +746,48 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Priority</picklist>
             <values>
                 <fullName>High</fullName>
@@ -822,6 +924,48 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1090,6 +1234,48 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Priority</picklist>
             <values>
                 <fullName>High</fullName>
@@ -1326,6 +1512,48 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1594,6 +1822,48 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Priority</picklist>
             <values>
                 <fullName>High</fullName>
@@ -1858,6 +2128,48 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Priority</picklist>
             <values>
                 <fullName>High</fullName>
@@ -2007,6 +2319,18 @@
   ) 
 )</errorConditionFormula>
         <errorMessage>Please fill in the Milestone and the End Date fields</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Validate_Subject</fullName>
+        <active>true</active>
+        <description>Only the values in the subject picklist are valid</description>
+        <errorConditionFormula>AND(
+  NOT(REGEX(Subject,$CustomMetadata.GVR__mdt.Task_Valid_Subjects.Value__c)),
+  NOT(REGEX(Subject,$CustomMetadata.GVR__mdt.Task_Valid_Subjects2.Value__c)),
+  CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Profiles.Value__c,$User.Profile_Name__c)
+)</errorConditionFormula>
+        <errorDisplayField>Subject</errorDisplayField>
+        <errorMessage>Please, select one of the valid subjects in the button on the right</errorMessage>
     </validationRules>
     <webLinks>
         <fullName>Mark_Task_Complete</fullName>

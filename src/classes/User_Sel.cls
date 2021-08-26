@@ -5,7 +5,7 @@
  * @date: 2015-08-14
  *
  **/
-public class User_Sel extends Selector
+public without sharing class User_Sel extends Selector
 {
 	public List<Schema.SObjectField> getSObjectFieldList()
 	{

@@ -112,7 +112,7 @@
                                     text2={label.smart_facility_remote_validation_text2}
                                     text3={label.smart_facility_remote_validation_text3}
                                     textcolor="" button-text={label.btn_learn_more} button-color="btn btn-primary link-button"
-                                    button-url="https://www.iata.org/smart-facility" button-position="text-right"
+                                    button-url={label.smart_facility_remote_validation_url} button-position="text-right"
                                     backgroundcolor="bg-white">
                                 </c-cw-Text-Container>
                             </div>
@@ -122,6 +122,19 @@
 
                     <!--VISIBLE RESPONSIVE VERSION-->
                     
+                    <div class="visible-md row-lg-home">
+                        <section>
+                            <div class="row-no-margin" id="latestupdates">
+                                <div class="col-12">
+
+                                    <c-cw-latest-i-c-g-updates-container label={label} title={label.latest_validation_updates}>
+                                    </c-cw-latest-i-c-g-updates-container>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!--VISIBLE RESPONSIVE VERSION-->          
                     <div class="visible-lg">
                         <section>
                             <div class="row col-12">
@@ -135,24 +148,9 @@
                                     text2={label.smart_facility_remote_validation_text2}
                                     text3={label.smart_facility_remote_validation_text3}
                                     textcolor="text-white" button-text={label.btn_learn_more} button-color="btn btn-primary link-button"
-                                    button-url="https://www.iata.org/smart-facility" button-position="text-right"
+                                    button-url={label.smart_facility_remote_validation_url} button-position="text-right"
                                     backgroundcolor="bg-blue">
                                 </c-cw-Text-Container>
-                            </div>
-                        </section>
-                    </div>
-                    
-
-                    <!--VISIBLE RESPONSIVE VERSION-->
-                    
-                    <div class="visible-md">
-                        <section>
-                            <div class="row-no-margin" id="latestupdates">
-                                <div class="col-12">
-
-                                    <c-cw-latest-i-c-g-updates-container label={label} title="Latest ICG Updates">
-                                    </c-cw-latest-i-c-g-updates-container>
-                                </div>
                             </div>
                         </section>
                     </div>
