@@ -10491,14 +10491,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UserService</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserServiceTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>User_Sel</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -38791,7 +38783,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Financial_Institution__c.Agent_IATA_code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -38801,7 +38793,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Financial_Institution__c.Country__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -38846,7 +38838,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Financial_Institution__c.Institution_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -64620,6 +64612,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>Financial_Institution__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Funds_Management_Line__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -69511,6 +69512,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Financial_Institution__c.Generic_FI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -70724,7 +70726,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Financial_Institution__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Financial_Security_Request</tab>
