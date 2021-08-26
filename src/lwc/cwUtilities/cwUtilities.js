@@ -563,7 +563,7 @@ export function getQueryParameters() {
 
 	search.split("&").forEach(element => {
 		if (element.startsWith("?q=") || element.startsWith("q=")) {
-			let decompressedValue = decompressQueryParams(element.split("=")[1]);
+			let decompressedValue = decompressQueryParams(decodeURIComponent(element.split("=")[1]));
 			searchParams.push("q=" + decompressedValue);
 		} else {
 			searchParams.push(element);
