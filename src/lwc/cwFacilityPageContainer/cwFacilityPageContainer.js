@@ -1055,7 +1055,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	tooltipText() {
 		if (this.facility && this.label) {
-			return getIataTooltip(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label);
+			return getIataTooltip(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label, this.facility.typeDevName);
 		}
 
 		return "";
