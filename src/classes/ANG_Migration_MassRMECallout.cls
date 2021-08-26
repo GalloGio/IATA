@@ -173,7 +173,7 @@ global class ANG_Migration_MassRMECallout {
 					result.isSuccess = false;
 					result.description = 'RHC Currency mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
 				}
-				else if(result.res.storedRHCValue.setScale(2) != acc.RHC_Informations__r[0].ANG_RHC_Amount__c.setScale(2)){
+				else if(result.res.storedRHCValue != null && !acc.RHC_Informations__r.isEmpty() && acc.RHC_Informations__r[0].ANG_RHC_Amount__c != null && result.res.storedRHCValue.setScale(2) != acc.RHC_Informations__r[0].ANG_RHC_Amount__c.setScale(2)){
 					result.isSuccess = false;
 					result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
 				}
@@ -216,7 +216,7 @@ global class ANG_Migration_MassRMECallout {
 					result.isSuccess = false;
 					result.description = 'RHC Currency Mismatch. RHC Currency set: ' + acc.RHC_Informations__r[0].CurrencyIsoCode + '; Received ' + result.res.storedBaseCurrency;
 				}
-				else if(result.res.storedRHCValue.setScale(2) != acc.RHC_Informations__r[0].ANG_RHC_Amount__c.setScale(2)){
+				else if(result.res.storedRHCValue != null && !acc.RHC_Informations__r.isEmpty() && acc.RHC_Informations__r[0].ANG_RHC_Amount__c != null && result.res.storedRHCValue.setScale(2) != acc.RHC_Informations__r[0].ANG_RHC_Amount__c.setScale(2)){
 					result.isSuccess = false;
 					result.description = 'RHC Amount Mismatch. RHC Amount set: ' + acc.RHC_Informations__r[0].ANG_RHC_Amount__c + '; Received ' + result.res.storedRHCValue;
 				}
