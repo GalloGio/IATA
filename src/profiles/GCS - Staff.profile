@@ -62264,10 +62264,10 @@
         <layout>Complaint__c-EUR_Complaint Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-IATA Standard Contact</layout>
+        <layout>Contact-Standard Contact lightning</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-Standard Contact</layout>
+        <layout>Contact-Standard Contact lightning</layout>
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
     <layoutAssignments>
