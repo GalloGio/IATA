@@ -984,10 +984,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>IATA Pay</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>IATA Postal Accounts Settlement System</fullName>
                 <default>false</default>
             </values>
@@ -1029,10 +1025,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>IGOM</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>InnovationHub CRM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2026,10 +2018,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>IFTP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>InnovationHub CRM</fullName>
                 <default>false</default>
             </values>
             <values>
