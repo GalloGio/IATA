@@ -638,7 +638,7 @@ public class ANG_RHCAlertTriggerHandler{
 								(SELECT Id, Email, IsEmailBounced, User_Portal_Status__c, AccountId, Account.Top_Parent__c,
 									 Financial_Assessment_Contact__c
 								 FROM contacts
-								 WHERE Status__c = :AMS_Utils.ACTIVE)
+								 WHERE Status__c = :AMS_Utils.ACTIVE AND User_Portal_Status__c IN (:ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,:ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_USER,:ANG_Risk_Helper.USER_PORTAL_STATUS_PENDING_APPROVAL))
 							FROM Account
 							WHERE ID IN :accIdSet
 								OR Top_Parent__c IN :accIdSet]) {
