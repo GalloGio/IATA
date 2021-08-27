@@ -686,11 +686,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
             <restricted>true</restricted>
             <valueSetName>Contact_Role_Details</valueSetName>
             <valueSettings>
-                <controllingFieldValue>One Source</controllingFieldValue>
                 <controllingFieldValue>E&amp;F</controllingFieldValue>
-                <controllingFieldValue>MedAire</controllingFieldValue>
-                <controllingFieldValue>Training</controllingFieldValue>
                 <controllingFieldValue>IGOM</controllingFieldValue>
+                <controllingFieldValue>MedAire</controllingFieldValue>
+                <controllingFieldValue>One Source</controllingFieldValue>
+                <controllingFieldValue>Training</controllingFieldValue>
                 <valueName>Operational Contact</valueName>
             </valueSettings>
         </valueSet>
