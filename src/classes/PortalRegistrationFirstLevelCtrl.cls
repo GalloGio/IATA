@@ -230,9 +230,9 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				config.extraChoice = selectedMetadataCustomerType.DeveloperName;
 			}
 		}else{
-			config.sector = config.contact.Account.Sector__c;
-			config.category = config.contact.Account.Sector__c;
-			config.extraChoice = config.contact.Account.Sector__c;
+			config.sector = config.contact.Account.Sector__c != null ? config.contact.Account.Sector__c : 'Sector';
+			config.category = config.contact.Account.Category__c != null ? config.contact.Account.Category__c : 'Category';
+			config.extraChoice = config.contact.Account.Sector__c != null ? config.contact.Account.Sector__c : 'Sector';
 		}
 			config.isGeneralPublic = config.contact.Account.is_General_Public_Account__c;
 		}
