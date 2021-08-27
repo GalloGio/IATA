@@ -689,8 +689,8 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                 <controllingFieldValue>E&amp;F</controllingFieldValue>
                 <controllingFieldValue>IGOM</controllingFieldValue>
                 <controllingFieldValue>MedAire</controllingFieldValue>
-                <controllingFieldValue>One Source</controllingFieldValue>
                 <controllingFieldValue>Training</controllingFieldValue>
+                <controllingFieldValue>One Source</controllingFieldValue>
                 <valueName>Operational Contact</valueName>
             </valueSettings>
         </valueSet>
