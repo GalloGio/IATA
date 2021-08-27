@@ -717,7 +717,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>3/3/2020 12:00 AM</value>
         </filters>
         <filters>
             <field>System__c</field>
@@ -727,7 +727,7 @@
         <filters>
             <field>CREATEDBY_USER</field>
             <operation>contains</operation>
-            <value>guerreiro</value>
+            <value>Kurup</value>
         </filters>
         <label>. mgo - kavy today</label>
         <language>en_US</language>
