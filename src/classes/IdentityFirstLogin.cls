@@ -1,4 +1,4 @@
-public class IdentityFirstLogin {
+public without sharing class IdentityFirstLogin {
 
 
 	private static string userName {get;set;}

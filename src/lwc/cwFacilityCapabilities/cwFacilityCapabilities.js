@@ -7,7 +7,7 @@ import setSummaryDetailCheckJSON_ from "@salesforce/apex/CW_FacilityCapabilities
 import setVisibilityPhotos_ from "@salesforce/apex/CW_FacilityCapabilitiesController.setVisibilityPhotos";
 import getPublicLinkToFiles_ from "@salesforce/apex/CW_CapabilitiesManagerController.getPublicLinkToFiles";
 import createRelationshipsForNewCapabilities_ from "@salesforce/apex/CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities";
-import { createKey } from "c/cwUtilities";
+import { createKey, areRequiredFieldsFilled } from "c/cwUtilities";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import pubsub from "c/cwPubSub";
 
@@ -157,6 +157,10 @@ export default class CwFacilityCapabilities extends LightningElement {
 		else{
 			return false;
 		}
+	}
+	
+	get isCommunity() {
+		return true;
 	}
 	
 	showToast(title, message, variant) {
@@ -324,8 +328,14 @@ export default class CwFacilityCapabilities extends LightningElement {
 				this.isEditableRecordType = this.data && this.data.superCategories && this.data.superCategories[0] && this.data.superCategories[0].sections[0].capabilities[0].isEditableRecordType;
 				this.data.superCategories.forEach(superCategory => {
 					superCategory.key = createKey(superCategory.label);
+					if (superCategory.iconPath) {
+						superCategory.iconPath = resources + superCategory.iconPath;
+					}
 					superCategory.sections.forEach(section => {
 						section.key = createKey(section.label);
+						if (section.iconPath) {
+							section.iconPath = resources + section.iconPath;
+						}
 						if(this.isStationManager === false){
 							section.capabilities.forEach(capability=>{
 								capability.categories.forEach(category=>{
@@ -408,9 +418,9 @@ export default class CwFacilityCapabilities extends LightningElement {
 				});
 
 				result.forEach(element => {
-                    if(element.extension.includes("pdf")){
-                        element.url = this.download;
-                    }
+					if(element.extension.includes("pdf")){
+						element.url = this.download;
+					}
 				});
 				
 				if(field === 'photos__c'){
@@ -936,42 +946,8 @@ export default class CwFacilityCapabilities extends LightningElement {
 		this.sendParamToParent();
 	}
 
-	get checkRequiredFields(){
-		let returnValue=true;
-		let obligationLinkField = 'more_info_link__c';
-		let uploadDocumentationField = 'more_info_document__c';
-
-		this.listAddedRows.forEach(element => {
-			element.fields.forEach(field => {
-				
-					if(field.required.toString() === "true" ){
-						if(field.value === ""){
-							if(field.field === obligationLinkField || field.field === uploadDocumentationField){
-								if(field.field === obligationLinkField){
-									let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
-	
-									returnValue = selectField[0].value != null ? true :  false;
-								}
-								else if(field.field === uploadDocumentationField){
-									let selectField = element.fields.filter(row => row.field === obligationLinkField);
-									returnValue = selectField[0].value != null ? true :  false;
-								}
-							}						
-							else{
-								returnValue = false;
-							}
-							
-						}
-					}
-				
-			});
-						
-		});	
-		return returnValue;
-	}
-
 	handleSaveChanges(listAddedRows){
-		if(this.checkRequiredFields){
+		if(areRequiredFieldsFilled(this.listAddedRows)){
 			this.isLoading = true;
 			this.createRelationshipsForNewCapabilities(this.recordId,listAddedRows);
 		}

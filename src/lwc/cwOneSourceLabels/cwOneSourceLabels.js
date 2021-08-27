@@ -460,8 +460,14 @@ import obligation_documents from "@salesforce/label/c.icg_documents";
 import manage_documents from "@salesforce/label/c.icg_manage_documents";
 import icg_user_guide_pdf_link from "@salesforce/label/c.icg_user_guide_pdf_link";
 import icg_station_has_been_created from "@salesforce/label/c.icg_station_has_been_created";
+import icg_handling_services from "@salesforce/label/c.icg_handling_services";
+import icg_validation_services_message from "@salesforce/label/c.icg_validation_services_message";
+import icg_provided_bythird_party from "@salesforce/label/c.icg_provided_bythird_party";
+import icg_in_house from "@salesforce/label/c.icg_in_house";
 import icg_manage_obligations_documents from "@salesforce/label/c.icg_manage_obligations_documents";
-
+import icg_tooltip_service_info1 from "@salesforce/label/c.icg_tooltip_service_info1";
+import icg_tooltip_service_info2 from "@salesforce/label/c.icg_tooltip_service_info2";
+import icg_others from "@salesforce/label/c.icg_others";
 
 export function labels() {
 	let labels = {
@@ -912,11 +918,11 @@ export function labels() {
 		icg_select_an_existing_hierarchy,
 		icg_carousel_info_external_image,
 		icg_please_contact_iata,
-        contact_us,
-        icg_nearest_airport_description,
-        icg_error_update_facility,
-        icg_successful_save_facility,
-        icg_facility_invalid_info,
+		contact_us,
+		icg_nearest_airport_description,
+		icg_error_update_facility,
+		icg_successful_save_facility,
+		icg_facility_invalid_info,
 		icg_https_default_value,
 		icg_join_now_popup_message01,
 		icg_join_now_popup_message02,
@@ -928,7 +934,14 @@ export function labels() {
 		manage_documents,
 		icg_user_guide_pdf_link,
 		icg_station_has_been_created,
-		icg_manage_obligations_documents
+		icg_handling_services,
+		icg_validation_services_message,
+		icg_provided_bythird_party,
+		icg_in_house,
+		icg_manage_obligations_documents,
+		icg_tooltip_service_info1,
+		icg_tooltip_service_info2,
+		icg_others
 
 	};
 

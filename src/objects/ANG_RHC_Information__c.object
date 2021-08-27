@@ -314,7 +314,7 @@
         <fullName>ANG_Minimum_Financial_Security__c</fullName>
         <description>Holds the information in what is the minimum FS required for the agent. This information comes from a Case (IFAP or SAAM) and should not be updated manually</description>
         <externalId>false</externalId>
-        <label>Minimum FS required</label>
+        <label>FS Required per LFC</label>
         <precision>18</precision>
         <required>false</required>
         <scale>4</scale>

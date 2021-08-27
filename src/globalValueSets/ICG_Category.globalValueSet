@@ -261,6 +261,186 @@
         <label>Environmental Compliance</label>
     </customValue>
     <customValue>
+        <fullName>Belt_Loader</fullName>
+        <default>false</default>
+        <label>Belt Loader (CBL)</label>
+    </customValue>
+    <customValue>
+        <fullName>Belt_Loader_With_In-Hold_Conveyor_System</fullName>
+        <default>false</default>
+        <label>Belt Loader With In-Hold Conveyor System (CBH)</label>
+    </customValue>
+    <customValue>
+        <fullName>Lower_Deck_Loader</fullName>
+        <default>false</default>
+        <label>Lower Deck Loader (LDL)</label>
+    </customValue>
+    <customValue>
+        <fullName>Main_Deck_Loader</fullName>
+        <default>false</default>
+        <label>Main Deck Loader (MDL)</label>
+    </customValue>
+    <customValue>
+        <fullName>Prm_Boarding_Vehicles</fullName>
+        <default>false</default>
+        <label>PRM Boarding Vehicles (PBV)</label>
+    </customValue>
+    <customValue>
+        <fullName>Catering_Truck</fullName>
+        <default>false</default>
+        <label>Catering Truck (CAT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Cabin_Cleaning_Truck</fullName>
+        <default>false</default>
+        <label>Cabin Cleaning Truck (CCT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Elevating_Work_Platform</fullName>
+        <default>false</default>
+        <label>Elevating Work Platform (MWP)</label>
+    </customValue>
+    <customValue>
+        <fullName>Passenger_Boarding_Stairs</fullName>
+        <default>false</default>
+        <label>Passenger Boarding Stairs (PBS)</label>
+    </customValue>
+    <customValue>
+        <fullName>Mobile_Passenger_Boardingramps</fullName>
+        <default>false</default>
+        <label>Mobile Passenger Boarding ramps (PBR)</label>
+    </customValue>
+    <customValue>
+        <fullName>Maintenance_Stairs</fullName>
+        <default>false</default>
+        <label>Maintenance Stairs (MSR)</label>
+    </customValue>
+    <customValue>
+        <fullName>Aircraft_Tail_Stand</fullName>
+        <default>false</default>
+        <label>Aircraft Tail Stand (TSP)</label>
+    </customValue>
+    <customValue>
+        <fullName>Deicers_And_Deicing/Anti-Icing_Vehicles</fullName>
+        <default>false</default>
+        <label>Deicers And Deicing/Anti-Icing Vehicles (DAI)</label>
+    </customValue>
+    <customValue>
+        <fullName>Baggage_Tractors</fullName>
+        <default>false</default>
+        <label>Baggage Tractors (BTU)</label>
+    </customValue>
+    <customValue>
+        <fullName>Cargo_Tractors</fullName>
+        <default>false</default>
+        <label>Cargo Tractors (CTU)</label>
+    </customValue>
+    <customValue>
+        <fullName>Pushback_Tow_Tractor</fullName>
+        <default>false</default>
+        <label>Pushback Tow Tractor (TWT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Towbar</fullName>
+        <default>false</default>
+        <label>Towbar (TBR)</label>
+    </customValue>
+    <customValue>
+        <fullName>Towbarless_Tow_Tractor</fullName>
+        <default>false</default>
+        <label>Towbarless Tow Tractor (TWL)</label>
+    </customValue>
+    <customValue>
+        <fullName>Maingear_Towbarless_Tractor</fullName>
+        <default>false</default>
+        <label>Maingear Towbarless Tractor (MGT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Air_Start_Unit</fullName>
+        <default>false</default>
+        <label>Air Start Unit (ASU)</label>
+    </customValue>
+    <customValue>
+        <fullName>Aircraftair-Conditioning_Unit</fullName>
+        <default>false</default>
+        <label>Aircraft Air-conditioning Unit (ACU)</label>
+    </customValue>
+    <customValue>
+        <fullName>Aircraft_Heating_Unit</fullName>
+        <default>false</default>
+        <label>Aircraft Heating Unit (AHU)</label>
+    </customValue>
+    <customValue>
+        <fullName>Potable_Water_Service_Vehicle</fullName>
+        <default>false</default>
+        <label>Potable Water Service Vehicle (WAT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavatory_Service_Vehicles</fullName>
+        <default>false</default>
+        <label>Lavatory Service Vehicles (LAV)</label>
+    </customValue>
+    <customValue>
+        <fullName>Ground_Power_Unit</fullName>
+        <default>false</default>
+        <label>Ground Power Unit (GPU)</label>
+    </customValue>
+    <customValue>
+        <fullName>Uld_Transporter</fullName>
+        <default>false</default>
+        <label>ULD Transporter (CPT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Uld_Dollies</fullName>
+        <default>false</default>
+        <label>ULD Dollies (DOL)</label>
+    </customValue>
+    <customValue>
+        <fullName>Temperature_Controlled_Cargo_Dolly</fullName>
+        <default>false</default>
+        <label>Temperature Controlled Cargo Dolly (TCD)</label>
+    </customValue>
+    <customValue>
+        <fullName>Baggage_Cart</fullName>
+        <default>false</default>
+        <label>Baggage Cart (CRT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Temperature_Controlled_Cargo_Truck</fullName>
+        <default>false</default>
+        <label>Temperature Controlled Cargo Truck (TCT)</label>
+    </customValue>
+    <customValue>
+        <fullName>Prm_Bus</fullName>
+        <default>false</default>
+        <label>PRM Bus (PBS)</label>
+    </customValue>
+    <customValue>
+        <fullName>Airport_Passenger_Bus</fullName>
+        <default>false</default>
+        <label>Airport Passenger Bus (APB)</label>
+    </customValue>
+    <customValue>
+        <fullName>Crew_Bus</fullName>
+        <default>false</default>
+        <label>Crew Bus (CBS)</label>
+    </customValue>
+    <customValue>
+        <fullName>Forklift_Truck</fullName>
+        <default>false</default>
+        <label>Forklift Truck (FKL)</label>
+    </customValue>
+    <customValue>
+        <fullName>Hold_Baggage_Security_System_Classification</fullName>
+        <default>false</default>
+        <label>Hold Baggage Security System Classification</label>
+    </customValue>
+    <customValue>
+        <fullName>Security_Program_Information</fullName>
+        <default>false</default>
+        <label>Security Program Information</label>
+    </customValue>
+    <customValue>
         <fullName>Temperature_Controlled_Ground_Service_Equipment_In_Facility</fullName>
         <default>false</default>
         <isActive>false</isActive>

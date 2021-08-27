@@ -68,7 +68,8 @@ public class SIDRAOIActionPlansCtrlTest {
 		Operational_Improvements__c oi = createSidraCase();
 
 		OI_Action_Plan__c oiActionPlan = new OI_Action_Plan__c(
-			OI__c = oi.Id
+			OI__c = oi.Id,
+			Weightage__c = '0'
 		);
 		insert oiActionPlan;
 
@@ -95,6 +96,45 @@ public class SIDRAOIActionPlansCtrlTest {
 		System.Assert(result.Description__c == oiActionPlan.Description__c, result.Description__c + ' != ' + oiActionPlan.Description__c);
 	}
 
+	static TestMethod void testSave_Error(){
+
+		Operational_Improvements__c oi = createSidraCase();
+
+		OI_Action_Plan__c oiActionPlan1 = new OI_Action_Plan__c(
+			OI__c = oi.Id,
+			Weightage__c = '0'
+		);
+		OI_Action_Plan__c oiActionPlan2 = new OI_Action_Plan__c(
+			OI__c = oi.Id,
+			Weightage__c = '0'
+		);
+		List<OI_Action_Plan__c> listActions = new List<OI_Action_Plan__c>{oiActionPlan1, oiActionPlan2};
+		insert listActions;
+
+		ApexPages.StandardController stdController = new ApexPages.StandardController(oi);
+		SIDRAOIActionPlansController controller = new SIDRAOIActionPlansController(stdController);
+
+		System.AssertEquals(2,controller.listOIActionPlans.size());
+
+		Test.startTest();
+		//edit value in OI Action Plan
+		listActions = controller.listOIActionPlans;
+		listActions.get(0).Weightage__c = '90';
+		listActions.get(1).Weightage__c = '20';
+		PageReference pageref = controller.save();
+		Test.stopTest();
+
+		System.assert(pageref == null);
+
+		listActions = [
+			Select Id, Weightage__c
+			From OI_Action_Plan__c
+			where Id IN :listActions
+		];
+
+		System.AssertEquals('0', listActions.get(0).Weightage__c);
+		System.AssertEquals('0', listActions.get(1).Weightage__c);
+	}
 
 	static TestMethod void testDelete_Error(){
 

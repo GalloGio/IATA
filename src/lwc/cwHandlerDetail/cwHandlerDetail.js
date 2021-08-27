@@ -1,29 +1,15 @@
 import { LightningElement, track, api } from "lwc";
-import getDefaultAirlineHandlersDataApex from "@salesforce/apex/CW_HandledAirlinesController.getAllAirlines";
-import getDefaultCargoRampHandlersApex from "@salesforce/apex/CW_CreateFacilityController.getOnAirportStations";
+import _getDefaultAirlineHandlersDataApex from "@salesforce/apex/CW_HandledAirlinesController.getAllAirlines";
+import _getDefaultCargoRampHandlersApex from "@salesforce/apex/CW_CreateFacilityController.getOnAirportStations";
 
 import saveAirlinesHandled from "@salesforce/apex/CW_HandledAirlinesController.saveAirlinesHandled";
 import saveHiddenOperatingStations from "@salesforce/apex/CW_HandledAirlinesController.saveHiddenOperatingStations";
 
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 
+const FILTER_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 export default class CwHandlerDetail extends LightningElement {
-	// get isAirline() {
-	// 	PREVIOUS: get showListAirlines() { return this.facility.recordTypeDevName === "Ramp_Handler" || this.facility.recordTypeDevName === "Cargo_Handling_Facility"; }
-	// 	return this.stationProfile && (this.stationProfile.recordTypeDevName === "Ramp_Handler" || this.stationProfile.recordTypeDevName === "Cargo_Handling_Facility");
-	// }
 
-	// get isOperatingAirline() {
-	//	PREVIOUS: get showOperatingAirlines() { return this.facility.recordTypeDevName === "Airport_Operator"; }
-	// 	return this.stationProfile && this.stationProfile.recordTypeDevName === "Airport_Operator";
-	// }
-
-	// get isOperatingCHFandRampH() {
-	// 	PREVIOUS: get showOperatingCHFandRampH() { return this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline"; }
-	// 	return this.stationProfile && (this.stationProfile.recordTypeDevName === "Airport_Operator" || this.stationProfile.recordTypeDevName === "Airline");
-	// }
-
-	// DML - CHECK BLOCK - START
 	generateItemsToShow(numberItemSum, numberItemLoopSum) {
 		let itemsToLoop = this.showOnlySelected ? this.selectedItems : this.filteredHandlerItemsByText;
 		if (itemsToLoop && itemsToLoop.length >= this.pageSelected + numberItemSum) {
@@ -47,11 +33,6 @@ export default class CwHandlerDetail extends LightningElement {
 			}
 		];
 	}
-	// DML - CHECK BLOCK - END
-
-	// ########################################################################################
-	// NEW VERSION
-	// ########################################################################################
 
 	// ########################################################################################
 	// @api
@@ -68,18 +49,48 @@ export default class CwHandlerDetail extends LightningElement {
 	@api urlBaseToStationProfile;
 
 	_handlerData;
+	_settingHandlerData = false;
 	@api
 	get handlerData() {
 		return this._handlerData;
 	}
 	set handlerData(value) {
+		this._settingHandlerData = true;
 		if (!this.isValidHandlerType) {
 			this._handlerData = [];
 			this._handlerDataDraft = [];
+			this._settingHandlerData = false;
+		} else {
+			this.completeData(value)
+				.then( (response) => {
+					this._handlerData = JSON.parse(JSON.stringify(this.transformHandlerData(response)));
+					this._handlerDataDraft = JSON.parse(JSON.stringify(this._handlerData));
+				})
+				.finally( () => {
+					this._settingHandlerData = false;
+				});
 		}
-		value = this.transformHandlerData(value);
-		this._handlerData = JSON.parse(JSON.stringify(value));
-		this._handlerDataDraft = value;
+	}
+
+	completeData(value) {
+		return new Promise((resolve) => {
+			if (this.isAirlineHandlers) {
+				this.getDefaultAirlineHandlersDataApex()
+					.then(response => {
+						response.forEach(_data => {
+							let itemFound = value.find( obj => { return obj.value === _data.value; });
+							if (itemFound){ _data.selected = itemFound.selected; }
+						});
+						resolve(JSON.parse(JSON.stringify(response)));
+					});
+			} else {
+				if (value === undefined || value.length === 0) {
+					this.getDefaultCargoRampHandlersApex().then(response => { resolve(response); });
+				} else {
+					resolve(value);
+				}
+			}
+		});
 	}
 
 	_editModeAvailable = false;
@@ -153,8 +164,6 @@ export default class CwHandlerDetail extends LightningElement {
 	// ########################################################################################
 	// @track / normal variables
 	// ########################################################################################
-	initialized = false;
-
 	@track _handlerDataDraft = []; // Manage items seleceted / unselected draft
 
 	// pagination
@@ -195,15 +204,23 @@ export default class CwHandlerDetail extends LightningElement {
 		}
 	}
 	get getLettersForFilters() {
-		return ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+		return FILTER_LETTERS;
 	}
 	get filteredHandlerItemsByFirstLetter() {
 		if (!this.letterSelected) {
 			return this._handlerDataDraft;
 		} else {
 			let filteredItems = [];
+			const isOthersLetter = this.letterSelected.toLowerCase() === 'others';
 			this._handlerDataDraft.forEach(handlerItem => {
-				if (handlerItem.isHeader == false && handlerItem.label && handlerItem.label.length > 0 && handlerItem.label.charAt(0).toLowerCase() === this.letterSelected.toLowerCase()) {
+				const currentLabel = (handlerItem && handlerItem.label) ? handlerItem.label.trim().toUpperCase() : '';
+				if (handlerItem.isHeader == false && currentLabel.length > 0 
+					&& (
+						(isOthersLetter === false && FILTER_LETTERS.indexOf(currentLabel[0]) >= 0 && currentLabel[0].toLowerCase() === this.letterSelected.toLowerCase())
+						||
+						(isOthersLetter === true && FILTER_LETTERS.indexOf(currentLabel[0]) < 0)
+					)
+				) {
 					filteredItems.push(handlerItem);
 				}
 			});
@@ -362,27 +379,37 @@ export default class CwHandlerDetail extends LightningElement {
 	// ########################################################################################
 	// Logic
 	// ########################################################################################
-	LoadData() {
-		if (this.handlerData == undefined || this.handlerData == null || this.handlerData.length == 0) {
-			this.setDefaultHandlerData();
-		}
-	}
-
 	@api
 	setDefaultHandlerData() {
 		if (this.handlerType == "airline") {
-			getDefaultAirlineHandlersDataApex()
+			this.getDefaultAirlineHandlersDataApex()
+				.then(response => { this.handlerData = response; });
+
+		} else if (this.handlerType == "cargo" || this.handlerType == "ramp") {
+			this.getDefaultCargoRampHandlersApex()
+				.then(response => { this.handlerData = response; });
+		}
+	}
+
+	getDefaultAirlineHandlersDataApex() {
+		return new Promise((resolve) => {
+			_getDefaultAirlineHandlersDataApex()
 				.then(returnData => {
 					if (returnData && returnData != null) {
 						returnData = JSON.parse(returnData);
 					}
-					this.handlerData = returnData;
+					resolve(returnData);
 				})
 				.catch(error => {
-					this.handlerData = [];
+					resolve([]);
 				});
-		} else if (this.handlerType == "cargo" || this.handlerType == "ramp") {
-			getDefaultCargoRampHandlersApex({
+
+		});
+	}
+
+	getDefaultCargoRampHandlersApex() {
+		return new Promise((resolve) => {
+			_getDefaultCargoRampHandlersApex({
 				rtype: this.stationProfile.recordTypeDevName,
 				accountName: this.stationProfile.accountName,
 				airportId: this.stationProfile.nearestAirport.city,
@@ -397,13 +424,12 @@ export default class CwHandlerDetail extends LightningElement {
 							defaultHandlerData.push(currentItem);
 						}
 					});
-
-					this.handlerData = defaultHandlerData;
+					resolve(defaultHandlerData);
 				})
 				.catch(error => {
-					this.handlerData = [];
+					resolve([]);
 				});
-		}
+		});
 	}
 
 	transformHandlerData(valuesToTransform) {
@@ -416,7 +442,7 @@ export default class CwHandlerDetail extends LightningElement {
 			if (this.autoSelection === true) {
 				if (this.stationProfile.recordTypeDevName === "Airline" && (this.handlerType === "cargo" || this.handlerType === "ramp")) {
 					newCurrentItem.selected = false;
-				} else if (this.stationProfile.recordTypeDevName === "Airport_Operator" && (this.handlerType === "airline" || this.handlerType === "cargo" || this.handlerType === "ramp")) {
+				} else if (this.stationProfile.recordTypeDevName === "Airport_Operator" && (this.handlerType === "cargo" || this.handlerType === "ramp")) {
 					newCurrentItem.selected = true;
 				}
 			}
@@ -424,13 +450,6 @@ export default class CwHandlerDetail extends LightningElement {
 			// Url to Station Profile
 			if (this.handlerType == "cargo" || this.handlerType == "ramp") {
 				newCurrentItem.stationProfileUrl = this.urlBaseToStationProfile + "?eid=" + newCurrentItem.value;
-			}
-
-			// Extra info in label
-			if (this.handlerType == "airline") {
-				if (newCurrentItem.Airline_designator__c) {
-					newCurrentItem.label += " [" + newCurrentItem.Airline_designator__c + "]";
-				}
 			}
 
 			newValues.push(newCurrentItem);
@@ -468,7 +487,7 @@ export default class CwHandlerDetail extends LightningElement {
 		headers.forEach(currentHeader => {
 			values.push({ label: currentHeader, value: currentHeader, isHeader: true });
 		});
-		values.sort((a, b) => (a.label > b.label ? 1 : -1));
+		values.sort(this.sortItems);
 	}
 	removeHandlerItemHeaders(values) {
 		let valuesWithoutHeaders = [];
@@ -479,8 +498,20 @@ export default class CwHandlerDetail extends LightningElement {
 			}
 		});
 
-		valuesWithoutHeaders.sort((a, b) => (a.label > b.label ? 1 : -1));
+		valuesWithoutHeaders.sort(this.sortItems);
 		return valuesWithoutHeaders;
+	}
+
+	sortItems(a, b) {
+		let aFixed = a.label.trim().toUpperCase();
+		if (aFixed.length > 0 && FILTER_LETTERS.indexOf(aFixed[0]) < 0 ) { aFixed = 'ZZZZ' + aFixed; }
+
+		let bFixed = b.label.trim().toUpperCase();
+		if (bFixed.length > 0 && FILTER_LETTERS.indexOf(bFixed[0]) < 0 ) { bFixed = 'ZZZZ' + bFixed; }
+
+		if (aFixed < bFixed) { return -1; }
+		if (aFixed > bFixed) { return 1; }
+		return 0;
 	}
 
 	@api
@@ -513,8 +544,7 @@ export default class CwHandlerDetail extends LightningElement {
 						new CustomEvent("event", {
 							detail: {
 								name: "save",
-								handlerType: this.handlerType,
-								handlerData: JSON.parse(JSON.stringify(this.handlerData))
+								handlerType: this.handlerType
 							}
 						})
 					);
@@ -550,8 +580,7 @@ export default class CwHandlerDetail extends LightningElement {
 								detail: {
 									name: "save",
 									handlerType: this.handlerType,
-									result: result,
-									handlerData: JSON.parse(JSON.stringify(this.handlerData))
+									result: result
 								}
 							})
 						);
@@ -577,12 +606,10 @@ export default class CwHandlerDetail extends LightningElement {
 	// ########################################################################################
 	// Events
 	// ########################################################################################
-	renderedCallback() {
-		if (!this.initialized) {
-			this.initialized = true;
-
-			this.LoadData();
-		}
+	connectedCallback() {
+		if (!this._settingHandlerData && (this.handlerData == undefined || this.handlerData == null || this.handlerData.length == 0)) {
+			this.setDefaultHandlerData();
+		}	
 	}
 
 	// Handler Item
@@ -615,9 +642,7 @@ export default class CwHandlerDetail extends LightningElement {
 				detail: {
 					name: "selectItem",
 					handlerType: this.handlerType,
-					itemSelected: itemSelected,
-					handlerData: this.handlerData,
-					handlerDataDraft: this._handlerDataDraft
+					itemSelected: itemSelected
 				}
 			})
 		);

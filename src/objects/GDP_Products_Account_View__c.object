@@ -718,6 +718,20 @@ The length is the total of the original fields (Area, Country_Code, Legal_Name, 
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Json_WS_NDC__c</fullName>
+        <description>JSON Response for the NDC Onboarding Webservice in CAC Webservice</description>
+        <externalId>false</externalId>
+        <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;+IF(Agency_Status_Code__c&lt;4,&apos;INVALID&apos;,IF(OR(Agency_Status_Code__c=5,Agency_Status_Code__c=6),&apos;SUSPENDED&apos;,&apos;VALID&apos;))+&quot;\&quot;,&quot;+&quot;\&quot;agency-name\&quot;:\&quot;&quot;+IF(ISBLANK(Trading_Name__c),SUBSTITUTE(Legal_Name__c,&quot;\&quot;&quot;,&quot;\\\&quot;&quot;),SUBSTITUTE(Trading_Name__c,&quot;\&quot;&quot;,&quot;\\\&quot;&quot;))+&quot;\&quot;,&quot;+&quot;\&quot;approval-date\&quot;:\&quot;&quot;+IF(ISBLANK(Related_Accreditation_Class__r.Original_approval_date__c),&quot;&quot;,TEXT(Month(Related_Accreditation_Class__r.Original_approval_date__c))+&quot;-&quot;+TEXT(Day(Related_Accreditation_Class__r.Original_approval_date__c))+&quot;-&quot;+TEXT(Year(Related_Accreditation_Class__r.Original_approval_date__c)))+&quot;\&quot;,&quot;+&quot;\&quot;agency-class\&quot;:\&quot;&quot;+Accreditation_Class__c+&quot;\&quot;,&quot;+&quot;\&quot;accreditation-type\&quot;:\&quot;&quot;+Accreditation_Model__c+&quot;\&quot;,&quot;+&quot;\&quot;site-type\&quot;:\&quot;&quot;+Location_Type__r.Name+&quot;\&quot;,&quot;+&quot;\&quot;address\&quot;:\&quot;&quot;+SUBSTITUTE(SUBSTITUTE(Location_Address__c,&quot;|&quot;,&quot;/&quot;),&quot;\&quot;&quot;,&quot;\\\&quot;&quot;)+&quot;\&quot;,&quot;+&quot;\&quot;city\&quot;:\&quot;&quot;+City__c+&quot;\&quot;,&quot;+&quot;\&quot;postal-code\&quot;:\&quot;&quot;+Zip_Postal_Code__c+&quot;\&quot;,&quot;+&quot;\&quot;state\&quot;:\&quot;&quot;+State_Province__c+&quot;\&quot;,&quot;+&quot;\&quot;country\&quot;:\&quot;&quot;+Country_Name__c+&quot;\&quot;,&quot;+&quot;\&quot;phone-number\&quot;:\&quot;&quot;+Related_Main_Phone__r.ISD_Code__c+Related_Main_Phone__r.STD_Code__c+Related_Main_Phone__r.Number__c+&quot;\&quot;,&quot;+
+&quot;\&quot;email-domain\&quot;:\&quot;&quot;+IF(FIND(&apos;@&apos;,Email_Address__c)&gt;0,RIGHT(Email_Address__c,LEN(Email_Address__c)-FIND(&apos;@&apos;,Email_Address__c)),&quot;&quot;)+&quot;\&quot;&quot;</formula>
+        <inlineHelpText>JSON Response for the NDC Onboarding Webservice in CAC Webservice</inlineHelpText>
+        <label>JSON WS NDC</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Json_WS_Simple__c</fullName>
         <description>JSON Response for the Simple Webservice in CAC Webservice</description>
         <externalId>false</externalId>

@@ -85,6 +85,14 @@ public with sharing class SIDRAOIActionPlansController {
 	**/
 	public PageReference Save () {
 		try {
+			Integer totalWeightage = 0;
+			for (OI_Action_Plan__c actionPlan: this.listOIActionPlans) {
+				totalWeightage += Integer.ValueOf(actionPlan.Weightage__c);
+			}
+			if (totalWeightage!=100 && totalWeightage!=0) {
+				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Total Weightage is ' + totalWeightage + '% and must be 0% or 100%'));
+				return null;
+			}
 			update this.listOIActionPlans;
 			return reloadPage(false);
 
@@ -134,7 +142,7 @@ public with sharing class SIDRAOIActionPlansController {
 	}
 
 	public void getOIActionPlans() {
-		String queryStr = 'SELECT OI__c, Name, Met_Due_Date__c, Id, Due_Date__c, Description__c, Comment__c, Closure_Date__c, Action_Owner__c ' +
+		String queryStr = 'SELECT OI__c, Name, Met_Due_Date__c, Id, Due_Date__c, Description__c, Comment__c, Closure_Date__c, Action_Owner__c, Weightage__c ' +
 								'FROM OI_Action_Plan__c ' +
 								'WHERE OI__c = \'' + this.parent.Id + '\' ' +
 								'ORDER BY ' + strSortField + ' ' + (isSortASC ? 'ASC' : 'DESC');

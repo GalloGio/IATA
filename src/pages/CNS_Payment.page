@@ -13,7 +13,7 @@
 					var serviceType = document.getElementById('{!$Component.pb.frm.pbs.serviceType}').value;
 					var invoiceNumber = document.getElementById('{!$Component.pb.frm.pbs.invoiceNumber}').value;
 					var amount = document.getElementById('{!$Component.pb.frm.pbs.amount}').value;
-					var reg = /^[0-9]{1,10}$/;
+					var reg = /^[0-9]+(\.[0-9]{2}|,[0-9]{2})?$/;
 					var tendigitnum = /^\d{10}$/; 
 
 					if (serviceType.length < 1){

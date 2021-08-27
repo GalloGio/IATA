@@ -39,6 +39,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		insert ardAirline;
 
 		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
+		ardCap.Photos__c = '[{"extension":"jpg","id":"0691w000001YvlfAAC","internalExtension":"jpg","label":"ULD Dollies-0","url":"/sfc/dist/version/download/?oid=00D1w0000000Nw2&ids=0681w000001Z63k&d=%2Fa%2F1w000000D1kE%2FzZYdzMivXSgH5HIFOgHQFc6pVtYxps4iqKQNAz8Ohf8&asPdf=false","visible":true,"downloadDocument":"/sfc/dist/version/download/?oid=00D1w0000000Nw2&ids=0681w000001Z63k&d=%2Fa%2F1w000000D1kE%2FzZYdzMivXSgH5HIFOgHQFc6pVtYxps4iqKQNAz8Ohf8&asPdf=false"}]';
 		insert ardCap;
 		
 		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
@@ -127,7 +128,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert' AND ValidationPrograms__c = 'IATA'];
 		
 		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
@@ -168,7 +169,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert' AND ValidationPrograms__c = 'IATA'];
 		
 		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
@@ -258,7 +259,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert' AND ValidationPrograms__c = 'IATA'];
 		
 		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
@@ -438,6 +439,34 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Test.startTest();
 		
 		String result = CW_FacilityCapabilitiesController.generateCapabilitiesStructureCsv();
+		system.assertNotEquals(null, result);
+		
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void getCapabilitiesPhotosFromStation() {
+		ICG_Account_Role_Detail__c stationFound;
+		for (ICG_Account_Role_Detail__c currentRow : [SELECT Id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Cargo Handling']) {
+			if (stationFound == null) {
+				stationFound = currentRow;
+			}
+		}
+
+		Test.startTest();
+		List<CW_AccountDetailCarousel.Carousel> photos = CW_CapabilitiesUtilities.getCapabilitiesPhotosFromStation(stationFound.Id);
+		System.assertEquals(false, photos.isEmpty(), 'Photos must not be empty');
+		System.assertEquals(1, photos.size(), 'Photos length must be 1');
+		System.assertEquals(true, photos[0].visible, 'Photos [0] must be visible');
+		System.assertEquals('jpg', photos[0].fileExtension, 'Photos [0] extension must be jpg');
+		Test.stopTest();
+	}
+
+	@isTest
+	public static void getMapTooltipBySuperCategoryTest() {
+		Test.startTest();
+		
+		Map<String, List<String>> result = CW_FacilityCapabilitiesController.getMapTooltipBySuperCategory();
 		system.assertNotEquals(null, result);
 		
 		Test.stopTest();

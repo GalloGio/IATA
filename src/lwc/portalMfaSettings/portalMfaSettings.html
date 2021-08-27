@@ -1,0 +1,74 @@
+<template>
+    <div if:true={labels} class="slds-theme_default mfa-custom-box-shadow">
+        <div class="slds-p-top_medium slds-p-horizontal_large">
+            <div class="slds-grid slds-wrap slds-p-top_small">
+                <div class="slds-large-size_2-of-3 slds-small-size_1-of-1">
+                    <div class="slds-grid">
+                        <span class="mfa-main-title">{labels.Portal_MFA_Activation_Container_Title}</span>
+                        <div class="slds-p-right_small slds-m-left_small slds-m-top_xx-small mfa-security-question-vl"></div>
+                        <span class={isActivatedClass}>{isActivatedLbl}</span>
+                    </div>
+                </div>
+                <div if:true={isCriticalForUser} class="slds-large-size_1-of-3 slds-small-size_1-of-12">
+                    <div class="slds-clearfix">
+                        <div class="slds-float_right">
+                            <span class="mfa-red-txt cursorPointer" onclick={deactivate2FA}>{labels.Portal_Deactivate}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div if:false={userInfo.isAuhtAppActivated}>
+                <div class="slds-grid slds-p-top_medium">
+                    <span class="mfa-medium-txt">{labels.Portal_MFA_Portal_Activation_Paragraph_1}</span>
+                </div>
+                <div class="slds-grid slds-p-top_medium">
+                    <span class="mfa-medium-txt">{labels.Portal_MFA_Portal_Activation_Paragraph_2}</span>
+                </div>
+                <div class="slds-grid slds-p-top_medium">
+                    <span class="mfa-medium-txt">{labels.Portal_MFA_Portal_Activation_Paragraph_3}</span>
+                </div>
+                <div class="slds-grid slds-p-top_medium">
+                    <lightning-formatted-rich-text class="mfa-medium-txt" value={labels.Portal_MFA_Portal_Activation_Paragraph_4}>
+						</lightning-formatted-rich-text>
+                </div>
+                <div class="slds-grid slds-p-top_medium">
+                    <div class="slds-x-small-size_0-of-6 slds-small-size_1-of-6"></div>
+                    <div class="slds-x-small-size_0-of-6 slds-small-size_4-of-6">
+                        <c-portal-mfa-activation-apps is-settings translations={labels}></c-portal-mfa-activation-apps>
+                    </div>
+                    <div class="slds-x-small-size_0-of-6 slds-small-size_1-of-6"></div>
+                </div>
+                <div class="slds-grid slds-p-vertical_x-large">
+                    <div class="slds-col slds-align_absolute-center">
+                        <button class="mfa-centered-btn" onclick={setup2FA}>{labels.Portal_MFA_Portal_Activation_Setup_2FA}</button>
+                    </div>
+                </div>
+            </div>
+
+            <div if:true={userInfo.isAuhtAppActivated}>
+                <div class="slds-grid slds-p-top_medium">
+                    <span class="mfa-medium-txt">{labels.Portal_MFA_Portal_Activation_Active_Body}</span>
+                </div>
+                
+                <div class="slds-grid slds-p-top_medium">
+                    <span class="mfa-link cursorPointer" onclick={change2FaApp}>{labels.Portal_Change_2FA}</span>
+                </div>
+
+                <div if:true={areChangesIn2FA}>
+                    <c-portal-registration-generic-modal if:true={isRemoving2FA} icon={warningIcon} title={labels.Portal_Settings_Deactivate_App_Title} message={labels.Portal_Settings_Deactivate_App_Body}
+                        button1-label={labels.ISSP_Back} button2-label={labels.ISSP_Confirm} 
+                        onbuttononeaction={hideModal} onbuttontwoaction={confirmModal}>
+                    </c-portal-registration-generic-modal>
+                    <c-portal-registration-generic-modal if:true={isChanging2FA} icon={warningIcon} title={labels.Portal_Settings_Disconnect_App_Title} message={labels.Portal_Settings_Disconnect_App_Body}
+                        button1-label={labels.ISSP_Back} button2-label={labels.ISSP_Confirm}
+                        onbuttononeaction={hideModal} onbuttontwoaction={confirmModal}>
+                    </c-portal-registration-generic-modal>
+                </div>
+            </div>
+        </div>
+
+        
+        <div if:true={userInfo.isAuhtAppActivated} class="slds-p-vertical_x-large"></div>
+    </div>
+</template>

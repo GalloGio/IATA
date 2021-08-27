@@ -158,6 +158,8 @@ public without sharing class CW_LandingSearchBarController {
 	*/
 	@AuraEnabled (cacheable=true)
 	public static String getCertificationsList() {
+		List<String> listValidationPrograms = CW_Utilities.VALIDATION_PROGRAMS.split(',');
+
 		final Map<String, RowInfo> mapUpdated = new Map<String, RowInfo> ();
 		final List<ICG_Certification__c> certDetails = [SELECT name, Label__c, Certification_Type__c, Alias__c,
 															(SELECT id FROM ICG_Capability_Assignment_Groups__r 
@@ -165,7 +167,7 @@ public without sharing class CW_LandingSearchBarController {
 																AND ICG_Account_Role_Detail__r.isApproved__c = true
 																AND Is_Active__c = true)
 														FROM ICG_Certification__c 
-														WHERE Is_Visible__c = true]; //Check if cert is expired to avoid it
+														WHERE Is_Visible__c = true AND ValidationPrograms__c IN: listValidationPrograms]; //Check if cert is expired to avoid it
 
 		for(ICG_Certification__c cert : certDetails) {
 			final RowInfo loc = new RowInfo();

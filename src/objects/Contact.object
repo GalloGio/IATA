@@ -5656,6 +5656,16 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         </valueSet>
     </fields>
     <fields>
+        <fullName>Course_Outline_PDF__c</fullName>
+        <externalId>false</externalId>
+        <label>Course Outline PDF</label>
+        <length>75</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Credit_Card_Payment_Link__c</fullName>
         <externalId>false</externalId>
         <formula>/*PreProd*/
@@ -9583,12 +9593,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Chính trị hàng không</label>
                 </value>
                 <value>
-                    <fullName>Comercial</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Comercial</label>
-                </value>
-                <value>
                     <fullName>Commercial</fullName>
                     <default>false</default>
                     <label>Commercial</label>
@@ -9902,12 +9906,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>opeartions</label>
-                </value>
-                <value>
-                    <fullName>Operaciones</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Operaciones</label>
                 </value>
                 <value>
                     <fullName>Operações</fullName>
@@ -15171,53 +15169,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>SIS_Contacts</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.TITLE</columns>
-        <columns>CONTACT.PHONE1</columns>
-        <columns>SIS_ID__c</columns>
-        <columns>CONTACT.EMAIL</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>CONTACT.CREATED_DATE</columns>
-        <columns>CONTACT.LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CONTACT.RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>01220000000Q3F3</value>
-        </filters>
-        <label>SIS Contacts</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IATASISCustomerSupport</group>
-            <group>IATASISHelpDeskAgent</group>
-            <group>IATASISOperations</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>SIS_Service_Provider_Contacts</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.TITLE</columns>
-        <columns>CONTACT.PHONE1</columns>
-        <columns>CONTACT.EMAIL</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CONTACT.RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>01220000000Q3F4</value>
-        </filters>
-        <label>SIS Service Provider Contacts</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IATASISCustomerSupport</group>
-            <group>IATASISHelpDeskAgent</group>
-            <group>IATASISOperations</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>Test_ICCS_webinar</fullName>
         <columns>FULL_NAME</columns>
         <columns>ACCOUNT.NAME</columns>
@@ -19057,26 +19008,6 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
         <url>/apex/Assign_Financial_Contact?id={!Account.Id}</url>
     </webLinks>
     <webLinks>
-        <fullName>BLND_FormFactoryContactLink</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>550</height>
-        <linkType>url</linkType>
-        <masterLabel>FormFactory Contact Link</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
-sforce_session_id={!API.Session_ID}&amp; 
-sforce_server_url={!API.Partner_Server_URL_120}&amp; 
-sforce_user_name={!User.Username}&amp; 
-sforce_full_name={!User.Name}&amp; 
-sforce_user_id={!User.Id}&amp; 
-custom_link_name=FormFactory Form Name&amp; 
-mycontact={!Contact.Id}&amp; 
-myuser={!User.Id}</url>
-    </webLinks>
-    <webLinks>
         <fullName>BSPlinkPassword</fullName>
         <availability>online</availability>
         <displayType>link</displayType>
@@ -19359,6 +19290,32 @@ try {
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>/00T/e?retURL=%2F{!Contact.Id}&amp;tsk5=Call - Successful&amp;who_id={!Contact.Id}&amp;title=Call - Successful&amp;followup=1</url>
+    </webLinks>
+    <webLinks>
+        <fullName>OdigoCti__SMS</fullName>
+        <availability>online</availability>
+        <description>Odigo button : Send SMS from contact page layout</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send SMS</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>// Create param string
+var vPhone = &apos;{!Contact.MobilePhone}&apos;;
+if (vPhone == null || vPhone == &apos;&apos;) {
+vPhone = &apos;{!Contact.Phone}&apos;;
+}
+
+var vRegExpSF = new RegExp(&quot;^\\(.*\\) [0-9]*-[0-9]*$&quot;, &quot;g&quot;);
+if (vRegExpSF.test(vPhone)) {
+vPhone = vPhone.substr(1, 3) + vPhone.substr(6, 3) + vPhone.substring(10, vPhone.length);
+}
+
+var vParams = &apos;pObjectId=&apos; + &apos;{!Contact.Id}&apos;;
+vParams += &apos;&amp;pCallerDDI=&apos; + vPhone;
+
+var vSMSPopup = window.open(&apos;/apex/OdigoCti__VFP02OdigoCTIPopupSMS?&apos; + vParams, &apos;PopupSMS&apos;,&apos;height=370,width=320,left=250,top=200,location=no,menubar=no,resizable=no,scrollbars=no,toolbar=no,titlebar=no,status=no&apos;);
+vSMSPopup.focus();</url>
     </webLinks>
     <webLinks>
         <fullName>PassengerOperations</fullName>

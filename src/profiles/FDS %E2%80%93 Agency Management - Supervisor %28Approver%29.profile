@@ -26,11 +26,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>BLND_SnapShot</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>CallScripting</application>
         <default>false</default>
         <visible>false</visible>
@@ -2385,6 +2380,46 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AccountCreationCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTI</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTICasesCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTICasesTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContactsCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContactsTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContentCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContentTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIHeaderCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIHeaderTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTITest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -5033,6 +5068,86 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IATA_ServiceList_CTRL_TEST</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_AllController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_AllCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ContactsCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ContactsCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_DetailController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_DetailCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_HomeController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_HomeControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumsBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumsBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumsSchedule</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemosController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemosCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_NewController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_NewCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ReqController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ReqCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_util</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -7768,6 +7883,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LabRegistry_helper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LabRegistry_helper_test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LabelTranslator</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -7877,6 +8000,22 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LookupSObjectController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MFA_LoginFlowController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MFA_LoginFlowControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MITA_AgreementTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MITA_AgreementTriggerHandlerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -8129,6 +8268,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OSCARstatusBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OS_Account_Role_Detail_CapabilityHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9164,6 +9307,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RecordRetrievalLightningImpTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RecordRetrievalLightningImplementation</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RecordSharingController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10064,6 +10215,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>TestDataFactory_Users</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>TestDataGenerator</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10328,6 +10483,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>UserSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserSelectorTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>User_Sel</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10345,6 +10508,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserprovisioningRequestControllerTests</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Users</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsersTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -14210,6 +14381,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Country_Specific_Attribute__c.Accreditation_Model__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AMS_Country_Specific_Attribute__c.Block_notification_on_RHC_amount_update__c</field>
         <readable>true</readable>
@@ -16272,6 +16448,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AMS_OSCAR__c.STEP51__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AMS_OSCAR__c.STEP52__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18942,6 +19123,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Agency_Risk_Event__c.ANG_isCashlessAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23307,7 +23493,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.X8585_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -23581,7 +23767,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Aircraft_Damage_Reduction_Systems__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Applied_Measurement_System__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Reference_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approved_By__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approver_Email__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23771,6 +23982,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Capacity_In_Kg__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Cart_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.DPI_Explain_Delivery_Pickup_Procedure__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -23806,6 +24037,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Drawbar_Pull_Kg__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.ESC_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -23831,7 +24067,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Energy_Mobility__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Energy_Temp_Control_System__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Energy_Without_Motor__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Energy__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Expiry_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Filtered_Supply_Air__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23901,7 +24162,42 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Max_Capacity_In_Passengers__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Max_Kva_Supply__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Max_Lifting_Capacity_Or_Weight_Limit__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Max_Load_Capacity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Max_Load_Width_Between_Safety_Rails__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Maximum_Load_Kg__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Method_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Model__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23912,6 +24208,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.More_Info_Link__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Number_Of_Connectors_To_Aircraft__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23936,7 +24237,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Operating_Temperature_Range__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Overall_Airport_Size__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Pax_Mode__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23956,7 +24267,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Power_Factor_PF__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Printscreen__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quantity__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24116,6 +24447,51 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Servicing_Height_Max__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Servicing_Height_Min__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Supply_Flowrate_In_Kg_Sec__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.TCHA_Alarm_Range__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24147,6 +24523,51 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.TSWA_Surface_Space__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Tank_Capacity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.ULD_Compatibility_DPE__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.ULD_Compatibility_PAG__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.ULD_Compatibility_PBM__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.ULD_Compatibility_PGA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.ULD_Compatibility_PMC__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.ULD_Compatibility_PRM__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Use_Of_GSE__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Useable_Internal_Volume__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24191,6 +24612,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Version_Edition_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Voltage_Supply__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.WVDE_Linked_Facility_Management_Inv_Syst__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24212,6 +24643,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.WVDE_Max_Measuring_Weight_Kg__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Year_Of_Manufacture__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26262,1421 +26698,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>BIN_Range_Conflict__c.Twin_Conflict__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Application__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Owner__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Private__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFAC_Shared_View__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Bookmark__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Height__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Lastopen__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Locked__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Over1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Over2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Over3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Private__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Carousel__c.BLND_Width__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Carousel__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Index__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Keywords__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Locked__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Over1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Over2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Over3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Private__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFCS_Slide__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Action_Owner__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Due__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Include_in_Report__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Issue_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Project_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Status__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Task_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Action_Item__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Discussion__c.BLND_Attachment_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Discussion__c.BLND_Body__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Discussion__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Discussion__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Discussion__c.BLND_Purpose__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Discussion__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Highlight_Owner__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Include_in_Report__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Include_in_Weekly_Dashboard__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Priority__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Project_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Highlight__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Impact__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Include_in_Report__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Issue_Owner__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Issue_Raised_On__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Priority__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Project_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Resolution__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Resolve_By__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Severity__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Status__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Task_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Issue__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Linker__c.BLND_Destination_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Linker__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Linker__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Linker__c.BLND_Purpose__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Linker__c.BLND_Source_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Linker__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Account_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Archive__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Complete_Tasks__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Complete__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Cost_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Cost__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Duration_In_Business_Days__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Duration_In_Calendar_Days__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Finish_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Finish__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Folder_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Opportunity_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Priority__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Revenue_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Revenue__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Schedule_Override__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Schedule__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Start_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Start__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Vacation_List__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Weight__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Work_In_Actual_Hours__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Work_In_Planned_Hours__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Project__c.BLND_Workday_List__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Approval__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Archive__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Attachment_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Billing_Cost_Per_Day__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Billing_Cost_Per_Use__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Billing_Hourly_Rate__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Billing_Overtime_Rate__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Cost_Per_Day__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Cost_Per_Use__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Hourly_Rate__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Overtime_Rate__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Project_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Purpose__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Skill_Certification__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Skill_Level__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Skill_Set__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Resource__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Approval__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Archive__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Billable_Task__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Complete__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Constraint_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Constraint_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Cost_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Cost__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Dependent__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_DreamFactory__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Duration_In_Business_Days__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Duration_In_Calendar_Days__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Duration__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Finish_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Finish__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Index__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Project_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Resources__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Revenue_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Revenue__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Schedule__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Start_Baseline__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Start__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Subtask__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Tabs__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Work_In_Actual_Hours__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Work_In_Planned_Hours__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFDT_Task__c.BLND_Work__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Bookmark__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Height__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Lastopen__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Locked__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Over1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Over2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Over3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Private__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Form__c.BLND_Width__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Form__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Index__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Keywords__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Locked__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Over1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Over2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Over3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Private__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFFF_Page__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Account_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Amount__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Attachment_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Billable__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Billed_Flag__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Case_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Contact_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Note__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Opportunity_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Project_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Status__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Submitted__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Task_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_User_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Expense__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Account_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Attachment_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Billable__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Billed_Flag__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Case_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Contact_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Date__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Note__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Opportunity_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Project_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Status__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Submitted__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Task_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Time_Units__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Time__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_User_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTE_Time__c.BLND_Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Folder_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Over1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Over2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Over3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Document__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Entity_Info__c.BLND_Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Access_List__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>BLND_DFTT_Folder__c.BLND_Folder_Link__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -33741,6 +32762,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Course_Outline_PDF__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.Credit_Card_Payment_Link__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -36671,6 +35697,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Custom_metadata_label_translation__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Customer_Invoice__c.Bank_Account_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -36862,161 +35893,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Customer_Invoice__c.Type_Of_Service__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_Permissions__c.Data__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_Permissions__c.Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_Permissions__c.Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_Permissions__c.Over__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_Permissions__c.User_Link__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_Permissions__c.Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Asset__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Changed__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Created__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Deleted__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Deployed__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Flag1__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Flag2__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Flag3__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Flag4__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Object__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Package__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Problem__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Success__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Item__c.Version__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.Expansion__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.Extra_Field__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.Result__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.SnapShot__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.Source__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.Success__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.Type__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>DFSS_SnapShot_Push__c.Version__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -39660,6 +38536,106 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Additional_Data__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_Folder_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_Result__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_duration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_end_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_fail_cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_fail_reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Call_start_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Campaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__IVR_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Phone_number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Skill__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Survey_information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Survey_name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Survey_score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Transfer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Waiting_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Event.OdigoCti__Waiting_time_second__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Event.Participants__c</field>
         <readable>true</readable>
@@ -41746,6 +40722,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GDP_Products_Account_View__c.Json_WS_NDC__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GDP_Products_Account_View__c.Json_WS_Simple__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -42401,6 +41382,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GVR__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GadmAccountServiceDetail__e.EventType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -42417,6 +41403,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>IATA_Code_Search_Special_Countries__mdt.Remittance_Holding_Capacity_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IATA_Email_Domain_Name__mdt.Allowed_for_Portal_Users__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -42568,6 +41559,11 @@
         <editable>false</editable>
         <field>IATA_ISO_Country__c.Airline_EasyPay_Opt_Out_Date__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IATA_ISO_Country__c.Allow_Cash_FOP_for_Cashless_Agencies__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -43441,6 +42437,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_Account_Role_Detail__c.In_House_Services__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ICG_Account_Role_Detail__c.Is_Direct_Ramp_Access__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -43567,6 +42568,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ICG_Account_Role_Detail__c.Summary_Detail_Check_JSON__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_Account_Role_Detail__c.Third_Party_Services__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -48286,6 +47292,136 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Account_Role__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Additional_Certifications__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Additional_certifications_in_place__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Airline_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Are_your_labs_part_of_national_platform__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.CountryName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Do_you_issue_test_results_for_all_lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Do_you_manage_booking_for_all_locations__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Endorsed_by_governments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Existing_partnership_with_airlines__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.How_Many_Lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.How_long_have_you_been_in_the_business__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Lab_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.National_accreditation_for_all_the_labs__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Nature_of_SLA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Operating_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Operating_under_brand__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Parent_Detail_For_Airline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Parent_Detail_For_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Partner_Airline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Type_of_SLAs_in_place__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Type_of_lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_Governments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_National_Platform__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_Operating_Brand__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.onboarding_case__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LVA_CallUsConfig__mdt.AvailableHours__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -48442,6 +47578,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Contact_Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Course_Outline_PDF__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -49028,6 +48169,11 @@
         <editable>true</editable>
         <field>LocalGovernance_Meeting__c.Legal_Remarks_Minutes__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LocalGovernance_Meeting__c.Local_Group_Type__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50115,6 +49261,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>OI_Action_Plan__c.Weightage__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Objective__c.AM_Can_IATA_support_the_airline__c</field>
         <readable>true</readable>
@@ -50565,6 +49716,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Action_Plan_Effectiveness_Assessment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Affected_Process__c</field>
         <readable>true</readable>
@@ -50595,9 +49751,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Apparent_Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Operational_Improvements__c.Approval_process_selector__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Area_of_Concern__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -50627,6 +49793,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Closest_Action_Plan_due_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Comments_OI__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -50695,6 +49866,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Effectiveness_Evaluation_Deadline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Effort__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Estimated_of_Records_Affected_total__c</field>
         <readable>true</readable>
@@ -50736,6 +49917,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Operational_Improvements__c.If_Dropped__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Operational_Improvements__c.If_Yes_please_indicate_the_number__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50757,6 +49943,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Operational_Improvements__c.Impact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Improvement_Target__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -50855,8 +50046,13 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.OI_Approval_date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.OI_Category__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -50867,6 +50063,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Status_auto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.OI_Subcategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -50901,6 +50102,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Operational_Improvements__c.Other_Initiator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Overall_Deadline_Formula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Operational_Improvements__c.Overall_Deadline__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50930,8 +50141,18 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Priority__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.QRM_Analysis_Conclusions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Quality_Response_Categorization__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -51005,6 +50226,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Solution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Solution_details__c</field>
         <readable>true</readable>
@@ -51030,7 +50256,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Submission_for_Approval_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -53568,6 +52794,11 @@
         <editable>false</editable>
         <field>Portal_Applications__c.Visible__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_MFA_Setting__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -58750,6 +57981,106 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Additional_Data__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_Folder_ID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_Result__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_duration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_end_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_fail_cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_fail_reason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_reference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Call_start_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Campaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__IVR_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Phone_number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Skill__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Survey_information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Survey_name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Survey_score__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Transfer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Waiting_time__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Task.OdigoCti__Waiting_time_second__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Task.Participants__c</field>
         <readable>true</readable>
@@ -59781,6 +59112,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>User.OdigoCti__Odigo_Conf__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.OdigoCti__Odigo_login__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>User.Office_Location__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -59912,6 +59253,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>User.UID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Questions_Answer__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -61851,7 +61202,15 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Lifting_Elevating_Equipment</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
@@ -61883,6 +61242,14 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Servicing_Equipment</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.System_For_Mail_Tracking_And_Reporting</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61899,7 +61266,15 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Towing_Equipment</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.Transport_Vehicles</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Transporting_Equipment</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
@@ -62165,60 +61540,6 @@
         <layout>BIN_Range_Conflict__c-BIN Range Conflict Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>BLND_DFAC_Shared_View__c-DreamFactory Shared View Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFCS_Carousel__c-Carousel Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFCS_Slide__c-Slide Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Action_Item__c-DreamTeam Action Item Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Discussion__c-DreamTeam Discussion Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Highlight__c-DreamTeam Highlight Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Issue__c-DreamTeam Issue Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Linker__c-DreamTeam Linker Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Project__c-DreamTeam Project Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Resource__c-DreamTeam Resource Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFDT_Task__c-DreamTeam Task Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFFF_Form__c-Form Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFFF_Page__c-Page Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFTE_Expense__c-DreamTeam Expense Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFTE_Time__c-DreamTeam Time Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFTT_Document__c-TableTop Document Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFTT_Entity_Info__c-TableTop Entity Info Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>BLND_DFTT_Folder__c-TableTop Folder Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Backlog_history__c-Backlog history Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -62343,10 +61664,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.ISS_Portal_New_Case_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -62460,10 +61777,6 @@
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
         <recordType>Case.Cases_Global</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
@@ -62591,10 +61904,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.Cases_IFG</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -62628,10 +61937,6 @@
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
@@ -63134,6 +62439,12 @@
         <layout>Custom_Related_case__c-Related case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Custom_metadata_label__mdt-Custom metadata label Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Custom_metadata_label_translation__mdt-Custom metadata label translation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Customer_Invoice_Payment_Link__mdt-Customer Invoice Payment Link Config Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -63148,15 +62459,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Customer_Invoices_Visible_Status__mdt-Customer Invoices Visible Status Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DFSS_Permissions__c-SnapShot Permissions Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DFSS_SnapShot_Item__c-SnapShot Action Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>DFSS_SnapShot_Push__c-SnapShot Push Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>DIP_Details__c-DIP Details Layout</layout>
@@ -63587,10 +62889,16 @@
         <layout>GST_Information__c-GST Information Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>GVR__mdt-Global Validation Rules Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Global-Global Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>IATA_Code_Search_Special_Countries__mdt-IATA Code Search Special Country Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>IATA_Email_Domain_Name__mdt-IATA Email Domain Name Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>IATA_ISO_City__c-IATA Geonames City Layout</layout>
@@ -63970,6 +63278,37 @@
         <layout>KPI_Value__c-KPI Value Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Aggregator Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Aggregator</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-IT Integrator Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.IT_Integrator</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Independent Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Independent_Lab</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-LAB Account Role Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-LAB Account Role Detail Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Default</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Lab Network Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Lab_Network</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Operating Country Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Operating_Country</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Partner Airline Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Airline_Agreement</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>LVA_CallUsConfig__mdt-LVA_CallUsConfig Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -64334,6 +63673,9 @@
     <layoutAssignments>
         <layout>Portal_Applications__c-ISS Portal Page Layout</layout>
         <recordType>Portal_Applications__c.ISS_Portal_Application</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Portal_MFA_Setting__mdt-Portal MFA Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Portal_Service_Account_Preference__c-Portal Service Account Preference Layout</layout>
@@ -67030,6 +66372,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>IA_Home</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>ICCSPdfPAGenerator</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -68362,6 +67708,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>InterlineAgreementsMemorandum</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>Invite_User</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -68392,6 +67742,10 @@
     <pageAccesses>
         <apexPage>LogPhoneCase</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>MFA_LoginFlowPage</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>MITA_Agreements</apexPage>
@@ -69567,7 +68921,17 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Lifting_Elevating_Equipment</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -69607,6 +68971,16 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Servicing_Equipment</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.System_For_Mail_Tracking_And_Reporting</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -69627,7 +69001,17 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Towing_Equipment</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.Transport_Vehicles</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Transporting_Equipment</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -69929,11 +69313,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Cases_Global_TEST</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.Cases_IFG</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -70070,11 +69449,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.ID_Card_Queries</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -70704,6 +70078,41 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Aggregator</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Airline_Agreement</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Default</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.IT_Integrator</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Independent_Lab</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Lab_Network</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Operating_Country</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Lead.CorpComLeads</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -70755,12 +70164,13 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>OI_Action_Plan__c.Data_Governance</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>OI_Action_Plan__c.action_plan_std</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -71260,7 +70670,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>AMS_Settlement_System__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>AMS_Voucher_Region__c</tab>
@@ -71411,10 +70821,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>BLND_Snapshot</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>Backlog_history__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
@@ -71524,10 +70930,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Coupon_Used__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>DFSS_SnapShot_Push__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
@@ -71904,6 +71306,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>KPI_Value__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>LAB_Account_Role_Detail__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

@@ -884,6 +884,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Trained Staff Certification</fullName>
                 <default>false</default>
             </values>
@@ -1214,6 +1218,10 @@
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1554,6 +1562,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Trained Staff Certification</fullName>
                 <default>false</default>
             </values>
@@ -1823,6 +1835,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Lab Registry</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Local Industry Groups</fullName>
                 <default>false</default>
             </values>
@@ -1888,6 +1904,10 @@
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2233,6 +2253,10 @@
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>

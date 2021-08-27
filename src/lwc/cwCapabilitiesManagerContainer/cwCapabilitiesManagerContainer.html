@@ -186,7 +186,7 @@
 																		<c-cw-capabilities-manager-inputs is-header="true"
 																			item={currentCategory}
 																			property-name="label"
-																			aux-type={currentCategory.auxType} edit-mode=false>
+																			aux-type={currentCategory.auxType} edit-mode=false is-community={isCommunity}>
 																		</c-cw-capabilities-manager-inputs>
 																	</p>
 																</th>
@@ -255,7 +255,7 @@
 																				property-name={currentfield.value.name}
 																				aux-type={currentCategory.auxType} 
 																				type={currentfield.value.type} values={currentfield.value.values}
-																				edit-mode=false onfieldupdated={addFieldToList}>
+																				edit-mode=false  is-community={isCommunity} onfieldupdated={addFieldToList}>
 																			</c-cw-capabilities-manager-inputs>
 																		</b>
 																	</td>
@@ -263,7 +263,7 @@
 																		<template if:false={currentfield.value.isformula}>
 																			<td if:false={currentfield.first}
 																				key={currentfield.value.name}
-																				class="row-separator photo-colum" 
+																				class="row-separator" 
 																				data-super-categories-index={superCategoryIndex}
 																				data-section-index={sectionIndex}
 																				data-capability-index={capabilityIndex}
@@ -327,7 +327,7 @@
 																					property-name={currentfield.value.name}
 																					max-characters="20"
 																					type={currentfield.value.type} values={currentfield.value.values}
-																					edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
+																					edit-mode={row.isNotEditable} is-community={isCommunity} onfieldupdated={addFieldToList}>
 																				</c-cw-capabilities-manager-inputs>
 
 																			</td>
@@ -397,23 +397,24 @@
 
 														<td if:false={currentCategory.isEditableRecordType} class="certifications-stamp cert-colum">
 															<div class="stamp-inline">
-																<template for:each={row.certifications}
-																	for:item="cert">
-																		<template if:true={editMode}>
-																			<img key={cert.id} width="35px" src={cert.src}													
-																				onmouseover={showHideStampHover}
-																				onmousemove={showHideStampHover}
-																				onmouseout={showHideStampHover}
-																				data-name={cert.label}
-																				data-issue-date={cert.issueDate}
-																				data-expiration-date={cert.expirationDate}>
-																		</template>
+																<template if:false={row.isValidationWithoutCertification}>
+																	<template for:each={row.certifications}
+																		for:item="cert">
+																			<template if:true={editMode}>
+																				<img key={cert.id} width="35px" src={cert.src}
+																					onmouseover={showHideStampHover}
+																					onmousemove={showHideStampHover}
+																					onmouseout={showHideStampHover}
+																					data-name={cert.label}
+																					data-issue-date={cert.issueDate}
+																					data-expiration-date={cert.expirationDate}>
+																			</template>
 
-																		<template if:false={editMode}>
-																			<img key={cert.id} width="35px" src={cert.src}																	
-																				class="certifications-disabled">
-																		</template>
-
+																			<template if:false={editMode}>
+																				<img key={cert.id} width="35px" src={cert.src}
+																					class="certifications-disabled">
+																			</template>
+																	</template>
 																</template>
 															</div>
 														</td>

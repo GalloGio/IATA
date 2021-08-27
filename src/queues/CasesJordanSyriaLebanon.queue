@@ -2,7 +2,7 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>csnotificationsame@iata.org</email>
-    <name>Cases - Jordan, Syria &amp; Lebanon</name>
+    <name>Cases - Jordan &amp; Syria</name>
     <queueMembers>
         <publicGroups>
             <publicGroup>IATALevant</publicGroup>

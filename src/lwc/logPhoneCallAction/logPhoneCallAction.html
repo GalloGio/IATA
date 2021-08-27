@@ -1,0 +1,60 @@
+<template>
+	<lightning-card title="Log Phone Call" icon-name="utility:log_a_call" class="slds-size_2-of-2" if:false={loading}>
+		<lightning-record-edit-form record-type-id={recordtypeValue} object-api-name={caseObject}
+			onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+			<lightning-messages></lightning-messages>
+			<div class="slds-grid">
+				<div class="slds-col slds-size_1-of-2">
+					<template if:true={recordtypePicklist}>
+						<lightning-combobox required="true" name="Recordtype" label="Recordtype" value={recordtypeValue}
+							options={recordtypePicklist} onchange={handleRecordtypeChange}>
+						</lightning-combobox>
+					</template>
+				</div>
+			</div>
+			<div class="slds-grid">
+				<div class="slds-col slds-size_1-of-2">
+					<lightning-input-field required="true" field-name={casearea} value={defaultCaseArea}></lightning-input-field>
+					<lightning-input-field required="true" field-name={reason} value={defaultReason}></lightning-input-field>
+					<lightning-input-field required="true" field-name={subject} value={defaultSubject}></lightning-input-field>
+					<lightning-input-field required="true" field-name={region} value={defaultRegion}></lightning-input-field>
+					<lightning-input-field required="true" field-name={country} value={defaultCountry}></lightning-input-field>
+					<lightning-input-field required="true" field-name={type} value={defaultType}></lightning-input-field>
+				</div>
+				<div class="slds-col slds-size_1-of-2">
+					<lightning-input-field required="true" field-name={status} value=""></lightning-input-field>
+					<lightning-input-field required="true" field-name={language} value={defaultLanguage}></lightning-input-field>
+					<lightning-input-field required="true" field-name={contact} value={defaultContact}></lightning-input-field>
+					<lightning-input-field required="true" field-name={typecustomer} value={defaultTypecustomer}></lightning-input-field>
+					<lightning-input-field required="true" field-name={account} value={defaultAccount}></lightning-input-field>
+				</div>
+			</div>
+			<div class="slds-grid">
+				<lightning-input-field field-name={description} value="Phone call"></lightning-input-field>
+			</div>
+			<div class="hidden">
+				<lightning-input-field required="false" field-name={caserecordtype} value={defaultCaseRecordtype}></lightning-input-field>
+			</div>
+
+			<ul class="slds-button-group-row slds-float_right">
+				<li class="slds-button-group-item">
+					<lightning-button type="button" variant="brand-outline" label="Cancel" value="Cancel"
+						onclick={handleClose}></lightning-button>
+				</li>
+				<li class="slds-button-group-item">
+					<lightning-button id="saveclose" type="submit" variant="brand" label="Save & Close"
+						onclick={handleSaveClose}></lightning-button>
+				</li>
+				<li class="slds-button-group-item">
+					<lightning-button id="save" type="submit" variant="brand" label="Save"></lightning-button>
+				</li>
+			</ul>
+		</lightning-record-edit-form>
+	</lightning-card>
+
+	<template if:true={loading}>
+		<div class="spinner">
+			<lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+		</div>
+	</template>
+</template>

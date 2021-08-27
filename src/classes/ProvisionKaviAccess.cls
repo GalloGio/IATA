@@ -23,6 +23,7 @@ global with sharing class ProvisionKaviAccess {
 			System.debug('@@@ contactId: '+contactId);
 			//System.debug('This is the ContactID returned:' + contactId);
 			if (contactId != null){
+				HigherLogicIntegrationHelper.assignHLPermissionSetInternalUsers(userId, 'GRANT_ACCESS');
 				//Once the contact has been created, we need to create the PortalApplciationRight record...
 				return createPortalApplicationRightMethod(contactId);
 			}

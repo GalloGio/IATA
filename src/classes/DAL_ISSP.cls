@@ -1,4 +1,4 @@
-public with sharing class DAL_ISSP {
+public without sharing class DAL_ISSP {
 
 		public static User getUser(Id userId) {
 		if (userId == null)

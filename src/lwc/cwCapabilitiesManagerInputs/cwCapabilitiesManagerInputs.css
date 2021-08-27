@@ -34,3 +34,8 @@
     width: max-content;
     text-align: left;
   }
+
+  .picklist-scroll {
+    max-height: 170px;
+    overflow-y : auto;
+  }

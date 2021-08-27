@@ -275,6 +275,255 @@
         <type>TextArea</type>
     </fields>
     <fields>
+        <fullName>OdigoCti__Additional_Data__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Additional data</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_Folder_ID__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Folder ID in IVR</description>
+        <externalId>false</externalId>
+        <label>Folder ID</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_Result__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Call result</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Value 1</fullName>
+                    <default>false</default>
+                    <label>Value 1</label>
+                </value>
+                <value>
+                    <fullName>Value 2</fullName>
+                    <default>false</default>
+                    <label>Value 2</label>
+                </value>
+                <value>
+                    <fullName>Value 3</fullName>
+                    <default>false</default>
+                    <label>Value 3</label>
+                </value>
+                <value>
+                    <fullName>Value 4</fullName>
+                    <default>false</default>
+                    <label>Value 4</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Call type</description>
+        <externalId>false</externalId>
+        <label>Call type</label>
+        <required>false</required>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Call back</fullName>
+                    <default>false</default>
+                    <label>Call back</label>
+                </value>
+                <value>
+                    <fullName>Inbound</fullName>
+                    <default>false</default>
+                    <label>Inbound</label>
+                </value>
+                <value>
+                    <fullName>Internal</fullName>
+                    <default>false</default>
+                    <label>Internal</label>
+                </value>
+                <value>
+                    <fullName>Outbound</fullName>
+                    <default>false</default>
+                    <label>Outbound</label>
+                </value>
+                <value>
+                    <fullName>Call&amp;Pay</fullName>
+                    <default>false</default>
+                    <label>Call&amp;Pay</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_duration__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Call duration</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_end_time__c</fullName>
+        <deprecated>false</deprecated>
+        <description>End of the call (date &amp; time)</description>
+        <externalId>false</externalId>
+        <label>Call end time</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_fail_cause__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cause of the fail</description>
+        <externalId>false</externalId>
+        <label>Call fail cause</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_fail_reason__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Call fail reason</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_reference__c</fullName>
+        <deprecated>false</deprecated>
+        <description>RFAP</description>
+        <externalId>false</externalId>
+        <label>Call ID</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Call_start_time__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Start time (and date)</description>
+        <externalId>false</externalId>
+        <label>Call start time</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Campaign__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Campaign</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__IVR_Number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>SVI number</description>
+        <externalId>false</externalId>
+        <label>IVR Number</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Phone_number__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Caller / Calling phone number</description>
+        <externalId>false</externalId>
+        <label>Phone number</label>
+        <required>false</required>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Skill__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Skill</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Survey_information__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Survey information</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Survey_name__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Survey name</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Survey_score__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Survey score</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Transfer__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Transfer</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Waiting_time__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Waiting time</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OdigoCti__Waiting_time_second__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Waiting time (second)</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Participants__c</fullName>
         <description>Introduced and used by the ICCS Currency Center</description>
         <externalId>false</externalId>

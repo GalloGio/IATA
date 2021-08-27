@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
-        <fullName>CS_site_guest</fullName>
-        <accessLevel>Read</accessLevel>
-        <description>Sharing all contacts with the IATA portal site guest user (for the registration process)</description>
-        <label>CS site guest</label>
-        <sharedTo>
-            <group>CS_portal_guest</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>Email</field>
-            <operation>contains</operation>
-            <value>@</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>Contact_Sharing_Rule_with_IFG_Support_Team</fullName>
         <accessLevel>Read</accessLevel>
         <label>Contact Sharing Rule with IFG Support Team</label>
@@ -89,45 +75,4 @@
             <value>Standard</value>
         </criteriaItems>
     </sharingCriteriaRules>
-    <sharingGuestRules>
-        <fullName>IDCard_Share_guest_permissions</fullName>
-        <accessLevel>Read</accessLevel>
-        <description>IDCard_Share_guest_permissions</description>
-        <label>IDCard Share guest permissions</label>
-        <sharedTo>
-            <guestUser>IATA_IDCard</guestUser>
-        </sharedTo>
-        <criteriaItems>
-            <field>CreatedById</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-    </sharingGuestRules>
-    <sharingGuestRules>
-        <fullName>Identity_Contact_Sharing</fullName>
-        <accessLevel>Read</accessLevel>
-        <label>Identity Contact Sharing</label>
-        <sharedTo>
-            <guestUser>identity1</guestUser>
-        </sharedTo>
-        <criteriaItems>
-            <field>LastName</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-    </sharingGuestRules>
-    <sharingGuestRules>
-        <fullName>Share_Contacts_with_IATA_Portal_Site_Guest_User</fullName>
-        <accessLevel>Read</accessLevel>
-        <description>Share Contacts with IATA Portal Site Guest User</description>
-        <label>Share Contacts with IATA Portal Site Guest User</label>
-        <sharedTo>
-            <guestUser>IATA_Portal</guestUser>
-        </sharedTo>
-        <criteriaItems>
-            <field>CreatedById</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-    </sharingGuestRules>
 </SharingRules>

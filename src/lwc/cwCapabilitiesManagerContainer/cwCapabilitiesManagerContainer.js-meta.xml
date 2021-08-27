@@ -5,4 +5,9 @@
     <targets>
         <target>lightning__RecordPage</target>
     </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="validationPrograms" type="String" label="Validation programs to use" default=""/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>

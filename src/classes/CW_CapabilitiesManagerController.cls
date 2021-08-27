@@ -36,6 +36,7 @@ public without sharing class CW_CapabilitiesManagerController {
 					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
 					asgmtGroupToAdd.label = currentGroup.ICG_Certification__r.Label__c;
 					asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
+					asgmtGroupToAdd.validationProgram = currentGroup.ICG_Certification__r.ValidationPrograms__c;
 				}
 				if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
 					asgmtGroupByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(asgmtGroupToAdd);
@@ -62,7 +63,8 @@ public without sharing class CW_CapabilitiesManagerController {
 		Map<String, List<String>> mapCategoriesByRecordTypeDevName,
 		Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
 		String certificationId,
-		ICG_Account_Role_Detail__c accountRoleDetailFound
+		ICG_Account_Role_Detail__c accountRoleDetailFound,
+		String validationPrograms
 	){
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
@@ -70,8 +72,8 @@ public without sharing class CW_CapabilitiesManagerController {
 
 		//Get certifications allowed for user
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.DeveloperName;
-		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
-		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit();
+		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT,validationPrograms);
+		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit() || CW_Utilities.getPermissionToEdit();
 
 		//Get recordtypes id for category
 		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
@@ -234,7 +236,7 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @return			Map<String, Object> with custom estructure that contains information on all capabilities
 	 */
 	@AuraEnabled
-	public static Map<String, Object> getCapabilitiesForFacilityCertificationId(String id, String certiId, String groupId) { 
+	public static Map<String, Object> getCapabilitiesForFacilityCertificationId(String id, String certiId, String groupId,String validationPrograms) { 
 		Map<String, Object> returnValue = new Map<String, Object>{ CW_CapabilitiesUtilities.SUPERCATEGORIES => new List<Map<String, Object>>() };
 		String certificationId='';
 		try {
@@ -255,13 +257,42 @@ public without sharing class CW_CapabilitiesManagerController {
 				return returnValue;
 			}
 
+			// Apply the security logic for Editable RecordTypes if it is required
+			List<String> pSets = CW_Utilities.getCurrentUserPermissionSets();
+
+			if (!CW_Utilities.isCurrentUserSystemAdministrator() && !pSets.contains(CW_Utilities.PSET_OS_BACKEND_ADMIN) && pSets.contains(CW_Utilities.PSET_OS_CERT_MANAGER)) {
+				Map<String, List<String>> mapEditableRecordTypes = CW_FacilityCapabilitiesController.getMapEditableRecordTypes();
+				
+				// Get groups linked to the user
+				List<String> myGroups = new List<String>();
+				for (Group currentGroup : [SELECT DeveloperName FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())]) {
+					myGroups.add(currentGroup.DeveloperName.toLowerCase());
+				}
+
+				for (String currentEditableRt : mapEditableRecordTypes.keySet()) {
+					if ( mapCategoriesByRecordTypeDevName.containsKey(currentEditableRt.toLowerCase()) ) {
+						// Check if the user is in the public group allowed to edit this RT
+						Boolean allowed = false;
+						for (String grpAllowedToEdit : mapEditableRecordTypes.get(currentEditableRt)) {
+							if (!allowed) {
+								allowed = grpAllowedToEdit == '*' || myGroups.contains(grpAllowedToEdit.toLowerCase());
+							}
+						}
+						if (!allowed) {
+							mapCategoriesByRecordTypeDevName.remove(currentEditableRt.toLowerCase());
+						}
+					}
+				}
+			}
+
 			Map<String, Object> generatedData = generateData(
 				id,
 				categoriesToRetrieve,
 				mapCategoriesByRecordTypeDevName,
 				mapAccountRoleDetailAssignmentRtsById,
 				certificationId,
-				accountRoleDetailFound
+				accountRoleDetailFound,
+				validationPrograms
 			);
 			return CW_CapabilitiesUtilities.generateReturnValue(id, generatedData,true);
 		} catch (Exception e) {
@@ -382,6 +413,7 @@ public without sharing class CW_CapabilitiesManagerController {
 			final String ardCapabilityR = 'Account_Role_Detail_Capability__r';
 			final String caGroupR = 'ICG_Capability_Assignment_Group__r';
 			final String certificationR = 'ICG_Certification__r';
+			final String validationProgramNoneValue = 'NONE';
 
 			// Fields related to Account Role Detail
 			fieldsToRetrieve.addAll(new List<String>{ arDetailR + '.Id', ardCapabilityR + '.RecordTypeId', caGroupR + '.RecordTypeId', caGroupR + '.RecordType.DeveloperName', arDetailR + '.Name', ardCapabilityR + '.Category__c', ardCapabilityR + '.Photos__c', arDetailR + '.Summary_Detail_Check_JSON__c' });
@@ -427,13 +459,13 @@ public without sharing class CW_CapabilitiesManagerController {
 			}
 			
 			// Fields related to Certifications
-			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Label__c', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
+			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Label__c', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c', caGroupR + '.' + certificationR + '.ValidationPrograms__c' });
 			String query;
 			if(certificationId != null){
-				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + 'WHERE ' + caGroupR +  '.Is_Active__c = true AND '  + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id =\'' + ardId + '\' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (' + categories + ')' + ' AND ' + ardCapabilityR + '.Equipment__c IN (' + equipments + ') order by CreatedDate';
+				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + 'WHERE ' + caGroupR +  '.Is_Active__c = true AND (' + caGroupR + '.Expiration_Date__c >= TODAY OR ' + caGroupR + '.' + certificationR + '.ValidationPrograms__c = \'' + validationProgramNoneValue + ' \' ) AND ' + arDetailR + '.Id =\'' + ardId + '\' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (' + categories + ')' + ' AND ' + ardCapabilityR + '.Equipment__c IN (' + equipments + ') order by CreatedDate';
 			}
 			else{//if read all capabilities from station
-				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR +  '.Is_Active__c = true AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by CreatedDate';
+				query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR +  '.Is_Active__c = true AND (' + caGroupR + '.Expiration_Date__c >= TODAY OR ' + caGroupR + '.' + certificationR + '.ValidationPrograms__c = \'' + validationProgramNoneValue + '\' )AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by CreatedDate';
 			}
 			returnValue = (List<ICG_Account_Role_Capability_Assignment__c>) Database.query(query);
 		}
@@ -496,7 +528,6 @@ public without sharing class CW_CapabilitiesManagerController {
 			try {
 				//parse to capabilities wrapper
 				List<CW_Utilities.CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
-
 				if(String.isNotBlank(groupId) && String.isNotEmpty(groupId)){
 
 					//delete all previous assigment

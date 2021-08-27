@@ -102,7 +102,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>oscar.Dossier_Reception_Date__c</leftValueReference>
-                <operator>LessThan</operator>
+                <operator>LessThanOrEqualTo</operator>
                 <rightValue>
                     <elementReference>BankGuaranteeOrAgreementDate</elementReference>
                 </rightValue>

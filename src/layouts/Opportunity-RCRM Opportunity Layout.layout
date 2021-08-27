@@ -71,6 +71,10 @@
                 <behavior>Required</behavior>
                 <field>CloseDate</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

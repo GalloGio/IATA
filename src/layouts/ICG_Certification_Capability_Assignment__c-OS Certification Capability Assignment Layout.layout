@@ -8,7 +8,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Category__c</field>
+                <field>ICG_Certification__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Name</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -16,11 +20,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>ICG_Certification__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Name</field>
+                <field>Category__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -64,8 +64,6 @@
         <style>CustomLinks</style>
     </layoutSections>
     <miniLayout>
-        <fields>Category__c</fields>
-        <fields>Equipment__c</fields>
         <fields>ICG_Certification__c</fields>
     </miniLayout>
     <relatedLists>

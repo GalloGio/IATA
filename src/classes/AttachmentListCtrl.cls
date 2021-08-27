@@ -495,23 +495,23 @@ public with sharing class AttachmentListCtrl {
 
 	public class ReturnWrapper {
 		@AuraEnabled
-		@testvisible String severity {get; set;}
+		public @testvisible String severity {get; set;}
 		@AuraEnabled
-		String extraDetails {get; set;}
+		public String extraDetails {get; set;}
 
 		
 		@AuraEnabled 
-		string name{get; set;}
+		public string name{get; set;}
 		@AuraEnabled 
-		Decimal size{get; set;}
+		public Decimal size{get; set;}
 		@AuraEnabled 
-		Datetime createdDate{get; set;}
+		public Datetime createdDate{get; set;}
 		@AuraEnabled 
-		string sfdcContext{get; set;}
+		public string sfdcContext{get; set;}
 		@AuraEnabled 
-		string viewURL{get; set;}
+		public string viewURL{get; set;}
 		@AuraEnabled 
-		string id{get; set;}
+		public string id{get; set;}
 		
 		public ReturnWrapper(){
 			this.severity = 'ERROR';
@@ -928,7 +928,7 @@ public with sharing class AttachmentListCtrl {
 	public static Boolean updateParentRecord(String recordId) {
 		List<Customer_Invoice__c> invoiceList = [SELECT Id, Has_Attachments__c FROM Customer_Invoice__c WHERE Id = :recordId];
 
-		if(invoiceList != null && invoiceList[0].Has_Attachments__c != true) {
+		if(!invoiceList.isEmpty() && invoiceList[0].Has_Attachments__c != true) {
 			invoiceList[0].Has_Attachments__c = true;
 			update invoiceList;
 		}

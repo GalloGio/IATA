@@ -1,0 +1,47 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="center">
+
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="500" style="width:375.0pt;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0cm 0cm 0cm 0cm">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;height:180.0pt">
+  <td valign="top" style="background:white;padding:0cm 0cm 0cm 0cm;height:180.0pt">
+  <table class="MsoNormalTable" border="0" cellspacing="5" cellpadding="0" width="550" style="width:412.5pt;mso-cellspacing:3.0pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   0cm 0cm 0cm 0cm">
+   <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+    height:240.0pt">
+    <td valign="top" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; padding: 3pt; height: 240pt;">
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Dear&nbsp;</span><font face="Arial, sans-serif">{!OI_Action_Plan__c.Action_Owner__c},</font></p><p class="MsoNormal"><span style="font-family: Arial, sans-serif; font-size: 10pt;">&nbsp;</span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">We would like to remind you that you are the owner of the
+    following Action Plan for Continuous Improvement&nbsp;</span><font face="Arial, sans-serif">{!Operational_Improvements__c.Name}&nbsp;</font><span style="font-size: 12pt; font-family: Arial, sans-serif;">whose
+    deadline expires in 15 days.</span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Specific Action<o:p></o:p></span></p>
+    <p class="MsoNormal"><b><span style="font-size: 12pt; font-family: Arial, sans-serif;">Description:&nbsp;<o:p></o:p></span></b><font face="Arial, sans-serif"><b>{!OI_Action_Plan__c.Description__c}</b></font></p>
+    <p class="MsoNormal"><b><span style="font-size: 12pt; font-family: Arial, sans-serif;">Due Date:&nbsp;</span></b><font face="Arial, sans-serif"><b>{!OI_Action_Plan__c.Due_Date__c}</b></font></p>
+    <p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Please note the deadline is indicative. In case you wish to
+    modify it or your action is already completed, notify me. <o:p></o:p></span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Below you may find the link to the Continuous Improvement for
+    more details.</span></p>
+    <p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span></p>
+    <p class="MsoNormal"><b><span style="font-size: 12pt; font-family: Arial, sans-serif;">Subject:</span></b><span style="font-size: 12pt; font-family: Arial, sans-serif;">&nbsp;</span><span style="font-size: 12pt;">{!Operational_Improvements__c.Subject__c}&nbsp;</span></p><p class="MsoNormal" style="background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;"><span style="font-size: 16px;">{!Operational_Improvements__c.Link}</span></p><p class="MsoNormal"><span style="font-size: 10pt; font-family: Arial, sans-serif;">&nbsp;</span></p><p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif;">Thank you and Best Regards,&nbsp;</span></p><p class="MsoNormal">{!Operational_Improvements__c.OwnerFullName}</p>
+    </td>
+   </tr>
+  </tbody></table>
+  </td>
+ </tr>
+ <tr style="mso-yfti-irow:1;height:1.5pt">
+  <td valign="top" style="background:white;padding:0cm 0cm 0cm 0cm;height:1.5pt"></td>
+ </tr>
+ <tr style="mso-yfti-irow:2;mso-yfti-lastrow:yes;height:75.0pt">
+  <td valign="top" style="background:white;padding:0cm 0cm 0cm 0cm;height:75.0pt"></td>
+ </tr>
+</tbody></table>
+
+</div><div><font face="Arial,Sans-Serif" style="color: rgb(0, 0, 0); font-family: arial; font-size: 12pt;">
+</font></div>]]></td>
+</tr>
+</table>

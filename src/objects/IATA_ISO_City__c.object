@@ -328,7 +328,7 @@
         <filters>
             <field>NAME</field>
             <operation>contains</operation>
-            <value>Mun</value>
+            <value>Mum</value>
         </filters>
         <label>Criteria based</label>
         <language>en_US</language>

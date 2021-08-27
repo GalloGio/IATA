@@ -363,7 +363,7 @@
                                     <apex:outputPanel style="display: flex;justify-content: space-between;">
                                         <apex:outputPanel>
                                             <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
-                                                <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}" />
+                                                <apex:selectOption itemValue="YES" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}" />
                                                 <apex:selectOption itemValue="NA" itemLabel="{!$Label.ISSP_Not_Applicable}" itemDisabled="{!!editMode}" />
                                             </apex:selectRadio>
                                         </apex:outputPanel>

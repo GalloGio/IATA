@@ -5,9 +5,16 @@
 
 		<!-- Aux type defined - Start -->
 		<template if:true={isAuxTypeDefined}>
+
 			<template if:true={isAuxTypeStandardTemperatureRanges}>
 				<div class="content bold yellow capitalize" title={getTooltip}>
 					<span>Temperature Range: {getValue}</span>
+				</div>
+			</template>
+
+			<template if:true={isAuxTypeHandlingEquipmentInfrastructure}>
+				<div class="content bold yellow capitalize" title={getTooltip}>
+					<span>{getValue}</span>
 				</div>
 			</template>
 
@@ -39,6 +46,22 @@
 				<diV class="display-flex">
 					<div class="content blue" title={getTooltip}>
 						<span>Room {getRowIndexAddOne}</span>
+					</div>
+					<div if:true={isComparisonFacilityView} class="content yellow" title={getTooltip}>
+						<span> <img class="width-20" src={icons.thermometer} /> {getValue}</span>
+					</div>
+				</diV>
+			</template>
+
+			<template if:true={isAuxTypeHandlingEquipmentInfrastructure}>
+				<diV class="display-flex">
+					<div class="content blue" title={getTooltip}>
+						<template if:true={containsManufacturerField}>
+							<span>{item.sc_manufacturer__c}</span>
+						</template>
+						<template if:false={containsManufacturerField}>
+							<span>{getValue} {getRowIndexAddOne}</span>
+						</template>
 					</div>
 					<div if:true={isComparisonFacilityView} class="content yellow" title={getTooltip}>
 						<span> <img class="width-20" src={icons.thermometer} /> {getValue}</span>
@@ -93,14 +116,31 @@
 				
 				<template if:false={isTypeDefined}>
 					<lightning-input if:true={isText} type="text" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
+					<div class="datepickslds">
+						<lightning-input if:true={isDate} type="date" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label=""  title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
+					</div>
+					<lightning-input if:true={isEmail} type="email" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode}  onblur={setValue}></lightning-input>
 					<lightning-textarea if:true={isTextArea} variant="label-hidden" class={getCssClass} data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-textarea>
-					<lightning-combobox if:true={isPicklist} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} options={getOptions} readonly={editMode} onchange={setValue} ></lightning-combobox>
+					<template if:false={editMode}>
+						<lightning-combobox if:true={isPicklist} variant="label-hidden" class={getCssClass} data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} options={getOptions} readonly={editMode} onchange={setValue} ></lightning-combobox>     
+					</template>
+					<template if:true={editMode}>
+						<div data-item="stamp-popover-1" onmouseover={showPopover} onmouseleave={hidePopover}>
+							<lightning-input if:true={isPicklist} type="text" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" value={getValue} readonly={editMode} onblur={setValue}></lightning-input>
+							<div class="tooltipCapabilities">
+								<c-cw-simple-tooltip item-id="stamp-popover-1" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+							</div>
+						</div>
+					</template>
 					<lightning-dual-listbox if:true={isMultiPicklist} name={getPropertyName} source-label="Available" size="4" selected-label="Selected" options={getOptions} value={getValue} disabled={editMode} onchange={setValue}></lightning-dual-listbox>
 				</template>
 
 				<template if:true={isTypeDefined}>
-					<template if:true={isTypeNumber}>
+					<template if:true={isTypeDecimalorInt}>
 						<lightning-input type="number" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-input>
+					</template>
+					<template if:true={isTypeDecimalWithStep}>
+						<lightning-input type="number" step="0.1" class={getCssClass} variant="label-hidden" data-name={getPropertyName} name={getTooltip} label="" title={getValue} value={getValue} readonly={editMode} onblur={setValue}></lightning-input>
 					</template>
 
 					<template if:true={isTypeTrueFalse}>

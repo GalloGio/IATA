@@ -10982,15 +10982,16 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
     <fields>
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
-        <formula>IF(ISPICKVAL( Key_Control_Type__c , &quot;HQ&quot;), &quot;HQ&quot;,
-TEXT( Related_Case_Number__r.Region__c))</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Region</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Financial_Security_Regional_Coverage</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Regional_Cargo_Manager_Regional__c</fullName>
@@ -13389,7 +13390,12 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <columns>Deadline_for_Alignment__c</columns>
         <columns>OWNER.LAST_NAME</columns>
         <filterScope>Everything</filterScope>
-        <label>EXE2014 - All</label>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+            <value>Pending Approval,Pending Input - GPO,Pending Evidence Validation</value>
+        </filters>
+        <label>EXE2014 -  Action by GPO</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -13465,6 +13471,62 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         </filters>
         <label>EXE2014 - All Pending Approval</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>EXE2014_All_Pending_Approval_GPO</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Exe_Category_New__c</columns>
+        <columns>Exe_Category__c</columns>
+        <columns>Exception_Type__c</columns>
+        <columns>Region__c</columns>
+        <columns>IATA_Country__c</columns>
+        <columns>Deadline_for_Approval__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+            <value>Pending Recommendation - Dir. Of Dist</value>
+        </filters>
+        <label>EXE2014 - All Pending Approval - Dir Dis</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>CFDS_SVP</group>
+            <role>A_P_Business_Delivery_Manager</role>
+            <role>China_N_Asia_Business_Delivery_Staff</role>
+            <role>Distribution_Business_Delivery_HO</role>
+            <role>MADHubACCstaff</role>
+            <role>MAD_Hub_Business_Delivery_Manager</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>EXE2014_All_Pending_Approval_GPO1</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Exe_Category_New__c</columns>
+        <columns>Exe_Category__c</columns>
+        <columns>Exception_Type__c</columns>
+        <columns>Region__c</columns>
+        <columns>IATA_Country__c</columns>
+        <columns>Deadline_for_Approval__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+            <value>Pending Approval,Pending Input - GPO,Pending Evidence Validation</value>
+        </filters>
+        <label>EXE2014 - All Pending Approval - GPO</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>CFDS_SVP</group>
+            <role>A_P_Business_Delivery_Manager</role>
+            <role>China_N_Asia_Business_Delivery_Staff</role>
+            <role>Distribution_Business_Delivery_HO</role>
+            <role>MADHubACCstaff</role>
+            <role>MAD_Hub_Business_Delivery_Manager</role>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>EXE2014_All_Pending_Approval_SVP</fullName>
@@ -19445,6 +19507,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -24932,6 +25021,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -30467,6 +30583,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -36027,6 +36170,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -41374,6 +41544,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -46750,6 +46947,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -52241,6 +52465,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -57780,6 +58031,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -63284,6 +63562,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Root_Cause_Type__c</picklist>
             <values>
                 <fullName>Agency Management %28AM%29</fullName>
@@ -68739,6 +69044,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -74242,6 +74574,33 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>RS - Withhold funds from airline</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Region__c</picklist>
+            <values>
+                <fullName>Africa %26 Middle East</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Americas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Asia %26 Pacific</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>China %26 North Asia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Europe</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

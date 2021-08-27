@@ -11,6 +11,13 @@ private class AccountContactRoleSelectorTest {
 		Account_Contact_Role__c accountContactRole = TestDataFactory_AccountContactRoles.createDefaultAccountContactRole(contact.Id, accountRole.Id);
 		accountContactRole.Account__c = account.Id;
 		insert accountContactRole;
+
+		User adminUser = [SELECT Id, UserRoleId FROM User WHERE IsActive = TRUE AND UserRoleId != NULL AND Profile.Name='System Administrator' LIMIT 1];
+
+		System.runAs(adminUser){
+			User user = TestDataFactory_Users.createPortalUsers(new List<Contact>{contact}).get(0);
+			insert user;
+		}
 	}
 
 	@IsTest

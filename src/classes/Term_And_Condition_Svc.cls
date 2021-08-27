@@ -62,6 +62,7 @@ public with sharing class Term_And_Condition_Svc
 			WHERE Auto_Renew__c = true
 				AND Accepted_Term_Condition__r.Name IN :termNames
 				AND Subscription_End_Date__c >= :Date.today()
+				AND Accepted_Term_Condition__c <> null
 		];
 
 		System.debug('termLastVersion::'+termLastVersion);

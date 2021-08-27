@@ -4,6 +4,7 @@
     <name>FDS Agency Managers</name>
     <queueMembers>
         <users>
+            <user>chiavonf@iata.org</user>
             <user>dengww@iata.org</user>
         </users>
     </queueMembers>

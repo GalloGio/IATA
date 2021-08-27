@@ -1,0 +1,70 @@
+<template>
+    <div if:false={is2FASetup} class="slds-size_full slds-grid back-image slds-grid_align-center" style={topBackgroundImg}>
+        <div class="slds-size_3-of-4 settingsContainerWidth slds-m-top_medium">
+            <span class="slds-m-vertical_medium">
+                <span class="white-label" onclick={navigateHome}>{label.CSP_Breadcrumb_Home_Title}</span>
+
+                <span class="slds-m-horizontal_small gray-label">
+                    <span> > </span>
+                </span>
+                <span class="slds-m-horizontal_small gray-label">
+                    <span if:true={translations}> {translations.Portal_Settings} </span>
+                </span>
+            </span>
+
+            <div class="slds-m-vertical_x-large text-white text-xlarge text-bold headerContainerShadow">
+                <div if:true={translations}>{translations.Portal_Settings}</div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-p-bottom_large slds-p-top_xx-large mfa-font-family">
+        <div if:false={is2FASetup} class="slds-grid slds-grid_align-center">
+            <div class="slds-grid sldsx-small-size_1-of-1 slds-large-size_9-of-12 settingsContainerWidth">
+                <div class="slds-grid slds-gutters_large">
+                    <div class="slds-col slds-size_1-of-3 mfa-side-menu">
+                        <c-portal-settings-menu translations={translations} onscroll={navigateToPosition}></c-portal-settings-menu>
+                    </div>
+                    <div class="slds-col slds-x-small-size_1-of-1 slds-large-size_8-of-12">
+                        <div class="slds-grid">
+                            <div class="slds-size_1-of-1">
+                                <c-portal-setup-security-question translations={translations} user-info={userInfo}
+                                onactivatesecurityquestion={handleSecQuestionActivate}></c-portal-setup-security-question>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-p-top_x-large">
+                            <div class="slds-size_1-of-1">
+                                <c-portal-mfa-settings translations={translations} user-info={userInfo} qr-code-url={qrCodeURL} oninitqr={displayAuthApp}
+                                onsetqanda={setUp2FA} onremove={remove2FA} onchange2fa={change2FaAuthApp}>
+                                </c-portal-mfa-settings>
+                            </div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-size_1-of-1">
+                                <c-portal-change-password></c-portal-change-password>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-p-vertical_x-large">
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div if:true={is2FASetup} class="slds-grid slds-grid_align-center slds-p-horizontal_medium">
+            <div class="slds-x-small-size_1-of-1 slds-large-size_2-of-3 settings2FAWidth">
+                <c-portal-set-security-question if:true={isSetupSecQandA} is-settings display-intro-info translations={translations}
+                onsavesecurityquestion={handleSecQuestionActivate}></c-portal-set-security-question>
+                <c-portal-mfa-activation-container if:true={isSetupAuthApp} translations={translations} is-settings qr-code={qrCodeURL}
+                secret={secret} onvalidatemfacode={validateQrCode}></c-portal-mfa-activation-container>
+            </div>
+        </div>
+    </div>
+	<div data-id="spinnerId" class="slds-spinner_container" style="position:fixed;" if:true={isLoading}>
+		<div class="slds-spinner slds-spinner_medium" role="status">
+			<span class="slds-assistive-text"></span>
+			<div class="slds-spinner__dot-a"></div>
+			<div class="slds-spinner__dot-b"></div>
+		</div>
+	</div>
+</template>

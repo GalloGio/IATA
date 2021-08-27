@@ -118,6 +118,18 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Quality_Response_Categorization__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Apparent_Cause__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Area_of_Concern__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>QRM_Analysis_Conclusions__c</field>
             </layoutItems>
         </layoutColumns>
@@ -201,7 +213,10 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Subject__c</fields>
         <fields>NAME</fields>
+        <fields>OI_Category__c</fields>
+        <fields>OI_Subcategory__c</fields>
         <relatedList>Operational_Improvements__c.Parent_OI__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

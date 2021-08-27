@@ -1,7 +1,8 @@
 public with sharing class CW_CertificationSection {
 	@AuraEnabled(cacheable=true)
 	public static List<ICG_Certification__c> getCertifications(String certificationType, String certificationName) {
-		String query = 'SELECT Id, Description__c, Tech_Order__c, link__c,Name,Label__c,Certification_Type__c,Expiration_Period__c,Image__c FROM ICG_Certification__c WHERE is_visible__c = TRUE';
+		List<String> listValidationPrograms = CW_Utilities.VALIDATION_PROGRAMS.split(',');
+		String query = 'SELECT Id, Description__c, Tech_Order__c, link__c,Name,Label__c,Certification_Type__c,Expiration_Period__c,Image__c FROM ICG_Certification__c WHERE is_visible__c = TRUE AND ValidationPrograms__c IN (\'' + String.join((listValidationPrograms), '\', \'') + '\')';
 		if (String.isNotBlank(certificationType)) {
 			query += ' AND Certification_Type__c = \'' + certificationType + '\'';
 		}

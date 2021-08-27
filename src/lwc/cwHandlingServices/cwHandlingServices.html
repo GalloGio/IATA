@@ -1,0 +1,124 @@
+<template>
+    <template if:true={getShowSummary}>
+        <p class={getTitleCss}>
+            <b>{title}</b>
+            <template if:true={editMode}>
+                <template if:true={showEditButton}>
+                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOn} variant="error" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOn} title="Edit" onclick={showInput} size="x-small"></lightning-icon>
+                </template>
+                        
+                <template if:true={editOn}>
+                    <span class="tooltip-service-info">
+                        <lightning-icon icon-name="utility:info_alt" class="ml-4" size="x-small"></lightning-icon>
+                
+                        <span class={getTooltipCss}>
+                            <section data-name="stamp-popover" class="slds-popover slds-nubbin_top-left popover-custom tooltiptextinfoSection" role="dialog">
+                                <div class="slds-popover__body">
+                                    <span class="text-left">
+                                        <span class="active-service"><b> {label.icg_tooltip_service_info1}</b></span>
+                                        <br/>
+                                        <span class="active-third-service"><b> {label.icg_tooltip_service_info2}</b></span>
+                                    </span>
+                                </div>
+                            </section>
+                        </span>
+                    </span>
+                </template>
+            </template>
+        </p>
+        <hr class="yellow-underline mt-2">
+    </template>
+
+    <div class="responsive-padding-left">
+        <div class="row">
+            <!-- Loop handling services  -->
+            <div class="row-no-margin">
+                <template for:each={services} for:item="service">
+                    <div key={service.key} class="col-4">
+                        <div class="col-no-padding-right mt-1 mb-1">
+                            <template if:true={service.isDeselected}>
+                                <div class='inactive-service' onclick={setActiveService} data-id={service.id}>
+                                    <div data-tosca="service.id" class={itemLayoutCssClass}>
+                                        <img data-item="service.id" src={icons.blueCheck} class="width-20">
+                                        <span data-item="service.id" class="pl-1 text-truncate display-block">{service.label}</span>
+                                        
+                                        <template if:true={service.hasTooltip}>
+                                            <span class="tooltiptext">
+                                                <section data-name="stamp-popover" class="slds-popover  slds-nubbin_top-left popover-custom" role="dialog">
+                                                    <div class="slds-popover__body">
+                                                        <span class="text-left text-black">
+                                                            {service.tooltip}
+                                                        </span>
+                                                    </div>
+                                                </section>
+                                            </span>
+                                        </template>
+                                    </div> 
+                                </div>               
+                            </template>   
+                            <template if:true={service.isInHouse}>
+                                <lightning-layout-item class='active-service' onclick={setActiveService} data-id={service.id}>
+                                    <div data-tosca="service.id" class={itemLayoutCssClass}>
+                                        <img data-item="service.id" src={icons.greenCheck} class="width-20">
+                                        <span data-item="service.id" class="pl-1 text-truncate display-block">{service.label}</span>
+                                        
+                                        <span class="tooltiptext">
+                                            <section data-name="stamp-popover" class="slds-popover  slds-nubbin_top-left popover-custom" role="dialog">
+                                                <div class="slds-popover__body">
+                                                    <span class="text-left text-black">
+                                                        <template if:true={service.isThirdParty}>
+                                                            <b>{label.icg_provided_bythird_party} </b>
+                                                        </template>
+                                                        <template if:true={service.isInHouse}>
+                                                            <b>{label.icg_in_house} </b>
+                                                        </template>
+                                                        <template if:true={service.hasTooltip}>
+                                                            <br />
+                                                            {service.tooltip}
+                                                        </template>
+                                                    </span>
+                                                </div>
+                                            </section>
+                                        </span>
+
+                                    </div> 
+                                </lightning-layout-item>               
+                            </template>   
+                            <template if:true={service.isThirdParty}>
+                                <lightning-layout-item class='active-third-service' onclick={setActiveService} data-id={service.id}>
+                                    <div data-tosca="service.id" class={itemLayoutCssClass}>
+                                        <img data-item="service.id" src={icons.blackCheck} class="width-20">
+                                        <span data-item="service.id" class="pl-1 text-truncate display-block">{service.label}</span>
+                                        
+                                        <span class="tooltiptext">
+                                            <section data-name="stamp-popover" class="slds-popover  slds-nubbin_top-left popover-custom" role="dialog">
+                                                <div class="slds-popover__body">
+                                                    <span class="text-left text-black">
+                                                        <template if:true={service.isThirdParty}>
+                                                            <b>{label.icg_provided_bythird_party} </b>
+                                                        </template>
+                                                        <template if:true={service.isInHouse}>
+                                                            <b>{label.icg_in_house} </b>
+                                                        </template>
+                                                        <template if:true={service.hasTooltip}>
+                                                            <br />
+                                                            {service.tooltip}
+                                                        </template>
+                                                    </span>
+                                                </div>
+                                            </section>
+                                        </span>
+
+                                    </div> 
+                                </lightning-layout-item>               
+                            </template>          
+                        </div>
+                    </div>
+                </template>
+
+            </div>
+        </div>
+    </div>
+    
+</template>

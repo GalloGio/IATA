@@ -1,0 +1,50 @@
+.mfa-side-menu {
+    display: none;
+}
+
+.mfa-side-column {
+    display: none;
+}
+
+.mfa-top-links {
+    display: none;
+}
+
+@media (min-width: 1024px)  {
+    .mfa-side-menu {
+        display: block;
+    }
+    
+    .mfa-side-column {
+        display: block;
+    }
+    
+    .mfa-top-links {
+        display: block;
+    }
+}
+
+
+.mfa-side-menu-content {
+    min-height: 120px;
+    position: sticky;
+    z-index: 20;
+    top: 25px;
+    left: 560px;
+}
+
+.back-image {
+    min-height: 180px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.white-label {
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.gray-label {
+    color: #ffffff8a;
+}

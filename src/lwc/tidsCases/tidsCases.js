@@ -19,7 +19,7 @@ export default class TidsCases extends LightningElement {
 		viewCaseList(result){
 			result.forEach(function(item){
 				item.newId='$'+item.Id+'$';
-				item.url="/csportal/s/case-details?caseId="+item.Id + '&Att=false';
+				item.url="/s/case-details?caseId="+item.Id + '&Att=false';
 				item.visible=true;
 			});
 			this.cases = result;
@@ -102,6 +102,6 @@ export default class TidsCases extends LightningElement {
 							pageName: "case-details"
 					}})
 			.then(url => navigateToPage(url, params));
-			window.location.href = CSP_PortalPath + "/csportal/s/case-details?caseId="+selectedcase.Id + '&Att=true';;
+			window.location.href = CSP_PortalPath + "/s/case-details?caseId="+selectedcase.Id + '&Att=true';;
 		}
 }

@@ -270,7 +270,7 @@ ul.enlarge li:hover .tooltip-img img {
 	position: relative;
 	width: 100%;
 	z-index: 1;
-	overflow: auto;
+	/* overflow: auto; */
 }
 .table-scroll table {
 	width: 100%;

@@ -345,5 +345,28 @@ public class HigherLogicIntegrationHelper {
 		}
 
 	}
+	/**
+	* Assigns or removes the Higher Logic Permission Set
+	* to internal users
+	*
+	* @param userId: Id
+	* @param action: String
+	*
+	*/
+	@future(callout=true)
+	public static void assignHLPermissionSetInternalUsers(Id userId, String action){
 
+		PermissionSet permSet = [SELECT Id FROM PermissionSet WHERE Name = 'HL_UsersAccess'][0];
+		List<User> userLst = new List<User>([SELECT Id FROM User WHERE Id = :userId]);
+
+		if(action == GRANT_ACCESS){
+			List<PermissionSetAssignment> grantPSALst  = new List<PermissionSetAssignment>();
+			for(User usr : userLst){
+				grantPSALst.add(new PermissionSetAssignment(PermissionSetId = permSet.Id, AssigneeId = usr.Id));
+			}
+			if(!grantPSALst.isEmpty()){
+				insert grantPSALst;
+			}
+		}
+	}
 }

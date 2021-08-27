@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>AccountHeaderController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Permissions for the Account Managers and their subordinates to be able to perform CRUD operations on Account Issues &amp; Priorities and Key Account Planning.
 For more details, contact AMP team.</description>
     <fieldPermissions>

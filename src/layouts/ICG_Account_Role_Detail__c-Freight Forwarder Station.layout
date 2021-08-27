@@ -210,6 +210,8 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Contact_Email__c</fields>
+        <fields>Account_Name__c</fields>
+        <fields>Account_Role__c</fields>
         <fields>Contact_Name__c</fields>
         <fields>ICG_Role__c</fields>
         <fields>Status__c</fields>

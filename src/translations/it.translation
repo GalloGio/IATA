@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -103,6 +99,10 @@
     <customApplications>
         <label><!-- IFTP --></label>
         <name>IFTP</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IATA Lab Network --></label>
+        <name>Lab_Registry</name>
     </customApplications>
     <customApplications>
         <label><!-- MITA / BIETA --></label>
@@ -743,6 +743,10 @@
     <customLabels>
         <label><!-- AMS OSCAR STEP51 --></label>
         <name>AMS_OSCAR_STEP51</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AMS OSCAR STEP52 --></label>
+        <name>AMS_OSCAR_STEP52</name>
     </customLabels>
     <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
@@ -1579,6 +1583,70 @@
     <customLabels>
         <label><!-- Account --></label>
         <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ADetails --></label>
+        <name>AccountCTI_Account_ADetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ATeam --></label>
+        <name>AccountCTI_Account_ATeam</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Agency --></label>
+        <name>AccountCTI_Account_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Category --></label>
+        <name>AccountCTI_Account_Category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Ecomm --></label>
+        <name>AccountCTI_Account_Ecomm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - IATACode --></label>
+        <name>AccountCTI_Account_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Overall --></label>
+        <name>AccountCTI_Account_Overall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Sector --></label>
+        <name>AccountCTI_Account_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Segmentation --></label>
+        <name>AccountCTI_Account_Segmentation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ServiceModel --></label>
+        <name>AccountCTI_Account_ServiceModel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Status --></label>
+        <name>AccountCTI_Account_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Cases - Interactions --></label>
+        <name>AccountCTI_Cases_Interactions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - AllContacts --></label>
+        <name>AccountCTI_Contact_AllContacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Choose Contact --></label>
+        <name>AccountCTI_Contact_ChooseContact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Create Case --></label>
+        <name>AccountCTI_Contact_CreateCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI_Contact PortalServices --></label>
+        <name>AccountCTI_Contact_PortalServices</name>
     </customLabels>
     <customLabels>
         <label><!-- AccountContextActivationEmailBody --></label>
@@ -2906,6 +2974,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Add_All</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Add Contact --></label>
+        <name>CSP_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label>Aggiungi nuovi documenti</label>
         <name>CSP_Add_New_Documents</name>
     </customLabels>
@@ -3008,6 +3080,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Email aziendale (nel caso in cui ne abbia una)</label>
+        <name>CSP_Business_Email</name>
     </customLabels>
     <customLabels>
         <label>Comprare on line</label>
@@ -3174,8 +3250,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Contact Added --></label>
+        <name>CSP_Contact_Added</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Deleted --></label>
+        <name>CSP_Contact_Deleted</name>
+    </customLabels>
+    <customLabels>
         <label>Cambiare il nome del suo profilo influirà sulla validità della sua carta d&apos;identità. Contatti il team del servizio clienti per modificare il nome del suo profilo</label>
         <name>CSP_Contact_Id_Card_Error_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Contact Updated --></label>
+        <name>CSP_Contact_Updated</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Contact Us Banner Message --></label>
@@ -3254,6 +3342,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Details --></label>
+        <name>CSP_Details</name>
+    </customLabels>
+    <customLabels>
         <label>Documento aggiunto ai miei segnalibri</label>
         <name>CSP_DocumentBookmarkAdded</name>
     </customLabels>
@@ -3296,6 +3388,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_EditTrainingDetails --></label>
         <name>CSP_EditTrainingDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Edit Contact --></label>
+        <name>CSP_Edit_Contact</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Email --></label>
@@ -3486,7 +3582,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Emergency reason --></label>
+        <label>Riprenotazione del suo esame di formazione IATA (apprendimento a distanza)</label>
         <name>CSP_Emergency_Selected_Reason5</name>
     </customLabels>
     <customLabels>
@@ -3584,6 +3680,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Filtered --></label>
         <name>CSP_Filtered</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Find Document --></label>
+        <name>CSP_Find_Document</name>
     </customLabels>
     <customLabels>
         <label>Il suo account è stato creato con successo! Potrà già da ora scoprire le funzionalità del nostro portale. Per ottenere contenuti personalizzati, la invitiamo a completare il suo profilo.</label>
@@ -4452,6 +4552,190 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_L_WorkPhone_LMS --></label>
         <name>CSP_L_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_AdditionalCertInPlace --></label>
+        <name>CSP_LabReg_AdditionalCertInPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CompleteDetails --></label>
+        <name>CSP_LabReg_CompleteDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_ConfirmationMessage --></label>
+        <name>CSP_LabReg_ConfirmationMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CountryLabs --></label>
+        <name>CSP_LabReg_CountryLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Describe_SLA_Nature --></label>
+        <name>CSP_LabReg_Describe_SLA_Nature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_DownloadTemplate --></label>
+        <name>CSP_LabReg_DownloadTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_CSV --></label>
+        <name>CSP_LabReg_Download_CSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_Instructions --></label>
+        <name>CSP_LabReg_Download_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_FormNotCompleted --></label>
+        <name>CSP_LabReg_FormNotCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_HowManyLabs --></label>
+        <name>CSP_LabReg_HowManyLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_How_Long_In_Business --></label>
+        <name>CSP_LabReg_How_Long_In_Business</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_InitialQuestion --></label>
+        <name>CSP_LabReg_InitialQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_InitialQuestionDescription --></label>
+        <name>CSP_LabReg_InitialQuestionDescription</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_National_Govern_Platform --></label>
+        <name>CSP_LabReg_National_Govern_Platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_NumberOfLocations --></label>
+        <name>CSP_LabReg_NumberOfLocations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Operating_Brand --></label>
+        <name>CSP_LabReg_Operating_Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_OwnFacilities --></label>
+        <name>CSP_LabReg_OwnFacilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SLA_InPlace --></label>
+        <name>CSP_LabReg_SLA_InPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Intro --></label>
+        <name>CSP_LabReg_SplashScreen_Intro</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step1 --></label>
+        <name>CSP_LabReg_SplashScreen_Step1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step2 --></label>
+        <name>CSP_LabReg_SplashScreen_Step2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step3 --></label>
+        <name>CSP_LabReg_SplashScreen_Step3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step4 --></label>
+        <name>CSP_LabReg_SplashScreen_Step4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Start --></label>
+        <name>CSP_LabReg_Start</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step --></label>
+        <name>CSP_LabReg_Step</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step2Intro --></label>
+        <name>CSP_LabReg_Step2Intro</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step_Locations --></label>
+        <name>CSP_LabReg_Step_Locations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_ThankYouForRequestingService --></label>
+        <name>CSP_LabReg_ThankYouForRequestingService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_TypeOfLab --></label>
+        <name>CSP_LabReg_TypeOfLab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCSVBtn --></label>
+        <name>CSP_LabReg_UploadCSVBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCompleted --></label>
+        <name>CSP_LabReg_UploadCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadDetails --></label>
+        <name>CSP_LabReg_UploadDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFileHelpText --></label>
+        <name>CSP_LabReg_UploadFileHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFilledCSV --></label>
+        <name>CSP_LabReg_UploadFilledCSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadHere --></label>
+        <name>CSP_LabReg_UploadHere</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_WhichAirlines --></label>
+        <name>CSP_LabReg_WhichAirlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Which_One --></label>
+        <name>CSP_LabReg_Which_One</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_airlinePartnershipSelection --></label>
+        <name>CSP_LabReg_airlinePartnershipSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_confirmDetails --></label>
+        <name>CSP_LabReg_confirmDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_issueTestResultsSelection --></label>
+        <name>CSP_LabReg_issueTestResultsSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_labsPartOfNationalPlatform --></label>
+        <name>CSP_LabReg_labsPartOfNationalPlatform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_manageBookingSelection --></label>
+        <name>CSP_LabReg_manageBookingSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_nationalAccreditationSelection --></label>
+        <name>CSP_LabReg_nationalAccreditationSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry --></label>
+        <name>CSP_LabRegistry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_LabDetails --></label>
+        <name>CSP_LabRegistry_LabDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_service_desc --></label>
+        <name>CSP_LabRegistry_service_desc</name>
     </customLabels>
     <customLabels>
         <label>Ultimo aggiornamento</label>
@@ -5363,6 +5647,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Undo --></label>
+        <name>CSP_Undo</name>
+    </customLabels>
+    <customLabels>
         <label>Si è verificato un errore imprevisto.</label>
         <name>CSP_Unexcepted_Error</name>
     </customLabels>
@@ -5509,6 +5797,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Aree di lavoro</label>
         <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_labReg_Step_Airline_Agreements --></label>
+        <name>CSP_labReg_Step_Airline_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_labReg_Step_GeneralInformation --></label>
+        <name>CSP_labReg_Step_GeneralInformation</name>
     </customLabels>
     <customLabels>
         <label>Seleziona motivo</label>
@@ -8503,6 +8799,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
+        <label><!-- General Error Message --></label>
+        <name>General_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -8597,6 +8897,246 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- IATA Store Service Description --></label>
         <name>IATA_Store_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Action Reverted --></label>
+        <name>IA_Action_Reverted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Activation Date --></label>
+        <name>IA_Activation_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Add Contact Disclaimer --></label>
+        <name>IA_Add_Contact_Disclaimer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement --></label>
+        <name>IA_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Accepted --></label>
+        <name>IA_Agreement_Accepted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Details --></label>
+        <name>IA_Agreement_Details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement History --></label>
+        <name>IA_Agreement_History</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Name --></label>
+        <name>IA_Agreement_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Rejected --></label>
+        <name>IA_Agreement_Rejected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Requested --></label>
+        <name>IA_Agreement_Requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Requests --></label>
+        <name>IA_Agreement_Requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Status --></label>
+        <name>IA_Agreement_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Type --></label>
+        <name>IA_Agreement_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreement Withdrawn --></label>
+        <name>IA_Agreement_Withdrawn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Agreements --></label>
+        <name>IA_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Airline Contact --></label>
+        <name>IA_Airline_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Airline Contacts --></label>
+        <name>IA_Airline_Contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA All agreements --></label>
+        <name>IA_All_agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Approver Airline --></label>
+        <name>IA_Approver_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Approving Problem --></label>
+        <name>IA_Approving_Problem</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Choose agreement name --></label>
+        <name>IA_Choose_agreement_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Choose agreement type --></label>
+        <name>IA_Choose_agreement_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Choose status --></label>
+        <name>IA_Choose_status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Contact Save Problem --></label>
+        <name>IA_Contact_Save_Problem</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Delete Message1 --></label>
+        <name>IA_Delete_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Delete Message2 --></label>
+        <name>IA_Delete_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Description Interline Airline Generic Contact --></label>
+        <name>IA_Description_Interline_Airline_Generic_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Description Interline Cargo Agreement Manager --></label>
+        <name>IA_Description_Interline_Cargo_Agreement_Manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Description Interline Passenger Agreement Manager --></label>
+        <name>IA_Description_Interline_Passenger_Agreement_Manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Description Passenger Protection Manager --></label>
+        <name>IA_Description_Passenger_Protection_Manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Expiry Date --></label>
+        <name>IA_Expiry_Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Find Airline or Agreement --></label>
+        <name>IA_Find_Airline_or_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Interline Agreement Contacts --></label>
+        <name>IA_Interline_Agreement_Contacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Interline Agreements --></label>
+        <name>IA_Interline_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Interline Agreements For Approval --></label>
+        <name>IA_Interline_Agreements_For_Approval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Interline Available Agreements --></label>
+        <name>IA_Interline_Available_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA MITA Contact Type --></label>
+        <name>IA_MITA_Contact_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Memorandum --></label>
+        <name>IA_Memorandum</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Memorandums --></label>
+        <name>IA_Memorandums</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA New Agreement --></label>
+        <name>IA_New_Agreement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA New Agreement Subtitle --></label>
+        <name>IA_New_Agreement_Subtitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA New Agreements Empty --></label>
+        <name>IA_New_Agreements_Empty</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Rejecting Problem --></label>
+        <name>IA_Rejecting_Problem</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Request Agreements Empty --></label>
+        <name>IA_Request_Agreements_Empty</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Request Approved --></label>
+        <name>IA_Request_Approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Request Rejected --></label>
+        <name>IA_Request_Rejected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Request Submitted --></label>
+        <name>IA_Request_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Request Submitted Message --></label>
+        <name>IA_Request_Submitted_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Requester Airline --></label>
+        <name>IA_Requester_Airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Requesting Problem --></label>
+        <name>IA_Requesting_Problem</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Status not active yet --></label>
+        <name>IA_Status_not_active_yet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Status pending withdrawal --></label>
+        <name>IA_Status_pending_withdrawal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Status rejected --></label>
+        <name>IA_Status_rejected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Status withdrawn --></label>
+        <name>IA_Status_withdrawn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Undo Agreement Accepted --></label>
+        <name>IA_Undo_Agreement_Accepted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Undo Agreement Rejected --></label>
+        <name>IA_Undo_Agreement_Rejected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Undoing Problem --></label>
+        <name>IA_Undoing_Problem</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Withdraw --></label>
+        <name>IA_Withdraw</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Withdrawal Message --></label>
+        <name>IA_Withdrawal_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IA Withdrawal Submitted --></label>
+        <name>IA_Withdrawal_Submitted</name>
     </customLabels>
     <customLabels>
         <label><!-- ICAddressDoctor_adns --></label>
@@ -24606,6 +25146,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
+        <label><!-- New Opportunity --></label>
+        <name>New_Opportunity</name>
+    </customLabels>
+    <customLabels>
         <label>Nuova password</label>
         <name>New_password</name>
     </customLabels>
@@ -24688,6 +25232,3682 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label><!-- OSCAR_RISK_WARNING --></label>
         <name>OSCAR_RISK_WARNING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- delete all stats gate --></label>
+        <name>OdigoCti__AlreadyEmptyStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseTransferError --></label>
+        <name>OdigoCti__CaseTransferError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CaseTransferSuccess --></label>
+        <name>OdigoCti__CaseTransferSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CleanAgentStats --></label>
+        <name>OdigoCti__CleanAgentStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CleanGateStats --></label>
+        <name>OdigoCti__CleanGateStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- config by default --></label>
+        <name>OdigoCti__DefaultSkillsConf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- delete all stats agent --></label>
+        <name>OdigoCti__DeleteAllStatsAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- delete all stats gate --></label>
+        <name>OdigoCti__DeleteAllStatsGate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- DurationStatRefresh --></label>
+        <name>OdigoCti__DurationStatRefresh</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error_Config --></label>
+        <name>OdigoCti__Error_Config</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error_Invalid_Phone --></label>
+        <name>OdigoCti__Error_Invalid_Phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error_Phone --></label>
+        <name>OdigoCti__Error_Phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error_Unknown_Phone --></label>
+        <name>OdigoCti__Error_Unknown_Phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Error_status --></label>
+        <name>OdigoCti__Error_status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Hold On Call --></label>
+        <name>OdigoCti__Hold_On_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID137 --></label>
+        <name>OdigoCti__ODIGO_Break2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID201 --></label>
+        <name>OdigoCti__ODIGO_Break3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID265 --></label>
+        <name>OdigoCti__ODIGO_Break4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID329 --></label>
+        <name>OdigoCti__ODIGO_Break5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID393 --></label>
+        <name>OdigoCti__ODIGO_Break6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID457 --></label>
+        <name>OdigoCti__ODIGO_Break7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTAdditionalData --></label>
+        <name>OdigoCti__ODIGO_UTAdditionalData</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Transfer --></label>
+        <name>OdigoCti__ODIGO_UTAgent_ID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_Folder_ID --></label>
+        <name>OdigoCti__ODIGO_UTCall_Folder_ID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_Result --></label>
+        <name>OdigoCti__ODIGO_UTCall_Result</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_duration --></label>
+        <name>OdigoCti__ODIGO_UTCall_duration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_end_time --></label>
+        <name>OdigoCti__ODIGO_UTCall_end_time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_fail_cause --></label>
+        <name>OdigoCti__ODIGO_UTCall_fail_cause</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_fail_reason --></label>
+        <name>OdigoCti__ODIGO_UTCall_fail_reason</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_reference --></label>
+        <name>OdigoCti__ODIGO_UTCall_reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCall_start_time --></label>
+        <name>OdigoCti__ODIGO_UTCall_start_time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTCampaign --></label>
+        <name>OdigoCti__ODIGO_UTCampaign</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTIVR_Number --></label>
+        <name>OdigoCti__ODIGO_UTIVR_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTPhone_number --></label>
+        <name>OdigoCti__ODIGO_UTPhone_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTSkill --></label>
+        <name>OdigoCti__ODIGO_UTSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTTransfer --></label>
+        <name>OdigoCti__ODIGO_UTTransfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UTWaiting_time --></label>
+        <name>OdigoCti__ODIGO_UTWaiting_time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_AdditionalData --></label>
+        <name>OdigoCti__ODIGO_UT_CB_AdditionalData</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Transfer --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Agent_ID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_Folder_ID --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_Folder_ID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_Result --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_Result</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_duration --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_duration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_end_time --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_end_time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_fail_cause --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_fail_cause</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_fail_reason --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_fail_reason</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_reference --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Call_start_time --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Call_start_time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Campaign --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Campaign</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_IVR_Number --></label>
+        <name>OdigoCti__ODIGO_UT_CB_IVR_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Phone_number --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Phone_number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Transfer --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Transfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ODIGO_UT_CB_Waiting_time --></label>
+        <name>OdigoCti__ODIGO_UT_CB_Waiting_time</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoLogon_ErrorDetail --></label>
+        <name>OdigoCti__OdigoLogon_ErrorDetail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoLogon_PhoneNumberError --></label>
+        <name>OdigoCti__OdigoLogon_PhoneNumberError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_DateWeekSelect --></label>
+        <name>OdigoCti__OdigoStats_DateWeekSelect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_ErrorMissingParameter --></label>
+        <name>OdigoCti__OdigoStats_ErrorMissingParameter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_ErrorMissingParameterDate --></label>
+        <name>OdigoCti__OdigoStats_ErrorMissingParameterDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_ErrorTitle --></label>
+        <name>OdigoCti__OdigoStats_ErrorTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_MonthSelect --></label>
+        <name>OdigoCti__OdigoStats_MonthSelect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_StatsFilters --></label>
+        <name>OdigoCti__OdigoStats_StatsFilters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_StatsOptions --></label>
+        <name>OdigoCti__OdigoStats_StatsOptions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_WSError --></label>
+        <name>OdigoCti__OdigoStats_WSError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_Week --></label>
+        <name>OdigoCti__OdigoStats_Week</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OdigoStats_YearSelect --></label>
+        <name>OdigoCti__OdigoStats_YearSelect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_AP04InstallType --></label>
+        <name>OdigoCti__Odigo_AP04InstallType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Break --></label>
+        <name>OdigoCti__Odigo_Break</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID73 --></label>
+        <name>OdigoCti__Odigo_Break1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID649 --></label>
+        <name>OdigoCti__Odigo_Break10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID713 --></label>
+        <name>OdigoCti__Odigo_Break11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID777 --></label>
+        <name>OdigoCti__Odigo_Break12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID841 --></label>
+        <name>OdigoCti__Odigo_Break13</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID905 --></label>
+        <name>OdigoCti__Odigo_Break14</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID969 --></label>
+        <name>OdigoCti__Odigo_Break15</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1033 --></label>
+        <name>OdigoCti__Odigo_Break16</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1097 --></label>
+        <name>OdigoCti__Odigo_Break17</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1161 --></label>
+        <name>OdigoCti__Odigo_Break18</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1225 --></label>
+        <name>OdigoCti__Odigo_Break19</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1289 --></label>
+        <name>OdigoCti__Odigo_Break20</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1353 --></label>
+        <name>OdigoCti__Odigo_Break21</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1417 --></label>
+        <name>OdigoCti__Odigo_Break22</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1481 --></label>
+        <name>OdigoCti__Odigo_Break23</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1545 --></label>
+        <name>OdigoCti__Odigo_Break24</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1609 --></label>
+        <name>OdigoCti__Odigo_Break25</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1673 --></label>
+        <name>OdigoCti__Odigo_Break26</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1737 --></label>
+        <name>OdigoCti__Odigo_Break27</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1801 --></label>
+        <name>OdigoCti__Odigo_Break28</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1865 --></label>
+        <name>OdigoCti__Odigo_Break29</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID1929 --></label>
+        <name>OdigoCti__Odigo_Break30</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID521 --></label>
+        <name>OdigoCti__Odigo_Break8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ID585 --></label>
+        <name>OdigoCti__Odigo_Break9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CTIErrorTitle --></label>
+        <name>OdigoCti__Odigo_CTIErrorTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Campaign --></label>
+        <name>OdigoCti__Odigo_Campaign</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignCancel --></label>
+        <name>OdigoCti__Odigo_CampaignCancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignError_CannotGetCampaignsList --></label>
+        <name>OdigoCti__Odigo_CampaignError_CannotGetCampaignsList</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignLaunch --></label>
+        <name>OdigoCti__Odigo_CampaignLaunch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignPhone --></label>
+        <name>OdigoCti__Odigo_CampaignPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignSelect --></label>
+        <name>OdigoCti__Odigo_CampaignSelect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignSelectTarget --></label>
+        <name>OdigoCti__Odigo_CampaignSelectTarget</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignSelectedContacts --></label>
+        <name>OdigoCti__Odigo_CampaignSelectedContacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignSelectedLeads --></label>
+        <name>OdigoCti__Odigo_CampaignSelectedLeads</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignTargetCampaign --></label>
+        <name>OdigoCti__Odigo_CampaignTargetCampaign</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_CampaignTargetSkill --></label>
+        <name>OdigoCti__Odigo_CampaignTargetSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Change Status Name --></label>
+        <name>OdigoCti__Odigo_ChangeStatusID1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Change Status Name --></label>
+        <name>OdigoCti__Odigo_ChangeStatusID2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Change Status Name --></label>
+        <name>OdigoCti__Odigo_ChangeStatusID4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Change Status Name --></label>
+        <name>OdigoCti__Odigo_ChangeStatusSelectStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnState --></label>
+        <name>OdigoCti__Odigo_ColumnID1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnWrap-up time --></label>
+        <name>OdigoCti__Odigo_ColumnID13</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAverage inbound conversation time --></label>
+        <name>OdigoCti__Odigo_ColumnID14</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of callbacks validated --></label>
+        <name>OdigoCti__Odigo_ColumnID141</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of successful transfers --></label>
+        <name>OdigoCti__Odigo_ColumnID144</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of calls awaiting handling --></label>
+        <name>OdigoCti__Odigo_ColumnID152</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of agent log-in --></label>
+        <name>OdigoCti__Odigo_ColumnID17</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnCalls in queue --></label>
+        <name>OdigoCti__Odigo_ColumnID18</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of logs --></label>
+        <name>OdigoCti__Odigo_ColumnID2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of incoming calls dealt with --></label>
+        <name>OdigoCti__Odigo_ColumnID20</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnDissuaded calls --></label>
+        <name>OdigoCti__Odigo_ColumnID21</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnInbound communications duration --></label>
+        <name>OdigoCti__Odigo_ColumnID22</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnOn-hold duration --></label>
+        <name>OdigoCti__Odigo_ColumnID222</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnDuration of outbound calls --></label>
+        <name>OdigoCti__Odigo_ColumnID224</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of disturbances --></label>
+        <name>OdigoCti__Odigo_ColumnID226</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnDuration of call-backs --></label>
+        <name>OdigoCti__Odigo_ColumnID236</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnInbound average conversation time --></label>
+        <name>OdigoCti__Odigo_ColumnID24</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of breaks --></label>
+        <name>OdigoCti__Odigo_ColumnID3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAverage waiting time --></label>
+        <name>OdigoCti__Odigo_ColumnID30</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnBreak time --></label>
+        <name>OdigoCti__Odigo_ColumnID32</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnCalls put in queue --></label>
+        <name>OdigoCti__Odigo_ColumnID34</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of agents available --></label>
+        <name>OdigoCti__Odigo_ColumnID35</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of alerts --></label>
+        <name>OdigoCti__Odigo_ColumnID350</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of agents in break --></label>
+        <name>OdigoCti__Odigo_ColumnID36</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of transfers received and picked up --></label>
+        <name>OdigoCti__Odigo_ColumnID367</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnInbound calls in progress --></label>
+        <name>OdigoCti__Odigo_ColumnID37</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnEstimated waiting time --></label>
+        <name>OdigoCti__Odigo_ColumnID385</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnLog-in time --></label>
+        <name>OdigoCti__Odigo_ColumnID4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of agents in wrap-up --></label>
+        <name>OdigoCti__Odigo_ColumnID43</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAgent number of selections --></label>
+        <name>OdigoCti__Odigo_ColumnID44</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnCalls in fault --></label>
+        <name>OdigoCti__Odigo_ColumnID46</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAbandoned calls --></label>
+        <name>OdigoCti__Odigo_ColumnID48</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnInbound conversation time --></label>
+        <name>OdigoCti__Odigo_ColumnID5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAvalaible time --></label>
+        <name>OdigoCti__Odigo_ColumnID51</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAverage breaks duration --></label>
+        <name>OdigoCti__Odigo_ColumnID54</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnMaximum conversation duration --></label>
+        <name>OdigoCti__Odigo_ColumnID57</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAverage outbound conversation time --></label>
+        <name>OdigoCti__Odigo_ColumnID59</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnHandled inbound calls --></label>
+        <name>OdigoCti__Odigo_ColumnID6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of requests for transfer --></label>
+        <name>OdigoCti__Odigo_ColumnID62</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnHandled outbound calls --></label>
+        <name>OdigoCti__Odigo_ColumnID63</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of calls made --></label>
+        <name>OdigoCti__Odigo_ColumnID64</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnStatus_duration --></label>
+        <name>OdigoCti__Odigo_ColumnID65</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAgent_QoS --></label>
+        <name>OdigoCti__Odigo_ColumnID66</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Column Agent status --></label>
+        <name>OdigoCti__Odigo_ColumnID7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of requests for transfer --></label>
+        <name>OdigoCti__Odigo_ColumnID75</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnAbandoned calls --></label>
+        <name>OdigoCti__Odigo_ColumnID76</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of agents in outgoing calls --></label>
+        <name>OdigoCti__Odigo_ColumnID77</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of agents in call back --></label>
+        <name>OdigoCti__Odigo_ColumnID78</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnRinging time --></label>
+        <name>OdigoCti__Odigo_ColumnID8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of transfer calls received --></label>
+        <name>OdigoCti__Odigo_ColumnID86</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnNumber of incoming calls received direct --></label>
+        <name>OdigoCti__Odigo_ColumnID90</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnIncoming calls --></label>
+        <name>OdigoCti__Odigo_ColumnID91</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_ColumnGate QoS --></label>
+        <name>OdigoCti__Odigo_ColumnID93</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Magic number to enable debug mode --></label>
+        <name>OdigoCti__Odigo_Debug</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Gates Status --></label>
+        <name>OdigoCti__Odigo_GatesStatusID56</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Gates Status --></label>
+        <name>OdigoCti__Odigo_GatesStatusID64</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Gates Status --></label>
+        <name>OdigoCti__Odigo_GatesStatusID66</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Gates Status --></label>
+        <name>OdigoCti__Odigo_GatesStatusID67</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month1 --></label>
+        <name>OdigoCti__Odigo_Month1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month10 --></label>
+        <name>OdigoCti__Odigo_Month10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month11 --></label>
+        <name>OdigoCti__Odigo_Month11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month12 --></label>
+        <name>OdigoCti__Odigo_Month12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month2 --></label>
+        <name>OdigoCti__Odigo_Month2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month3 --></label>
+        <name>OdigoCti__Odigo_Month3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month4 --></label>
+        <name>OdigoCti__Odigo_Month4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month5 --></label>
+        <name>OdigoCti__Odigo_Month5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month6 --></label>
+        <name>OdigoCti__Odigo_Month6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month7 --></label>
+        <name>OdigoCti__Odigo_Month7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month8 --></label>
+        <name>OdigoCti__Odigo_Month8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Month9 --></label>
+        <name>OdigoCti__Odigo_Month9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_OdigoWebSite --></label>
+        <name>OdigoCti__Odigo_OdigoWebSite</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_PhoneTypeHardPhoneLabel --></label>
+        <name>OdigoCti__Odigo_PhoneTypeHardPhoneLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_PhoneTypeWebRTCLabel --></label>
+        <name>OdigoCti__Odigo_PhoneTypeWebRTCLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID0</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID13</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID137</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID18</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID20</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID201</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID22</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID24</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID26</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID265</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_StatusID27 --></label>
+        <name>OdigoCti__Odigo_StatusID27</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID329</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID38</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID42</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_StatusID54 --></label>
+        <name>OdigoCti__Odigo_StatusID54</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID55</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_StatusID56 --></label>
+        <name>OdigoCti__Odigo_StatusID56</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID649</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID73</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,StatusName --></label>
+        <name>OdigoCti__Odigo_StatusID8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_StatusIdProcessing --></label>
+        <name>OdigoCti__Odigo_StatusIdProcessing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferButtonSubmit --></label>
+        <name>OdigoCti__Odigo_TransferButtonSubmit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferChangeOwnerSuccess --></label>
+        <name>OdigoCti__Odigo_TransferChangeOwnerSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorChangeOwnerNoQueueForSkill --></label>
+        <name>OdigoCti__Odigo_TransferErrorChangeOwnerNoQueueForSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorChangeOwnerNoWorkItem --></label>
+        <name>OdigoCti__Odigo_TransferErrorChangeOwnerNoWorkItem</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorChangeOwnerProcess --></label>
+        <name>OdigoCti__Odigo_TransferErrorChangeOwnerProcess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorLiveAgentDisabled --></label>
+        <name>OdigoCti__Odigo_TransferErrorLiveAgentDisabled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorMissingParameters --></label>
+        <name>OdigoCti__Odigo_TransferErrorMissingParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorNoChatButton --></label>
+        <name>OdigoCti__Odigo_TransferErrorNoChatButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorNoToken --></label>
+        <name>OdigoCti__Odigo_TransferErrorNoToken</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferErrorOmniChannelDisable --></label>
+        <name>OdigoCti__Odigo_TransferErrorOmniChannelDisable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferNote --></label>
+        <name>OdigoCti__Odigo_TransferNote</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_TransferSkillLabel --></label>
+        <name>OdigoCti__Odigo_TransferSkillLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UT_CB_Skill --></label>
+        <name>OdigoCti__Odigo_UT_CB_Skill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UT_CallType3 --></label>
+        <name>OdigoCti__Odigo_UT_Callbacks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UT_CallType1 --></label>
+        <name>OdigoCti__Odigo_UT_IncomingCalls</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UT_Message1 --></label>
+        <name>OdigoCti__Odigo_UT_Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UT_Message2 --></label>
+        <name>OdigoCti__Odigo_UT_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UT_Message3 --></label>
+        <name>OdigoCti__Odigo_UT_Message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UT_CallType2 --></label>
+        <name>OdigoCti__Odigo_UT_OutgoingCalls</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityBusyRate --></label>
+        <name>OdigoCti__Odigo_UtilityBusyRate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityChoosePhoneNumberLabel --></label>
+        <name>OdigoCti__Odigo_UtilityChoosePhoneNumberLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityChoosePhoneTypeLabel --></label>
+        <name>OdigoCti__Odigo_UtilityChoosePhoneTypeLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityChooseSkillLabel --></label>
+        <name>OdigoCti__Odigo_UtilityChooseSkillLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityChooseTemplateLabel --></label>
+        <name>OdigoCti__Odigo_UtilityChooseTemplateLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityDisableMessageLineOne --></label>
+        <name>OdigoCti__Odigo_UtilityDisableMessageLineOne</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityDisableMessageLineTwoPartOne --></label>
+        <name>OdigoCti__Odigo_UtilityDisableMessageLineTwoPartOne</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityDisableMessageLineTwoPartTwo --></label>
+        <name>OdigoCti__Odigo_UtilityDisableMessageLineTwoPartTwo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityExternalRoutingStatus --></label>
+        <name>OdigoCti__Odigo_UtilityExternalRoutingStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityIncompleteConfigurationError --></label>
+        <name>OdigoCti__Odigo_UtilityIncompleteConfigurationError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityNoSkillMessage --></label>
+        <name>OdigoCti__Odigo_UtilityNoSkillMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityNoTemplate --></label>
+        <name>OdigoCti__Odigo_UtilityNoTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityNotConnected --></label>
+        <name>OdigoCti__Odigo_UtilityNotConnected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityOdigoVersionStatus --></label>
+        <name>OdigoCti__Odigo_UtilityOdigoVersionStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityPaasInformationStatus --></label>
+        <name>OdigoCti__Odigo_UtilityPaasInformationStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilitySaveError --></label>
+        <name>OdigoCti__Odigo_UtilitySaveError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilitySaveSuccess --></label>
+        <name>OdigoCti__Odigo_UtilitySaveSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilitySelectedColumn --></label>
+        <name>OdigoCti__Odigo_UtilitySelectedColumn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilitySkillLabelColumn --></label>
+        <name>OdigoCti__Odigo_UtilitySkillLabelColumn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilitySubmitButtonLabel --></label>
+        <name>OdigoCti__Odigo_UtilitySubmitButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilitySubmitButtonTitle --></label>
+        <name>OdigoCti__Odigo_UtilitySubmitButtonTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityTabDashboard --></label>
+        <name>OdigoCti__Odigo_UtilityTabDashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityTabGates --></label>
+        <name>OdigoCti__Odigo_UtilityTabGates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityTabMetrics --></label>
+        <name>OdigoCti__Odigo_UtilityTabMetrics</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityTabSkills --></label>
+        <name>OdigoCti__Odigo_UtilityTabSkills</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_UtilityTabStatistics --></label>
+        <name>OdigoCti__Odigo_UtilityTabStatistics</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP01ConfigError --></label>
+        <name>OdigoCti__Odigo_VFP01ConfigError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP01Help --></label>
+        <name>OdigoCti__Odigo_VFP01Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP01Validate --></label>
+        <name>OdigoCti__Odigo_VFP01Validate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Agent --></label>
+        <name>OdigoCti__Odigo_VFP02Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02AgentBusy --></label>
+        <name>OdigoCti__Odigo_VFP02AgentBusy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02AssignToMe --></label>
+        <name>OdigoCti__Odigo_VFP02AssignToMe</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Available --></label>
+        <name>OdigoCti__Odigo_VFP02Available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02AvailableBreak --></label>
+        <name>OdigoCti__Odigo_VFP02AvailableBreak</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBAt --></label>
+        <name>OdigoCti__Odigo_VFP02CBAt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBDone --></label>
+        <name>OdigoCti__Odigo_VFP02CBDone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBFail --></label>
+        <name>OdigoCti__Odigo_VFP02CBFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBFolder --></label>
+        <name>OdigoCti__Odigo_VFP02CBFolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBHour --></label>
+        <name>OdigoCti__Odigo_VFP02CBHour</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBNextTry --></label>
+        <name>OdigoCti__Odigo_VFP02CBNextTry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBNextTryOn --></label>
+        <name>OdigoCti__Odigo_VFP02CBNextTryOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBNumber --></label>
+        <name>OdigoCti__Odigo_VFP02CBNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBOn --></label>
+        <name>OdigoCti__Odigo_VFP02CBOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBRedo --></label>
+        <name>OdigoCti__Odigo_VFP02CBRedo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CBTitle --></label>
+        <name>OdigoCti__Odigo_VFP02CBTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallBack --></label>
+        <name>OdigoCti__Odigo_VFP02CallBack</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallBackDateError --></label>
+        <name>OdigoCti__Odigo_VFP02CallBackDateError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallBackError --></label>
+        <name>OdigoCti__Odigo_VFP02CallBackError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallIdentifierOn --></label>
+        <name>OdigoCti__Odigo_VFP02CallIdentifierOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallLogs --></label>
+        <name>OdigoCti__Odigo_VFP02CallLogs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallObject --></label>
+        <name>OdigoCti__Odigo_VFP02CallObject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallandPayMenu --></label>
+        <name>OdigoCti__Odigo_VFP02CallandPayMenu</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CallbackSuccess --></label>
+        <name>OdigoCti__Odigo_VFP02CallbackSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ComingAndGoing --></label>
+        <name>OdigoCti__Odigo_VFP02ComingAndGoing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Comment --></label>
+        <name>OdigoCti__Odigo_VFP02Comment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Communication --></label>
+        <name>OdigoCti__Odigo_VFP02Communication</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ConferenceCall --></label>
+        <name>OdigoCti__Odigo_VFP02ConferenceCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Connecting --></label>
+        <name>OdigoCti__Odigo_VFP02Connecting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CreateActivity --></label>
+        <name>OdigoCti__Odigo_VFP02CreateActivity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02CurrentCallLog --></label>
+        <name>OdigoCti__Odigo_VFP02CurrentCallLog</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Dashboard --></label>
+        <name>OdigoCti__Odigo_VFP02Dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Date --></label>
+        <name>OdigoCti__Odigo_VFP02Date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Disturbed --></label>
+        <name>OdigoCti__Odigo_VFP02Disturbed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Duration --></label>
+        <name>OdigoCti__Odigo_VFP02Duration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrAccessGateway --></label>
+        <name>OdigoCti__Odigo_VFP02ErrAccessGateway</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrNoOpener --></label>
+        <name>OdigoCti__Odigo_VFP02ErrNoOpener</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrNoOpenerFreeSitting --></label>
+        <name>OdigoCti__Odigo_VFP02ErrNoOpenerFreeSitting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrNoOpenerSMS --></label>
+        <name>OdigoCti__Odigo_VFP02ErrNoOpenerSMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrOdigoNotAgent --></label>
+        <name>OdigoCti__Odigo_VFP02ErrOdigoNotAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrOdigoWrongLogin --></label>
+        <name>OdigoCti__Odigo_VFP02ErrOdigoWrongLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrWSIssue --></label>
+        <name>OdigoCti__Odigo_VFP02ErrWSIssue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorModelSMS --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorModelSMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorPhone --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorTagRecordNotComm --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorTagRecordNotComm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorTagRecordPortailTicket --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorTagRecordPortailTicket</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorTagRecordPortalURL --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorTagRecordPortalURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorTagRecordStatus --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorTagRecordStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorVB --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorVB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorVBNotComm --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorVBNotComm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ErrorcallandPayNotComm --></label>
+        <name>OdigoCti__Odigo_VFP02ErrorcallandPayNotComm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02FirstStepMbOff --></label>
+        <name>OdigoCti__Odigo_VFP02FirstStepMbOff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02FirstStepMbOn --></label>
+        <name>OdigoCti__Odigo_VFP02FirstStepMbOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02FreeSittingLoggingOn --></label>
+        <name>OdigoCti__Odigo_VFP02FreeSittingLoggingOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02FreeSittingNumber --></label>
+        <name>OdigoCti__Odigo_VFP02FreeSittingNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02GenericErrorMessage --></label>
+        <name>OdigoCti__Odigo_VFP02GenericErrorMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02HangUpCall --></label>
+        <name>OdigoCti__Odigo_VFP02HangUpCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02HoldOnCall --></label>
+        <name>OdigoCti__Odigo_VFP02HoldOnCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02HowToLogin --></label>
+        <name>OdigoCti__Odigo_VFP02HowToLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02InboundCall --></label>
+        <name>OdigoCti__Odigo_VFP02InboundCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02InfoUser1 --></label>
+        <name>OdigoCti__Odigo_VFP02InfoUser1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02InfoUser2 --></label>
+        <name>OdigoCti__Odigo_VFP02InfoUser2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02InvalidCallLog --></label>
+        <name>OdigoCti__Odigo_VFP02InvalidCallLog</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02InvalidCallLogComment --></label>
+        <name>OdigoCti__Odigo_VFP02InvalidCallLogComment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02LastStepMbOff --></label>
+        <name>OdigoCti__Odigo_VFP02LastStepMbOff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02LastStepMbOn --></label>
+        <name>OdigoCti__Odigo_VFP02LastStepMbOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ListenRecordIE8 --></label>
+        <name>OdigoCti__Odigo_VFP02ListenRecordIE8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02LoginText --></label>
+        <name>OdigoCti__Odigo_VFP02LoginText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Logoff --></label>
+        <name>OdigoCti__Odigo_VFP02Logoff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Logon --></label>
+        <name>OdigoCti__Odigo_VFP02Logon</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02LogonFreeSitting --></label>
+        <name>OdigoCti__Odigo_VFP02LogonFreeSitting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02MoreInfo --></label>
+        <name>OdigoCti__Odigo_VFP02MoreInfo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Name --></label>
+        <name>OdigoCti__Odigo_VFP02Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02OdigoCTIPhoneNumberIncorrect --></label>
+        <name>OdigoCti__Odigo_VFP02OdigoCTIPhoneNumberIncorrect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02OdigoNoLogin --></label>
+        <name>OdigoCti__Odigo_VFP02OdigoNoLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02OdigoRDVDateIncorrect --></label>
+        <name>OdigoCti__Odigo_VFP02OdigoRDVDateIncorrect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02OdigoSelectedRegisterOnEmpty --></label>
+        <name>OdigoCti__Odigo_VFP02OdigoSelectedRegisterOnEmpty</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02OutboundCallTitle --></label>
+        <name>OdigoCti__Odigo_VFP02OutboundCallTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02OutboundCallType --></label>
+        <name>OdigoCti__Odigo_VFP02OutboundCallType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02OutgoingCall --></label>
+        <name>OdigoCti__Odigo_VFP02OutgoingCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PhoneLabel --></label>
+        <name>OdigoCti__Odigo_VFP02PhoneLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PhoneType --></label>
+        <name>OdigoCti__Odigo_VFP02PhoneType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PickUpCall --></label>
+        <name>OdigoCti__Odigo_VFP02PickUpCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupAgent --></label>
+        <name>OdigoCti__Odigo_VFP02PopupAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupAgentChoice --></label>
+        <name>OdigoCti__Odigo_VFP02PopupAgentChoice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupAgentSelected --></label>
+        <name>OdigoCti__Odigo_VFP02PopupAgentSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupAssociateName --></label>
+        <name>OdigoCti__Odigo_VFP02PopupAssociateName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupBlind --></label>
+        <name>OdigoCti__Odigo_VFP02PopupBlind</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupCallbackPreviewTitle --></label>
+        <name>OdigoCti__Odigo_VFP02PopupCallbackPreviewTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupCampaignList --></label>
+        <name>OdigoCti__Odigo_VFP02PopupCampaignList</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupCriteriaPH --></label>
+        <name>OdigoCti__Odigo_VFP02PopupCriteriaPH</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupErrAgentMissing --></label>
+        <name>OdigoCti__Odigo_VFP02PopupErrAgentMissing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupErrAmpersand --></label>
+        <name>OdigoCti__Odigo_VFP02PopupErrAmpersand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupErrMiniDirMissing --></label>
+        <name>OdigoCti__Odigo_VFP02PopupErrMiniDirMissing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupErrSkillMissing --></label>
+        <name>OdigoCti__Odigo_VFP02PopupErrSkillMissing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupHalfSupervised --></label>
+        <name>OdigoCti__Odigo_VFP02PopupHalfSupervised</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupLoading --></label>
+        <name>OdigoCti__Odigo_VFP02PopupLoading</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupMiniDir --></label>
+        <name>OdigoCti__Odigo_VFP02PopupMiniDir</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupMiniDirEntries --></label>
+        <name>OdigoCti__Odigo_VFP02PopupMiniDirEntries</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupMiniDirectory --></label>
+        <name>OdigoCti__Odigo_VFP02PopupMiniDirectory</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupOpenNumber --></label>
+        <name>OdigoCti__Odigo_VFP02PopupOpenNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupPhoneNumberToDisplay --></label>
+        <name>OdigoCti__Odigo_VFP02PopupPhoneNumberToDisplay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupPreviewAnswer --></label>
+        <name>OdigoCti__Odigo_VFP02PopupPreviewAnswer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupPreviewCall --></label>
+        <name>OdigoCti__Odigo_VFP02PopupPreviewCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupPreviewCancel --></label>
+        <name>OdigoCti__Odigo_VFP02PopupPreviewCancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupPreviewDeny --></label>
+        <name>OdigoCti__Odigo_VFP02PopupPreviewDeny</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupPreviewTitle --></label>
+        <name>OdigoCti__Odigo_VFP02PopupPreviewTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVAgent --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupRDVComment --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVComment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVDate --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVDate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVTitle --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVEnterPhoneNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupRDVRegisterOn --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVRegisterOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVSelectAgent --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVSelectAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVSelectMe --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVSelectMe</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVSelectSkill --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVSelectSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVSkill --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RDVTitle --></label>
+        <name>OdigoCti__Odigo_VFP02PopupRDVTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSelectNumber --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSelectNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSelectPhoneNumberToDisplay --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSelectPhoneNumberToDisplay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSSend --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSendSMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkill --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillChoice --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillChoice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillErrNumber --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillErrNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillSelected --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillsActivate --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillsActivate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillsInfos --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillsInfos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillsLevel --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillsLevel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillsMessage --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillsMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillsModelSelect --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillsModelSelect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillsName --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillsName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSkillsSelect --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSkillsSelect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupSupervised --></label>
+        <name>OdigoCti__Odigo_VFP02PopupSupervised</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupTransfer --></label>
+        <name>OdigoCti__Odigo_VFP02PopupTransfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupTransferAdditionalData --></label>
+        <name>OdigoCti__Odigo_VFP02PopupTransferAdditionalData</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupTransferFrom --></label>
+        <name>OdigoCti__Odigo_VFP02PopupTransferFrom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupTransfer --></label>
+        <name>OdigoCti__Odigo_VFP02PopupTransferNow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupTransferTo --></label>
+        <name>OdigoCti__Odigo_VFP02PopupTransferTo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupValidate --></label>
+        <name>OdigoCti__Odigo_VFP02PopupValidate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02PopupWebRTCPreviewTitle --></label>
+        <name>OdigoCti__Odigo_VFP02PopupWebRTCPreviewTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02QualifyCallBack --></label>
+        <name>OdigoCti__Odigo_VFP02QualifyCallBack</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RadioAvailable --></label>
+        <name>OdigoCti__Odigo_VFP02RadioAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RadioAvailable --></label>
+        <name>OdigoCti__Odigo_VFP02RadioMeeting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RadioOut --></label>
+        <name>OdigoCti__Odigo_VFP02RadioOut</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RecordCall --></label>
+        <name>OdigoCti__Odigo_VFP02RecordCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RecordUnavailable --></label>
+        <name>OdigoCti__Odigo_VFP02RecordUnavailable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RegexInvalidError --></label>
+        <name>OdigoCti__Odigo_VFP02RegexInvalidError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02RelatedTo --></label>
+        <name>OdigoCti__Odigo_VFP02RelatedTo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Result --></label>
+        <name>OdigoCti__Odigo_VFP02Result</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSEditableText --></label>
+        <name>OdigoCti__Odigo_VFP02SMSEditableText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSMaxChars --></label>
+        <name>OdigoCti__Odigo_VFP02SMSMaxChars</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSModel --></label>
+        <name>OdigoCti__Odigo_VFP02SMSModel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSNotAllowed --></label>
+        <name>OdigoCti__Odigo_VFP02SMSNotAllowed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSNumber --></label>
+        <name>OdigoCti__Odigo_VFP02SMSNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSPhoneNumber --></label>
+        <name>OdigoCti__Odigo_VFP02SMSPhoneNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSSend --></label>
+        <name>OdigoCti__Odigo_VFP02SMSSend</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSSendFailed --></label>
+        <name>OdigoCti__Odigo_VFP02SMSSendFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSSendSuccess --></label>
+        <name>OdigoCti__Odigo_VFP02SMSSendSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSSendingMessage --></label>
+        <name>OdigoCti__Odigo_VFP02SMSSendingMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSTaskObject --></label>
+        <name>OdigoCti__Odigo_VFP02SMSTaskObject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SMSText --></label>
+        <name>OdigoCti__Odigo_VFP02SMSText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SelectNumber --></label>
+        <name>OdigoCti__Odigo_VFP02SelectNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SendSMS --></label>
+        <name>OdigoCti__Odigo_VFP02SendSMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ShortHoldOnCall --></label>
+        <name>OdigoCti__Odigo_VFP02ShortHoldOnCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02ShortTakeBackCall --></label>
+        <name>OdigoCti__Odigo_VFP02ShortTakeBackCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SightcallMenu --></label>
+        <name>OdigoCti__Odigo_VFP02SightcallMenu</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Skills --></label>
+        <name>OdigoCti__Odigo_VFP02Skills</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02State --></label>
+        <name>OdigoCti__Odigo_VFP02State</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusAlerting --></label>
+        <name>OdigoCti__Odigo_VFP02StatusAlerting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusAlertingCustomer --></label>
+        <name>OdigoCti__Odigo_VFP02StatusAlertingCustomer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusCommunication --></label>
+        <name>OdigoCti__Odigo_VFP02StatusCommunication</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusDisturbed --></label>
+        <name>OdigoCti__Odigo_VFP02StatusDisturbed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusHoldCall --></label>
+        <name>OdigoCti__Odigo_VFP02StatusHoldCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusLogged --></label>
+        <name>OdigoCti__Odigo_VFP02StatusLogged</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusLogoff --></label>
+        <name>OdigoCti__Odigo_VFP02StatusLogoff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusPreview --></label>
+        <name>OdigoCti__Odigo_VFP02StatusPreview</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusReserved --></label>
+        <name>OdigoCti__Odigo_VFP02StatusReserved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusSelected --></label>
+        <name>OdigoCti__Odigo_VFP02StatusSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusUnknown --></label>
+        <name>OdigoCti__Odigo_VFP02StatusUnknown</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StatusWaiting --></label>
+        <name>OdigoCti__Odigo_VFP02StatusWaiting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Step1MbOff --></label>
+        <name>OdigoCti__Odigo_VFP02Step1MbOff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Step1MbOn --></label>
+        <name>OdigoCti__Odigo_VFP02Step1MbOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Step2MbOff --></label>
+        <name>OdigoCti__Odigo_VFP02Step2MbOff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Step2MbOn --></label>
+        <name>OdigoCti__Odigo_VFP02Step2MbOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Step3MbOff --></label>
+        <name>OdigoCti__Odigo_VFP02Step3MbOff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Step3MbOn --></label>
+        <name>OdigoCti__Odigo_VFP02Step3MbOn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepCampaigns --></label>
+        <name>OdigoCti__Odigo_VFP02StepCampaigns</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepFreeSittingAndWord --></label>
+        <name>OdigoCti__Odigo_VFP02StepFreeSittingAndWord</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepFreeSittingBeginning --></label>
+        <name>OdigoCti__Odigo_VFP02StepFreeSittingBeginning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepFreeSittingNecessaryWord --></label>
+        <name>OdigoCti__Odigo_VFP02StepFreeSittingNecessaryWord</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepFreeSittingNotAuthorisedMOff --></label>
+        <name>OdigoCti__Odigo_VFP02StepFreeSittingNotAuthorisedMOff</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepIssuesCall --></label>
+        <name>OdigoCti__Odigo_VFP02StepIssuesCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepIssuesMail --></label>
+        <name>OdigoCti__Odigo_VFP02StepIssuesMail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepNoFreeSitting --></label>
+        <name>OdigoCti__Odigo_VFP02StepNoFreeSitting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepSkills --></label>
+        <name>OdigoCti__Odigo_VFP02StepSkills</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepSkillsTemplate --></label>
+        <name>OdigoCti__Odigo_VFP02StepSkillsTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepStationCodeMode --></label>
+        <name>OdigoCti__Odigo_VFP02StepStationCodeMode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepStepWebRTCAgentChoice --></label>
+        <name>OdigoCti__Odigo_VFP02StepStepWebRTCAgentChoice</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepTelephoneMode --></label>
+        <name>OdigoCti__Odigo_VFP02StepTelephoneMode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepTemplate --></label>
+        <name>OdigoCti__Odigo_VFP02StepTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StepWebRTCPhoneType --></label>
+        <name>OdigoCti__Odigo_VFP02StepWebRTCPhoneType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02StopRecordCall --></label>
+        <name>OdigoCti__Odigo_VFP02StopRecordCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Subject --></label>
+        <name>OdigoCti__Odigo_VFP02Subject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02SuccessSave --></label>
+        <name>OdigoCti__Odigo_VFP02SuccessSave</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02TagRecordMenu --></label>
+        <name>OdigoCti__Odigo_VFP02TagRecordMenu</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02TagRecordOK --></label>
+        <name>OdigoCti__Odigo_VFP02TagRecordOK</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02TakeBackCall --></label>
+        <name>OdigoCti__Odigo_VFP02TakeBackCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02TaskTransferred --></label>
+        <name>OdigoCti__Odigo_VFP02TaskTransferred</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02TransferCall --></label>
+        <name>OdigoCti__Odigo_VFP02TransferCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02TransferredCall --></label>
+        <name>OdigoCti__Odigo_VFP02TransferredCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02Try --></label>
+        <name>OdigoCti__Odigo_VFP02Try</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02UnAvailableBreak --></label>
+        <name>OdigoCti__Odigo_VFP02UnAvailableBreak</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02UnionBreak --></label>
+        <name>OdigoCti__Odigo_VFP02UnionBreak</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02UserNotConfigured --></label>
+        <name>OdigoCti__Odigo_VFP02UserNotConfigured</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02VisitOdigo --></label>
+        <name>OdigoCti__Odigo_VFP02VisitOdigo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02WrapupBreak --></label>
+        <name>OdigoCti__Odigo_VFP02WrapupBreak</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Access_Id --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Access_Id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Access_Token --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Access_Token</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Amount --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Amount</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_City --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_City</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_FirstName --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_FirstName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_LastName --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_LastName</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Message --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Postalcode --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Postalcode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Status --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Street --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Street</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_TransactionId --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_TransactionId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_Type --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_WS_Url --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_WS_Url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_statusCode --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_statusCode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_CP_timeStamp --></label>
+        <name>OdigoCti__Odigo_VFP02_CP_timeStamp</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_FolderId --></label>
+        <name>OdigoCti__Odigo_VFP02_FolderId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_IVRNumber --></label>
+        <name>OdigoCti__Odigo_VFP02_IVRNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_OtherMenu --></label>
+        <name>OdigoCti__Odigo_VFP02_OtherMenu</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_VB --></label>
+        <name>OdigoCti__Odigo_VFP02_VB</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_VB_IVRNumber --></label>
+        <name>OdigoCti__Odigo_VFP02_VB_IVRNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_VB_Msg_failed --></label>
+        <name>OdigoCti__Odigo_VFP02_VB_Msg_failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_VB_Msg_initiated --></label>
+        <name>OdigoCti__Odigo_VFP02_VB_Msg_initiated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_VB_Msg_match --></label>
+        <name>OdigoCti__Odigo_VFP02_VB_Msg_match</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02_VB_Url --></label>
+        <name>OdigoCti__Odigo_VFP02_VB_Url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP02outboundCall --></label>
+        <name>OdigoCti__Odigo_VFP02outboundCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Agent --></label>
+        <name>OdigoCti__Odigo_VFP03Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03AgentStats --></label>
+        <name>OdigoCti__Odigo_VFP03AgentStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DashboardErrWS --></label>
+        <name>OdigoCti__Odigo_VFP03DashboardErrWS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DashboardSkill --></label>
+        <name>OdigoCti__Odigo_VFP03DashboardSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DashboardState --></label>
+        <name>OdigoCti__Odigo_VFP03DashboardState</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DashboardStateOfUser --></label>
+        <name>OdigoCti__Odigo_VFP03DashboardStateOfUser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DashboardStats --></label>
+        <name>OdigoCti__Odigo_VFP03DashboardStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DashboardTitle --></label>
+        <name>OdigoCti__Odigo_VFP03DashboardTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DashboardTraffic --></label>
+        <name>OdigoCti__Odigo_VFP03DashboardTraffic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DayOrWeek --></label>
+        <name>OdigoCti__Odigo_VFP03DayOrWeek</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Detail --></label>
+        <name>OdigoCti__Odigo_VFP03Detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03DetailTable --></label>
+        <name>OdigoCti__Odigo_VFP03DetailTable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03ErrStats --></label>
+        <name>OdigoCti__Odigo_VFP03ErrStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03ExcludeNeverLoggedAgents --></label>
+        <name>OdigoCti__Odigo_VFP03ExcludeNeverLoggedAgents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Gates --></label>
+        <name>OdigoCti__Odigo_VFP03Gates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03IncludeZero --></label>
+        <name>OdigoCti__Odigo_VFP03IncludeZero</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03MetricsSelected --></label>
+        <name>OdigoCti__Odigo_VFP03MetricsSelected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Month --></label>
+        <name>OdigoCti__Odigo_VFP03Month</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Name --></label>
+        <name>OdigoCti__Odigo_VFP03Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Next --></label>
+        <name>OdigoCti__Odigo_VFP03Next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03NextDay --></label>
+        <name>OdigoCti__Odigo_VFP03NextDay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03NextHour --></label>
+        <name>OdigoCti__Odigo_VFP03NextHour</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03NextMonth --></label>
+        <name>OdigoCti__Odigo_VFP03NextMonth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03NextWeek --></label>
+        <name>OdigoCti__Odigo_VFP03NextWeek</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03NextYear --></label>
+        <name>OdigoCti__Odigo_VFP03NextYear</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03NoDataAvailable --></label>
+        <name>OdigoCti__Odigo_VFP03NoDataAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03NoResults --></label>
+        <name>OdigoCti__Odigo_VFP03NoResults</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Of --></label>
+        <name>OdigoCti__Odigo_VFP03Of</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Plurality --></label>
+        <name>OdigoCti__Odigo_VFP03Plurality</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Previous --></label>
+        <name>OdigoCti__Odigo_VFP03Previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03PreviousDay --></label>
+        <name>OdigoCti__Odigo_VFP03PreviousDay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03PreviousHour --></label>
+        <name>OdigoCti__Odigo_VFP03PreviousHour</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03PreviousMonth --></label>
+        <name>OdigoCti__Odigo_VFP03PreviousMonth</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03PreviousWeek --></label>
+        <name>OdigoCti__Odigo_VFP03PreviousWeek</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03PreviousYear --></label>
+        <name>OdigoCti__Odigo_VFP03PreviousYear</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03StatsDisplay --></label>
+        <name>OdigoCti__Odigo_VFP03StatsDisplay</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison, Mobile Model --></label>
+        <name>OdigoCti__Odigo_VFP03Supervision_BackAgentButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison, Mobile Model --></label>
+        <name>OdigoCti__Odigo_VFP03Supervision_BackGateListButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03SupervisonChangeSkill --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonChangeSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03SupervisonChangeSkillSuccess --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonChangeSkillSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Create new template --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonCreateNewTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Create new template Save --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonCreateNewTemplateSave</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Listen Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonListen_AddPhoneNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Listen Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonListen_AlertAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Listen Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonListen_ListenButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Listen Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonListen_SILENTMONITORING</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Record Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonRecord_AgentsRecording</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Create Template Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonRecord_CreateTemplateChangeStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Record Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonRecord_RecordButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Record Model --></label>
+        <name>OdigoCti__Odigo_VFP03SupervisonRecord_TaskPanelNotification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_AddMetric</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_AdvancedSearch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Create Template Model --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_CreateTemplateChangeStatus</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Supervison_DefaultTemplate --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_DefaultTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_MonitoringBoard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_NewTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison ,Create Template Model --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_SaveButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_Search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_TemplateSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP03Supervison --></label>
+        <name>OdigoCti__Odigo_VFP03Supervison_UpdateTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Total --></label>
+        <name>OdigoCti__Odigo_VFP03Total</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03TotalTable --></label>
+        <name>OdigoCti__Odigo_VFP03TotalTable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP03Year --></label>
+        <name>OdigoCti__Odigo_VFP03Year</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ActivityParameters --></label>
+        <name>OdigoCti__Odigo_VFP04ActivityParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AgentStatTableID --></label>
+        <name>OdigoCti__Odigo_VFP04AgentStatTableID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AgentsStatsTabID --></label>
+        <name>OdigoCti__Odigo_VFP04AgentsStatsTabID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04All --></label>
+        <name>OdigoCti__Odigo_VFP04All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AppointmentActivated --></label>
+        <name>OdigoCti__Odigo_VFP04AppointmentActivated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AramisSpecial --></label>
+        <name>OdigoCti__Odigo_VFP04AramisSpecial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutoCallLog --></label>
+        <name>OdigoCti__Odigo_VFP04AutoCallLog</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutoContactPage --></label>
+        <name>OdigoCti__Odigo_VFP04AutoContactPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutoContactPageCallback --></label>
+        <name>OdigoCti__Odigo_VFP04AutoContactPageCallback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutoContactPageIncoming --></label>
+        <name>OdigoCti__Odigo_VFP04AutoContactPageIncoming</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutoContactPageOutgoing --></label>
+        <name>OdigoCti__Odigo_VFP04AutoContactPageOutgoing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutoContactPagePreviewCallback --></label>
+        <name>OdigoCti__Odigo_VFP04AutoContactPagePreviewCallback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutoContactPagePreviewIncoming --></label>
+        <name>OdigoCti__Odigo_VFP04AutoContactPagePreviewIncoming</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04AutomaticTask --></label>
+        <name>OdigoCti__Odigo_VFP04AutomaticTask</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchAgent --></label>
+        <name>OdigoCti__Odigo_VFP04BatchAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchCleaning --></label>
+        <name>OdigoCti__Odigo_VFP04BatchCleaning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchGates --></label>
+        <name>OdigoCti__Odigo_VFP04BatchGates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchHistoric --></label>
+        <name>OdigoCti__Odigo_VFP04BatchHistoric</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchLaunched --></label>
+        <name>OdigoCti__Odigo_VFP04BatchLaunched</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchRefresh --></label>
+        <name>OdigoCti__Odigo_VFP04BatchRefresh</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchRetrieval --></label>
+        <name>OdigoCti__Odigo_VFP04BatchRetrieval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchStats --></label>
+        <name>OdigoCti__Odigo_VFP04BatchStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BatchSupervision --></label>
+        <name>OdigoCti__Odigo_VFP04BatchSupervision</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BehaviorParameters --></label>
+        <name>OdigoCti__Odigo_VFP04BehaviorParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BreakNumber --></label>
+        <name>OdigoCti__Odigo_VFP04BreakNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cancel button --></label>
+        <name>OdigoCti__Odigo_VFP04BtnCancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04BtnNew --></label>
+        <name>OdigoCti__Odigo_VFP04BtnNew</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save button --></label>
+        <name>OdigoCti__Odigo_VFP04BtnSave</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CTIParameters --></label>
+        <name>OdigoCti__Odigo_VFP04CTIParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallBackHideReprogramCancelButton --></label>
+        <name>OdigoCti__Odigo_VFP04CallBackHideReprogramCancelButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallBackPopup --></label>
+        <name>OdigoCti__Odigo_VFP04CallBackPopup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallLog --></label>
+        <name>OdigoCti__Odigo_VFP04CallLog</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallScript --></label>
+        <name>OdigoCti__Odigo_VFP04CallScript</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallScriptAutomatic --></label>
+        <name>OdigoCti__Odigo_VFP04CallScriptAutomatic</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallScriptManual --></label>
+        <name>OdigoCti__Odigo_VFP04CallScriptManual</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallScriptNone --></label>
+        <name>OdigoCti__Odigo_VFP04CallScriptNone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallandPayURL --></label>
+        <name>OdigoCti__Odigo_VFP04CallandPayURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CallbackWaitingTime --></label>
+        <name>OdigoCti__Odigo_VFP04CallbackWaitingTime</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CheckOdigoVersion --></label>
+        <name>OdigoCti__Odigo_VFP04CheckOdigoVersion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CheckRestApi --></label>
+        <name>OdigoCti__Odigo_VFP04CheckRestApi</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CheckRestApiConfIncomplete --></label>
+        <name>OdigoCti__Odigo_VFP04CheckRestApiConfIncomplete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CheckRestApiInfoIncomplete --></label>
+        <name>OdigoCti__Odigo_VFP04CheckRestApiInfoIncomplete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04CheckSoapApi --></label>
+        <name>OdigoCti__Odigo_VFP04CheckSoapApi</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Clean --></label>
+        <name>OdigoCti__Odigo_VFP04Clean</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ClearDataBetweenCall --></label>
+        <name>OdigoCti__Odigo_VFP04ClearDataBetweenCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ClickToTransfer --></label>
+        <name>OdigoCti__Odigo_VFP04ClickToTransfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ConfDeleted --></label>
+        <name>OdigoCti__Odigo_VFP04ConfDeleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Conf_Name --></label>
+        <name>OdigoCti__Odigo_VFP04Conf_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ConfigCopyright --></label>
+        <name>OdigoCti__Odigo_VFP04ConfigCopyright</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Contact --></label>
+        <name>OdigoCti__Odigo_VFP04Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ContactEmail --></label>
+        <name>OdigoCti__Odigo_VFP04ContactEmail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ContactEmailValue --></label>
+        <name>OdigoCti__Odigo_VFP04ContactEmailValue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ContactPhone --></label>
+        <name>OdigoCti__Odigo_VFP04ContactPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04DashBoardAndReport --></label>
+        <name>OdigoCti__Odigo_VFP04DashBoardAndReport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Delete --></label>
+        <name>OdigoCti__Odigo_VFP04Delete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04DialingParameters --></label>
+        <name>OdigoCti__Odigo_VFP04DialingParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04DisplayParameters --></label>
+        <name>OdigoCti__Odigo_VFP04DisplayParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04EasyRecordLogin --></label>
+        <name>OdigoCti__Odigo_VFP04EasyRecordLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04EasyRecordPwd --></label>
+        <name>OdigoCti__Odigo_VFP04EasyRecordPwd</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04EasyRecordUrl --></label>
+        <name>OdigoCti__Odigo_VFP04EasyRecordUrl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ErrWaitingTime --></label>
+        <name>OdigoCti__Odigo_VFP04ErrWaitingTime</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04EventOnRDVActivated --></label>
+        <name>OdigoCti__Odigo_VFP04EventOnRDVActivated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- External Static Resource URL --></label>
+        <name>OdigoCti__Odigo_VFP04ExternalResource</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04GateStatTableID --></label>
+        <name>OdigoCti__Odigo_VFP04GateStatTableID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04GatesStatsTabID --></label>
+        <name>OdigoCti__Odigo_VFP04GatesStatsTabID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04GatewayLogin --></label>
+        <name>OdigoCti__Odigo_VFP04GatewayLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04GatewayOdigoVersion --></label>
+        <name>OdigoCti__Odigo_VFP04GatewayOdigoVersion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04GatewayPassword --></label>
+        <name>OdigoCti__Odigo_VFP04GatewayPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04GatewayURL --></label>
+        <name>OdigoCti__Odigo_VFP04GatewayURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04GetConfigurationFailed --></label>
+        <name>OdigoCti__Odigo_VFP04GetConfigurationFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04InfoLinkToRemoteSettings --></label>
+        <name>OdigoCti__Odigo_VFP04InfoLinkToRemoteSettings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04InfoLinkToTaskLayout --></label>
+        <name>OdigoCti__Odigo_VFP04InfoLinkToTaskLayout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04InfoLinkToUserLayout --></label>
+        <name>OdigoCti__Odigo_VFP04InfoLinkToUserLayout</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04InfoMessage --></label>
+        <name>OdigoCti__Odigo_VFP04InfoMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04InfoMessage2 --></label>
+        <name>OdigoCti__Odigo_VFP04InfoMessage2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04InfoMessage3 --></label>
+        <name>OdigoCti__Odigo_VFP04InfoMessage3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Launch --></label>
+        <name>OdigoCti__Odigo_VFP04Launch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04LaunchBatchStats --></label>
+        <name>OdigoCti__Odigo_VFP04LaunchBatchStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04LaunchBatchSupervision --></label>
+        <name>OdigoCti__Odigo_VFP04LaunchBatchSupervision</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04LocalPhonePrefix --></label>
+        <name>OdigoCti__Odigo_VFP04LocalPhonePrefix</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ManualRefresh --></label>
+        <name>OdigoCti__Odigo_VFP04ManualRefresh</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Mediablending --></label>
+        <name>OdigoCti__Odigo_VFP04Mediablending</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04MediablendingConf --></label>
+        <name>OdigoCti__Odigo_VFP04MediablendingConf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04MoreActivated --></label>
+        <name>OdigoCti__Odigo_VFP04MoreActivated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04MustOpenActivity --></label>
+        <name>OdigoCti__Odigo_VFP04MustOpenActivity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04NewTabContactPage --></label>
+        <name>OdigoCti__Odigo_VFP04NewTabContactPage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04NumeroPause --></label>
+        <name>OdigoCti__Odigo_VFP04NumeroPause</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCAddRow --></label>
+        <name>OdigoCti__Odigo_VFP04OCAddRow</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCApexSection --></label>
+        <name>OdigoCti__Odigo_VFP04OCApexSection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCApexclassLabel --></label>
+        <name>OdigoCti__Odigo_VFP04OCApexclassLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCBreakSection --></label>
+        <name>OdigoCti__Odigo_VFP04OCBreakSection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCCancel --></label>
+        <name>OdigoCti__Odigo_VFP04OCCancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCCancelModification --></label>
+        <name>OdigoCti__Odigo_VFP04OCCancelModification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCColumnAction --></label>
+        <name>OdigoCti__Odigo_VFP04OCColumnAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCColumnBreakId --></label>
+        <name>OdigoCti__Odigo_VFP04OCColumnBreakId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCColumnCustomSkill --></label>
+        <name>OdigoCti__Odigo_VFP04OCColumnCustomSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCColumnKeyword --></label>
+        <name>OdigoCti__Odigo_VFP04OCColumnKeyword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCColumnQueue --></label>
+        <name>OdigoCti__Odigo_VFP04OCColumnQueue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCColumnServicePresenceStatusId --></label>
+        <name>OdigoCti__Odigo_VFP04OCColumnServicePresenceStatusId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCDelete --></label>
+        <name>OdigoCti__Odigo_VFP04OCDelete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCDeleteBreakMessage --></label>
+        <name>OdigoCti__Odigo_VFP04OCDeleteBreakMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCDeleteSkillMessage --></label>
+        <name>OdigoCti__Odigo_VFP04OCDeleteSkillMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCLinkOdigoCtiConf --></label>
+        <name>OdigoCti__Odigo_VFP04OCLinkOdigoCtiConf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCLinkOmniChannelSettings --></label>
+        <name>OdigoCti__Odigo_VFP04OCLinkOmniChannelSettings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCNoOdigoCtiConfFound --></label>
+        <name>OdigoCti__Odigo_VFP04OCNoOdigoCtiConfFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCNoRecordFound --></label>
+        <name>OdigoCti__Odigo_VFP04OCNoRecordFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCOdigoConfAssociated --></label>
+        <name>OdigoCti__Odigo_VFP04OCOdigoConfAssociated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCOmniChannelDisabled --></label>
+        <name>OdigoCti__Odigo_VFP04OCOmniChannelDisabled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCOnEventApexSection --></label>
+        <name>OdigoCti__Odigo_VFP04OCOnEventApexSection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCOnEventClassLabel --></label>
+        <name>OdigoCti__Odigo_VFP04OCOnEventClassLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCSaveSuccess --></label>
+        <name>OdigoCti__Odigo_VFP04OCSaveSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCSkillMappingSubSection --></label>
+        <name>OdigoCti__Odigo_VFP04OCSkillMappingSubSection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCSkillSection --></label>
+        <name>OdigoCti__Odigo_VFP04OCSkillSection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCSubTitle --></label>
+        <name>OdigoCti__Odigo_VFP04OCSubTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCTitle --></label>
+        <name>OdigoCti__Odigo_VFP04OCTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OCUpdate --></label>
+        <name>OdigoCti__Odigo_VFP04OCUpdate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoChannelAvailable --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoChannelAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoErrIncorrectFormat --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoErrIncorrectFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoErrMissingInformationForExternalRouting --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoErrMissingInformationForExternalRouting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoErrMissingInformationForWebRTC --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoErrMissingInformationForWebRTC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoErrMissingPaasInformation --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoErrMissingPaasInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoErrRequiredField --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoErrRequiredField</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoParameters --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoPortalUrl --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoPortalUrl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoRecordParameters --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoRecordParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoSrvTZ --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoSrvTZ</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OdigoSuiteParameters --></label>
+        <name>OdigoCti__Odigo_VFP04OdigoSuiteParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OmniChannelPSID --></label>
+        <name>OdigoCti__Odigo_VFP04OmniChannelPSID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OmniChannelParameters --></label>
+        <name>OdigoCti__Odigo_VFP04OmniChannelParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OrgId --></label>
+        <name>OdigoCti__Odigo_VFP04OrgId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04OutboundActivated --></label>
+        <name>OdigoCti__Odigo_VFP04OutboundActivated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PaasInstance --></label>
+        <name>OdigoCti__Odigo_VFP04PaasInstance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PaasLogin --></label>
+        <name>OdigoCti__Odigo_VFP04PaasLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PaasPassword --></label>
+        <name>OdigoCti__Odigo_VFP04PaasPassword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PaasProductId --></label>
+        <name>OdigoCti__Odigo_VFP04PaasProductId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PaasURL --></label>
+        <name>OdigoCti__Odigo_VFP04PaasURL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Parameters --></label>
+        <name>OdigoCti__Odigo_VFP04Parameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PhoneFreeSitting --></label>
+        <name>OdigoCti__Odigo_VFP04PhoneFreeSitting</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PhoneValidation --></label>
+        <name>OdigoCti__Odigo_VFP04PhoneValidation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PostActivityAvailable --></label>
+        <name>OdigoCti__Odigo_VFP04PostActivityAvailable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PostCallBreak --></label>
+        <name>OdigoCti__Odigo_VFP04PostCallBreak</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PostCallBreakCallback --></label>
+        <name>OdigoCti__Odigo_VFP04PostCallBreakCallback</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PostCallBreakIncoming --></label>
+        <name>OdigoCti__Odigo_VFP04PostCallBreakIncoming</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PostCallBreakOutgoing --></label>
+        <name>OdigoCti__Odigo_VFP04PostCallBreakOutgoing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PresenceMapping --></label>
+        <name>OdigoCti__Odigo_VFP04PresenceMapping</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04PresentedPhoneNumber --></label>
+        <name>OdigoCti__Odigo_VFP04PresentedPhoneNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Program --></label>
+        <name>OdigoCti__Odigo_VFP04Program</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04RealTimeMetricsActivated --></label>
+        <name>OdigoCti__Odigo_VFP04RealTimeMetricsActivated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04RegexMobilePhonePattern --></label>
+        <name>OdigoCti__Odigo_VFP04RegexMobilePhonePattern</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04RegexVerificationForFreeseattingPhonenumber --></label>
+        <name>OdigoCti__Odigo_VFP04RegexVerificationForFreeseattingPhonenumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04RegexVerificationForOutboundPhonenumber --></label>
+        <name>OdigoCti__Odigo_VFP04RegexVerificationForOutboundPhonenumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04RetriveHistoricStats --></label>
+        <name>OdigoCti__Odigo_VFP04RetriveHistoricStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SMSActivated --></label>
+        <name>OdigoCti__Odigo_VFP04SMSActivated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SMSEditable --></label>
+        <name>OdigoCti__Odigo_VFP04SMSEditable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SampleMobilePhonePattern --></label>
+        <name>OdigoCti__Odigo_VFP04SampleMobilePhonePattern</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SampleRegexFormat --></label>
+        <name>OdigoCti__Odigo_VFP04SampleRegexFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SaveError --></label>
+        <name>OdigoCti__Odigo_VFP04SaveError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SaveSuccess --></label>
+        <name>OdigoCti__Odigo_VFP04SaveSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Schedule --></label>
+        <name>OdigoCti__Odigo_VFP04Schedule</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04ScreenRecordingUrl --></label>
+        <name>OdigoCti__Odigo_VFP04ScreenRecordingUrl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SearchOnFolder --></label>
+        <name>OdigoCti__Odigo_VFP04SearchOnFolder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SearchParameters --></label>
+        <name>OdigoCti__Odigo_VFP04SearchParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SightCallActivated --></label>
+        <name>OdigoCti__Odigo_VFP04SightCallActivated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SightCallCasesID --></label>
+        <name>OdigoCti__Odigo_VFP04SightCallCasesID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04Subtab --></label>
+        <name>OdigoCti__Odigo_VFP04Subtab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SupervisionBatches --></label>
+        <name>OdigoCti__Odigo_VFP04SupervisionBatches</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04SupervisionPagination --></label>
+        <name>OdigoCti__Odigo_VFP04SupervisionPagination</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04TagRecordKeyword --></label>
+        <name>OdigoCti__Odigo_VFP04TagRecordKeyword</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04TaskCreationOnFail --></label>
+        <name>OdigoCti__Odigo_VFP04TaskCreationOnFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Page title --></label>
+        <name>OdigoCti__Odigo_VFP04Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04VerticalModeInConsole --></label>
+        <name>OdigoCti__Odigo_VFP04VerticalModeInConsole</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04WebRTCFreeswitchLabel --></label>
+        <name>OdigoCti__Odigo_VFP04WebRTCFreeswitchLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04WebRTCParameters --></label>
+        <name>OdigoCti__Odigo_VFP04WebRTCParameters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04WebRTCStunServerLabel --></label>
+        <name>OdigoCti__Odigo_VFP04WebRTCStunServerLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04WebRTCSupportedModeLabel --></label>
+        <name>OdigoCti__Odigo_VFP04WebRTCSupportedModeLabel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04WebRTCSupportedModePickup --></label>
+        <name>OdigoCti__Odigo_VFP04WebRTCSupportedModePickup</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04WebRTCSupportedModePickupOutboundOnly --></label>
+        <name>OdigoCti__Odigo_VFP04WebRTCSupportedModePickupOutboundOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04WebRTCSupportedModePreview --></label>
+        <name>OdigoCti__Odigo_VFP04WebRTCSupportedModePreview</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP04recordRetrievalLightningApexclass --></label>
+        <name>OdigoCti__Odigo_VFP04recordRetrievalLightningApexclass</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06CallCenter --></label>
+        <name>OdigoCti__Odigo_VFP06CallCenter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Cancel --></label>
+        <name>OdigoCti__Odigo_VFP06Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06CreateUpdate --></label>
+        <name>OdigoCti__Odigo_VFP06CreateUpdate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Email --></label>
+        <name>OdigoCti__Odigo_VFP06Email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06HasOdigoAccess --></label>
+        <name>OdigoCti__Odigo_VFP06HasOdigoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language --></label>
+        <name>OdigoCti__Odigo_VFP06Language</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language1 --></label>
+        <name>OdigoCti__Odigo_VFP06Language1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language2 --></label>
+        <name>OdigoCti__Odigo_VFP06Language2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language3 --></label>
+        <name>OdigoCti__Odigo_VFP06Language3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language5 --></label>
+        <name>OdigoCti__Odigo_VFP06Language5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language6 --></label>
+        <name>OdigoCti__Odigo_VFP06Language6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language7 --></label>
+        <name>OdigoCti__Odigo_VFP06Language7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language8 --></label>
+        <name>OdigoCti__Odigo_VFP06Language8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06ManageAccess --></label>
+        <name>OdigoCti__Odigo_VFP06ManageAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message1 --></label>
+        <name>OdigoCti__Odigo_VFP06Message1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message11 --></label>
+        <name>OdigoCti__Odigo_VFP06Message11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message2 --></label>
+        <name>OdigoCti__Odigo_VFP06Message2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message3 --></label>
+        <name>OdigoCti__Odigo_VFP06Message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message4 --></label>
+        <name>OdigoCti__Odigo_VFP06Message4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message5 --></label>
+        <name>OdigoCti__Odigo_VFP06Message5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message6 --></label>
+        <name>OdigoCti__Odigo_VFP06Message6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message7 --></label>
+        <name>OdigoCti__Odigo_VFP06Message7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message8 --></label>
+        <name>OdigoCti__Odigo_VFP06Message8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Message9 --></label>
+        <name>OdigoCti__Odigo_VFP06Message9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06MultiSelectUser --></label>
+        <name>OdigoCti__Odigo_VFP06MultiSelectUser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Name --></label>
+        <name>OdigoCti__Odigo_VFP06Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06No --></label>
+        <name>OdigoCti__Odigo_VFP06No</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06OdigoLogin --></label>
+        <name>OdigoCti__Odigo_VFP06OdigoLogin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Phone --></label>
+        <name>OdigoCti__Odigo_VFP06Phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06PhoneFormat --></label>
+        <name>OdigoCti__Odigo_VFP06PhoneFormat</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06SearchFor --></label>
+        <name>OdigoCti__Odigo_VFP06SearchFor</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Select --></label>
+        <name>OdigoCti__Odigo_VFP06Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06SelectUser --></label>
+        <name>OdigoCti__Odigo_VFP06SelectUser</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status1 --></label>
+        <name>OdigoCti__Odigo_VFP06Status1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status10 --></label>
+        <name>OdigoCti__Odigo_VFP06Status10</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status11 --></label>
+        <name>OdigoCti__Odigo_VFP06Status11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status12 --></label>
+        <name>OdigoCti__Odigo_VFP06Status12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status13 --></label>
+        <name>OdigoCti__Odigo_VFP06Status13</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status2 --></label>
+        <name>OdigoCti__Odigo_VFP06Status2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status3 --></label>
+        <name>OdigoCti__Odigo_VFP06Status3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status4 --></label>
+        <name>OdigoCti__Odigo_VFP06Status4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status5 --></label>
+        <name>OdigoCti__Odigo_VFP06Status5</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status6 --></label>
+        <name>OdigoCti__Odigo_VFP06Status6</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status7 --></label>
+        <name>OdigoCti__Odigo_VFP06Status7</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status8 --></label>
+        <name>OdigoCti__Odigo_VFP06Status8</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Status9 --></label>
+        <name>OdigoCti__Odigo_VFP06Status9</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Template --></label>
+        <name>OdigoCti__Odigo_VFP06Template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Update --></label>
+        <name>OdigoCti__Odigo_VFP06Update</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06UpdateAccess --></label>
+        <name>OdigoCti__Odigo_VFP06UpdateAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Yes --></label>
+        <name>OdigoCti__Odigo_VFP06Yes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06err --></label>
+        <name>OdigoCti__Odigo_VFP06err</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06Language1 --></label>
+        <name>OdigoCti__Odigo_VFP06isActive</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06maxAlert --></label>
+        <name>OdigoCti__Odigo_VFP06maxAlert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_VFP06statusOther --></label>
+        <name>OdigoCti__Odigo_VFP06statusOther</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr01 --></label>
+        <name>OdigoCti__Odigo_WSErr01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr02 --></label>
+        <name>OdigoCti__Odigo_WSErr02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr03 --></label>
+        <name>OdigoCti__Odigo_WSErr03</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr04 --></label>
+        <name>OdigoCti__Odigo_WSErr04</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr05 --></label>
+        <name>OdigoCti__Odigo_WSErr05</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr06 --></label>
+        <name>OdigoCti__Odigo_WSErr06</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr07 --></label>
+        <name>OdigoCti__Odigo_WSErr07</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr102 --></label>
+        <name>OdigoCti__Odigo_WSErr102</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr103 --></label>
+        <name>OdigoCti__Odigo_WSErr103</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr108 --></label>
+        <name>OdigoCti__Odigo_WSErr108</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr110 --></label>
+        <name>OdigoCti__Odigo_WSErr110</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr111 --></label>
+        <name>OdigoCti__Odigo_WSErr111</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr33 --></label>
+        <name>OdigoCti__Odigo_WSErr33</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr404 --></label>
+        <name>OdigoCti__Odigo_WSErr404</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErr98 --></label>
+        <name>OdigoCti__Odigo_WSErr98</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV02 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV03 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV03</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV04 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV04</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV05 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV05</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV100 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV100</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV101 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV101</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV102 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV102</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDV33 --></label>
+        <name>OdigoCti__Odigo_WSErrRDV33</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WSErrRDVOtherError --></label>
+        <name>OdigoCti__Odigo_WSErrRDVOtherError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WebRTCError_CannotConnect --></label>
+        <name>OdigoCti__Odigo_WebRTCError_CannotConnect</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WebRTCError_MissingAgentConfiguration --></label>
+        <name>OdigoCti__Odigo_WebRTCError_MissingAgentConfiguration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WebRTCError_MissingConfiguration --></label>
+        <name>OdigoCti__Odigo_WebRTCError_MissingConfiguration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WebRTCError_ServerConnectionFail --></label>
+        <name>OdigoCti__Odigo_WebRTCError_ServerConnectionFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WebRTCError_ServerRegisterFail --></label>
+        <name>OdigoCti__Odigo_WebRTCError_ServerRegisterFail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WebRTCError_Title --></label>
+        <name>OdigoCti__Odigo_WebRTCError_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WebRTCError_UnexpectedError --></label>
+        <name>OdigoCti__Odigo_WebRTCError_UnexpectedError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_AgentSettingsFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_AgentSettingsFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_Agt --></label>
+        <name>OdigoCti__Odigo_WsErr_Agt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_AlreadyConnected --></label>
+        <name>OdigoCti__Odigo_WsErr_AlreadyConnected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_ChangeSkillsFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_ChangeSkillsFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_ConferenceCallFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_ConferenceCallFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_ConnectionFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_ConnectionFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_Dir --></label>
+        <name>OdigoCti__Odigo_WsErr_Dir</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_DirEntr --></label>
+        <name>OdigoCti__Odigo_WsErr_DirEntr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_HangupCallFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_HangupCallFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_HoldOnCallFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_HoldOnCallFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_NoDestination --></label>
+        <name>OdigoCti__Odigo_WsErr_NoDestination</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_NoMode --></label>
+        <name>OdigoCti__Odigo_WsErr_NoMode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_NoTemplate --></label>
+        <name>OdigoCti__Odigo_WsErr_NoTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_NoToken --></label>
+        <name>OdigoCti__Odigo_WsErr_NoToken</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_RecordCallFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_RecordCallFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_Refresh --></label>
+        <name>OdigoCti__Odigo_WsErr_Refresh</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_ResumeCallFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_ResumeCallFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_SettingsFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_SettingsFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_Skills --></label>
+        <name>OdigoCti__Odigo_WsErr_Skills</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_SmsTemplate --></label>
+        <name>OdigoCti__Odigo_WsErr_SmsTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_Stats --></label>
+        <name>OdigoCti__Odigo_WsErr_Stats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_SupervisionMetrics --></label>
+        <name>OdigoCti__Odigo_WsErr_SupervisionMetrics</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_SupervisionMyAgents --></label>
+        <name>OdigoCti__Odigo_WsErr_SupervisionMyAgents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_Switch --></label>
+        <name>OdigoCti__Odigo_WsErr_Switch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_TaskSkill --></label>
+        <name>OdigoCti__Odigo_WsErr_TaskSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_TransferFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_TransferFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_UnrecordCallFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_UnrecordCallFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_WebRTCConfFailed --></label>
+        <name>OdigoCti__Odigo_WsErr_WebRTCConfFailed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_WebRTCInvalidRoutinClientId --></label>
+        <name>OdigoCti__Odigo_WsErr_WebRTCInvalidRoutinClientId</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_WsErr_Wrap --></label>
+        <name>OdigoCti__Odigo_WsErr_Wrap</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Agt --></label>
+        <name>OdigoCti__Odigo_Ws_Agt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_ChangeSkills --></label>
+        <name>OdigoCti__Odigo_Ws_ChangeSkills</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_ConferenceCall --></label>
+        <name>OdigoCti__Odigo_Ws_ConferenceCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_ConfigRetrieved --></label>
+        <name>OdigoCti__Odigo_Ws_ConfigRetrieved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_ConnectionSuccess --></label>
+        <name>OdigoCti__Odigo_Ws_ConnectionSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Dir --></label>
+        <name>OdigoCti__Odigo_Ws_Dir</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_DirEntr --></label>
+        <name>OdigoCti__Odigo_Ws_DirEntr</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_HangupCall --></label>
+        <name>OdigoCti__Odigo_Ws_HangupCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_HoldOnCall --></label>
+        <name>OdigoCti__Odigo_Ws_HoldOnCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_RecordCall --></label>
+        <name>OdigoCti__Odigo_Ws_RecordCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Refresh --></label>
+        <name>OdigoCti__Odigo_Ws_Refresh</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_ResumeCall --></label>
+        <name>OdigoCti__Odigo_Ws_ResumeCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Settings --></label>
+        <name>OdigoCti__Odigo_Ws_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Skills --></label>
+        <name>OdigoCti__Odigo_Ws_Skills</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_SmsTemplate --></label>
+        <name>OdigoCti__Odigo_Ws_SmsTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Switch --></label>
+        <name>OdigoCti__Odigo_Ws_Switch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_TaskSkill --></label>
+        <name>OdigoCti__Odigo_Ws_TaskSkill</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Transfer --></label>
+        <name>OdigoCti__Odigo_Ws_Transfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_UnrecordCall --></label>
+        <name>OdigoCti__Odigo_Ws_UnrecordCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_WebRTCConfigRetrieved --></label>
+        <name>OdigoCti__Odigo_Ws_WebRTCConfigRetrieved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Odigo_Ws_Wrap --></label>
+        <name>OdigoCti__Odigo_Ws_Wrap</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OmniMappingAvailableLightning --></label>
+        <name>OdigoCti__OmniMappingAvailableLightning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OmniMappingBreaksLightning --></label>
+        <name>OdigoCti__OmniMappingBreaksLightning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- OmniOnCallLightning --></label>
+        <name>OdigoCti__OmniOnCallLightning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RecordFiltering --></label>
+        <name>OdigoCti__RecordFiltering</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RecordFilteringAgentFirst --></label>
+        <name>OdigoCti__RecordFilteringAgentFirst</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RecordFilteringAgentOnly --></label>
+        <name>OdigoCti__RecordFilteringAgentOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RecordFilteringAutoFirst --></label>
+        <name>OdigoCti__RecordFilteringAutoFirst</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RecordFilteringAutoOnly --></label>
+        <name>OdigoCti__RecordFilteringAutoOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RefreshStatGate --></label>
+        <name>OdigoCti__RefreshStatAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RefreshStatGate --></label>
+        <name>OdigoCti__RefreshStatGate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- RefreshStatSupervision --></label>
+        <name>OdigoCti__RefreshStatSupervision</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- retrieve historic stats --></label>
+        <name>OdigoCti__RetrieveHistoricStatsAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- retrieve historic gates --></label>
+        <name>OdigoCti__RetrieveHistoricStatsGate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- delete all stats --></label>
+        <name>OdigoCti__SuccessDeleteAllStats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer --></label>
+        <name>OdigoCti__Transfer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP04BtnCheckConf --></label>
+        <name>OdigoCti__VFP04BtnCheckConf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP04_Odigo_Conf --></label>
+        <name>OdigoCti__VFP04_Odigo_Conf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP04_Odigo_Conf_Name --></label>
+        <name>OdigoCti__VFP04_Odigo_Conf_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP04_Odigo_DefaultConfDel --></label>
+        <name>OdigoCti__VFP04_Odigo_DefaultConfDel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP04_Odigo_DelConfConfm --></label>
+        <name>OdigoCti__VFP04_Odigo_DelConfConfm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- VFP04_Odigo_SelectConf --></label>
+        <name>OdigoCti__VFP04_Odigo_SelectConf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Asst. Phone --></label>
+        <name>OdigoCti__lbl_AsstPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Business Phone --></label>
+        <name>OdigoCti__lbl_BusinessPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Call back --></label>
+        <name>OdigoCti__lbl_Call_back</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Cancel Transfer Button --></label>
+        <name>OdigoCti__lbl_CancelTransferButton</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lbl_ConnectedViaOdigo --></label>
+        <name>OdigoCti__lbl_ConnectedViaOdigo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lbl_ConnectingViaOdigo --></label>
+        <name>OdigoCti__lbl_ConnectingViaOdigo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Enter Phone Number --></label>
+        <name>OdigoCti__lbl_EnterPhoneNumber</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Hang Up Call --></label>
+        <name>OdigoCti__lbl_Hang_Up_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Home Phone --></label>
+        <name>OdigoCti__lbl_HomePhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Inbound --></label>
+        <name>OdigoCti__lbl_Inbound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Internal --></label>
+        <name>OdigoCti__lbl_Internal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Mobile Phone --></label>
+        <name>OdigoCti__lbl_MobilePhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Other Phone --></label>
+        <name>OdigoCti__lbl_OtherPhone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Outbound --></label>
+        <name>OdigoCti__lbl_Outbound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Outgoing Call --></label>
+        <name>OdigoCti__lbl_Outgoing_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lbl_Record_Call --></label>
+        <name>OdigoCti__lbl_Record_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lbl_Record_Refused --></label>
+        <name>OdigoCti__lbl_Record_Refused</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lbl_Recording_Call --></label>
+        <name>OdigoCti__lbl_Recording_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Stop Recording --></label>
+        <name>OdigoCti__lbl_StopRecording</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Take Back Call --></label>
+        <name>OdigoCti__lbl_Take_Back_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Transfer Call --></label>
+        <name>OdigoCti__lbl_TransferCall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- lbl_Transfer_Call --></label>
+        <name>OdigoCti__lbl_Transfer_Call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- call --></label>
+        <name>OdigoCti__lbl_call</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- email --></label>
+        <name>OdigoCti__lbl_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- fax --></label>
+        <name>OdigoCti__lbl_fax</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- map --></label>
+        <name>OdigoCti__lbl_map</name>
     </customLabels>
     <customLabels>
         <label>Non ha trovato l&apos;organizzazione che stava cercando?</label>
@@ -26265,6 +30485,26 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>PortalService</name>
     </customLabels>
     <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Body --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Body</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 1 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 2 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Title --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Impostazioni</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -26413,6 +30653,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reactivate Risk Event warning message --></label>
+        <name>Reactivate_Risk_Event_warning_message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -26473,6 +30717,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
+        <label><!-- Resource Center Service Description --></label>
+        <name>Resource_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -26487,6 +30735,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- SIDRA_GE_Info --></label>
         <name>SIDRA_GE_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIDRA Repayment Instalments not allowed for CASS --></label>
+        <name>SIDRA_Repayment_Instalments_not_allowed_for_CASS</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS --></label>
@@ -26521,6 +30773,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>SIS_L2_Customer_Support</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIS Notify Change in SIS 3digit Code --></label>
+        <name>SIS_Notify_Change_in_SIS_3digit_Code</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS Operations --></label>
         <name>SIS_Operations</name>
     </customLabels>
@@ -26547,6 +30803,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save &amp; Close --></label>
+        <name>SaveClose</name>
     </customLabels>
     <customLabels>
         <label><!-- Search --></label>
@@ -27775,6 +32035,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label>Qualcun altro da informare?</label>
         <name>csp_RecipientsQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Remove Contact --></label>
+        <name>csp_Remove_Contact</name>
     </customLabels>
     <customLabels>
         <label>La sua agenzia attualmente non dispone di un account IATA EasyPay.&lt;br/&gt;&lt;br/&gt;Si prega di contattare il firmatario autorizzato della propria sede centrale per richiedere l&apos;apertura di un account IATA EasyPay. In qualità di amministratore del portale potrà aggiornare le &lt;a href=&quot;/my-profile&quot;&gt;Informazioni personali&lt;/a&gt; per autonominarsi firmatario autorizzato, oppure potrà richiedere al corretto amministratore del portale dalla pagina &lt;a href=&quot;/company-profile&quot;&gt;Amministrazione dell&apos;azienda-&gt;Contatti&lt;/a&gt; di aprire il suo account EasyPay.&lt;br/&gt;&lt;br/&gt;Non esiti a &lt;a href=&quot;/Support-Reach-Us&quot;&gt;contattare l&apos;assistenza&lt;/a&gt; per qualsiasi necessità.</label>
@@ -29085,6 +33349,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>icg_gridEmptyMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg handling services --></label>
+        <name>icg_handling_services</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg has been approved --></label>
         <name>icg_has_been_approved</name>
     </customLabels>
@@ -29135,6 +33403,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- icg in --></label>
         <name>icg_in</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in house --></label>
+        <name>icg_in_house</name>
     </customLabels>
     <customLabels>
         <label><!-- icg in progress --></label>
@@ -29565,6 +33837,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>icg_order_to_create_new_phyisical_address</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg others --></label>
+        <name>icg_others</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg overall airport size --></label>
         <name>icg_overall_aiport_size</name>
     </customLabels>
@@ -29659,6 +33935,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- icg process finished --></label>
         <name>icg_process_finished</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg provided bythird party --></label>
+        <name>icg_provided_bythird_party</name>
     </customLabels>
     <customLabels>
         <label><!-- icg public area --></label>
@@ -30113,6 +34393,14 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>icg_to</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg tooltip service info1 --></label>
+        <name>icg_tooltip_service_info1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg tooltip service info2 --></label>
+        <name>icg_tooltip_service_info2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg total facility space --></label>
         <name>icg_total_facility_space</name>
     </customLabels>
@@ -30159,6 +34447,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- icg validation management --></label>
         <name>icg_validation_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg validation services message --></label>
+        <name>icg_validation_services_message</name>
     </customLabels>
     <customLabels>
         <label><!-- icg watch video --></label>
@@ -34221,10 +38513,6 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Available_Services</name>
     </customTabs>
     <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
-    </customTabs>
-    <customTabs>
         <label><!-- CNS E-Bulletin --></label>
         <name>CNS_E_Bulletin</name>
     </customTabs>
@@ -36504,6 +40792,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Emails --></label>
             <name>Emails</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Case Tracking History with Cases --></description>
+        <label><!-- Case Tracking History with Cases --></label>
+        <name>Case_Tracking_History_with_Cases</name>
+        <sections>
+            <label><!-- Case Tracking History --></label>
+            <name>Case Tracking History</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -38879,6 +43180,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Opportunitis with Accounts --></description>
+        <label><!-- Opportunitis with Accounts --></label>
+        <name>Opportunitis_with_Accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Orders Products &amp; Charges --></description>
         <label><!-- Orders Products &amp; Charges --></label>
         <name>Orders_Products_Charges</name>
@@ -38961,16 +43275,148 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <label>Accesso servizi Portale</label>
         <name>Portal_Service_Access</name>
         <sections>
+            <columns>
+                <label><!-- Account Category --></label>
+                <name>Account Category</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country --></label>
+                <name>Account Country</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country ISO Code --></label>
+                <name>Account Country ISO Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country ISO Code --></label>
+                <name>Account Country ISO Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account IATA Code --></label>
+                <name>Account IATA Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Account ISO Country --></label>
+                <name>Account ISO Country</name>
+            </columns>
+            <columns>
+                <label><!-- Account Name --></label>
+                <name>Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Account Record Type --></label>
+                <name>Account Record Type</name>
+            </columns>
+            <columns>
+                <label><!-- Account Sector --></label>
+                <name>Account Sector</name>
+            </columns>
             <label><!-- Account Information --></label>
             <name>Account Information</name>
         </sections>
         <sections>
+            <columns>
+                <label><!-- Contact Email --></label>
+                <name>Contact Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact ID --></label>
+                <name>Contact ID</name>
+            </columns>
+            <columns>
+                <label><!-- Contact Name --></label>
+                <name>Contact Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact Title --></label>
+                <name>Contact Title</name>
+            </columns>
+            <columns>
+                <label><!-- Contact User Portal Status --></label>
+                <name>Contact User Portal Status</name>
+            </columns>
             <label><!-- Contact Information --></label>
             <name>Contact Information</name>
         </sections>
         <sections>
             <label><!-- Portal Service Access --></label>
             <name>Portal Service Access</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Portal Service Application URL --></label>
+                <name>Portal Service Application URL</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Auto approved for --></label>
+                <name>Portal Service: Auto approved for</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Cannot be granted internally --></label>
+                <name>Portal Service: Cannot be granted internally</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Cannot be managed by portal admin --></label>
+                <name>Portal Service: Cannot be managed by portal admin</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Critical Service --></label>
+                <name>Portal Service: Critical Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Description --></label>
+                <name>Portal Service: Description</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Functional Role --></label>
+                <name>Portal Service: Functional Role</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Hide on Homepage --></label>
+                <name>Portal Service: Hide on Homepage</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requestable --></label>
+                <name>Portal Service: Requestable</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requires Level2 Registration --></label>
+                <name>Portal Service: Requires Level2 Registration</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requires Service Admin Approval --></label>
+                <name>Portal Service: Requires Service Admin Approval</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Restricted App --></label>
+                <name>Portal Service: Restricted App</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Service --></label>
+                <name>Portal Service: Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Service --></label>
+                <name>Portal Service: Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Visible --></label>
+                <name>Portal Service: Visible</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Visible on CNS --></label>
+                <name>Portal Service: Visible on CNS</name>
+            </columns>
+            <columns>
+                <label><!-- Service Description --></label>
+                <name>Service Description</name>
+            </columns>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -39271,6 +43717,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Service Usages --></label>
             <name>Service Usages</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Service Resources and Skills --></description>
+        <label><!-- Service Resources and Skills --></label>
+        <name>Service_Resources_and_Skills</name>
+        <sections>
+            <label><!-- Service Resource Skills --></label>
+            <name>Service Resource Skills</name>
+        </sections>
+        <sections>
+            <label><!-- Service Resources --></label>
+            <name>Service Resources</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -39690,6 +44149,15 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- User Provisioning Requests --></label>
             <name>User Provisioning Requests</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Service Resources and skills --></description>
+        <label><!-- Users with Service Resources and skills --></label>
+        <name>Users_with_Service_Resources_and_skills</name>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
         </sections>
     </reportTypes>
     <reportTypes>

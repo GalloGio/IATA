@@ -9,8 +9,10 @@ private class AccountHandlerTest {
 
 
 	private static void loadAccounts() {
-		acc1 = new Account(Name='testAccount1', Type=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Sector__c=AMS_Utils.SECTOR_PASSENGER, Category__c=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Location_Type__c = 'AO');
-		acc2 = new Account(Name='testAccount2', Type=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Sector__c=AMS_Utils.SECTOR_PASSENGER, Category__c=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Location_Type__c = 'AO');
+		Id airlineHQRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+		acc1 = new Account(Name='testAccount1', RecordTypeId=airlineHQRT, Type=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Sector__c=AMS_Utils.SECTOR_PASSENGER, Category__c=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Location_Type__c = 'AO');
+		acc2 = new Account(Name='testAccount2', RecordTypeId=airlineHQRT, Type=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Sector__c=AMS_Utils.SECTOR_PASSENGER, Category__c=AMS_Utils.CATEGORY_PASSENGER_SALES_AGENT, Location_Type__c = 'AO');
 
 		list<Account> listAccount1 = new list<Account>();
 		listAccount1.add(acc1);
@@ -161,6 +163,28 @@ private class AccountHandlerTest {
 		System.assertEquals(false, acc1child.Has_an_Administrator_User_Portal_Sum__c);
 		System.assertEquals(true, acc1child.Has_an_Administrator_User_Portal_Formula__c);
 		System.enqueueJob(new AsyncDML_Util(listAccount, AsyncDML_Util.DML_UNDELETE, false));
+	}
+
+	@isTest
+	private static void testNotifyFieldChange() {
+		loadAccounts();
+
+		User currentUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+		System.runAs(currentUser) {
+			// add custom permission to be able to edit ACLI_SAP_Id__c
+			PermissionSet ps = [SELECT Id FROM PermissionSet WHERE Name = 'Airline_HQ_ACLI'];
+			insert new PermissionSetAssignment(AssigneeId = currentUser.Id, PermissionSetId = ps.Id);
+		}
+
+		Test.startTest();
+		System.assertEquals(0,Limits.getEmailInvocations());
+		System.runAs(currentUser) {
+			acc1.ACLI_SAP_Id__c = '0034567890';
+			acc1.EF_SIS_Code__c = '123';
+			update acc1;
+		}
+		System.assertEquals(1,Limits.getEmailInvocations());
+		Test.stopTest();
 	}
 
 }

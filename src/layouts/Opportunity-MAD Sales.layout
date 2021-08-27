@@ -85,6 +85,10 @@
                 <behavior>Edit</behavior>
                 <field>Event_Source_lk__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Related_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

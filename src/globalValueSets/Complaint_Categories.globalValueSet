@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Accreditation</fullName>
+        <default>false</default>
+        <label>Accreditation</label>
+    </customValue>
+    <customValue>
+        <fullName>Agency Risk Management</fullName>
+        <default>false</default>
+        <label>Agency Risk Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Coding, MITA &amp; BIETA</fullName>
+        <default>false</default>
+        <label>Airline Coding, MITA &amp; BIETA</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Management</fullName>
+        <default>false</default>
+        <label>Airline Management</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Participation</fullName>
+        <default>false</default>
+        <label>Airline Participation</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Suspension</fullName>
+        <default>false</default>
+        <label>Airline Suspension</label>
+    </customValue>
+    <customValue>
+        <fullName>AirportIS</fullName>
+        <default>false</default>
+        <label>AirportIS</label>
+    </customValue>
+    <customValue>
+        <fullName>Airsat</fullName>
+        <default>false</default>
+        <label>Airsat</label>
+    </customValue>
+    <customValue>
+        <fullName>Banking</fullName>
+        <default>false</default>
+        <label>Banking</label>
+    </customValue>
+    <customValue>
+        <fullName>BIS</fullName>
+        <default>false</default>
+        <label>BIS</label>
+    </customValue>
+    <customValue>
+        <fullName>BIS – Business Intelligence Services</fullName>
+        <default>false</default>
+        <label>BIS – Business Intelligence Services</label>
+    </customValue>
+    <customValue>
+        <fullName>CargoIS</fullName>
+        <default>false</default>
+        <label>CargoIS</label>
+    </customValue>
+    <customValue>
+        <fullName>CheckACode</fullName>
+        <default>false</default>
+        <label>CheckACode</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Services</fullName>
+        <default>false</default>
+        <label>Customer Services</label>
+    </customValue>
+    <customValue>
+        <fullName>DDS</fullName>
+        <default>false</default>
+        <label>DDS</label>
+    </customValue>
+    <customValue>
+        <fullName>Distance Learning</fullName>
+        <default>false</default>
+        <label>Distance Learning</label>
+    </customValue>
+    <customValue>
+        <fullName>E&amp;F</fullName>
+        <default>false</default>
+        <label>E&amp;F</label>
+    </customValue>
+    <customValue>
+        <fullName>Ebroadcast</fullName>
+        <default>false</default>
+        <label>Ebroadcast</label>
+    </customValue>
+    <customValue>
+        <fullName>FDC</fullName>
+        <default>false</default>
+        <label>FDC</label>
+    </customValue>
+    <customValue>
+        <fullName>FFP</fullName>
+        <default>false</default>
+        <label>FFP</label>
+    </customValue>
+    <customValue>
+        <fullName>GAP</fullName>
+        <default>false</default>
+        <label>GAP</label>
+    </customValue>
+    <customValue>
+        <fullName>GDP</fullName>
+        <default>false</default>
+        <label>GDP</label>
+    </customValue>
+    <customValue>
+        <fullName>Global Agency Directory</fullName>
+        <default>false</default>
+        <label>Global Agency Directory</label>
+    </customValue>
+    <customValue>
+        <fullName>IASC</fullName>
+        <default>false</default>
+        <label>IASC</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA AgentExperience</fullName>
+        <default>false</default>
+        <label>IATA AgentExperience</label>
+    </customValue>
+    <customValue>
+        <fullName>IATAN</fullName>
+        <default>false</default>
+        <label>IATAN</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Travel Pass</fullName>
+        <default>false</default>
+        <label>IATA Travel Pass</label>
+    </customValue>
+    <customValue>
+        <fullName>ICCS</fullName>
+        <default>false</default>
+        <label>ICCS</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH</fullName>
+        <default>false</default>
+        <label>ICH</label>
+    </customValue>
+    <customValue>
+        <fullName>ID cards</fullName>
+        <default>false</default>
+        <label>ID cards</label>
+    </customValue>
+    <customValue>
+        <fullName>iiNet</fullName>
+        <default>false</default>
+        <label>iiNet</label>
+    </customValue>
+    <customValue>
+        <fullName>IMX</fullName>
+        <default>false</default>
+        <label>IMX</label>
+    </customValue>
+    <customValue>
+        <fullName>Instructor Led</fullName>
+        <default>false</default>
+        <label>Instructor Led</label>
+    </customValue>
+    <customValue>
+        <fullName>Invoicing &amp; Collection</fullName>
+        <default>false</default>
+        <label>Invoicing &amp; Collection</label>
+    </customValue>
+    <customValue>
+        <fullName>MarketIS</fullName>
+        <default>false</default>
+        <label>MarketIS</label>
+    </customValue>
+    <customValue>
+        <fullName>MRO SmartHub</fullName>
+        <default>false</default>
+        <label>MRO SmartHub</label>
+    </customValue>
+    <customValue>
+        <fullName>Operational Systems</fullName>
+        <default>false</default>
+        <label>Operational Systems</label>
+    </customValue>
+    <customValue>
+        <fullName>PAXIS</fullName>
+        <default>false</default>
+        <label>PAXIS</label>
+    </customValue>
+    <customValue>
+        <fullName>Publications</fullName>
+        <default>false</default>
+        <label>Publications</label>
+    </customValue>
+    <customValue>
+        <fullName>Quality</fullName>
+        <default>false</default>
+        <label>Quality</label>
+    </customValue>
+    <customValue>
+        <fullName>Remittance &amp; Settlement</fullName>
+        <default>false</default>
+        <label>Remittance &amp; Settlement</label>
+    </customValue>
+    <customValue>
+        <fullName>Reporting &amp; Billing</fullName>
+        <default>false</default>
+        <label>Reporting &amp; Billing</label>
+    </customValue>
+    <customValue>
+        <fullName>SIS</fullName>
+        <default>false</default>
+        <label>SIS</label>
+    </customValue>
+    <customValue>
+        <fullName>TACT</fullName>
+        <default>false</default>
+        <label>TACT</label>
+    </customValue>
+    <customValue>
+        <fullName>TASF</fullName>
+        <default>false</default>
+        <label>TASF</label>
+    </customValue>
+    <customValue>
+        <fullName>TIMATIC Solutions</fullName>
+        <default>false</default>
+        <label>TIMATIC Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Treasury dashboard</fullName>
+        <default>false</default>
+        <label>Treasury dashboard</label>
+    </customValue>
+    <customValue>
+        <fullName>weblink</fullName>
+        <default>false</default>
+        <label>weblink</label>
+    </customValue>
+    <customValue>
+        <fullName>YMQ Publications</fullName>
+        <default>false</default>
+        <label>YMQ Publications</label>
+    </customValue>
+    <description>Values used for Case complaint categories and Continuous Improvement Process categories</description>
+    <masterLabel>Complaint Categories</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

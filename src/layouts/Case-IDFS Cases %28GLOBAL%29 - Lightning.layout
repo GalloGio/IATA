@@ -459,6 +459,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.Close_case_global</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -479,12 +484,12 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Escalate_within_IATA_lightning</actionName>
+            <actionName>Case.Log_Phone_case_lwc</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Case.Log_Phone_case_lightning</actionName>
+            <actionName>Case.Escalate_within_IATA_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
         </platformActionListItems>
@@ -524,9 +529,9 @@
             <sortOrder>13</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>0</sortOrder>
+            <actionName>Case.NewOppAction</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>14</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>

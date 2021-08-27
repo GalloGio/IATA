@@ -54,9 +54,15 @@ public class AMS_OSCAR_ApprovalHelper
 	}
 
 	//Approve or rejects a single ProcessInstanceWorkItem with comments
-	public static void processForObject(String action, Id recordId, Id[] userIds, String comments)
+	public static void processForObject(String action, Id recordId, Id[] userIds, String comments, List<Id> currentApprovals)
 	{
-		process(action, getAllApprovals(new List<Id> { recordId })[0], userIds, comments);
+		
+		if (currentApprovals == null){
+			process(action, getAllApprovals(new List<Id> { recordId })[0], userIds, comments);
+		} else {
+			process(action, currentApprovals[0], userIds, comments);
+		}
+		
 	}
 
 	//Approve or rejects a single ProcessInstanceWorkItem with comments

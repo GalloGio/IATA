@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to store pairs of key-value to be used in Validation Rules instead of custom labels.
+To add new values use the name of the object first, like &apos;Task_Valid_Subjects&apos;</description>
+    <fields>
+        <fullName>Value__c</fullName>
+        <description>this filed must be used in the validation Rules like in this example:
+$CustomMetadata.GVR__mdt.Task_Valid_Subjects.Value__c</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Value</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Global Validation Rules</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>DeveloperName</columns>
+        <columns>Value__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <pluralLabel>Global Validation Rules</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -195,6 +195,13 @@
             summary="Modifying PCI Compliance will not change the forms of payment for Credit Card at Agency Level."
             rendered="{!isOSCARCorrection}"
         />
+
+
+        <apex:pageMessage severity="WARNING"
+            strength="1"
+            summary="{!$Label.Reactivate_Risk_Event_warning_message}"
+            rendered="{!isEventRiskToActivate}"
+        />
 		
 		<apex:pageMessage severity="WARNING"
             strength="1"

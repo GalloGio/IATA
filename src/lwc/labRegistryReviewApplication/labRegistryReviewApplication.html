@@ -1,0 +1,379 @@
+<template>
+	<div class="registration-modal">
+		<div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
+
+			<template if:false={isAppropriateCase}>
+				The case is not an Lab Registry Application.
+			</template>
+
+			<template if:true={isAppropriateCase}>
+
+				<template if:true={isPARAlreadyApprovedOrDenied}>
+					Application has already been processed.
+				</template>
+
+				<template if:false={isPARAlreadyApprovedOrDenied}>
+					<span slot="pageBody">
+						<c-portal-custom-card-container>
+							<span slot="cardBody">
+								<div >
+									<lightning-layout multiple-rows vertical-align="stretch">
+										<div class="IEFixDisplayContainer">
+											<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+											</lightning-layout-item>
+
+
+											<div class="sectionHeaderContainer">
+												<lightning-layout-item size="6" class="IEFixDisplay">
+													<div class="sectionTitle">LAB Registry</div>
+												</lightning-layout-item>
+											</div>
+											<lightning-layout-item size="6" class="IEFixDisplay">
+												<div class="sectionDescription">Review Application</div>
+											</lightning-layout-item>
+
+											<lightning-layout-item size="6" class="IEFixDisplay">
+											</lightning-layout-item>
+
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
+
+											<!-- Lab Details-->
+											<div>
+												<lightning-layout-item size="12" class="IEFixDisplay">
+													<div class="sectionSubTitle">1. {labels.CSP_labReg_Step_GeneralInformation}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+
+												<div class="fieldContainer">
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_InitialQuestion}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={labTypeSelection} disabled/>
+															</div>
+														</div>
+													</lightning-layout-item>
+
+													<!-- FORM A -->
+													<template  if:true={isAForm} >
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_How_Long_In_Business}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={howLongInBusinessSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Operating_Brand}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={operatingUnderBrand} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichBrand}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={whichBrands} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_SLA_InPlace}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={SLAInPlace} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showNatureOfSLA}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Describe_SLA_Nature}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={NatureOfSLA} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_manageBookingSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={manageBookingSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_issueTestResultsSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={issueTestResultsSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={labsPartOfNationalPlatform} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+	
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={whichNationalPlatform} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+													</template>
+
+
+													
+													<!-- FORM B -->
+
+													<template  if:true={isBForm}>
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_How_Long_In_Business}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={howLongInBusinessSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_TypeOfLab}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={typeOfLabSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_manageBookingSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={manageBookingSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_issueTestResultsSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={issueTestResultsSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_nationalAccreditationSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={nationalAccreditationSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_AdditionalCertInPlace}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={AdditionalCertInPlace} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showAdditionalCert}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={whichAdditionalCert} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_National_Govern_Platform}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={endorsedByGovern} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichGovern}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={whichGovern} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={labsPartOfNationalPlatform} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+	
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={whichNationalPlatform} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														
+													</template>
+												</div>
+											</div>
+
+
+											<!-- COUNTRIES -->
+											<div>
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+
+												<lightning-layout-item size="12" class="IEFixDisplay">
+													<div class="sectionSubTitle">2. {labels.CSP_LabReg_Step_Locations}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+
+												<lightning-datatable
+														key-field="Id"
+														data={lsCountriesLab}
+														columns={countryColumns}
+														hide-checkbox-column
+														resize-column-disabled
+														suppress-bottom-bar>
+												</lightning-datatable>
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+											</div>
+
+
+											<!-- AIRLINE AGREEMENTS-->
+											<div>
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+
+												<lightning-layout-item size="12" class="IEFixDisplay">
+													<div class="sectionSubTitle">3. {labels.CSP_labReg_Step_Airline_Agreements}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+
+												<div class="fieldContainer">
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_airlinePartnershipSelection}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={airlinePartnershipSelection} disabled/>
+															</div>
+														</div>
+													</lightning-layout-item>
+												</div>
+												
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+
+												<lightning-datatable
+														key-field="Id"
+														data={lsAirlineAgreement}
+														columns={airlinesColumns}
+														hide-checkbox-column
+														resize-column-disabled
+														suppress-bottom-bar>
+												</lightning-datatable>
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+											</div>
+										</div>
+									</lightning-layout>
+								</div>
+
+								<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+								</lightning-layout-item>
+					
+								<div class="buttonsContainer">
+									<lightning-layout-item size="1"></lightning-layout-item>
+									<lightning-layout-item size="2" class="backButtonWrapper">
+										<lightning-button variant="base"
+											label="Cancel"
+											onclick={cancel}
+											class="blueCustomButtonLinkSmall"
+											icon-position="left">
+										</lightning-button>
+									</lightning-layout-item>
+
+									<lightning-layout-item size="2"></lightning-layout-item>
+
+									<lightning-layout-item size="2" class="IEFixDisplay">
+										<lightning-button 
+											class="blueCustomButtonLinkSmall" 
+											data-id="denyApplication" 
+											label="Deny application"
+											variant="base" 
+											disabled={isCompleted}
+											onclick={denyApplication}>
+										</lightning-button>
+									</lightning-layout-item>
+									<lightning-layout-item size="2"></lightning-layout-item>
+
+									<lightning-layout-item size="2" class="IEFixDisplay">
+										<lightning-button 
+											class="blueCustomButtonLinkSmall" 
+											data-id="Approve" 
+											label="Approve Application"
+											variant="base"
+											disabled={isCompleted}
+											onclick={approveApplication}>
+										</lightning-button>
+									</lightning-layout-item>
+
+									<lightning-layout-item size="1"></lightning-layout-item>
+								</div>
+
+								<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+								</lightning-layout-item>
+							</span>
+						</c-portal-custom-card-container>
+					</span>
+				</template>
+			</template>
+		</div>
+
+		<div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+			<div class="slds-spinner slds-spinner_medium" role="status">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</div>
+	</div>
+</template>

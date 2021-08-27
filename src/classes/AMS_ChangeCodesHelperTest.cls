@@ -348,6 +348,7 @@ private class AMS_ChangeCodesHelperTest {
 		att.ANG_EmailTemplate_NG__c = 'emailTemplate';
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
+		att.Accreditation_Model__c = 'Cashless;Cash;Multicountry';
 		insert att;
 
 

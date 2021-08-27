@@ -21,6 +21,7 @@ public without sharing class CW_SearchEngine {
 	private static Set<Id> filteredStationIds = new Set<Id>();
 	/*Available Languages*/
 	private static final List<CW_Utilities.PicklistValue> AVAILABLE_LANGUAGES = (List<CW_Utilities.PicklistValue>) JSON.deserialize(CW_Utilities.getFacilityLanguages(), List<CW_Utilities.PicklistValue>.class);
+	private static final List<CW_Utilities.PicklistVal> AVAILABLE_SERVICES = CW_Utilities.getAllServicesAvailable();
 	/*
 	* @Description:
  
@@ -32,6 +33,11 @@ public without sharing class CW_SearchEngine {
 	*/
 	@auraEnabled
 	public static String getInfo(String attributes, Boolean isMapQuery, Boolean getOpeningHours, Boolean getHandledAirlines, Boolean orderByOnAirport, Boolean isPendingApproval, Integer limitRecords, Integer offset, Boolean isStrongFilter) {
+		List<String> listValidationPrograms = new List<String>();
+		if(String.isNotBlank(CW_Utilities.VALIDATION_PROGRAMS)){
+			listValidationPrograms = CW_Utilities.VALIDATION_PROGRAMS.split(',');
+		}
+
 		try {
 			String response;
 			List<OutputRow> lstARD = new List<OutputRow>();
@@ -75,7 +81,7 @@ public without sharing class CW_SearchEngine {
 				}
 			}
 
-			List<ICG_Certification__c> allCertifications = [SELECT Id, Name, Label__c, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Order__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c ASC LIMIT 1000];
+			List<ICG_Certification__c> allCertifications = [SELECT Id, Name, Label__c, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Order__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true AND ValidationPrograms__c IN : listValidationPrograms ORDER BY Order__c ASC LIMIT 1000];
 			if (!lstResults.isEmpty()) {
 				/* lstARD - list account role detail == Facility rows */
 				for (ICG_Account_Role_Detail__c result : lstResults) {					
@@ -117,9 +123,10 @@ public without sharing class CW_SearchEngine {
 			querySelect += ', Opening_Hours__c ';
 		}
 		if (getHandledAirlines == true) {
-			querySelect += ', (Select Id, Handled_Airline__c, Handled_Airline__r.Name from ICG_Account_Role_Detail_Relationships__r) ';
+			querySelect += ', (Select Id, Handled_Airline__c, Handled_Airline__r.Name, Handled_Airline__r.Airline_Designator__c from ICG_Account_Role_Detail_Relationships__r) ';
 		}
 
+		querySelect += ', Third_Party_Services__c,  In_House_Services__c ';
 		querySelect += ' FROM ' + ARDETAIL;
 		String limitRecordsSt = limitRecords != null ? ' limit ' + String.valueOf(limitRecords) : ' limit 2000';
 		String offsetSt = offset != null ? ' offset ' + String.valueOf(offset) : '';
@@ -287,7 +294,7 @@ public without sharing class CW_SearchEngine {
 	*	@Param: List<Param> lstAfterQueryFilters - althought 
 	*   @Returns: List<OutputRow> lstARDoutput filtered by lstAfterQueryFilters params
 	*/
-	private static List<OutputRow> filterResultsAfterQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
+	public static List<OutputRow> filterResultsAfterQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
 		List<OutputRow> lstARDoutput;
 
 		String query = getAdditionalQuery(lstAfterQueryFilters);
@@ -440,9 +447,27 @@ public without sharing class CW_SearchEngine {
 		if (param.fields != null) {
 			queryWhere += '(';
 			for (String field : param.fields) {
-				for (String paramValue : paramValues) {
-					String valueToAdd = checkBooleanString(paramValue) || checkIsNumber(paramValue) ? paramValue : ' \'' + paramValue + '\'';
-					queryWhere += field + ' ' + param.operator + valueToAdd + operatorANDOR;
+				if (param.operator == 'includes' && field.contains(';')){
+					List<String> internalFields = field.split(SPLITTER);
+					Integer cont = 0;
+					Integer contMax = internalFields.size();
+					for (String fieldItem : internalFields) {
+						cont++;
+						for (String paramValue : paramValues) {
+							String valueToAdd = checkBooleanString(paramValue) || checkIsNumber(paramValue) ? paramValue : ' (\'' + paramValue + '\')';
+							queryWhere += '(' + fieldItem + ' ' + param.operator + valueToAdd + ')';
+							
+							if (cont < contMax){
+								queryWhere += STRINGOR;
+							}
+						}
+					}
+				}
+				else{
+					for (String paramValue : paramValues) {
+						String valueToAdd = checkBooleanString(paramValue) || checkIsNumber(paramValue) ? paramValue : ' \'' + paramValue + '\'';
+						queryWhere += field + ' ' + param.operator + valueToAdd + operatorANDOR;
+					}
 				}
 			}
 			queryWhere = queryWhere.removeEnd(operatorANDOR) + ')';
@@ -517,6 +542,7 @@ public without sharing class CW_SearchEngine {
 	public class Facility {
 		public String name { get; set; }
 		public String type { get; set; }
+		public String typeDevName { get; set; }
 		public String image { get; set; }
 		public String description { get; set; }
 		public String phone { get; set; }
@@ -563,6 +589,9 @@ public without sharing class CW_SearchEngine {
 		public Decimal overallAirportSize { get; set; }
 		public Decimal fleet { get; set; }
 		public NearestAirport nearestAirport { get; set; }
+		List<CW_Utilities.PicklistVal> inHouseServices { get; set; }
+		List<CW_Utilities.PicklistVal> thirdPartyServices { get; set; }
+		List<CW_Utilities.PicklistVal> allServices { get; set; }
 		public String titleName { 
 			get { 
 				if (this.recordTypeDevName.containsIgnoreCase('Airport') && this.nearestAirport != null && this.nearestAirport.city != null) {
@@ -589,6 +618,7 @@ public without sharing class CW_SearchEngine {
 				this.formattedAddress = acr.Formatted_Address__c;
 				this.secondAddress = acr.Secondary_Address__c;
 				this.type = acr.Account_Role__r.Account__r.RecordType.Name;
+				this.typeDevName = acr.Account_Role__r.Account__r.RecordType.DeveloperName;
 				this.recordTypeIcon = PageReference.forResource('ICG_Resources', 'icons/company_type/' + acr.RecordType.DeveloperName.toLowerCase().replaceAll('_', '-') + '.svg').getUrl();
 				this.NumberEmployees = acr.Number_of_Employees__c;
 				this.FacilitySize = acr.Overall_Facility_Size_m2__c;
@@ -618,6 +648,22 @@ public without sharing class CW_SearchEngine {
 				this.fleet = acr.Fleet__c;
 				this.nearestAirport = new NearestAirport(acr.Nearest_Airport__c, acr.Nearest_Airport__r.Airport_Name__c, acr.Nearest_Airport__r.Code__c);
 				this.pilotInformation = acr.Pilot_Information__c;
+
+				List<CW_Utilities.PicklistVal> servicesInHouse = new List<CW_Utilities.PicklistVal>();
+				List<CW_Utilities.PicklistVal> servicesThirdParty = new List<CW_Utilities.PicklistVal>();
+				List<String> inHouse = (acr.In_House_Services__c != null) ? acr.In_House_Services__c.split(';') : new List<String>();
+				List<String> thirdParty = (acr.Third_Party_Services__c != null) ? acr.Third_Party_Services__c.split(';') : new List<String>();
+				for (CW_Utilities.PicklistVal item : AVAILABLE_SERVICES) {
+					if (!inHouse.isEmpty() && inHouse.contains(item.api)){
+						servicesInHouse.add(item);
+					} else if (!thirdParty.isEmpty() && thirdParty.contains(item.api)){
+						servicesThirdParty.add(item);
+					}
+				}
+
+				this.allServices = (acr.RecordType.DeveloperName == 'Ramp_Handler') ? AVAILABLE_SERVICES : new List<CW_Utilities.PicklistVal>();
+				this.inHouseServices = servicesInHouse;
+				this.thirdPartyServices = servicesThirdParty;
 			}
 			if (getOpeningHours == true) {
 				this.openingHours = CW_FacilityContactInfoController.stringToOpeningHours(acr.Opening_Hours__c);
@@ -646,7 +692,9 @@ public without sharing class CW_SearchEngine {
 					HandledElement airlineHandled = new HandledElement();
 					airlineHandled.selected = true;
 					airlineHandled.value = acrr.Handled_Airline__c;
-					airlineHandled.label = acrr.Handled_Airline__r.Name;
+					airlineHandled.label = 
+						acrr.Handled_Airline__r.Name +
+						(String.isNotBlank(acrr.Handled_Airline__r.Airline_designator__c) ? ' [' + acrr.Handled_Airline__r.Airline_designator__c + ']' : '');
 					handledAirlines.add(airlineHandled);
 				}
 			}

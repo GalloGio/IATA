@@ -157,6 +157,7 @@ public class ANG_RHCAlertTriggerHandler{
 												, ANG_Block_Cut_Cash_Form_of_Payment__c
 												, Create_SMAP_Case__c
 												, Stakeholders_email_list__c
+												, Accreditation_Model__c
 												, Email_Template_Internal_Stakeholders__c //ACAMBAS - NEWGEN-4466
 												FROM AMS_Country_Specific_Attributes__r
 												WHERE RecordTypeId = :ANG_RHCHelper.RECTYPE_RHCATTRIBUTE)
@@ -182,7 +183,14 @@ public class ANG_RHCAlertTriggerHandler{
 					if(c.ANG_Enable_NewGen__c) newGenAccounts.add(a.Id);
 					else legacyAccounts.add(a.Id);
 				}
-				for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r) configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c, att);
+				for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r){
+					if(!string.isBlank(att.Accreditation_Model__c)){
+						for(string AccModel:att.Accreditation_Model__c.split(';'))
+							configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c + AccModel, att);
+					}
+					
+					configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c, att);  //for exceptional monitoring
+				}
 			}
 			if(configs.isEmpty()) return; //no configurations set, no need to check further
 
@@ -201,7 +209,7 @@ public class ANG_RHCAlertTriggerHandler{
 					raAccMap.put(a.id,accounts.get(a.ANG_Account__c));
 				}
 
-				String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
+				String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c + accounts.get(a.ANG_Account__c).ANG_Accreditation_Model__c;
 				if(!configs.containsKey(key)) key = DEFAULT_CODE + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
 
 				if(configs.containsKey(key)){

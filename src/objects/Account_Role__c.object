@@ -775,6 +775,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Trained Staff Certification</fullName>
                 <default>false</default>
             </values>
@@ -1116,6 +1120,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Trained Staff Certification</fullName>
                 <default>false</default>
             </values>
@@ -1442,6 +1450,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Trained Staff Certification</fullName>
                 <default>false</default>
             </values>
@@ -1696,6 +1708,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Lab Registry</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Local Industry Groups</fullName>
                 <default>false</default>
             </values>
@@ -1761,6 +1777,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2094,6 +2114,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>

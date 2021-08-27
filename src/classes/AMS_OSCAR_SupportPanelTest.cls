@@ -6,8 +6,14 @@ public class AMS_OSCAR_SupportPanelTest {
 		PageReference pageRef = Page.AMS_OSCAR_SupportPanel;
 		Test.setCurrentPage(pageRef);
 
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
+		insert ctry ;
+
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
+		insert stt;
+
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-		Account acc1 = new Account(RecordTypeId = agencyRT, Name='Test1 Account');
+		Account acc1 = new Account(Short_Name__c='Test1 Agency', RecordTypeId = agencyRT, Name='Test1 Account');
 		insert acc1;
 
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = acc1.Id);
@@ -20,10 +26,16 @@ public class AMS_OSCAR_SupportPanelTest {
 		oscar.STEP2__c = 'Passed';
 		oscar.STEP1__c = 'Passed';
 		oscar.Bank_Guarantee_Requested__c = Date.today();
-		update oscar;
 
 		Case c = new Case(OSCAR__c = oscar.Id, recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
 		insert c;
+		
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = c.Id, Account_Name__c=acc1.Name, Short_Name__c=acc1.Short_Name__c,IATA_ISO_State__c=stt.Id);
+		insert stagingArea;
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
+		update oscar;
 
 		Complaint__c cmplt = new Complaint__c(Complaint_Opened_Date__c=System.today(), Related_Case_Number__c=c.Id);
 		insert cmplt;

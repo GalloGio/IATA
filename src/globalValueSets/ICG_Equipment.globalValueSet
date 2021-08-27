@@ -620,6 +620,186 @@
         <default>false</default>
         <label>Other Screening Equipment</label>
     </customValue>
+    <customValue>
+        <fullName>Belt_Loader</fullName>
+        <default>false</default>
+        <label>Belt Loader</label>
+    </customValue>
+    <customValue>
+        <fullName>Belt_Loader_With_In-Hold_Conveyor_System</fullName>
+        <default>false</default>
+        <label>Belt Loader With In-Hold Conveyor System</label>
+    </customValue>
+    <customValue>
+        <fullName>Lower_Deck_Loader</fullName>
+        <default>false</default>
+        <label>Lower Deck Loader</label>
+    </customValue>
+    <customValue>
+        <fullName>Main_Deck_Loader</fullName>
+        <default>false</default>
+        <label>Main Deck Loader</label>
+    </customValue>
+    <customValue>
+        <fullName>Prm_Boarding_Vehicles</fullName>
+        <default>false</default>
+        <label>PRM Boarding Vehicles</label>
+    </customValue>
+    <customValue>
+        <fullName>Catering_Truck</fullName>
+        <default>false</default>
+        <label>Catering Truck</label>
+    </customValue>
+    <customValue>
+        <fullName>Cabin_Cleaning_Truck</fullName>
+        <default>false</default>
+        <label>Cabin Cleaning Truck</label>
+    </customValue>
+    <customValue>
+        <fullName>Elevating_Work_Platform</fullName>
+        <default>false</default>
+        <label>Elevating Work Platform</label>
+    </customValue>
+    <customValue>
+        <fullName>Passenger_Boarding_Stairs</fullName>
+        <default>false</default>
+        <label>Passenger Boarding Stairs</label>
+    </customValue>
+    <customValue>
+        <fullName>Mobile_Passenger_Boardingramps</fullName>
+        <default>false</default>
+        <label>Mobile Passenger Boarding ramps</label>
+    </customValue>
+    <customValue>
+        <fullName>Maintenance_Stairs</fullName>
+        <default>false</default>
+        <label>Maintenance Stairs</label>
+    </customValue>
+    <customValue>
+        <fullName>Aircraft_Tail_Stand</fullName>
+        <default>false</default>
+        <label>Aircraft Tail Stand</label>
+    </customValue>
+    <customValue>
+        <fullName>Deicers_And_Deicing/Anti-Icing_Vehicles</fullName>
+        <default>false</default>
+        <label>Deicers And Deicing/Anti-Icing Vehicles</label>
+    </customValue>
+    <customValue>
+        <fullName>Baggage_Tractors</fullName>
+        <default>false</default>
+        <label>Baggage Tractors</label>
+    </customValue>
+    <customValue>
+        <fullName>Cargo_Tractors</fullName>
+        <default>false</default>
+        <label>Cargo Tractors</label>
+    </customValue>
+    <customValue>
+        <fullName>Pushback_Tow_Tractor</fullName>
+        <default>false</default>
+        <label>Pushback Tow Tractor</label>
+    </customValue>
+    <customValue>
+        <fullName>Towbar</fullName>
+        <default>false</default>
+        <label>Towbar</label>
+    </customValue>
+    <customValue>
+        <fullName>Towbarless_Tow_Tractor</fullName>
+        <default>false</default>
+        <label>Towbarless Tow Tractor</label>
+    </customValue>
+    <customValue>
+        <fullName>Maingear_Towbarless_Tractor</fullName>
+        <default>false</default>
+        <label>Maingear Towbarless Tractor</label>
+    </customValue>
+    <customValue>
+        <fullName>Air_Start_Unit</fullName>
+        <default>false</default>
+        <label>Air Start Unit</label>
+    </customValue>
+    <customValue>
+        <fullName>Aircraftair-Conditioning_Unit</fullName>
+        <default>false</default>
+        <label>Aircraft Air-conditioning Unit</label>
+    </customValue>
+    <customValue>
+        <fullName>Aircraft_Heating_Unit</fullName>
+        <default>false</default>
+        <label>Aircraft Heating Unit</label>
+    </customValue>
+    <customValue>
+        <fullName>Potable_Water_Service_Vehicle</fullName>
+        <default>false</default>
+        <label>Potable Water Service Vehicle</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavatory_Service_Vehicles</fullName>
+        <default>false</default>
+        <label>Lavatory Service Vehicles</label>
+    </customValue>
+    <customValue>
+        <fullName>Ground_Power_Unit</fullName>
+        <default>false</default>
+        <label>Ground Power Unit</label>
+    </customValue>
+    <customValue>
+        <fullName>Uld_Transporter</fullName>
+        <default>false</default>
+        <label>ULD Transporter</label>
+    </customValue>
+    <customValue>
+        <fullName>Uld_Dollies</fullName>
+        <default>false</default>
+        <label>ULD Dollies</label>
+    </customValue>
+    <customValue>
+        <fullName>Temperature_Controlled_Cargo_Dolly</fullName>
+        <default>false</default>
+        <label>Temperature Controlled Cargo Dolly</label>
+    </customValue>
+    <customValue>
+        <fullName>Baggage_Cart</fullName>
+        <default>false</default>
+        <label>Baggage Cart</label>
+    </customValue>
+    <customValue>
+        <fullName>Temperature_Controlled_Cargo_Truck</fullName>
+        <default>false</default>
+        <label>Temperature Controlled Cargo Truck</label>
+    </customValue>
+    <customValue>
+        <fullName>Prm_Bus</fullName>
+        <default>false</default>
+        <label>PRM Bus</label>
+    </customValue>
+    <customValue>
+        <fullName>Airport_Passenger_Bus</fullName>
+        <default>false</default>
+        <label>Airport Passenger Bus</label>
+    </customValue>
+    <customValue>
+        <fullName>Crew_Bus</fullName>
+        <default>false</default>
+        <label>Crew Bus</label>
+    </customValue>
+    <customValue>
+        <fullName>Forklift</fullName>
+        <default>false</default>
+        <label>Forklift</label>
+    </customValue>
+    <customValue>
+        <fullName>Hold_baggage_Security_System</fullName>
+        <default>false</default>
+        <label>Hold Baggage Security System</label>
+    </customValue>
+    <customValue>
+        <fullName>Security_Program_Details</fullName>
+        <default>false</default>
+        <label>Security Program Details</label>
+    </customValue>
     <masterLabel>ONE Source Equipment</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

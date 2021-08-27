@@ -335,6 +335,20 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Pardot Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Course_Outline_PDF__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Links to New Case</label>
@@ -718,7 +732,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Authorized_Signatories_Package__c.NAME</fields>
-        <fields>Authorized_Signatories_Package__c</fields>
         <fields>CREATED_DATE</fields>
         <relatedList>Authorized_Signatory__c.Contact__c</relatedList>
     </relatedLists>

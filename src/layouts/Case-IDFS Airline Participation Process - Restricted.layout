@@ -47,11 +47,11 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Region__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>BSPCountry__c</field>
             </layoutItems>
             <layoutItems>
@@ -59,11 +59,11 @@
                 <field>Origin</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>CaseArea__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Reason1__c</field>
             </layoutItems>
             <layoutItems>

@@ -25,7 +25,12 @@
 				<div key={currentsupercategory.value.key}>
 					<div key={currentsupercategory.value.label} class="row m-0 p-0 mt-4 mb-1 mr-2">
 						<div key={currentsupercategory.value.label}>
-							<h4><b>{currentsupercategory.value.label}</b></h4>
+							<h4>
+								<b>{currentsupercategory.value.label}</b>
+								<span if:true={currentsupercategory.value.iconPath} title={currentsupercategory.value.iconTooltip}>
+									<img  src={currentsupercategory.value.iconPath} class="icon margin-icon" width="20px">
+								</span>
+							</h4>
 							<hr class="yellow-underline mb-2">
 						</div>
 					</div>
@@ -38,6 +43,9 @@
 							<h5 data-item={currentsection.value.key} class={cargoHandlingCss} onclick={toggleSection}
 								data-key={currentsection.value.label} data-section="content">
 								<b>{currentsection.value.label}</b>
+								<span if:true={currentsection.value.iconPath} title={currentsection.value.iconTooltip}>
+									<img  src={currentsection.value.iconPath} class="icon margin-icon" width="20px">
+								</span>
 								<img src={chevrondown} class="icon btn-icon margin-icon" width="20px"
 									data-key={currentsection.value.label} data-section="content">
 							</h5>
@@ -268,28 +276,30 @@
 																			iterator:currentfield={currentheader.value}>
 																			
 																			<template if:false={currentheader.last}>
-																				
+																				<!-- if empty -->
 																				<template if:false={currentfield.value.label.length}>
-
-
-																					<th if:true={currentfield.first}
-																						key={currentfield.value.name}
-																						scope="col"
-																						colspan={currentfield.value.colspan}
-																						class="box-shadow-none zui-sticky-col">
-																					</th>
-
-																					<th if:false={currentfield.first}
-																						key={currentfield.value.name}
-																						scope="col"
-																						colspan={currentfield.value.colspan}
-																						class="box-shadow-none">
-																					</th>
-																					
+																					<template if:false={currentfield.value.isManufacturerField}>
+																						<th if:true={currentfield.first}
+																							key={currentfield.value.name}
+																							scope="col"
+																							colspan={currentfield.value.colspan}
+																							class="box-shadow-none zui-sticky-col">
+																						</th>
+																							
+																						<th if:false={currentfield.first}
+																							key={currentfield.value.name}
+																							scope="col"
+																							colspan={currentfield.value.colspan}
+																							class="box-shadow-none">
+																						</th>
+																					</template>
 																				</template>
-																				<template
-																					if:true={currentfield.value.label.length}>
-																					<th key={currentfield.value.name}
+																				<!-- /if empty -->
+
+																				<!-- if not empty -->
+																				<template if:true={currentfield.value.label.length}>
+																					<th
+																					 key={currentfield.value.name}
 																						scope="col"
 																						colspan={currentfield.value.colspan}>
 																						{currentfield.value.label}
@@ -298,21 +308,21 @@
 																			</template>
 																			<template if:true={currentheader.last}>
 																				
-																					<th if:true={currentfield.first}
-																						key={currentfield.value.name}
-																						scope="col"
-																						colspan={currentfield.value.colspan}
-																						class="first-column">
-																						<p>
-																							<c-cw-html-tag-generator
-																								label={label} is-header="true"
-																								item={currentCategory}
-																								property-name="label"
-																								aux-type={currentCategory.auxType}>
-																							</c-cw-html-tag-generator>
-																						</p>
-																					</th>
-																				
+																				<th if:true={currentfield.first}
+																					key={currentfield.value.name}
+																					scope="col"
+																					colspan={currentfield.value.colspan}
+																					class="first-column">
+																					<p>
+																						<c-cw-html-tag-generator
+																							label={label} is-header="true"
+																							item={currentCategory}
+																							property-name="label"
+																							aux-type={currentCategory.auxType}>
+																						</c-cw-html-tag-generator>
+																					</p>
+																				</th>
+
 																				<template if:true={editMode}>
 																					<template if:true={isPrivateArea}>													
 																						<template if:true={currentCategory.isEditableRecordType}>
@@ -336,42 +346,46 @@
 																							</template>
 																						</template>
 																						<template if:false={currentCategory.isEditableRecordType}>
-																							<th if:false={currentfield.first}
-																								key={currentfield.value.name}
-																								scope="col"
-																								colspan={currentfield.value.colspan}>
-																								{currentfield.value.label}
-																							</th>
+																							<template if:false={currentfield.first}>
+																								<th if:false={currentfield.value.isManufacturerField}
+																									key={currentfield.value.name}
+																									scope="col"
+																									colspan={currentfield.value.colspan}>
+																									{currentfield.value.label}
+																								</th>
+																							</template>
 																						</template>	
 																					</template>
 																					<template if:false={isPrivateArea}>
-																						<template if:true={currentCategory.isEditableRecordType}>
-																							<template if:false={currentfield.first}>
-																								<th if:true={currentfield.value.isurlfield}
-																								key={currentfield.value.name}
-																								scope="col"
-																								colspan={currentfield.value.colspan}>
-																								{label.icg_manage_obligations_documents}
-																								</th>
+																						<template if:false={currentfield.first}>
+																							<template if:false={currentfield.value.isManufacturerField}>
+																								<template if:true={currentCategory.isEditableRecordType}>
+																									<th if:true={currentfield.value.isurlfield}
+																									key={currentfield.value.name}
+																									scope="col"
+																									colspan={currentfield.value.colspan}>
+																									{label.icg_manage_obligations_documents}
+																									</th>
 
-																								<th if:false={currentfield.value.isurlfield}
-																								key={currentfield.value.name}
-																								scope="col"
-																								colspan={currentfield.value.colspan}>
-																								{currentfield.value.label}
-																								</th>
+																									<th if:false={currentfield.value.isurlfield}
+																									key={currentfield.value.name}
+																									scope="col"
+																									colspan={currentfield.value.colspan}>
+																									{currentfield.value.label}
+																									</th>
+																								</template>
+																								<template if:false={currentCategory.isEditableRecordType}>
+																									<th if:false={currentfield.first}
+																									key={currentfield.value.name}
+																									scope="col"
+																									colspan={currentfield.value.colspan}>
+																									{currentfield.value.label}
+																									</th>
+																								</template>
 																							</template>
 																						</template>
-																						<template if:false={currentCategory.isEditableRecordType}>
-																							<th if:false={currentfield.first}
-																							key={currentfield.value.name}
-																							scope="col"
-																							colspan={currentfield.value.colspan}>
-																							{currentfield.value.label}
-																							</th>
-																						</template>
 																						
-																					</template>	
+																					</template> 
 																																								
 																				</template>
 																				<template if:false={editMode}>
@@ -404,14 +418,17 @@
 																						</template>
 																					</template>
 																					<template if:false={currentCategory.isEditableRecordType}>
-																						<th if:false={currentfield.first}
-																						key={currentfield.value.name}
-																						scope="col"
-																						colspan={currentfield.value.colspan}>
-																						{currentfield.value.label}
-																						</th>
-																					</template>																				
-																					
+																						<template if:false={currentfield.value.isfileupload}>
+																							<template if:false={currentfield.first}>
+																								<th if:false={currentfield.value.isManufacturerField}
+																								key={currentfield.value.name}
+																								scope="col"
+																								colspan={currentfield.value.colspan}>
+																								{currentfield.value.label}
+																								</th>
+																							</template>
+																						</template>
+																					</template>
 																				</template>
 
 																			</template>
@@ -421,20 +438,21 @@
 																		<template if:true={currentheader.last}>
 																			<template if:false={editMode}>
 																				<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col"
-																				class="photo-colum-head">
-																				{label.photos}</th>
+																					class="photo-colum-head">
+																					{label.photos}</th>
 																				<th key={currentheader.value.name} scope="col"
 																					class="certifications-stamp"></th>
 																			</template>
 
 																			<template if:true={editMode}>
-																				<template if:true={isStationManager}>
-																					<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
-																				</template>
-																				<template if:false={isStationManager}>
+																				<template if:false={isPrivateArea}>
 																					<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.photos}</th>
 																				</template>
-
+																				<template if:true={isPrivateArea}>
+																					<template if:true={isStationManager}>
+																						<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
+																					</template>
+																				</template>	
 																				<th key={currentheader.value.name} scope="col"
 																					class="certifications-stamp"></th>
 																				<template if:true={isPrivateArea}>
@@ -489,7 +507,7 @@
 																								property-name={currentfield.value.name}
 																								aux-type={currentCategory.auxType}
 																								type={currentfield.value.type} values={currentfield.value.values}
-																								edit-mode=false onfieldupdated={addFieldToList}>
+																								edit-mode=false is-community={isCommunity} onfieldupdated={addFieldToList}>
 																							</c-cw-capabilities-manager-inputs>
 
 																						</b>
@@ -557,129 +575,139 @@
 																															row-index={rowIndex} category-index={categoryIndex} item={row}
 																															property-name={currentfield.value.name}
 																															type={currentfield.value.type} values={currentfield.value.values}
-																															max-characters="20" edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
+																															max-characters="20" edit-mode={row.isNotEditable} is-community={isCommunity} onfieldupdated={addFieldToList}>
 																															</c-cw-capabilities-manager-inputs>	
 																														</td>
 																													</template>
 
 																												</template>
 																												<template if:false={currentCategory.isEditableRecordType}>
-																													<td if:false={currentfield.first}
-																															key={currentfield.value.name}
-																															class="row-separator max-width-400">
+																													<template if:false={currentfield.first}>
+																														<td if:false={currentfield.value.isManufacturerField}
+																																key={currentfield.value.name}
+																																class="row-separator max-width-400">
 
-																														<c-cw-html-tag-generator
-																														label={label}
-																														row-index={rowIndex} item={row}
-																														property-name={currentfield.value.name}
-																														max-characters="20">
-																														</c-cw-html-tag-generator>
-																													</td>
-																												</template>
-
-																											</template>
-																											<template if:false={isStationManager}>
-
-																												<td if:false={currentfield.first}
-																															key={currentfield.value.name}
-																															class="row-separator max-width-400">
-
-																													<template if:true={currentCategory.isEditableRecordType}>
-
-																														<template if:true={currentfield.value.isfileupload}>
-																															<button if:true={row.documentsAvailable}
-																																class="p-0 bg-transp border-0 cursor-pt"
-																																data-tosca="edit_documents" title="Edit documents" disabled={row.isNotEditable}>
-																																<img src={infoIcon} width="20px" class="cursor-pt"
-																																	data-super-category-index={currentsupercategory.index}
-																																	data-section-index={currentsection.index}
-																																	data-capability-index={currentcapability.index}
-																																	data-category-index={categoryIndex}
-																																	data-row-index={rowIndex}
-																																	data-field="documents"
-																																	onclick={openModalEditPhotos}/>
-																															</button>
-																															
-																															<button if:false={row.documentsAvailable} disabled
-																																class="p-0 bg-transp border-0 disabled-filter">
-																																<img src={infoIcon} width="20px" />
-																															</button>
-																														</template>
-																														<template if:false={currentfield.value.isfileupload}>
-																															<c-cw-html-tag-generator  
+																															<c-cw-html-tag-generator
 																															label={label}
 																															row-index={rowIndex} item={row}
 																															property-name={currentfield.value.name}
 																															max-characters="20">
 																															</c-cw-html-tag-generator>
-																														</template>
-
+																														</td>
 																													</template>
-																													<template if:false={currentCategory.isEditableRecordType}>
-																															<c-cw-html-tag-generator  
+																												</template>
+
+																											</template>
+																											<template if:false={isStationManager}>
+																												<template if:false={currentfield.first}>
+
+																													<td if:false={currentfield.value.isManufacturerField}
+																															key={currentfield.value.name}
+																															class="row-separator max-width-400">
+
+																														<template if:true={currentCategory.isEditableRecordType}>
+
+																															<template if:true={currentfield.value.isfileupload}>
+																																<button if:true={row.documentsAvailable}
+																																	class="p-0 bg-transp border-0 cursor-pt"
+																																	data-tosca="edit_documents" title="Edit documents" disabled={row.isNotEditable}>
+																																	<img src={infoIcon} width="20px" class="cursor-pt"
+																																		data-super-category-index={currentsupercategory.index}
+																																		data-section-index={currentsection.index}
+																																		data-capability-index={currentcapability.index}
+																																		data-category-index={categoryIndex}
+																																		data-row-index={rowIndex}
+																																		data-field="documents"
+																																		onclick={openModalEditPhotos}/>
+																																</button>
+																																
+																																<button if:false={row.documentsAvailable} disabled
+																																	class="p-0 bg-transp border-0 disabled-filter">
+																																	<img src={infoIcon} width="20px" />
+																																</button>
+																															</template>
+																															<template if:false={currentfield.value.isfileupload}>
+																																<c-cw-html-tag-generator  
 																																label={label}
 																																row-index={rowIndex} item={row}
 																																property-name={currentfield.value.name}
 																																max-characters="20">
 																																</c-cw-html-tag-generator>
-																													</template>
-																												</td>
+																															</template>
+
+																														</template>
+																														<template if:false={currentCategory.isEditableRecordType}>
+																																<c-cw-html-tag-generator  
+																																	label={label}
+																																	row-index={rowIndex} item={row}
+																																	property-name={currentfield.value.name}
+																																	max-characters="20">
+																																	</c-cw-html-tag-generator>
+																														</template>
+																													</td>
+																												</template>
 																										</template>
 
 																								
 																						</template>
 																						<template if:false={isPrivateArea}>
-																							<td if:false={currentfield.first}
-																									key={currentfield.value.name}
-																									class="row-separator max-width-400">
-		
-																									<template if:true={currentCategory.isEditableRecordType}>
-																										<template if:true={currentfield.value.isfileupload}>
-																											<button if:true={row.documentsAvailable}
-																												class="p-0 bg-transp border-0 cursor-pt"
-																												data-tosca="edit_documents" title="Edit documents" disabled={row.isNotEditable}>
-																												<img src={infoIcon} width="20px" class="cursor-pt"
-																													data-super-category-index={currentsupercategory.index}
-																													data-section-index={currentsection.index}
-																													data-capability-index={currentcapability.index}
-																													data-category-index={categoryIndex}
-																													data-row-index={rowIndex}
-																													data-field="documents"
-																													onclick={openModalEditPhotos}/>
-																											</button>
+																							<template if:false={currentfield.first}>
+																								<td if:false={currentfield.value.isManufacturerField}
+																										key={currentfield.value.name}
+																										class="row-separator max-width-400">
+			
+																										<template if:true={currentCategory.isEditableRecordType}>
+																											<template if:true={currentfield.value.isfileupload}>
+																												<button if:true={row.documentsAvailable}
+																													class="p-0 bg-transp border-0 cursor-pt"
+																													data-tosca="edit_documents" title="Edit documents" disabled={row.isNotEditable}>
+																													<img src={infoIcon} width="20px" class="cursor-pt"
+																														data-super-category-index={currentsupercategory.index}
+																														data-section-index={currentsection.index}
+																														data-capability-index={currentcapability.index}
+																														data-category-index={categoryIndex}
+																														data-row-index={rowIndex}
+																														data-field="documents"
+																														onclick={openModalEditPhotos}/>
+																												</button>
+																												
+																												<button if:false={row.documentsAvailable} disabled
+																													class="p-0 bg-transp border-0 disabled-filter">
+																													<img src={infoIcon} width="20px" />
+																												</button>
+																											</template>
+																											<template if:false={currentfield.value.isfileupload}>
+																												<div class="tooltipCapabilitiesPublic">
+																													<c-cw-html-tag-generator  
+																													label={label}
+																													row-index={rowIndex} item={row}
+																													property-name={currentfield.value.name}
+																													max-characters="20">
+																													</c-cw-html-tag-generator>
+																												</div>
+																											</template>
 																											
-																											<button if:false={row.documentsAvailable} disabled
-																												class="p-0 bg-transp border-0 disabled-filter">
-																												<img src={infoIcon} width="20px" />
-																											</button>
-																										</template>
-																										<template if:false={currentfield.value.isfileupload}>
-																											<c-cw-html-tag-generator  
-																											label={label}
-																											row-index={rowIndex} item={row}
-																											property-name={currentfield.value.name}
-																											max-characters="20">
-																											</c-cw-html-tag-generator>
-																										</template>
-																										
 
-																									</template>
-																									<template if:false={currentCategory.isEditableRecordType}>
-																											<c-cw-html-tag-generator  
-																												label={label}
-																												row-index={rowIndex} item={row}
-																												property-name={currentfield.value.name}
-																												max-characters="20">
-																												</c-cw-html-tag-generator>
-																									</template>		
-		
+																										</template>
+																										<template if:false={currentCategory.isEditableRecordType}>
+																												<c-cw-html-tag-generator  
+																													label={label}
+																													row-index={rowIndex} item={row}
+																													property-name={currentfield.value.name}
+																													max-characters="20">
+																													</c-cw-html-tag-generator>
+																										</template>		
+			
 																								</td>
+																							</template>
 																						</template>
 																						
 																					</template>
 
 																					<template if:false={editMode}>
-																						<td if:false={currentfield.first}
+																						<template if:false={currentfield.first}>
+																							
+																						<td if:false={currentfield.value.isManufacturerField}
 																						key={currentfield.value.name}
 																						class="row-separator max-width-400"
 																						data-super-category-index={currentsupercategory.index}
@@ -713,12 +741,14 @@
 																							</template>
 
 																							<template if:false={currentfield.value.isfileupload}>
-																								<c-cw-html-tag-generator
-																									label={label}
-																									row-index={rowIndex} item={row}
-																									property-name={currentfield.value.name}
-																									max-characters="20">
-																								</c-cw-html-tag-generator>
+																								<div class="tooltipCapabilitiesPublic">
+																									<c-cw-html-tag-generator
+																										label={label}
+																										row-index={rowIndex} item={row}
+																										property-name={currentfield.value.name}
+																										max-characters="20">
+																									</c-cw-html-tag-generator>
+																								</div>
 																							</template>
 
 																						</template>
@@ -736,6 +766,7 @@
 
 																						</td>
 																					</template>
+																					</template>
 
 																				</template>
 																			</template>
@@ -744,7 +775,7 @@
 																		<template if:true={editMode}>
 																			<template if:true={isPrivateArea}>
 																				<template if:true={isStationManager}>
-																					<td if:false={currentCategory.isEditableRecordType} class="row-separator"
+																					<td if:false={currentCategory.isEditableRecordType} class="row-separator photo-colum"
 																						data-super-categories-index={currentsupercategory.index}
 																						data-section-index={currentsection.index}
 																						data-capability-index={currentcapability.index}
@@ -774,6 +805,7 @@
 																						</template>
 																						<template if:true={disablePhotoIcon}>
 
+																							<template if:false={currentCategory.isEditableRecordType}>
 																								<button if:false={row.photosAvailableEdit}
 																									disabled
 																									class="p-0 bg-transp border-0 disabled-filter">
@@ -791,6 +823,7 @@
 																										data-field="photos"
 																										onclick={openModalEditPhotos} />
 																								</button>
+																							</template>
 																						</template>
 
 																					</td>
@@ -888,22 +921,22 @@
 																				</td>
 																			</template>
 																		</template>
-																			<td class="certifications-stamp">
-																				<div class="stamp-inline">
-																					<template for:each={row.certifications}
-																						for:item="cert">
-																						<img key={cert.id} width="35px"
-																							src={cert.src}
-																							onmouseover={showHideStampHover}
-																							onmousemove={showHideStampHover}
-																							onmouseout={showHideStampHover}
-																							data-name={cert.name}
-																							data-label={cert.label}
-																							data-issue-date={cert.issueDate}
-																							data-expiration-date={cert.expirationDate}>
-																					</template>
-																				</div>
-																			</td>
+																		<td class="certifications-stamp">
+																			<div class="stamp-inline">
+																				<template if:false={row.isValidationWithoutCertification} for:each={row.certifications}
+																					for:item="cert">
+																					<img key={cert.id} width="35px"
+																						src={cert.src}
+																						onmouseover={showHideStampHover}
+																						onmousemove={showHideStampHover}
+																						onmouseout={showHideStampHover}
+																						data-name={cert.name}
+																						data-label={cert.label}
+																						data-issue-date={cert.issueDate}
+																						data-expiration-date={cert.expirationDate}>
+																				</template>
+																			</div>
+																		</td>
 																		<template if:true={editMode}>
 																			<template if:true={row.isEditableRecordType}>
 																			<td class="cell-buttons">																				

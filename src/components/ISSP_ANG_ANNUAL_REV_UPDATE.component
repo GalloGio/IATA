@@ -1265,8 +1265,8 @@
 
         function populateShippingCountry() {
             if($('[id$="notifyChangeLocationCheckbox"]').prop("checked")) {
-                if ('{!ca.fw.newform.shipping_country__c}' != '') {
-                    $('[id$="ShippingCountryList"]').val('{!ca.fw.newform.shipping_country__c}'.toUpperCase());
+                if ('{!JSENCODE(ca.fw.newform.shipping_country__c)}' != '') {
+                    $('[id$="ShippingCountryList"]').val('{!JSENCODE(ca.fw.newform.shipping_country__c)}'.toUpperCase());
                 } else {
                     $('[id$="ShippingCountryList"]').val("{!ca.account.ShippingCountry}".toUpperCase());
                 }

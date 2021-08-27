@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Submit_for_Approval</customButtons>
-    <customButtons>Submit_for_extension</customButtons>
-    <customButtons>Concluded_OI</customButtons>
-    <customButtons>Terminate_OI</customButtons>
-    <customButtons>Close_OI</customButtons>
-    <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -26,6 +21,10 @@
                 <behavior>Required</behavior>
                 <field>Description__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Priority__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
@@ -39,63 +38,8 @@
                 <behavior>Required</behavior>
                 <field>Root_Cause_Analysis__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Root_Cause_s__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Risk Assessment</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Legal_Impact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Reputational_Impact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Service_Impact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Financial_Impact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Impact__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Trigger_Process__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Likelihood_of_issue__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Risk_Significance_Level_of_initiative__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Risk_Portfolio__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>If_Yes_please_indicate_the_number__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -133,16 +77,16 @@
                 <field>Related_Case_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>OI_Type__c</field>
+                <behavior>Edit</behavior>
+                <field>Improvement_Target__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>If_other_please_explain__c</field>
+                <field>Effectiveness_Evaluation_Deadline__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Overall_Deadline__c</field>
+                <behavior>Readonly</behavior>
+                <field>Overall_Deadline_Formula__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -156,23 +100,31 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Leading_Region__c</field>
+                <field>Initiator__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Initiator__c</field>
+                <field>Other_Initiator__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Operation__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>Affected_Process__c</field>
+                <behavior>Edit</behavior>
+                <field>OI_Category__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>If_other_please_state_the_affected_proc__c</field>
+                <field>OI_Subcategory__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Risk_Portfolio__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>If_Yes_please_indicate_the_number__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -190,18 +142,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OI_Approval_date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Submission_for_extension_date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Extension_approved_date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Extension_rejected_date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -245,19 +185,41 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>Impact &amp; Effort Assessment</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Impact__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Effort__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Solution__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Action Plans effectiveness assessment</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Likelihood_Post_Improvements__c</field>
+                <field>Action_Plan_Effectiveness_Assessment__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Impact_Post_Improvements__c</field>
+                <field>If_Dropped__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Overall_effectiveness_of_improvements__c</field>
+                <field>Comments_OI__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>
@@ -280,18 +242,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Conclusion_Date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Pending_eff_validation_date__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Terminated_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -338,15 +288,6 @@
         <relatedList>RelatedProcessHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>TASK.SUBJECT</fields>
-        <fields>TASK.WHO_NAME</fields>
-        <fields>ACTIVITY.TASK</fields>
-        <fields>TASK.DUE_DATE</fields>
-        <fields>CORE.USERS.FULL_NAME</fields>
-        <fields>TASK.LAST_UPDATE</fields>
-        <relatedList>RelatedHistoryList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
         <fields>Action_Plan_Type__c</fields>
         <fields>Description__c</fields>
@@ -372,7 +313,10 @@
         <relatedList>Quality__c.OI_number_if_logged__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Subject__c</fields>
         <fields>NAME</fields>
+        <fields>OI_Category__c</fields>
+        <fields>OI_Subcategory__c</fields>
         <relatedList>Operational_Improvements__c.Parent_OI__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

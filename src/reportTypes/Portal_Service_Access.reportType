@@ -286,31 +286,41 @@
             <field>LastActivityDate</field>
             <table>Portal_Application_Right__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Has_access_to_OAG__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
         <masterLabel>Portal Service Access</masterLabel>
     </sections>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact Email</displayNameOverride>
             <field>Contact__c.Email</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact Name</displayNameOverride>
             <field>Contact__c.ISSP_Contact_Name__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact Title</displayNameOverride>
             <field>Contact__c.Title</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact User Portal Status</displayNameOverride>
             <field>Contact__c.User_Portal_Status__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Contact ID</displayNameOverride>
             <field>Contact__c.Id</field>
             <table>Portal_Application_Right__c</table>
         </columns>
@@ -319,34 +329,169 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account ID</displayNameOverride>
             <field>Contact__c.Account.Id</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Category</displayNameOverride>
             <field>Contact__c.Account.Category__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Name</displayNameOverride>
             <field>Contact__c.Account.Name</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Record Type</displayNameOverride>
             <field>Contact__c.Account.RecordType.DeveloperName</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Sector</displayNameOverride>
             <field>Contact__c.Account.Sector__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account IATA Code</displayNameOverride>
             <field>Contact__c.Account.IATACode__c</field>
             <table>Portal_Application_Right__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Country</displayNameOverride>
+            <field>Contact__c.Account.Services_Rendered_Country__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Country ISO Code</displayNameOverride>
+            <field>Contact__c.Account.Country_ISO_Code__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account Country ISO Code</displayNameOverride>
+            <field>Contact__c.Account.DSE__DS_Country_ISO_Code__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Account ISO Country</displayNameOverride>
+            <field>Contact__c.Account.IATA_ISO_Country__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
         <masterLabel>Account Information</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service Application URL</displayNameOverride>
+            <field>Portal_Application__c.Application_URL__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Critical Service</displayNameOverride>
+            <field>Portal_Application__c.Critical_Service__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Description</displayNameOverride>
+            <field>Portal_Application__c.Description__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Service</displayNameOverride>
+            <field>Portal_Application__c.Name</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Service</displayNameOverride>
+            <field>Portal_Application__c.ServiceName__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Service Description</displayNameOverride>
+            <field>Portal_Application__c.Service_Description__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Visible</displayNameOverride>
+            <field>Portal_Application__c.Visible__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Visible on CNS</displayNameOverride>
+            <field>Portal_Application__c.VisibleCNS__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Restricted App</displayNameOverride>
+            <field>Portal_Application__c.Restricted_App__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Requestable</displayNameOverride>
+            <field>Portal_Application__c.Requestable__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Requires Level2 Registration</displayNameOverride>
+            <field>Portal_Application__c.Requires_Level2_Registration__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Requires Service Admin Approval</displayNameOverride>
+            <field>Portal_Application__c.Requires_Service_Admin_Approval__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Functional Role</displayNameOverride>
+            <field>Portal_Application__c.Functional_Role__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Hide on Homepage</displayNameOverride>
+            <field>Portal_Application__c.Hide_on_Homepage__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Cannot be managed by portal admin</displayNameOverride>
+            <field>Portal_Application__c.Cannot_be_managed_by_portal_admin__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Cannot be granted internally</displayNameOverride>
+            <field>Portal_Application__c.ANG_Restrict_internal_selection__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <displayNameOverride>Portal Service: Auto approved for</displayNameOverride>
+            <field>Portal_Application__c.Auto_approved_for__c</field>
+            <table>Portal_Application_Right__c</table>
+        </columns>
+        <masterLabel>Service information</masterLabel>
     </sections>
 </ReportType>

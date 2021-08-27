@@ -1,0 +1,249 @@
+<apex:component id="sectionDetailComponent" controller="IA_DetailController" allowDML="true">
+	<apex:attribute name="agreement" description="This is the agreement to show its info" type="MITA_Agreement__c" required="true" assignTo="{!selectedAgreement}"/>
+	<apex:attribute name="otheraccount" description="This is other airline participating in the agreement" type="Account" required="true" assignTo="{!otherAirline}"/>
+	<apex:attribute name="withdrawPermission" description="if this permission is enabled the withdraw agreement section is visible" type="Boolean" required="true" assignTo="{!hasWithdrawPermission}"/>
+	<apex:attribute name="closefunction" description="javascript string to be used in this component to close itself" type="String" required="true"/>
+
+	<apex:actionFunction name="withdrawAgreement" action="{!withdrawAgreement}" rerender="AgreementDetailsSection" oncomplete="modalOnComplete('hidden');" status="loadingStatus"/>
+
+	<script>
+		ready(function() {
+			closeThisModal = function() {
+				{!closefunction};
+			}
+			// verify input box to enable/disable withdraw button
+			checkWithdraw = function(inputdate) {
+				let now = new Date();
+				let withdrawalmindate = now.setDate(now.getDate()+{!daysForWithdrawal-1});
+				if (inputdate.valueAsDate > withdrawalmindate) {
+					document.getElementById('withdrawSubmitButton').removeAttribute('disabled');
+				} else {
+					document.getElementById('withdrawSubmitButton').setAttribute('disabled', 'true');
+				}
+			}
+			//handle expanded sections
+			toggleExpand = function(obj,targetid) {
+				obj.getElementsByClassName("arrow")[0].classList.toggle("rotate-180");
+				document.getElementById(targetid).classList.toggle("IA-collapsed");
+			}
+			// close modal agreement when clicking outside the popup
+			document.addEventListener('click', function(evt) {
+				let modalDetail = document.getElementById('modalAgreementDetailContent');
+				if (modalDetail && !modalDetail.contains(evt.target)) {
+					closeThisModal();
+				} else {
+					modalOnComplete('hidden');
+				}
+			});
+		});
+	</script>
+
+	<!-- MODAL Agreement Detail -->
+	<apex:outputPanel id="modalAgreementDetail" styleclass="IA-modal-container">
+		<div class="modal showModal modalBackgound">
+			<div class="modal-dialog modal-dialog-scrollable" role="document">
+				<div id="modalAgreementDetailContent" class="IA-Modal IA-Modal-All-Detail modal-content">
+					<div class="modal-header container">
+						<div class="row">
+							<apex:outputText value="{!AgreementDetail.otherAirlineLogo}" styleclass="baseline" escape="false"/>
+							<span style="margin-left: 29px;">{!AgreementDetail.otherAirlineName}&nbsp;-&nbsp;{!AgreementDetail.agreementType}</span>
+							<span class="IA-Close" onclick="closeThisModal(); return false;"></span>
+						</div>
+					</div>
+					<div class="modal-body">
+						<!-- View Agreement detail container -->
+						<apex:outputPanel id="AgreementDetailsSection" layout="block" styleclass="container">
+							<div class="row">
+								<div class="col-sm-6">
+									{!$Label.IA_Agreement_Details}
+								</div>
+								<div class="col-sm-6 text-right">
+									<div class="IA-TableOutputInfo IA-{!SUBSTITUTE(AgreementDetail.agreementStatus,' ','_')}">{!AgreementDetail.agreementStatusLabel}</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>{!$Label.ISSP_IATA_Designator}</label>
+									<div>{!AgreementDetail.otherAirlineDesignator}</div>
+								</div>
+								<div class="col-sm-6">
+									<label>{!$Label.IA_Agreement}</label>
+									<div>{!AgreementDetail.agreementName}</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>{!$Label.ISSP_Airline_Prefix}</label>
+									<div>{!AgreementDetail.otherAirlinePrefix}</div>
+								</div>
+								<div class="col-sm-6">
+									<label>{!$Label.IA_Agreement_Type}</label>
+									<div>{!AgreementDetail.agreementType}</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>{!$Label.ISSP_Airline}</label>
+									<div>{!AgreementDetail.otherAirlineName}</div>
+								</div>
+								<div class="col-sm-3">
+									<label>{!$Label.IA_Activation_Date}</label>
+									<div>{!AgreementDetail.agreementEffectiveDate}</div>
+								</div>
+								<div class="col-sm-3">
+									<label>{!$Label.IA_Expiry_Date}</label>
+									<div>{!AgreementDetail.agreementCancellationDate}</div>
+								</div>
+							</div>
+							<apex:outputPanel id="WithdrawSection">
+								<apex:outputPanel rendered="{!AND(!showSuccessWithdrawn,hasWithdrawPermission,AgreementDetail.agreementCancellationDate=='-')}">
+									<div class="row">
+										<div class="col-sm-5"></div>
+										<div id="withdrawExpandButton" class="IA-Withdraw-Button col-sm-2 center" onclick="toggleExpand(this,'withdrawSectionExpandable');">
+											{!$Label.IA_Withdraw}
+											<span class="arrow"></span>
+										</div>
+										<div class="col-sm-5"></div>
+									</div>
+									<div id="withdrawSectionExpandable" class="IA-collapsed">
+										<div class="row center">
+											<div class="col-sm-4"></div>
+											<div class="col-sm-4">
+												<label>
+													<apex:outputText value="{!$Label.IA_Withdrawal_Message}">
+														<apex:param value="{!daysForWithdrawal}"/>
+													</apex:outputText>
+												</label>
+												<apex:inputField type="date" value="{!agreementCancellation.Cancellation_date__c}" html-min="{!AgreementDetail.minWithdrawDate}" required="true" onchange="checkWithdraw(this);"/>
+											</div>
+											<div class="col-sm-4"></div>
+										</div>
+										<div class="row center">
+											<button id="withdrawSubmitButton" class="IA-button" onclick="withdrawAgreement(); return false;" disabled="true">{!$Label.CSP_Submit}</button>
+										</div>
+									</div>
+								</apex:outputPanel>
+								<apex:outputPanel rendered="{!showSuccessWithdrawn}">
+									<div class="IA-WithdrawSuccess row">
+										<div class="col-sm-5 text-right">
+											<span class="IA-check align-middle"></span>
+										</div>
+										<div class="col-sm-7 text-left">
+											<div class="top-text">
+												{!$Label.IA_Withdrawal_Submitted}
+											</div>
+											<div class="bottom-text">
+												{!$Label.Effective_Date}: {!WithdrawnDateFormatted}
+											</div>
+										</div>
+									</div>
+								</apex:outputPanel>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						<!-- /View Agreement detail container -->
+						<!-- History container -->
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-6" onclick="toggleExpand(this,'AgreementDetailHistoryTable');">
+									<span class="IA-Expandable">
+										{!$Label.IA_Agreement_History}
+										<span class="arrow rotate-180"></span>
+									</span>
+								</div>
+							</div>
+							<div id="AgreementDetailHistoryTable" class="row IA-collapsed">
+								<div class="table IA-Table">
+									<table id="HistoryTable" class="table table-hover table-condensed">
+										<thead>
+											<tr>
+												<th class="IA-strong">{!$Label.Date}</th>
+												<th>{!$Label.Company}</th>
+												<th>{!$Label.ISSP_Contacts}</th>
+												<th>{!$Label.CSP_Details}</th>
+											</tr>
+										</thead>
+										<tbody>
+											<apex:repeat var="history" value="{!AgreementHistory}">
+												<tr>
+													<td class="IA-strong">
+														{!history.datechange}
+													</td>
+													<td>
+														{!history.company}
+													</td>
+													<td>
+														{!history.username}
+													</td>
+													<td>
+														{!history.details}
+													</td>
+												</tr>
+											</apex:repeat>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- /History container -->
+						<!-- view contacts container -->
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-6" onclick="toggleExpand(this,'AgreementDetailContactsTable');">
+									<span class="IA-Expandable">
+										{!$Label.IA_Interline_Agreement_Contacts}
+										<span class="arrow rotate-180"></span>
+									</span>
+								</div>
+							</div>
+							<div id="AgreementDetailContactsTable" class="row IA-Table IA-collapsed">
+								<div class="table">
+									<div class="table">
+										<table id="viewContactsTable" class="table table-hover table-condensed">
+											<thead>
+												<tr>
+													<th class="IA-strong">{!$ObjectType.Contact.Fields.Name.Label}</th>
+													<th>{!$ObjectType.Contact.Fields.email.Label}</th>
+													<th>{!$ObjectType.Contact.Fields.phone.Label}</th>
+													<th>{!$ObjectType.Contact.Fields.MITA_Contact_Type__c.Label}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<apex:repeat var="accountContact" value="{!AccountContactRows}">
+													<tr>
+														<td class="IA-strong">
+															{!accountContact.fullName}
+														</td>
+														<td>
+															<a href="mailto:{!accountContact.email}">{!accountContact.email}</a>
+														</td>
+														<td>
+															{!accountContact.phone}
+														</td>
+														<td>
+															<apex:dataList value="{!accountContact.mitaTypes}" var="mitaType">
+																<div class="IA-tooltip">
+																	{!mitaType.name}
+																	<apex:outputPanel rendered="{!NOT(ISBLANK(mitaType.description))}">
+																		{!mitaType.description}
+																	</apex:outputPanel>
+																</div>
+															</apex:dataList>
+														</td>
+													</tr>
+												</apex:repeat>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /view contacts container -->
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</apex:outputPanel>
+	<!-- /MODAL Agreement Detail -->
+
+</apex:component>

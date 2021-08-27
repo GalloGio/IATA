@@ -295,6 +295,10 @@
                 <behavior>Edit</behavior>
                 <field>Enable_NewGen_Pilot__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Allow_Cash_FOP_for_Cashless_Agencies__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

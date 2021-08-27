@@ -87,11 +87,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Region__c</field>
-            <table>Quality__c</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>IATA_Country__c</field>
             <table>Quality__c</table>
         </columns>

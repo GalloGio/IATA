@@ -1,0 +1,141 @@
+<apex:page renderas="pdf" controller="IA_MemorandumController" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" readOnly="true">
+	<html>
+		<head>
+			<style>
+				@font-face {font-family: "AktivGrotesk";
+					src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot')}"); /* IE9*/
+					src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot?#iefix')}") format("embedded-opentype"), /* IE6-IE8 */
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff2')}") format("woff2"), /* chrome、firefox */
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff')}") format("woff"), /* chrome、firefox */
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.ttf')}") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.svg#Aktiv Grotesk W01 Regular')}") format("svg"); /* iOS 4.1- */
+				}
+				@page{
+					page-size:A4;
+					@bottom-left {
+						content: "{!filename}";
+						font-family: 'AktivGrotesk', sans-serif;
+						font-size: 60%;
+					}
+					@bottom-right {
+						content: "Page: " counter(page) " / " counter(pages);
+						font-family: 'AktivGrotesk', sans-serif;
+						font-size: 60%;
+					}
+				}
+				.bold {
+					font-weight: bold;
+				}
+				.underline {
+					text-decoration: underline;
+				}
+				body{
+					font-family: 'AktivGrotesk', sans-serif;
+					margin: 0;
+				}
+				.header {
+					text-align: center;
+				}
+				.logo {
+					height: auto;
+					width: 150px;
+				}
+				.title{
+					font-family: 'AktivGrotesk', sans-serif;
+					text-align: center;
+					color: #3333FF;
+					font-size: 18px;
+					line-height: 22px;
+					margin-bottom: 15px;
+				}
+				.message {
+					text-align: left;
+					font-size: 12px;
+					line-height: 30px;
+					margin-bottom: 15px;
+				}
+				.content {
+					color: black;
+					font-size: 12px;
+				}
+				.content-header {
+					text-align: justify;
+					margin-bottom: 16px;
+				}
+				.content-body {
+					margin-bottom: 10px;
+				}
+				.table{
+					width: 100%;
+				}
+				.table th{
+					padding-top: 0.5em;
+					padding-bottom: 0.5em;
+					text-align: left;
+				}
+				.table td{
+					padding-top: 0.5em;
+					padding-bottom: 0.5em;
+				}
+			</style>
+		</head>
+
+		<body>
+			<div class="header">
+				<apex:image styleclass="logo" value="{!IATALogoURL}" alt="IATA"/>
+			</div>
+
+			<div class="title">
+				<div>MEMORANDUM</div>
+				<div>{!memorandumNumber}</div>
+			</div>
+
+			<div class="content">
+				<div class="content-header">
+					Listed below are the concurrences and withdrawals between parties for IATA Multilateral Interline Traffic Agreements (MITA), Bilateral Interline E-ticketing Traffic Agreements (BIETA), and Electronic Miscellaneous Documents (EMD), for the month of&nbsp;
+					<apex:outputText styleclass="bold underline" value="{0,date,MMMM yyyy}">
+						<apex:param value="{!memorandumDate}"/>
+					</apex:outputText>
+					<br/>
+				</div>
+
+				<div class="content-body">
+					<apex:repeat value="{!listTitles}" var="title">
+						<apex:variable var="listAgreements" value="{!DataAgreements[title]}" />
+
+						<apex:outputPanel rendered="{!listAgreements.size=0}">
+							<div class="bold underline">{!title}</div>
+							<p>No {!title} for this Period</p>
+						</apex:outputPanel>
+
+						<apex:outputPanel rendered="{!listAgreements.size>0}">
+							<div class="bold underline">{!title}</div>
+							<table class="table">
+								<tr>
+									<th style="width: 23%;">Airline 1</th>
+									<th style="width: 23%;">Airline 2</th>
+									<th style="width: auto;">Agreement Type</th>
+									<th style="width: 15%;">{!IF(CONTAINS(title,'Concurrences'),'Effective date','Cancellation date')}</th>
+								</tr>
+								<apex:repeat value="{!listAgreements}" var="row">
+								<tr>
+									<td><apex:outputField value="{!row.agreement.Airline_1__r.Name}"/></td>
+									<td><apex:outputField value="{!row.agreement.Airline_2__r.Name}"/></td>
+									<td><apex:outputText value="{!row.agreement.Agreement_type__c}"/></td>
+									<td>
+										<apex:outputText value="{0,date,d MMM yyyy}">
+											<apex:param value="{!IF(CONTAINS(title,'Concurrences'),row.agreement.Effective_Date__c,row.agreement.Cancellation_Date__c)}"/>
+										</apex:outputText>
+									</td>
+								</tr>
+								</apex:repeat>
+							</table>
+						</apex:outputPanel>
+
+					</apex:repeat>
+				</div>
+			</div>
+
+		</body>
+	</html>
+</apex:page>

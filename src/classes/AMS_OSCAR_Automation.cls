@@ -37,6 +37,39 @@ public with sharing class AMS_OSCAR_Automation {
 		}
 	}
 
+	public class AMS_OSCAR_Step52_succeeded implements IClassFactory {
+
+		public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+
+			system.debug('Start AUTOMATION AMS_OSCAR_Step52_succeeded.processWork');
+			Boolean res = False;
+
+			if (oscar != null) {
+				try{
+					List<ANG_Agency_Risk_Event__c> riskEventList = [SELECT Id, ANG_expiration_date_ff__c, Applicable_for_re_activation__c, ang_event_status__c
+																FROM ANG_Agency_Risk_Event__c 
+																WHERE ANG_AccountId__c  =: oscar.Account__c 
+																	AND  ang_event_status__c =: ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
+																	AND Applicable_for_re_activation__c =: true
+																	AND ANG_expiration_date_ff__c >=: Date.today()
+																];
+					if(!riskEventList.isEmpty()){										
+						for(ANG_Agency_Risk_Event__c rEvent : riskEventList){
+							rEvent.Applicable_for_re_activation__c = false;
+							rEvent.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+						}
+						update riskEventList;
+					}	
+					return True;
+				}catch (Exception e){
+					return False;
+				}
+			}
+
+			return res;
+		}
+	}
+
 	public class AMS_OSCAR_Step6_failed implements IClassFactory {
 		public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
 			system.debug('Start AUTOMATION AMS_OSCAR_Step6_failed.processWork');
@@ -667,6 +700,19 @@ public with sharing class AMS_OSCAR_Automation {
 					oscar.Approval_disapproval_date__c = Date.today();
 					oscar.Status__c = 'On Hold_Internal';
 					res = True;
+					AMS_Pax_Accreditation_Form__c pax = [SELECT ANG_Accreditation_Model_to_Change__c 
+															FROM AMS_Pax_Accreditation_Form__c 
+															WHERE Id =:oscar.AMS_Online_Accreditation__c LIMIT 1];
+
+					if(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
+						&& pax.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+						List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+						Set<Id> accountsAffected = new Set<Id>();
+						accountsAffected.add(oscar.Account__c);
+						toUpsert = ANG_AgencyChangesHelper.performCashTransformation(accountsAffected);
+						if(!toUpsert.isEmpty())
+							upsert toUpsert;
+					}
 
 				} else if(oscar != null && oscar.STEP12__c == 'Failed') {
 					oscar.addError('Approval can\'t be set when Manage Financial Security step is Failed.');

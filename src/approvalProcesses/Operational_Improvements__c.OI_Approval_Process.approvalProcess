@@ -19,7 +19,7 @@
         <label>RPM Approval Action</label>
         <name>RPM_Approval_Action</name>
     </approvalStep>
-    <emailTemplate>Quality/Request_Approval_for_OI</emailTemplate>
+    <emailTemplate>Quality/Continuous_Improvement_Process_Approved_by_RPM</emailTemplate>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>

@@ -832,7 +832,7 @@
                                                                 loadIataCode();
                                                             }
                                                         });
-                                                        $j('#frmt').jstree(JSON.parse('{!tree}'));
+                                                        $j('#frmt').jstree(JSON.parse('{!JSENCODE(tree)}'));
 
                                                         $j(document).ready(function () {
                                                             flag = 1;

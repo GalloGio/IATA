@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import { navigateToPage, getParamsFromPage }       from 'c/navigationUtils';
-import handleResetPassword      from '@salesforce/apex/PortalForgotPasswordController.handleResetPassword';
+import handleResetPassword2     from '@salesforce/apex/PortalForgotPasswordController.handleResetPassword2';
 import invalidMailFormat        from '@salesforce/label/c.ISSP_AMS_Invalid_Email';
 import emailLabel               from '@salesforce/label/c.CSP_Email';
 import loginLabel               from '@salesforce/label/c.Login';
@@ -48,13 +48,8 @@ export default class ForgotPasswordOneId extends LightningElement {
 		}
 		else{
 			this.isLoading = true;
-			handleResetPassword({ email : this.email, params: this.pageParams }).then(result => {
-				if(result.success != true){
-					this.dispatchSubmitEvent(false);
-				}
-				else{
-					this.dispatchSubmitEvent(true);
-				}
+			handleResetPassword2({ email : this.email, params: this.pageParams }).then(result => {
+				this.dispatchSubmitEvent(result);
 			});
 		}
 	}

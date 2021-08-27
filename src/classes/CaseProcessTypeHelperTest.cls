@@ -119,4 +119,25 @@ private class CaseProcessTypeHelperTest {
 		System.assertEquals('Short 24h', oscar.Accreditation_Process_Type__c);
 	}
 
+	/**
+	 * An oscar Case without an OSCAR record is ignored from the process
+	 */
+	@isTest static void testKPI_OSCAR_NotProcessed() {
+
+		Case cse = [SELECT Id, KPI_Calculation__c FROM Case LIMIT 1];
+		System.assertEquals(null, cse.KPI_Calculation__c);
+
+		Test.startTest();
+		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c LIMIT 1];
+		delete oscar;
+
+		cse.Reason1__c = 'FoP Management';
+		cse.Status = 'Closed';
+		update cse;
+		Test.stopTest();
+
+		cse = [SELECT Id, KPI_Calculation__c FROM Case LIMIT 1];
+		System.assertEquals(null, cse.KPI_Calculation__c);
+	}
+
 }

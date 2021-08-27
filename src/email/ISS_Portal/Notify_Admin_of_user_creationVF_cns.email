@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="{!$Label.ISSP_Email_NewUser_Subject}" language="{!recipient.LanguageLocaleKey}" recipientType="User" relatedToType="Contact">
+<messaging:emailTemplate subject="{!$Label.ISSP_Email_NewUser_Subject}" language="{!recipient.LanguageLocaleKey}" renderUsingSystemContextWithoutSharing="True" recipientType="User" relatedToType="Contact">
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
  <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  

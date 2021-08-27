@@ -4,8 +4,13 @@
  * Edit Log:
  * @history			2020/03/06  |   Creation to manage search engine fields avoiding special char issues.
  */
-trigger ICG_Account_Role_Detail on ICG_Account_Role_Detail__c(after insert, after update,after delete) {
+trigger ICG_Account_Role_Detail on ICG_Account_Role_Detail__c(before insert, before update, after insert, after update,after delete) {
 
+	if (Trigger.isBefore) {
+		if (Trigger.isInsert || Trigger.isUpdate) {
+			CW_ICGAccountRoleDetail_Handler.handleBeforeInsertUpdate(Trigger.new);
+		} 
+	}
 	if (Trigger.isAfter) {
 		if (Trigger.isInsert) {
 			CW_ICGAccountRoleDetail_Handler.handleAfterInsert(Trigger.newMap);

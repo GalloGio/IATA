@@ -279,6 +279,19 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
+        <fullName>Local_Group_Type__c</fullName>
+        <description>Formula field to retrieve Type from parent object</description>
+        <externalId>false</externalId>
+        <formula>TEXT(Local_Governance__r.Local_Governance_type__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Local Group Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Meeting_Responsible__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>User responsible for this Local Governance Meeting</description>

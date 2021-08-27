@@ -266,6 +266,9 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Account.ACC_NAME</fields>
         <fields>Contact.Account_Country__c</fields>

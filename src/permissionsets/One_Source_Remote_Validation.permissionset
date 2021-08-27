@@ -696,6 +696,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account_Role_Detail_Capability__c.Max_Load_Width_Between_Safety_Rails__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account_Role_Detail_Capability__c.Method_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1056,6 +1061,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ICG_Account_Role_Detail__c.In_House_Services__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ICG_Account_Role_Detail__c.Is_Direct_Ramp_Access__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1092,6 +1102,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ICG_Account_Role_Detail__c.Street_Nr_FOR__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ICG_Account_Role_Detail__c.Third_Party_Services__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

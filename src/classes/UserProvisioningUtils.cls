@@ -182,4 +182,32 @@ public class UserProvisioningUtils {
 		}
 
 	}
+
+	public static void CreateUPRs(Set <Id> contactIdPASSAccreditationSet, string ConnecteAppRoleName){
+		//WORKAROUND TO TRIGGER THE USER PROVISIONING.
+		//IF the user does not have system permission: "Manage Users" AND "view and setup application
+		//Then user provisioning is NOT triggered when the permission set is assigned to the user.
+		//However, we can create the record in the user provisioning request object
+		//And this will kick in the user provisioning flow. 
+		list<UserProvisioningRequest> lsUPR = new list<UserProvisioningRequest>();
+		if(!string.isBlank(ConnecteAppRoleName) && !contactIdPASSAccreditationSet.isEmpty()){
+			Connected_App_Roles__c PASSConnectedApp = [SELECT Connected_App_Provisioning_Name__c, Provisioning_Id__c FROM Connected_App_Roles__c WHERE Name = :ConnecteAppRoleName LIMIT 1];
+			if(PASSConnectedApp<>null){
+				for(user U: [select id from user where contactId in:contactIdPASSAccreditationSet]){
+					lsUPR.add(
+						new UserProvisioningRequest(
+							AppName = PASSConnectedApp.Connected_App_Provisioning_Name__c
+							, ConnectedAppId = PASSConnectedApp.Provisioning_Id__c
+							, Operation = 'Create'
+							, ApprovalStatus = 'NotRequired'
+							, SalesforceUserId = u.Id
+							, state = 'New'
+						)
+					);
+				}
+			}
+		}
+		if(!lsUPR.isEmpty())
+			insert lsUPR;
+	}
 }

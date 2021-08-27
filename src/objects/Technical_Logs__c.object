@@ -246,7 +246,7 @@
         <filters>
             <field>Record__c</field>
             <operation>contains</operation>
-            <value>69212846,69212883,69212905,69212894</value>
+            <value>08376247316</value>
         </filters>
         <label>AMS - 1 record</label>
         <language>en_US</language>
@@ -371,7 +371,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>5/11/2021 12:00 AM</value>
+            <value>7/9/2021 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

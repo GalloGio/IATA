@@ -491,9 +491,24 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.NewOppAction</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Case.Escalate_within_IATA_Key_Customer_Alert</actionName>
@@ -519,16 +534,6 @@
             <actionName>Clone</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>

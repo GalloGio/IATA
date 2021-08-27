@@ -4,7 +4,7 @@ public class IdentityFirstLoginTest {
 	@isTest
 	static void loginPage() {
 
-		String username = 'topolino@iata.org';
+		String username = 'topolino@test.org';
 		String password = 'paperina';
 		String UID = Comm_User_Helper.NewGuid();
 
@@ -54,7 +54,7 @@ public class IdentityFirstLoginTest {
 	@isTest
 	static void noLoginPage() {
 
-		String username = 'topolino@iata.org';
+		String username = 'topolino@test.org';
 		String password = 'paperina';
 		String UID = Comm_User_Helper.NewGuid();
 

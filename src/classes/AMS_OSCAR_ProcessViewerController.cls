@@ -29,6 +29,9 @@ public class AMS_OSCAR_ProcessViewerController {
 	};
 
 	private static final String CLASS_BLACK = '';
+	private static final String STEP52 = 'STEP52';
+	private static final String STEP36 = 'STEP36';
+	private static final String STEP06 = 'STEP6';
 	private static final String CLASS_RED = 'red';
 	private static final String CLASS_GREEN = 'green';
 	private static final String CLASS_BLUE = 'blue';
@@ -56,6 +59,9 @@ public class AMS_OSCAR_ProcessViewerController {
 	public Map<String,String> statusLabel {get;set;}
 	public Map<String,Boolean> ddBlock {get;set;}
 	public Map<String,StepFieldsDataWrapper> stepFieldsData {get;set;}
+	List<ANG_Agency_Risk_Event__c> riskEventList {get;set;}
+	List<Agency_Applied_Change_code__c>  agencyAppliedChangeCodes {get;set;}
+
 
 	public static Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get('AMS_OSCAR__c').getDescribe().fields.getMap();
 
@@ -347,7 +353,9 @@ public class AMS_OSCAR_ProcessViewerController {
 
 				this.oscar = fetchOscarFields(this.oscarCase.OSCAR__c);
 				this.oscarId = this.oscar.Id;
-
+				if(this.oscar.Account__c != null){
+					populateRiskEventAndChangeCodes(this.oscar.Account__c);
+				}
 				loadJsonFile();
 			}
 
@@ -355,16 +363,36 @@ public class AMS_OSCAR_ProcessViewerController {
 
 			this.oscar = fetchOscarFields(objectId);
 			this.oscarId = this.oscar.Id;
-
+			if(this.oscar.Account__c != null){
+				populateRiskEventAndChangeCodes(this.oscar.Account__c);
+			}
 			loadJsonFile();
 
 			this.oscarCase = fetchCaseFields(objectId,true);
 			this.caseId = this.oscarCase.Id;
 
 		}
-
 		selectedTab = 'tab1';
 
+	}
+
+	public void populateRiskEventAndChangeCodes(ID accountID){
+
+		riskEventList = [SELECT Id, ANG_expiration_date_ff__c, Applicable_for_re_activation__c, ang_event_status__c
+						FROM ANG_Agency_Risk_Event__c 
+						WHERE ANG_AccountId__c  =: accountID 
+							AND  ang_event_status__c =: ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
+							AND Applicable_for_re_activation__c =: true
+							AND ANG_expiration_date_ff__c >=: Date.today()
+						];
+        
+		agencyAppliedChangeCodes = [SELECT id, Account__c, OSCAR__r.ANG_Type_Of_Change__c, 
+											OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, CreatedDate 
+										FROM Agency_Applied_Change_code__c 
+										WHERE Account__c =: accountID
+											AND Change_Code__c =: AMS_Utils.CHA_CHANGE_CODE
+											AND CreatedDate <: Date.today()
+											ORDER BY CreatedDate DESC];
 	}
 
 	public String convertToString(Blob value){
@@ -411,11 +439,19 @@ public class AMS_OSCAR_ProcessViewerController {
 	 */
 	public void getStatus(AMS_OSCAR_JSON.Process process){
 		Boolean firstExpanded = false;
+		integer indexStepsToRemove = 0;
+		integer indexFlowsToRemove = 0;
+		integer indexStep52ToRemove = 0;
+		integer indexFlow52ToRemove = 0;
+		Boolean haveSomeMenuToRemove = false;
+		integer indexFlows = 0;
+		integer indexSteps = 0;
 
 		for(AMS_OSCAR_JSON.Flow flow: process.flows) {
 			flowColors.put(process.name + flow.name, CLASS_GREEN);
 			collapsibleMap.put(process.name + flow.name, true);
 
+			indexSteps = 0;
 			for(AMS_OSCAR_JSON.Step step: flow.steps){
 
 				String stepApiName = step.name + '__c';
@@ -442,14 +478,41 @@ public class AMS_OSCAR_ProcessViewerController {
 					firstExpanded = true;
 				}
 
-				if (step.name == 'STEP6') { // sanity check
+				if (step.name == STEP06) { // sanity check
 					if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && isParentOscar && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED)
 						step.saveActionEnabled = false;
 					else if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && oscar.Child_OSCAR_Status__c == AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_CASE)
 						step.saveActionEnabled = false;
 				}
+				// Re-active Risk Event
+				if (step.name == STEP36 && process.name == AMS_Utils.NGCHANGES
+					&& oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE 
+					&& oscar.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH 
+					&& agencyAppliedChangeCodes != null && !agencyAppliedChangeCodes.isEmpty()
+					&& riskEventList != null && !riskEventList.isEmpty()){
+					for(Agency_Applied_Change_code__c cc: agencyAppliedChangeCodes){
+						if(cc.OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
+								&& cc.OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS
+								&& cc.CreatedDate > = Date.today().addMonths(-6)){
+							indexStepsToRemove = indexSteps; 
+							indexFlowsToRemove =indexFlows;
+							haveSomeMenuToRemove = true;
+						}
+					}
+				}
+				
+				if(step.name == STEP52){
+					indexStep52ToRemove = indexSteps; 
+					indexFlow52ToRemove = indexFlows;
+				}
+				indexSteps++;
 			}
-
+			indexFlows++;
+		}
+		if(haveSomeMenuToRemove){
+			process.flows[indexFlowsToRemove].steps.remove(indexStepsToRemove);
+		}else if(process.flows[indexFlow52ToRemove].steps[indexStep52ToRemove].name == STEP52){
+				process.flows[indexFlow52ToRemove].steps.remove(indexStep52ToRemove);
 		}
 	}
 
@@ -562,6 +625,7 @@ public class AMS_OSCAR_ProcessViewerController {
 		return '' //
 			+ ' SELECT ' + fields + ', ' //
 			+ ' 	AMS_Online_Accreditation__r.Ready_for_Accreditation__c, RecordType.Name, RecordType.DeveloperName, ' //
+			+ ' 	AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, ' //
 			+ ' 	Account__r.Name, Account__r.Remittance_frequency__c, Account__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, ' //
 			+ ' 	AMS_Online_Accreditation__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Remittance_Frequency__c, ' //
 			+ ' 	Account__r.ANG_IsNewGenAgency__c, AMS_Online_Accreditation__r.Branch_Office_Country__c, AMS_Online_Accreditation__r.Location_Class__c, ' //

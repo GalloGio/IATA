@@ -156,19 +156,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>IATASISCustomerSupport</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>IATA SIS Customer Support</label>
-        <sharedTo>
-            <group>IATASISCustomerSupport</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - SIS Help Desk</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>IATASISHelpDeskAgent</fullName>
         <accessLevel>Edit</accessLevel>
         <label>IATA SIS Help Desk Agent</label>
@@ -218,7 +205,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Asia &amp; Pacific,Cases - Africa &amp; Middle East,Cases - China &amp; North Asia,Cases - Americas,Cases - Europe</value>
+            <value>Cases - Asia &amp; Pacific,Internal Cases (IDFS ISS),Cases - Africa &amp; Middle East,Cases - China &amp; North Asia,Cases - Americas,Cases - Europe</value>
         </criteriaItems>
         <criteriaItems>
             <field>CaseArea__c</field>
@@ -245,19 +232,6 @@
         <label>IDCardStandard</label>
         <sharedTo>
             <group>IDCard_Standard</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>ID Card Application</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
-        <fullName>ID_Card_case_sharing</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>ID Card case sharing</label>
-        <sharedTo>
-            <group>ID_Card_portal_user_group</group>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>

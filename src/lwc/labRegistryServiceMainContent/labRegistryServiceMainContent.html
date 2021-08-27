@@ -1,0 +1,148 @@
+<template>
+	<template if:true={displayAcceptTerms}>
+		<c-portal-services-terms-and-conditions-modal 
+			portal-service-id={serviceId}
+			contact-id={contactId}
+			oncancel={goToHome} 
+			onaccept={acceptTerms}>
+		</c-portal-services-terms-and-conditions-modal>
+	</template>
+
+	<div class='banner'></div>
+	<div class="customLightShadow customPopupInterior75PercentScreenCentered slds-is-relative">
+		<span slot="pageBody">
+			<span slot="cardTitle" class="slds-text-heading_large banner">
+				{labels.CSP_LabRegistry_LabDetails}
+			</span>
+
+			<span slot="cardBody">
+				<div class="c-container">
+					<lightning-layout  pull-to-boundary="medium">
+						<lightning-layout-item flexibility="auto" padding="around-small">
+							<div class="custom-box">
+								<div class="boxSection">
+									<p class="boxNumber">1</p>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxTitle" value={labels.CSP_LabReg_CompleteDetails} ></lightning-formatted-rich-text>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxText" value={labels.CSP_LabReg_Download_CSV} ></lightning-formatted-rich-text>
+								</div>
+								<div class="boxSection">
+									<a href={csvFilePath}>
+										<lightning-button label={labels.CSP_LabReg_DownloadTemplate}  icon-name="utility:download" class="slds-m-left_x-small"></lightning-button>
+									</a>
+									&nbsp;
+									<a href={instructionFilePath} target="_blank"> 
+										<lightning-button label={labels.CSP_LabReg_Download_Instructions}  icon-name="utility:download" class="slds-m-left_x-small"></lightning-button>
+									</a>
+								</div>
+							</div>
+						</lightning-layout-item>
+
+						<lightning-layout-item flexibility="auto" padding="around-small">
+							<div class="custom-box">
+								<div class="boxSection">
+									<p class="boxNumber">2</p>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxTitle" value={labels.CSP_LabReg_UploadDetails} ></lightning-formatted-rich-text>
+									&nbsp;&nbsp;<lightning-helptext content={labels.CSP_LabReg_UploadFileHelpText}></lightning-helptext>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxText" value={labels.CSP_LabReg_UploadFilledCSV} ></lightning-formatted-rich-text>
+								</div>
+								<div class="boxSection">
+									<div class="buttonContainer marginAuto">
+										<lightning-button class="containedButton customBtn btnModal outlinedBtn" label={labels.CSP_LabReg_UploadCSVBtn} variant="neutral"  onclick={openUploadModal} >
+										</lightning-button>
+									</div>
+								</div>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+
+				</div>
+				
+			</span>
+		</span>
+
+		<div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+			<div class="slds-spinner slds-spinner_medium" role="status">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--  MODAL FOR FILE UPLOAD -->
+	<template if:true={showUploadModal}>
+		<div class="modal">
+			<div class="customPopupInteriorThreeQuartersScreenCentered">
+				
+				<div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+					<span>{labels.ISSP_RD_UploadFile}</span>
+				</div>
+
+				<div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+					<div class="slds-p-vertical_large textMediumMessage">
+						{labels.CSP_LabReg_UploadHere}
+					</div>
+
+					<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+						<lightning-input 
+							type="file"
+							accept={acceptedFormats} 
+							onchange={handleUploadFinished}
+							multiple>
+						</lightning-input>
+					</lightning-layout-item>
+
+
+					<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+					</lightning-layout-item>
+
+
+					<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay" if:false={disableConfirm}>
+						<lightning-datatable
+							key-field="Id"
+							data={uploadedCSV}
+							columns={fileColumns}
+							hide-checkbox-column
+							resize-column-disabled
+							suppress-bottom-bar
+							onrowaction={removeFile}>>
+						</lightning-datatable>
+					</lightning-layout-item>
+
+
+				</div>
+
+				
+
+				<div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix" style="text-align:right">
+					<button class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={closeUploadModal}>{labels.Button_Cancel}
+					</button>
+					<button disabled={disableConfirm} class="containedButton containedButton-size slds-m-horizontal_small" onclick={handleSubmitRequest}>
+						{labels.IDCard_Confirm_Replacement}
+					</button>
+				</div>
+			</div>
+		</div>
+	</template>
+
+	<template if:true={openSuccessModal}>
+        <c-portal-registration-generic-modal
+            icon={successIcon}
+            title={labels.CSP_L2_Details_Saved}
+            message={labels.CSP_LabReg_UploadCompleted}
+			button1-label=''
+            button2-label={labels.ISSP_RD_OK_Action}
+            onbuttontwoaction={closeConfirmationModal}>
+        </c-portal-registration-generic-modal>
+    </template>
+
+</template>

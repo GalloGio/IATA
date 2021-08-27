@@ -1,0 +1,51 @@
+<template>
+    <div if:true={labels}>
+        <c-portal-login-step-container title={labels.Portal_MFA_Activation_Container_Title} button-label={labels.CSP_Login}
+        onbuttonclick={loginHandle} remove-back-option>
+            <div slot="mfa-login-body" class="slds-col">
+                <div class="slds-grid slds-align_absolute-center">
+                    <div class="slds-col">
+                        <div class="slds-p-top_medium slds-grid">
+                            <span class="slds-text-align_center" style="margin: auto;">{labels.Portal_MFA_Login_Code_Body}</span>
+                        </div>
+                        <div class="slds-p-top_large slds-grid slds-align_absolute-center">
+                            <div class="slds-max-small-size_7-of-12 slds-small-size_6-of-12 slds-large-size_6-of-12">
+                                <c-portal-mfa-activation-code length=6 is-only-input oncodeset={handleCodeValid}></c-portal-mfa-activation-code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div slot="mfa-login-footer">
+                <div class="slds-grid sdls-p-vertical_small">
+                    <div class="mfa-link slds-align_absolute-center cursorPointer" onclick={displayResetSection}>
+                        {labels.Portal_MFA_Troubleshooting_Title}
+                    </div>
+                </div>
+                <div class="slds-grid slds-p-top_small">
+                    <div class="mfa-link slds-align_absolute-center" onclick={displayResetSection}>
+                        <svg if:true={_hideResetSection} xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16" style="width: 1.2rem; height: auto;">
+                            <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                        </svg>
+                        <svg if:false={_hideResetSection} xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16" style="width: 1.2rem; height: auto;">
+                            <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div if:false={isResetSectionHidden} class="slds-grid slds-p-top_small slds-p-horizontal_small slds-text-align_center mfa-troubleshoot-text">
+                    <span>{labels.Portal_MFA_Paragraph_1}</span>
+                </div>
+                <div if:false={isResetSectionHidden} class="slds-grid slds-p-top_medium slds-align_absolute-center">
+                    <button class="mfa-troubleshoot-btn slds-p-bottom_xxx-small" style="font-weight: 500;" onclick={reset2FA}>{labels.Portal_MFA_Troubleshooting_Reset}</button>
+                </div>
+                <div if:false={isResetSectionHidden} class="slds-grid slds-p-top_medium slds-p-horizontal_xx-small slds-text-align_center mfa-troubleshoot-text">
+                    <span>{labels.Portal_MFA_Paragraph_2}</span>
+                </div>
+                <div if:false={isResetSectionHidden} class="slds-grid slds-p-top_xxx-small slds-align_absolute-center">
+                    <a href="/faq/s/troubleshooting?language=en_US" target="_blank" class="mfa-link">{labels.Portal_MFA_Troubleshooting_Form}</a>
+                </div>
+            </div>
+        </c-portal-login-step-container>
+    </div>
+</template>
