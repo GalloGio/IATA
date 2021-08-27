@@ -1,4 +1,4 @@
-<messaging:emailTemplate subject="IMPORTANT NOTIFICATION : Remittance Holding Capacity Monitoring status - {!relatedTo.ANG_AccountId__r.IATACode__c}" recipientType="Contact" language="{!CASE(recipient.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}" relatedToType="ANG_RHC_Information__c">
+<messaging:emailTemplate subject="Notification from IATA: Remittance Holding Capacity (RHC) Monitoring status – 75% Consumed" recipientType="Contact" language="{!CASE(recipient.Preferred_Language__c, 'Chinese','zh_CN','Thai', 'th','Vietnamese', 'vi','Arabic', 'ar', 'Korean', 'ko', 'German','DE', 'English','EN', 'French','FR', 'Italian','IT', 'Danish','da', 'Spanish','es', 'Dutch','nl', 'Finnish','fi', 'Portuguese','pt', 'Swedish','sv', 'Polish','pl', 'Norweigian','no',  'Japanese','ja','Portuguese','pt','Indonesian', 'in',   'EN')}" relatedToType="ANG_RHC_Information__c">
 <messaging:htmlEmailBody >
 <div style="margin:auto; width:600px">
  <span style="font-family:Open Sans,GillSansMT,Lucida Sans Unicode, Lucida Grande, sans-serif;color:#004577;">  
@@ -8,36 +8,38 @@
 <BR/>
 {!$Label.ISSP_Email_Dear_Pre} {!recipient.Name}{!$Label.ISSP_Email_Dear_Post}<BR/>
 <BR/>
-We would like to inform you that according to our records you have reached <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b> of your Remittance Holding Capacity (RHC).
+The Remittance Holding Capacity (RHC) amount of your agency has reached <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b>. If the RHC reaches 100% your cash form of payment will be automatically disabled until the consumed RHC comes down again as a result of a payment to IATA’s BSP bank account.
 <BR/>
-It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_RHC_Amount__c}"/></apex:outputText></b> and the currently used amount is <b>{!relatedTo.CurrencyIsoCode} <apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}"/></apex:outputText></b>.
-<BR/><BR/>
-<b>You can, at any time, decrease your used RHC amount by pre-paying  any outstanding BSP Cash sales before or on the remittance date.</b>
-<BR/><BR/>
-If your agency has a direct debit in place for payments of BSP sales to IATA please take note of the following:
-<BR/><BR/>
-•	Any advance payment received with good value by IATA up to 4 working days prior to upcoming remittance day (R) will be deducted from your total outstanding amount and the direct debit to your designated bank account will be of the balance amount, if any. As an example if your billing is 1,000 and your agency has made an advance payment of 800 by R-4, your revised direct debit amount on remittance day will be 200. 
 <BR/>
-•	However, if you make advance payment between R-2 and R, such payments will be adjusted with your future direct debit amount. As an example, if your billing is 2,000 and your agency has made an advance payment of 500 by R-3 and another 400 on R-2, your revised upcoming direct debit amount will be 2,000-500 =1,500. Your future direct debit amount will be adjusted with the remaining 400.
+If you wish to lower your consumed RHC before the next Remittance day, you can make a pre-payment by bank transfer  to  our  usual  BSP  bank  account  for  your  country.  Please  include  your  IATA  code  as  a  reference  to facilitate the allocation of the amount received. Please note that it takes approximately 3 working days for the payment to be reflected in your consumed RHC.
 <BR/><BR/>
-We would like to inform you that in the event there is no reference to the IATA numeric code in the transfer, we will be applying the advance payment to the Head Entity.
+If your agency has a direct debit in place for your payments to IATA BSP, the advance payments will be adjusted as  follows:  Any  advance  payment  received  by  IATA  at  least  three  (3)  days  before  the  Remittance  day  will  be deducted from the upcoming remittance payment. Any advance payment received by IATA less than three (3) days before the Remittance day will be deducted from the following remittance.
 <BR/><BR/>
-<b>You can also, at any time, apply for an increase in you RHC amount.</b>
-<BR/><BR/>
-In order to increase your agency’s RHC amount, you need to increase the financial security amount held by IATA for your agency. Your RHC will be increased by the same percentage of additional financial security provided.
+    •	As an example, if your next remittance payment is 1,000 and the one after that is 1,500, and you make an advance payment of 200 four (4) working days before the Remittance day, IATA will debit 1,000-200 = 800 from your bank account on the upcoming Remittance day. 
 <BR/>
-If your agency is not currently providing a financial security to IATA, you can provide a new financial security. In this case, your RHC will be increased by the same percentage of additional financial security provided.
+    •	However, if the advance payment is received only one (1) working day before the Remittance day, IATA will debit the full amount (1,000) on the next Remittance day, and the advance payment will be deducted from the following direct debit (1,500 - 200 = 1,300).
 <BR/><BR/>
-Please note that if your Agency’s total Cash amounts outstanding to the BSP reach 100% of your RHC,  Cash as a form of payment will be temporarily restricted until a remittance is received, although you will be able to continue issuing tickets through other forms of payment such as Credit Card (if applicable), IATA EasyPay and/or other alternative transfer methods.
+For the future, please be reminded that you can increase your RHC by providing an additional Financial Security. Your RHC will be increased by the same amount as the additional Financial Security provided. If this solution does not fit you, you can open a free IATA EasyPay account (online rechargeable wallet).
 <BR/><BR/>
-You can consult your RHC usage at any time on the <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_ANG_RHC">IATA Customer Portal</a>.
+If  you  are  PCI  DSS  (Payment  Card  Industry  Data  Security  Standard)  compliant,  you  can  issue  tickets  using  the credit card of the customer as the form of payment. Please make sure that you first check the credit card types (VI, CA. DS, AX, etc.) accepted by each airline on your GDS (Amadeus, Galileo, Sabre, etc).
+<BR/><BR/>
+You can also issue transactions using an Alternative Transfer Method (ATM), such as a card issued to your Agency, provided that:
+<BR/>
+    •	The ATM is enrolled with IATA (either by the ATM provider, or by your Agency directly through BSPlink), and 
+<BR/>
+    •   The Airline has provided consent to your Agency to use that particular ATM
+<BR/>
+Once an ATM is enrolled with IATA, you can consult through BSPlink which Airline has provided consent for your agency to use it.
+<BR/><BR/>
+For any related question or doubts regarding these topics, please do not hesitate to contact us through the <a href="{!$Label.ISSP_Email_PortalUrl}ISSP_Login?retURL=/ISSP_ANG_RHC">IATA Customer Portal</a> create a case, give us a call or chat with us).
 <BR/><BR/>
 
-{!$Label.ISSP_Email_ThankYou}
-<br/><br/>
-<b>IATA – Global Delivery Center</b>
-<br/>
-<br/>
+We are here for you!
+<BR/><BR/>
+Best regards,
+<BR/>
+International Air Transport Association (IATA)
+<BR/>
 <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=015w0000001yYtT&oid=00D2000000008TF&lastMod=1392385307000"/>
 <!--<apex:image value="{!$Label.ISSP_Email_PortalUrl}servlet/servlet.ImageServer?id=015w0000001yKkp&oid=00D2000000008TF"/>-->
 <br/>
