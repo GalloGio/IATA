@@ -90,10 +90,9 @@
 											placeholder={searchBoxPlaceholder} list="predictiveresults-1"
 											onkeyup={predictiveSearch} autocomplete="off" readonly>
 											<span class="input-group-btn">					
-												<button onclick={resultsPage} data-tosca="search-btn" disabled
-													class="disabled-filter searchbutton btn search" type="button">
+												<button data-tosca="search-btn" class="disabled-filter searchbutton btn search disabled isDisabled" type="button">
 													<img src={searchIcon} data-tosca="searchIcon" class="searchbuttonimg" alt="Search" />
-												</button>						
+												</button>
 											</span>
 									</template>
 									<template if:true={searchReady}>

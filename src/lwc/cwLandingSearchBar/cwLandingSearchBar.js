@@ -263,16 +263,20 @@ export default class CwLandingSearchBar extends LightningElement {
 		filteredValues.forEach(element => {
 			const keySeparator = element.info.description && element.info.description !== "" ? " - " : "";
 			const label = element.info.alias ? element.info.alias : element.info.keyName;
-			this.predictiveValues.push({
-				key: element.info.type + keySeparator + element.info.description,
-				techkey: createKey(element.info.type + keySeparator + element.info.description + keySeparator + label + keySeparator + element.info.uniqueId),
-				value: element.info.value,
-				label: label,
-				searchValues: element.info.searchValues,
-				icon: checkIconType(element.info.type),
-				basekey: element.key,
-				stationsIds: element.info.stationsIds
-			});
+			if(this.predictiveValues.length < 50){
+				this.predictiveValues.push({
+					key: element.info.type + keySeparator + element.info.description,
+					techkey: createKey(element.info.type + keySeparator + element.info.description + keySeparator + label + keySeparator + element.info.uniqueId),
+					value: element.info.value,
+					label: label,
+					searchValues: element.info.searchValues,
+					icon: checkIconType(element.info.type),
+					basekey: element.key,
+					stationsIds: element.info.stationsIds
+				});
+			}else{
+				return;
+			}
 		});
 	}
 
