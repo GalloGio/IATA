@@ -4,7 +4,7 @@ private class AccountContactRoleSelectorTest {
 	static void makeData(){
 		Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 		insert account;
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(account.Id, 1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
 		insert contact;
 		Account_Role__c accountRole = TestDataFactory_AccountRoles.createBaseAccountRoles(new List<Account>{account}).get(0);
 		insert accountRole;
