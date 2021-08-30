@@ -130,6 +130,13 @@
     animation: mymove 5s;
     width: 500px;
 }
+.customCenteredPopup1200 {
+
+	animation: mymove 5s;
+
+    width: 1200px;
+
+}
 
 .modal {
     
