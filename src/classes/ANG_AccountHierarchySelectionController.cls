@@ -450,7 +450,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				hierarchyItemByCountry = new Map<Id, List<HierarchyItem>>();
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',') + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
 					if(countryIDToShowOnSplitAccountMultiCountry != null && (oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST)){
-						if(countryIDToShowOnSplitAccountMultiCountry == a.IATA_ISO_Country__c && a.location_type__c != 'GE'){
+						if(countryIDToShowOnSplitAccountMultiCountry == a.IATA_ISO_Country__c && a.location_type__c != AMS_Utils.GE){
 							Boolean main = (a.Id == oscar.Account__c);
 							Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
 							hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
@@ -513,7 +513,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 						if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
 							// Requires that every account have location class "D" if the account status
 							// is not one of the following: "Terminated", "Not in Operation", "Not Accredited" (pilotAccStatusNotRequireLocClassD)
-							if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)){
+							if(a.Location_Class__c != AMS_Utils.LC_D && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)){
 								existsLocClassDomesticError = true;
 							}
 	

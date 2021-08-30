@@ -87,12 +87,12 @@ global without sharing class AMS_RecordCreatorWebservice {
 					ownerId = cse.OwnerId;
 				}
 
-				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC || typeOfProcess == CONVERT_TO_ST || typeOfProcess == ANGPARTCONVERTMCTOLT || typeOfProcess == ANGPARTCONVERTMCTOST)){
+				if(cse.Origin == AMS_Utils.CASEORIGINPORTAL && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC || typeOfProcess == CONVERT_TO_ST || typeOfProcess == ANGPARTCONVERTMCTOLT || typeOfProcess == ANGPARTCONVERTMCTOST)){
 					ownerId = AMS_OscarCaseTriggerHelper.fetchOscarRegionQueueId(cse.Account.Region_Formula__c);
 				}
 			}
 
-			if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
+			if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == AMS_Utils.CASEORIGINPORTAL){
 				String selectedAccount = cases.get(0).Account_Concerned__c;
 				oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
 

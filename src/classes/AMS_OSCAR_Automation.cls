@@ -22,7 +22,7 @@ public with sharing class AMS_OSCAR_Automation {
 
 					Map<Id, AMS_Process_Detail__c> processDetails = new Map<Id, AMS_Process_Detail__c>();
 					String countryNameToShowOnSplitAccountMultiCountry = '';
-					for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name FROM AMS_Process_Detail__c WHERE Oscar__c = :oscar.Id and recordtype.developername='Agency_Involved']){
+					for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name FROM AMS_Process_Detail__c WHERE Oscar__c = :oscar.Id and recordtype.developername =: AMS_Utils.OSCARAGENCYINVOLVEDDEVELOPERNAME ]){
 						processDetails.put(pd.Account__c, pd);
 						countryNameToShowOnSplitAccountMultiCountry = pd.Account__r.IATA_ISO_Country__r.Name;
 					}
@@ -50,11 +50,13 @@ public with sharing class AMS_OSCAR_Automation {
 							countrySelected = a.IATA_ISO_Country__c;
 						}
 					}
-					if(oneHEisSelected && accountListByCountry.get(countrySelected).size() > numberOffAccountsSelected){
-						oscar.addError(Label.AMS_Console_Account_Hierarchy_Split_account_multicountry.replace('HEAccount.iso_country__c', countryNameToShowOnSplitAccountMultiCountry));
-						return false;
-					}else{
-						res = true;
+					if(accountListByCountry.containsKey(countrySelected)){
+						if(oneHEisSelected && accountListByCountry.get(countrySelected).size() > numberOffAccountsSelected){
+							oscar.addError(Label.AMS_Console_Account_Hierarchy_Split_account_multicountry.replace('HEAccount.iso_country__c', countryNameToShowOnSplitAccountMultiCountry));
+							return false;
+						}else{
+							res = true;
+						}
 					}
 				}
 				
@@ -585,7 +587,7 @@ public with sharing class AMS_OSCAR_Automation {
 				}
 			}
 
-			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || oscar.Process__c == AMS_Utils.new_PASS_HO || oscar.Process__c == AMS_Utils.new_PASS_BR))
+			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != AMS_Utils.OSCARSTPESNOTSTARTED) || (oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || oscar.Process__c == AMS_Utils.new_PASS_HO || oscar.Process__c == AMS_Utils.new_PASS_BR))
 				&& !hasFRRequiredStep) {
 				oscar.Dossier_Validation__c = Date.today();
 				oscar.Validation_result__c = 'Passed';
@@ -924,16 +926,16 @@ public with sharing class AMS_OSCAR_Automation {
 				res = True;
 
 				//restart manager approval step
-				oscar.STEP2__c = 'Not Started';
-				oscar.RPM_Approval__c = 'Not Started';
+				oscar.STEP2__c = AMS_Utils.OSCARSTPESNOTSTARTED;
+				oscar.RPM_Approval__c = AMS_Utils.OSCARSTPESNOTSTARTED;
 
 				//restart validation step
 				if(oscar.Process__c == AMS_Utils.AGENCYCHANGES){
 
-					oscar.STEP25__c = 'Not Started';
+					oscar.STEP25__c = AMS_Utils.OSCARSTPESNOTSTARTED;
 				} else {
 
-					oscar.STEP15__c = 'Not Started';
+					oscar.STEP15__c = AMS_Utils.OSCARSTPESNOTSTARTED;
 				}
 
 				oscar.Validation_result__c = 'N/A';

@@ -78,6 +78,16 @@ public without sharing class AMS_Utils {
 	public static final String GE = 'GE';
 
 
+	public static final String MULTICOUNTRYGECHANGETOGOSTANDARD = 'GE - Change to Gostandard';
+	public static final String MULTICOUNTRYGECHANGETOGOLITE = 'GE - Change to Golite';
+	public static final String LOCATIONRISKEVENTSFIELD = 'Location_Risk_Events__r';
+	public static final String RHCINFORMATIONSFIELD = 'RHC_Informations__r';
+	public static final String OSCARSTEP6 = 'STEP6__c';
+	public static final String CASEORIGINPORTAL = 'Portal';
+	public static final String OSCARAGENCYINVOLVEDDEVELOPERNAME = 'Agency_Involved';
+	public static final String OSCARSTPESNOTSTARTED = 'Not Started';
+
+
 	public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
 	public static final String PORTAL_APP_ACCESS_REQUESTED = 'Access Requested';
 	public static final String PORTAL_APP_ACCESS_DENIED = 'Access Denied';
@@ -445,6 +455,7 @@ public without sharing class AMS_Utils {
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
+	public static final String LC_D = 'D';
 	public static final String LC_POSTAL_OPERATOR = 'L';
 	public static final String LC_TIDS = 'T';
 

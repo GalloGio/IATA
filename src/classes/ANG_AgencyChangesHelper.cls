@@ -680,7 +680,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(oscar.STEP6__c == AMS_Utils.PASSED && oldOSCAR.STEP6__c != AMS_Utils.PASSED){
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Sanity check step passed');
 			
-			if(!canProceedWithConversionStep(oscar, 'STEP6__c', new Set<String>{AMS_Utils.PASSED, AMS_Utils.FAILED}, CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION)){
+			if(!canProceedWithConversionStep(oscar, AMS_Utils.OSCARSTEP6, new Set<String>{AMS_Utils.PASSED, AMS_Utils.FAILED}, CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION)){
 				return;
 			}
 			Set<Id> allAccountsInvolvedSetToProcessChangeCodeGeneration = fetchAccountIdsToBeProcessed(oscar.Id);
@@ -730,7 +730,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(acct.Id)){
 					pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 				}
-				riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
+				riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects(AMS_Utils.LOCATIONRISKEVENTSFIELD');
 				if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 					for(ANG_Agency_Risk_Event__c are : riskEventsLst){
 						riskEventsIdsToUpdate.add(are.id);
@@ -754,7 +754,9 @@ public with sharing class ANG_AgencyChangesHelper {
 				List<AMS_Agencies_relationhip__c> agenciesRelationhip = [SELECT Id
 																		FROM AMS_Agencies_relationhip__c
 																		WHERE Child_Account__c IN :allAccountsInvolvedSet ];
-				delete agenciesRelationhip;
+				if(!agenciesRelationhip.isEmpty()){
+					delete agenciesRelationhip;
+				}
 
 				if(allAccountsInvolvedSet.size() != 1){
 
@@ -786,7 +788,9 @@ public with sharing class ANG_AgencyChangesHelper {
 							agenciesRelationhipToAdd.add(rel);
 						}
 					}
-					insert agenciesRelationhipToAdd;
+					if(!agenciesRelationhipToAdd.isEmpty()){
+						insert agenciesRelationhipToAdd;
+					}
 				}
 			}
 
@@ -864,7 +868,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		if(oscar.STEP6__c == AMS_Utils.PASSED && oldOSCAR.STEP6__c != AMS_Utils.PASSED){
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Sanity check step passed');
 			
-			if(!canProceedWithConversionStep(oscar, 'STEP6__c', new Set<String>{AMS_Utils.PASSED, AMS_Utils.FAILED}, CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION)){
+			if(!canProceedWithConversionStep(oscar, AMS_Utils.OSCARSTEP6, new Set<String>{AMS_Utils.PASSED, AMS_Utils.FAILED}, CANNOT_PASS_SANITY_CHECK_ON_GE_CONVERSION)){
 				return;
 			}
 
@@ -882,7 +886,7 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if(acct.Location_Type__c == AMS_Utils.HE){
 					// If there is an existing RHC record removes it
-					List<ANG_RHC_Information__c> rhcLst = (List<ANG_RHC_Information__c>) acct.getSObjects('RHC_Informations__r');
+					List<ANG_RHC_Information__c> rhcLst = (List<ANG_RHC_Information__c>) acct.getSObjects(AMS_Utils.RHCINFORMATIONSFIELD);
 
 					if(rhcLst != null && !rhcLst.isEmpty()){
 						changesContainer.addRhcInformationToDeactivate(rhcLst.get(0));
