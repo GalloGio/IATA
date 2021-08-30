@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>1EF Application</fullName>
+        <default>false</default>
+        <label>1EF Application</label>
+    </customValue>
+    <customValue>
+        <fullName>ACCA</fullName>
+        <default>false</default>
+        <label>ACCA</label>
+    </customValue>
+    <customValue>
+        <fullName>Accelya</fullName>
+        <default>false</default>
+        <label>Accelya</label>
+    </customValue>
+    <customValue>
+        <fullName>ACLI</fullName>
+        <default>false</default>
+        <label>ACLI</label>
+    </customValue>
+    <customValue>
+        <fullName>Admin User Account issue</fullName>
+        <default>false</default>
+        <label>Admin User Account issue</label>
+    </customValue>
+    <customValue>
+        <fullName>Agent Experience Portal</fullName>
+        <default>false</default>
+        <label>Agent Experience Portal</label>
+    </customValue>
+    <customValue>
+        <fullName>Agentexp mobile app</fullName>
+        <default>false</default>
+        <label>Agentexp mobile app</label>
+    </customValue>
+    <customValue>
+        <fullName>AirportIS</fullName>
+        <default>false</default>
+        <label>AirportIS</label>
+    </customValue>
+    <customValue>
+        <fullName>AMS</fullName>
+        <default>false</default>
+        <label>AMS</label>
+    </customValue>
+    <customValue>
+        <fullName>Bi-Lateral Credit limit processing</fullName>
+        <default>false</default>
+        <label>Bi-Lateral Credit limit processing</label>
+    </customValue>
+    <customValue>
+        <fullName>BSP Cash processing</fullName>
+        <default>false</default>
+        <label>BSP Cash processing</label>
+    </customValue>
+    <customValue>
+        <fullName>BSPlink</fullName>
+        <default>false</default>
+        <label>BSPlink</label>
+    </customValue>
+    <customValue>
+        <fullName>Business rules execution</fullName>
+        <default>false</default>
+        <label>Business rules execution</label>
+    </customValue>
+    <customValue>
+        <fullName>Business rules setup</fullName>
+        <default>false</default>
+        <label>Business rules setup</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellation / Refund</fullName>
+        <default>false</default>
+        <label>Cancellation / Refund</label>
+    </customValue>
+    <customValue>
+        <fullName>CargoIS</fullName>
+        <default>false</default>
+        <label>CargoIS</label>
+    </customValue>
+    <customValue>
+        <fullName>CASSlink</fullName>
+        <default>false</default>
+        <label>CASSlink</label>
+    </customValue>
+    <customValue>
+        <fullName>Change Request</fullName>
+        <default>false</default>
+        <label>Change Request</label>
+    </customValue>
+    <customValue>
+        <fullName>Check a Code webpage</fullName>
+        <default>false</default>
+        <label>Check a Code webpage</label>
+    </customValue>
+    <customValue>
+        <fullName>Clearing Bank</fullName>
+        <default>false</default>
+        <label>Clearing Bank</label>
+    </customValue>
+    <customValue>
+        <fullName>Corporates definition / update</fullName>
+        <default>false</default>
+        <label>Corporates definition / update</label>
+    </customValue>
+    <customValue>
+        <fullName>Credit Card Processing</fullName>
+        <default>false</default>
+        <label>Credit Card Processing</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Portal</fullName>
+        <default>false</default>
+        <label>Customer Portal</label>
+    </customValue>
+    <customValue>
+        <fullName>Customer Portal mobile app</fullName>
+        <default>false</default>
+        <label>Customer Portal mobile app</label>
+    </customValue>
+    <customValue>
+        <fullName>Cybersource</fullName>
+        <default>false</default>
+        <label>Cybersource</label>
+    </customValue>
+    <customValue>
+        <fullName>Data Validation</fullName>
+        <default>false</default>
+        <label>Data Validation</label>
+    </customValue>
+    <customValue>
+        <fullName>DB India</fullName>
+        <default>false</default>
+        <label>DB India</label>
+    </customValue>
+    <customValue>
+        <fullName>DDD tool</fullName>
+        <default>false</default>
+        <label>DDD tool</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct Data Solutions</fullName>
+        <default>false</default>
+        <label>Direct Data Solutions</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct Debit processing</fullName>
+        <default>false</default>
+        <label>Direct Debit processing</label>
+    </customValue>
+    <customValue>
+        <fullName>EasyPay</fullName>
+        <default>false</default>
+        <label>EasyPay</label>
+    </customValue>
+    <customValue>
+        <fullName>EasyPay processing</fullName>
+        <default>false</default>
+        <label>EasyPay processing</label>
+    </customValue>
+    <customValue>
+        <fullName>Edenred</fullName>
+        <default>false</default>
+        <label>Edenred</label>
+    </customValue>
+    <customValue>
+        <fullName>Extranet</fullName>
+        <default>false</default>
+        <label>Extranet</label>
+    </customValue>
+    <customValue>
+        <fullName>Fraud Prevention rules execution</fullName>
+        <default>false</default>
+        <label>Fraud Prevention rules execution</label>
+    </customValue>
+    <customValue>
+        <fullName>Fraud Prevention rules setup</fullName>
+        <default>false</default>
+        <label>Fraud Prevention rules setup</label>
+    </customValue>
+    <customValue>
+        <fullName>GFA</fullName>
+        <default>false</default>
+        <label>GFA</label>
+    </customValue>
+    <customValue>
+        <fullName>Harling Warehouse</fullName>
+        <default>false</default>
+        <label>Harling Warehouse</label>
+    </customValue>
+    <customValue>
+        <fullName>How To?</fullName>
+        <default>false</default>
+        <label>How To?</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Implementation &amp; Service Fee Issues</fullName>
+        <default>false</default>
+        <label>IATA Implementation &amp; Service Fee Issues</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA store</fullName>
+        <default>false</default>
+        <label>IATA store</label>
+    </customValue>
+    <customValue>
+        <fullName>iBSPs</fullName>
+        <default>false</default>
+        <label>iBSPs</label>
+    </customValue>
+    <customValue>
+        <fullName>ICCS 2</fullName>
+        <default>false</default>
+        <label>ICCS 2</label>
+    </customValue>
+    <customValue>
+        <fullName>ICCS tool</fullName>
+        <default>false</default>
+        <label>ICCS tool</label>
+    </customValue>
+    <customValue>
+        <fullName>ICE</fullName>
+        <default>false</default>
+        <label>ICE</label>
+    </customValue>
+    <customValue>
+        <fullName>ICH4</fullName>
+        <default>false</default>
+        <label>ICH4</label>
+    </customValue>
+    <customValue>
+        <fullName>IFAP</fullName>
+        <default>false</default>
+        <label>IFAP</label>
+    </customValue>
+    <customValue>
+        <fullName>iiNET</fullName>
+        <default>false</default>
+        <label>iiNET</label>
+    </customValue>
+    <customValue>
+        <fullName>ILDS</fullName>
+        <default>false</default>
+        <label>ILDS</label>
+    </customValue>
+    <customValue>
+        <fullName>Integrated Connectivity and API</fullName>
+        <default>false</default>
+        <label>Integrated Connectivity and API</label>
+    </customValue>
+    <customValue>
+        <fullName>IRIS</fullName>
+        <default>false</default>
+        <label>IRIS</label>
+    </customValue>
+    <customValue>
+        <fullName>Maestro</fullName>
+        <default>false</default>
+        <label>Maestro</label>
+    </customValue>
+    <customValue>
+        <fullName>MDM</fullName>
+        <default>false</default>
+        <label>MDM</label>
+    </customValue>
+    <customValue>
+        <fullName>MediaCompetence</fullName>
+        <default>false</default>
+        <label>MediaCompetence</label>
+    </customValue>
+    <customValue>
+        <fullName>MSTS</fullName>
+        <default>false</default>
+        <label>MSTS</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <customValue>
+        <fullName>Participation TACT online</fullName>
+        <default>false</default>
+        <label>Participation TACT online</label>
+    </customValue>
+    <customValue>
+        <fullName>PaxIS</fullName>
+        <default>false</default>
+        <label>PaxIS</label>
+    </customValue>
+    <customValue>
+        <fullName>Payer Validation</fullName>
+        <default>false</default>
+        <label>Payer Validation</label>
+    </customValue>
+    <customValue>
+        <fullName>RET Files Processing</fullName>
+        <default>false</default>
+        <label>RET Files Processing</label>
+    </customValue>
+    <customValue>
+        <fullName>RHC</fullName>
+        <default>false</default>
+        <label>RHC</label>
+    </customValue>
+    <customValue>
+        <fullName>Salesforce</fullName>
+        <default>false</default>
+        <label>Salesforce</label>
+    </customValue>
+    <customValue>
+        <fullName>SAP</fullName>
+        <default>false</default>
+        <label>SAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Scheduler</fullName>
+        <default>false</default>
+        <label>Scheduler</label>
+    </customValue>
+    <customValue>
+        <fullName>SIS</fullName>
+        <default>false</default>
+        <label>SIS</label>
+    </customValue>
+    <customValue>
+        <fullName>Surcharge / Discount</fullName>
+        <default>false</default>
+        <label>Surcharge / Discount</label>
+    </customValue>
+    <customValue>
+        <fullName>System Performance and availability</fullName>
+        <default>false</default>
+        <label>System Performance and availability</label>
+    </customValue>
+    <customValue>
+        <fullName>System reports</fullName>
+        <default>false</default>
+        <label>System reports</label>
+    </customValue>
+    <customValue>
+        <fullName>System Security</fullName>
+        <default>false</default>
+        <label>System Security</label>
+    </customValue>
+    <customValue>
+        <fullName>Timaticweb</fullName>
+        <default>false</default>
+        <label>Timaticweb</label>
+    </customValue>
+    <customValue>
+        <fullName>TIP  Post Trans. Reporting</fullName>
+        <default>false</default>
+        <label>TIP  Post Trans. Reporting</label>
+    </customValue>
+    <customValue>
+        <fullName>Treasury Dashboard</fullName>
+        <default>false</default>
+        <label>Treasury Dashboard</label>
+    </customValue>
+    <customValue>
+        <fullName>Upfront Validation API</fullName>
+        <default>false</default>
+        <label>Upfront Validation API</label>
+    </customValue>
+    <customValue>
+        <fullName>WebHelp</fullName>
+        <default>false</default>
+        <label>WebHelp</label>
+    </customValue>
+    <customValue>
+        <fullName>Web Injection Payment Module</fullName>
+        <default>false</default>
+        <label>Web Injection Payment Module</label>
+    </customValue>
+    <customValue>
+        <fullName>Webstar</fullName>
+        <default>false</default>
+        <label>Webstar</label>
+    </customValue>
+    <customValue>
+        <fullName>Yardstick</fullName>
+        <default>false</default>
+        <label>Yardstick</label>
+    </customValue>
+    <description>Values used in Area_of_Concern__c  fields in Case Object and in Operational_Improvements__c object</description>
+    <masterLabel>Area of Concern</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

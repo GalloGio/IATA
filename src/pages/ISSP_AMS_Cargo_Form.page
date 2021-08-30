@@ -1929,7 +1929,6 @@
                         <apex:outputpanel >
                             <apex:inputfield value="{!newForm.ISSP_AMS_Registered_Capital__c}" onkeypress="return onlyNumbers(event);"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpRegisteredCapital}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                            <apex:outputText value=" USD"/>
                         </apex:outputpanel>
                     </apex:pageblocksectionitem>
                     <apex:pageblocksectionitem rendered="{!NOT(isCNSAgency)}">
@@ -1937,7 +1936,6 @@
                         <apex:outputpanel >
                             <apex:inputfield value="{!newForm.ISSP_AMS_Paidup_capital__c}" onkeypress="return onlyNumbers(event);"/>
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtHelpPaidUpCapital}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                            <apex:outputText value=" USD"/>
                         </apex:outputpanel>
                     </apex:pageblocksectionitem>
 

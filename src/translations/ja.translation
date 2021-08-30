@@ -8798,6 +8798,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
+        <label><!-- General Error Message --></label>
+        <name>General_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -16959,7 +16963,7 @@ and
         <name>ISSP_AMS_Step0_Intro_PASS</name>
     </customLabels>
     <customLabels>
-        <label>&quot;代理店詳細の小さな変更（電話番号、Eメールアドレスなど）は、&lt;a href=&quot;&quot;/ISSP_CompanyInformation?mid=M5S2&quot;&quot; target=&quot;&quot;_self&quot;&quot;&gt;会社情報&lt;/a&gt;ページで直接行うことができます。&quot;</label>
+        <label>&quot;代理店詳細の小さな変更（電話番号、Eメールアドレスなど）は、&lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;会社情報&lt;/span&gt;ページで直接行うことができます。&quot;</label>
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
@@ -25138,6 +25142,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
+        <label><!-- New Opportunity --></label>
+        <name>New_Opportunity</name>
+    </customLabels>
+    <customLabels>
         <label>新しいパスワード</label>
         <name>New_password</name>
     </customLabels>
@@ -30473,6 +30481,26 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>PortalService</name>
     </customLabels>
     <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Body --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Body</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 1 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 2 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Title --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>設定</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -30771,6 +30799,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save &amp; Close --></label>
+        <name>SaveClose</name>
     </customLabels>
     <customLabels>
         <label><!-- Search --></label>
@@ -43684,6 +43716,19 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Service Resources and Skills --></description>
+        <label><!-- Service Resources and Skills --></label>
+        <name>Service_Resources_and_Skills</name>
+        <sections>
+            <label><!-- Service Resource Skills --></label>
+            <name>Service Resource Skills</name>
+        </sections>
+        <sections>
+            <label><!-- Service Resources --></label>
+            <name>Service Resources</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Services with contacts associated --></description>
         <label><!-- Services with contacts associated --></label>
         <name>Services_with_contacts_associated</name>
@@ -44100,6 +44145,15 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <sections>
             <label><!-- User Provisioning Requests --></label>
             <name>User Provisioning Requests</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Service Resources and skills --></description>
+        <label><!-- Users with Service Resources and skills --></label>
+        <name>Users_with_Service_Resources_and_skills</name>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
         </sections>
     </reportTypes>
     <reportTypes>

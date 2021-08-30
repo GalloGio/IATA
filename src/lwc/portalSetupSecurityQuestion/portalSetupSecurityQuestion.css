@@ -1,0 +1,13 @@
+.slds-modal__header {
+    border: 0px;
+    border-radius: 0px;
+    padding: 0px;
+}
+
+.pointer-cursor{
+    cursor: pointer;
+}
+
+.darkBlueIcon {
+    fill: #1e32fa;
+}

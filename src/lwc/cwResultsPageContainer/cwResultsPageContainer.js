@@ -11,7 +11,7 @@ import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmen
 
 
 export default class CwResultsPageContainer extends LightningElement {
-	recordsPerPage = 20;
+	@track recordsPerPage = 20;
 	label = labels.labels();
 	@track selectedPage = 1;
 
@@ -214,6 +214,7 @@ export default class CwResultsPageContainer extends LightningElement {
 						this.paginateLogic();
 					} else {
 						this.mapData = null;
+						this.numberOfRecordsByTab = {};
 						this.updateMapOptions();
 						this.isLoading = false;
 						if (!this.initialLoadPerformed) {
@@ -226,6 +227,7 @@ export default class CwResultsPageContainer extends LightningElement {
 					//this.error = error;
 					this.results = null;
 					this.mapData = null;
+					this.numberOfRecordsByTab = {};
 					this.updateMapOptions();
 					this.isLoading = false;
 					if (!this.initialLoadPerformed) this.initialLoadPerformed = true;
@@ -233,6 +235,7 @@ export default class CwResultsPageContainer extends LightningElement {
 				});
 		} else {
 			this.mapData = null;
+			this.numberOfRecordsByTab = {};
 			this.updateMapOptions();
 			this.isLoading = false;
 			if (!this.initialLoadPerformed) this.initialLoadPerformed = true;
@@ -263,6 +266,7 @@ export default class CwResultsPageContainer extends LightningElement {
 					.then(result => {
 						let allResults = JSON.parse(result);
 						this.mapData = [];
+						this.numberOfRecordsByTab = {};
 						allResults.forEach(record => {
 							let iconurl = this.getIcon(record.facility.recordTypeDevName, searchWrapper);
 							let ctypeimg = this.getCTypeImage(record.facility.recordTypeDevName);
@@ -278,6 +282,16 @@ export default class CwResultsPageContainer extends LightningElement {
 								recordUrl: this.urlBaseFacilityPage + "?eid=" + record.facility.Id,
 								availableCerts: record.lstAvailableCertifications
 							});
+
+							if (this.numberOfRecordsByTab['all'] === undefined) {
+								this.numberOfRecordsByTab['all'] = 0;
+							}
+							this.numberOfRecordsByTab['all'] += 1;
+
+							if (this.numberOfRecordsByTab[record.facility.recordTypeName.toLowerCase()] === undefined) {
+								this.numberOfRecordsByTab[record.facility.recordTypeName.toLowerCase()] = 0;
+							}
+							this.numberOfRecordsByTab[record.facility.recordTypeName.toLowerCase()] += 1;
 						});
 						this.updateMapOptions();
 						Array.prototype.certicon = this.certimage;
@@ -285,6 +299,7 @@ export default class CwResultsPageContainer extends LightningElement {
 					})
 					.catch(error => {
 						this.mapData = null;
+						this.numberOfRecordsByTab = {};
 						this.updateMapOptions();
 						console.error(error);
 					});
@@ -557,21 +572,14 @@ export default class CwResultsPageContainer extends LightningElement {
 		return style;
 	}
 
+	@track
+	numberOfRecordsByTab = {};
 	get numberOfPages(){
-		let pageNumbers = 1;
-		if (this.mapData) {
-			if (this.companyTypeFilter && this.companyTypeFilter !== "All"){
-				let filteredData = this.mapData.filter(elem => {
-					return elem.dataTypeLabel === this.companyTypeFilter;
-				});
-				if (filteredData && filteredData.length > 0){
-					 pageNumbers = Math.ceil(filteredData.length / this.recordsPerPage);
-				}
-			} else{
-				pageNumbers = Math.ceil(this.mapData.length / this.recordsPerPage);
-			}
+		if (this.numberOfRecordsByTab[this.companyTypeFilter.toLowerCase()] !== undefined) {
+			return Math.ceil(this.numberOfRecordsByTab[this.companyTypeFilter.toLowerCase()] / this.recordsPerPage);
+		} else {
+			return 1;
 		}
-		return pageNumbers;
 	}
 
 	nextpage(event) {

@@ -9,7 +9,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>All/Continuous_Improvement_Process_Creation_Notification</template>
+        <template>Quality/Continuous_Improvement_Process_Creation_Notification</template>
     </alerts>
     <alerts>
         <fullName>OI_Approval_notification</fullName>
@@ -19,7 +19,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Continuous_Improvement_Process_Approved_by_RPM</template>
+        <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
     <alerts>
         <fullName>OI_Approved_by_RPM</fullName>
@@ -187,6 +187,16 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_QRM_Analysis_Conclusions_to_N_A</fullName>
+        <description>Set the field &quot;QRM Analysis Conclusions&quot; to &quot;N/A&quot;</description>
+        <field>QRM_Analysis_Conclusions__c</field>
+        <formula>&quot;N/A&quot;</formula>
+        <name>Set QRM Analysis Conclusions to N/A</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Terminate_OI</fullName>
         <description>Set today as Termination Date to set the status as Terminated</description>
         <field>Terminated_Date__c</field>
@@ -223,6 +233,19 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Autoclosed_when_approved_by_CPSManager</fullName>
+        <actions>
+            <name>Set_QRM_Analysis_Conclusions_to_N_A</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>When a Improvement is approved by a CPS Manager it is closed automatically
+
+Note: Custom Metadata are not yet available for Workflows, when available replace the regex string by $CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_N_A.Value__c</description>
+        <formula>AND(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISCHANGED(OI_Approval_date__c),   NOT(ISBLANK(OI_Approval_date__c)),   REGEX(TEXT(Issue_Sub_Category__c),&quot;Active AL Withholding|Agent Adjustment|Agent Termination late|AL instruction|Bank.Reg.Legal|Banking details|Calendar changes|Default Exceeding  .500k|Delay trf EP to Hinge|Delayed recovery adj|Financial Security timing|HAR.*|ICCS Settlement|Irregularity .Default|Late AL settlement .External .|Late AL settlement .External. &lt; .1k|Matching|Non Hinge &gt; 6 mths|Sanctions|Settlement adjustment|Signatories|Suspended AL|Value Date&quot;) )</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>Notify on OI creation</fullName>
         <actions>
             <name>Notify_on_Operational_Improvement_Creation</name>
@@ -245,6 +268,19 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <description>Action done when an OI is being completed</description>
         <formula>AND(   OR(     RecordType.DeveloperName=&apos;Data_Governance&apos;,     RecordType.DeveloperName=&apos;Operational_Improvements&apos;   ),   NOT(ISBLANK(TEXT(Action_Plan_Effectiveness_Assessment__c))) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>QRM_Analysis_Conclusions_NA</fullName>
+        <actions>
+            <name>Set_Closed_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>After CPS Manager approval “QRM Analysis Conclusions” is set to N/A.
+
+Note: Custom Metadata are not yet available for Workflows, when available replace the regex string by $CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_No.Value__c</description>
+        <formula>AND(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISCHANGED(OI_Approval_date__c),   NOT(ISBLANK(OI_Approval_date__c)),   REGEX(TEXT(Issue_Sub_Category__c),&apos;AG &gt; 6 mths|AL .Bank mandates.  &gt; 6 mths|AL .Legal.   &gt; 6 mths|AL  .Other . &gt; 6 months|AL .Sanctions.   &gt; 6 mths|AL .Suspension.   &gt; 6 mths|Authorisation procedures|IATA AL.AG unbalanced &gt; 1 mth|Unidentified &gt;1&lt;3 mths|Unidentified &gt; 3 mths&apos;) )</formula>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>Reset approval date</fullName>

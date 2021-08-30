@@ -43,5 +43,14 @@ public with sharing class PortalApplicationRights {
 		return records;
 	}
 	
+	//return a 'default' Portal_Application_Right__c record (ONLY USED TO DEFAULT AND RETURN MANDATORY FIELDS)
+	public List<Portal_Application_Right__c> createDefaultPortalApplicationRight(Integer numberOfRecords){
+		for(Integer x = 0; x < numberOfRecords; x++){
+			Portal_Application_Right__c portalApplicationRight = (Portal_Application_Right__c) Schema.getGlobalDescribe().get('Portal_Application_Right__c').newSObject();
+			records.add(portalApplicationRight);
+		}
+		return records;
+	}
+
 	public class PortalApplicationRightDomainException extends Exception {}
 }

@@ -126,14 +126,14 @@
         <label>IATA AgentExperience</label>
     </customValue>
     <customValue>
-        <fullName>IATA Travel Pass</fullName>
-        <default>false</default>
-        <label>IATA Travel Pass</label>
-    </customValue>
-    <customValue>
         <fullName>IATAN</fullName>
         <default>false</default>
         <label>IATAN</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Travel Pass</fullName>
+        <default>false</default>
+        <label>IATA Travel Pass</label>
     </customValue>
     <customValue>
         <fullName>ICCS</fullName>
@@ -196,6 +196,11 @@
         <label>Publications</label>
     </customValue>
     <customValue>
+        <fullName>Quality</fullName>
+        <default>false</default>
+        <label>Quality</label>
+    </customValue>
+    <customValue>
         <fullName>Remittance &amp; Settlement</fullName>
         <default>false</default>
         <label>Remittance &amp; Settlement</label>
@@ -242,5 +247,5 @@
     </customValue>
     <description>Values used for Case complaint categories and Continuous Improvement Process categories</description>
     <masterLabel>Complaint Categories</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

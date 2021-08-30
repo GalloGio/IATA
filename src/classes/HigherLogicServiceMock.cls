@@ -1,3 +1,4 @@
+@IsTest
 global class HigherLogicServiceMock implements HttpCalloutMock {
 
 	global HTTPResponse respond(HTTPRequest req) {

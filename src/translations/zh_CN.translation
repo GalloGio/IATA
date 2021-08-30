@@ -8794,6 +8794,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
+        <label><!-- General Error Message --></label>
+        <name>General_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -25129,6 +25133,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
+        <label><!-- New Opportunity --></label>
+        <name>New_Opportunity</name>
+    </customLabels>
+    <customLabels>
         <label>新密码</label>
         <name>New_password</name>
     </customLabels>
@@ -30464,6 +30472,26 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PortalService</name>
     </customLabels>
     <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Body --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Body</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 1 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 2 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Title --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>设置</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -30762,6 +30790,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save &amp; Close --></label>
+        <name>SaveClose</name>
     </customLabels>
     <customLabels>
         <label><!-- Search --></label>
@@ -43040,7 +43072,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>报告/报表</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>
@@ -43087,7 +43119,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contracts</name>
         </sections>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>报告/报表</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43208,7 +43240,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
-            <label><!-- OSCARs --></label>
+            <label>报告/报表</label>
             <name>OSCARs</name>
         </sections>
     </reportTypes>
@@ -43675,6 +43707,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Service Resources and Skills --></description>
+        <label><!-- Service Resources and Skills --></label>
+        <name>Service_Resources_and_Skills</name>
+        <sections>
+            <label><!-- Service Resource Skills --></label>
+            <name>Service Resource Skills</name>
+        </sections>
+        <sections>
+            <label><!-- Service Resources --></label>
+            <name>Service Resources</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Services with contacts associated --></description>
         <label><!-- Services with contacts associated --></label>
         <name>Services_with_contacts_associated</name>
@@ -44091,6 +44136,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- User Provisioning Requests --></label>
             <name>User Provisioning Requests</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Service Resources and skills --></description>
+        <label><!-- Users with Service Resources and skills --></label>
+        <name>Users_with_Service_Resources_and_skills</name>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
         </sections>
     </reportTypes>
     <reportTypes>

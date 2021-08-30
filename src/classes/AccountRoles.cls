@@ -1,6 +1,6 @@
 public with sharing class AccountRoles {
-	public static final String STATUSACTIVE = 'Active';
-	public static final String STATUSINACTIVE = 'Inactive';
+	public final String STATUSACTIVE = 'Active';
+	public final String STATUSINACTIVE = 'Inactive';
 
 	public List<Account_Role__c> records { get; private set; }
 
@@ -39,10 +39,7 @@ public with sharing class AccountRoles {
 
 		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account_Role__c', 'Default');
 		for(Id accountId : accountIdSet){
-			if(Test.isRunningTest())
-				records.add(new Account_Role__c(RecordTypeId = recordTypeId, Account__c = accountId));
-			else
-				records.add(new Account_Role__c(RecordTypeId = recordTypeId, Account__c = accountId, Functional_Role__c = functionalRoleName) );
+			records.add(new Account_Role__c(RecordTypeId = recordTypeId, Account__c = accountId, Functional_Role__c = functionalRoleName) );
 		}
 		return records;
 	}

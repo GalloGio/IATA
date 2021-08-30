@@ -14,9 +14,9 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	*/
 
 	// FOP OSCAR was mass created if Origin is the following:
-	private static final String MASSIVE_FOP_ORIGIN = 'Massive FOP Creation';
-	private static final String AUTOMATIC_RENEWAL_FOP_ORIGIN = 'FoP automatic renewal';
-	private static final String ANN_REV_REASON = 'Annual revalidation';
+	public static final String MASSIVE_FOP_ORIGIN = 'Massive FOP Creation';
+	public static final String AUTOMATIC_RENEWAL_FOP_ORIGIN = 'FoP automatic renewal';
+	public static final String ANN_REV_REASON = 'Annual revalidation';
 
 	private static final String RECTYPE_OSCARCOMM = AMS_Utils.RECTYPE_OSCARCOMM;
 	private static final String RECTYPE_NEWGENFOP = AMS_Utils.RECTYPE_NEWGENFOP;
@@ -86,10 +86,20 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 			}
 		}
 
-		return (Iterable<Case>) Database.getQueryLocator([SELECT Id, ContactId, ContactEmail, Contact.Name, OSCAR__c, OSCAR__r.createdDate,
-															Contact.Account.IataCode__c, Origin, Reason1__c, Contact.Preferred_Language__c,
-															Contact.BSP_CASS_Payment_contact__c, Contact.Financial_Assessment_Contact__c,
-															CreatedDate, OSCAR__r.STEP43__c, OSCAR__r.ANG_Administrative_non_compliance_date__c,
+		return (Iterable<Case>) Database.getQueryLocator([SELECT Id, ContactId, ContactEmail, AccountId, CreatedDate, Origin, Reason1__c,
+															OSCAR__c,
+															OSCAR__r.ANG_Administrative_non_compliance_date__c,
+															OSCAR__r.STEP43__c,
+															OSCAR__r.createdDate,
+															Contact.Id,
+															Contact.Name,
+															Contact.Email,
+															Contact.Preferred_Language__c,
+															Contact.BSP_CASS_Payment_contact__c,
+															Contact.Financial_Assessment_Contact__c,
+															Contact.Account.IataCode__c,
+															Contact.Account.Name,
+															Contact.Account.ANG_PCI_compliance_expiry_date__c,
 															Owner.Name
 														  FROM Case
 														  WHERE RecordtypeID = :RECTYPE_OSCARCOMM
@@ -120,28 +130,34 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 		Map<Id,Case> annualRevDeadlineReminderCases = new Map<Id,Case>();
 		
 		Map<String,Map<Id,Case>> casesByTemplateName =  new Map<String,Map<Id,Case>>();
-		Map<String,Set<Id>> templateContIdMap = new Map<String,Set<Id>>();
+		Map<Id,List<Contact>> mapCaseContacts = new Map<Id,List<Contact>>();
+
+		// Find any Contact for each account that could receive the same notification as the case owner
+		map<Id,Account> mapAccountContacts = findExtraRecipientsInAccounts(scope);
 
 		for (Case cse :scope) {
 			Date dt = Date.newInstance(cse.CreatedDate.year(), cse.CreatedDate.month(), cse.CreatedDate.day());
 
 			if (dt == DATE_REMINDER_15 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_15) {
 				if(cse.origin == MASSIVE_FOP_ORIGIN) {
-					populateTemplateMap(reminderCases, cse, FOP_REMINDER_TEMPLATE_ID, templateContIdMap);
+					Account account = mapAccountContacts.get(cse.AccountId);
+					List<Contact> listExtraRecipients = account?.Contacts;
+					populateContactsMap(reminderCases, cse, mapCaseContacts, listExtraRecipients);
 				} else if (cse.Reason1__c == ANN_REV_REASON) {
-					populateAnnualRevalidationTemplateMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, templateContIdMap);
+					populateAnnualRevalidationContactMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, mapCaseContacts);
 				}
 			} else if (dt == DATE_REMINDER_30) {
-				nonComplianceCases.put(cse.id,cse);
-					
 				if (cse.origin == MASSIVE_FOP_ORIGIN) {
-					populateTemplateMap(nonComplianceCases, cse, FOP_NONCOMPLIANCE_TEMPLATE_ID, templateContIdMap);
+					populateContactsMap(nonComplianceCases, cse, mapCaseContacts, null);
 				} else if (cse.origin == AUTOMATIC_RENEWAL_FOP_ORIGIN) {
-					populateTemplateMap(renewalNonComplianceCases, cse, RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID, templateContIdMap);
+					Account account = mapAccountContacts.get(cse.AccountId);
+					List<Contact> listExtraRecipients = account?.Contacts;
+					populateContactsMap(renewalNonComplianceCases, cse, mapCaseContacts, listExtraRecipients);
 				}
 			} else if ((dt == DATE_REMINDER_21 || dt == DATE_REMINDER_27 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_21 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_27) && cse.Reason1__c == ANN_REV_REASON) {
-				populateAnnualRevalidationTemplateMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, templateContIdMap);
+				populateAnnualRevalidationContactMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, mapCaseContacts);
 			}
+
 		}
 		
 		if(!reminderCases.isEmpty()) {
@@ -165,28 +181,62 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 		}
 
 		try{
-			ANG_OscarProcessHelper.sendFOPPortalNotificationAndEmail(casesByTemplateName, templateContIdMap,notificationTemplatesInverted);
+			ANG_OscarProcessHelper.sendFOPPortalNotificationAndEmail(casesByTemplateName, mapCaseContacts, notificationTemplatesInverted);
 		}catch(Exception e){
-			errors.add('Error running batch containing Case IDs: '+String.join(templateContIdMap.values(),',')+' - '+e.getMessage()+' - '+e.getStackTraceString()+'/n');
+			errors.add('Error running batch containing Case IDs: '+String.join(mapCaseContacts.values(),',')+' - '+e.getMessage()+' - '+e.getStackTraceString()+'/n');
 		}
 	}
 
-	private void populateAnnualRevalidationTemplateMap(Map<Id,Case> annualRevDeadlineReminderCases, Map<Id,Case> annualRevReminderCases, Case cse, Map<String,Set<Id>> templateContIdMap) {
+	private void populateAnnualRevalidationContactMap(Map<Id,Case> annualRevDeadlineReminderCases, Map<Id,Case> annualRevReminderCases, Case cse, Map<Id,List<Contact>> mapCaseContacts) {
 		if (cse.OSCAR__r.STEP43__c == AMS_Utils.PASSED) {
-			populateTemplateMap(annualRevDeadlineReminderCases, cse, ANNUAL_REV_DEADLINE_REMINDER, templateContIdMap);
+			populateContactsMap(annualRevDeadlineReminderCases, cse, mapCaseContacts, null);
 		} else {
-			populateTemplateMap(annualRevReminderCases, cse, ANNUAL_REV_REMINDER, templateContIdMap);
+			populateContactsMap(annualRevReminderCases, cse, mapCaseContacts, null);
 		}
 	}
 
-	private void populateTemplateMap(Map<Id,Case> caseMap, Case cse, String identifier, Map<String,Set<Id>> templateContIdMap) {
+	private void populateContactsMap(Map<Id,Case> caseMap, Case cse, Map<Id,List<Contact>> mapCaseContacts, list<Contact> listExtraRecipients) {
 		caseMap.put(cse.id, cse);
 
-		if (templateContIdMap.keySet().contains(notificationTemplates.get(identifier))) {
-			templateContIdMap.get(notificationTemplates.get(identifier)).add(cse.ContactId);
-		} else {
-			templateContIdMap.put(notificationTemplates.get(identifier),new Set<Id>{cse.ContactId});
+		List<Contact> listContacts = mapCaseContacts.get(cse.Id);
+		if (listContacts == null) {
+			listContacts = new List<Contact>();
 		}
+		listContacts.add(cse.Contact);
+		if (listExtraRecipients!=null) {
+			listContacts.addAll(listExtraRecipients);
+		}
+		// make the list unique
+		map<Id,Contact> mapUniqueContact = new map<Id,Contact>();
+		for (Contact contact: listContacts) {
+			mapUniqueContact.put(contact.Id, contact);
+		}
+		mapCaseContacts.put(cse.Id,mapUniqueContact.values());
+	}
+
+	/**
+	 * Creates a map with an Account Id and a set of all contacts that will receive a notification
+	 */
+	private map<Id,Account> findExtraRecipientsInAccounts(list<Case> listCase) {
+		//Find accounts related to the incoming cases
+		list<Id> listAccountId = new list<Id>();
+		for (Case cse :listCase) {
+			listAccountId.add(cse.AccountId);
+		}
+
+		return new map<Id,Account>(
+			[SELECT Id,
+				(SELECT Id, Email, Name, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c,
+					Account.IataCode__c, Account.Name, Account.ANG_PCI_compliance_expiry_date__c
+				FROM Contacts
+				WHERE Status__c = :AMS_Utils.ACTIVE
+				AND IsEmailBounced = false
+				AND (
+					User_Portal_Status__c = :AMS_Utils.CONTACT_TYPE_ADMIN
+					OR BSP_CASS_Payment_contact__c = true
+				))
+			FROM Account
+			WHERE Id IN :listAccountId]);
 	}
 
 	global void finish(Database.BatchableContext BC) {

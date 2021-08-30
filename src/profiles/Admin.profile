@@ -8007,6 +8007,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MFA_LoginFlowController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MFA_LoginFlowControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MITA_AgreementTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -10484,14 +10492,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserSelectorTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserServiceTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -35692,6 +35692,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Custom_metadata_label_translation__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Customer_Invoice__c.Bank_Account_Name__c</field>
         <readable>true</readable>
@@ -49743,8 +49748,18 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Operational_Improvements__c.Apparent_Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Operational_Improvements__c.Approval_process_selector__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Area_of_Concern__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -50129,6 +50144,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Operational_Improvements__c.QRM_Analysis_Conclusions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Quality_Response_Categorization__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -52770,6 +52790,11 @@
         <editable>false</editable>
         <field>Portal_Applications__c.Visible__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_MFA_Setting__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -59227,6 +59252,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Questions_Answer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>User.dgai__active_user_settings__c</field>
         <readable>true</readable>
@@ -62404,6 +62439,12 @@
         <layout>Custom_Related_case__c-Related case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Custom_metadata_label__mdt-Custom metadata label Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Custom_metadata_label_translation__mdt-Custom metadata label translation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Customer_Invoice_Payment_Link__mdt-Customer Invoice Payment Link Config Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -63635,6 +63676,9 @@
     <layoutAssignments>
         <layout>Portal_Applications__c-Portal Application Layout</layout>
         <recordType>Portal_Applications__c.ISS_Portal_Application</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Portal_MFA_Setting__mdt-Portal MFA Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Portal_Service_Account_Preference__c-Portal Service Account Preference Layout</layout>
@@ -70590,6 +70634,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>LogPhoneCase</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>MFA_LoginFlowPage</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>

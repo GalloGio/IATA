@@ -8794,6 +8794,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
+        <label><!-- General Error Message --></label>
+        <name>General_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -25139,6 +25143,10 @@ IATA Müşteri Portalına kaydolurken sorun yaşamaya devam ederseniz, lütfen &
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
+        <label><!-- New Opportunity --></label>
+        <name>New_Opportunity</name>
+    </customLabels>
+    <customLabels>
         <label>Yeni şifre gir</label>
         <name>New_password</name>
     </customLabels>
@@ -30474,6 +30482,26 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>PortalService</name>
     </customLabels>
     <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Body --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Body</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 1 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 2 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Title --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Ayarlar</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -30774,6 +30802,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save &amp; Close --></label>
+        <name>SaveClose</name>
     </customLabels>
     <customLabels>
         <label><!-- Search --></label>
@@ -42576,7 +42608,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Live Chat Instant Surveys --></label>
         <name>Live_Chat_Instant_Surveys</name>
         <sections>
-            <label><!-- Instant Surveys --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Instant Surveys</name>
         </sections>
     </reportTypes>
@@ -42725,7 +42757,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <label><!-- Representing (if applicable) --></label>
                 <name>Representing (if applicable)</name>
             </columns>
-            <label><!-- Participants --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Participants</name>
         </sections>
     </reportTypes>
@@ -42872,7 +42904,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Network Members</name>
         </sections>
         <sections>
-            <label><!-- Networks --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Networks</name>
         </sections>
     </reportTypes>
@@ -42938,7 +42970,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- ONE source station contacts --></label>
         <name>ONE_source_station_contacts</name>
         <sections>
-            <label><!-- Account Roles --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Account Roles</name>
         </sections>
         <sections>
@@ -42946,7 +42978,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>ONE Source Contact Role Details</name>
         </sections>
         <sections>
-            <label><!-- OS Stations --></label>
+            <label>Portal Erişim Ismi</label>
             <name>OS Stations</name>
         </sections>
     </reportTypes>
@@ -43099,7 +43131,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Contracts</name>
         </sections>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43687,6 +43719,19 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Service Resources and Skills --></description>
+        <label><!-- Service Resources and Skills --></label>
+        <name>Service_Resources_and_Skills</name>
+        <sections>
+            <label><!-- Service Resource Skills --></label>
+            <name>Service Resource Skills</name>
+        </sections>
+        <sections>
+            <label><!-- Service Resources --></label>
+            <name>Service Resources</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Services with contacts associated --></description>
         <label><!-- Services with contacts associated --></label>
         <name>Services_with_contacts_associated</name>
@@ -44103,6 +44148,15 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <sections>
             <label><!-- User Provisioning Requests --></label>
             <name>User Provisioning Requests</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Service Resources and skills --></description>
+        <label><!-- Users with Service Resources and skills --></label>
+        <name>Users_with_Service_Resources_and_skills</name>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
         </sections>
     </reportTypes>
     <reportTypes>

@@ -12,6 +12,12 @@ private class AirportISServiceTest {
 	}
 
 	@IsTest
+	static void fakeMethod(){
+		AirportISService airportISService = new AirportISService();
+		airportISService.fakemethod();
+	}
+
+	@IsTest
 	static void testManageUserOnboarding(){
 		PortalApplicationRights portalApplicationRights = new PortalApplicationRights();
 

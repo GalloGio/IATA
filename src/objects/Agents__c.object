@@ -353,6 +353,7 @@ No value set denotes that the agent is logged in.</description>
         <columns>User__c</columns>
         <columns>Maximum_case_workload__c</columns>
         <columns>Region__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

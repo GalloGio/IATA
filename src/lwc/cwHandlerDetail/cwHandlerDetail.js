@@ -442,7 +442,7 @@ export default class CwHandlerDetail extends LightningElement {
 			if (this.autoSelection === true) {
 				if (this.stationProfile.recordTypeDevName === "Airline" && (this.handlerType === "cargo" || this.handlerType === "ramp")) {
 					newCurrentItem.selected = false;
-				} else if (this.stationProfile.recordTypeDevName === "Airport_Operator" && (this.handlerType === "airline" || this.handlerType === "cargo" || this.handlerType === "ramp")) {
+				} else if (this.stationProfile.recordTypeDevName === "Airport_Operator" && (this.handlerType === "cargo" || this.handlerType === "ramp")) {
 					newCurrentItem.selected = true;
 				}
 			}

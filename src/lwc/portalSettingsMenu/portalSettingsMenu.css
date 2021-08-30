@@ -1,0 +1,15 @@
+.mfa-active-menu-item {
+    border-left: red 4px solid;
+    color: red;
+    background-color: #f046320a;
+}
+
+.clickable-cursor {
+    cursor: pointer;
+}
+
+.sticky-menu {
+    position: sticky;
+    z-index: 20;
+    top: 25px;
+}

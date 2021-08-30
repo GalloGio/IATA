@@ -1,0 +1,6 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="Portal Wellcome Panel" ref="exampleComponentName" label="Label">
+		Panel component containinig the 2FA flow.
+	</aura:example>
+</aura:documentation>

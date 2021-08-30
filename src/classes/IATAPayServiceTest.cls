@@ -12,6 +12,12 @@ private class IATAPayServiceTest {
 	}
 
 	@IsTest
+	static void fakeMethod(){
+		IATAPayService iataPayService = new IATAPayService();
+		iataPayService.fakemethod();
+	}
+
+	@IsTest
 	static void testManageUserOnboarding(){
 		PortalApplicationRights portalApplicationRights = new PortalApplicationRights();
 

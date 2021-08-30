@@ -1748,6 +1748,11 @@ global class ANG_OscarProcessHelper {
 		if (origin == AMS_Utils.ANG_MASSIVE_FOP || origin == AMS_Utils.ANG_FOP_AUTOMATIC_RENEWAL)
 			sr = [Select body, name from StaticResource where Name = 'ANG_NilCreditCardSelfDeclaration'].get(0);
 
+		//Find users related to contacts in keyContactMap, to send emails to users instead of contacts when possible
+		Map<Id,User> keyContactUserMap = new Map<Id,User>();
+		for (User user : [SELECT Id, ContactId FROM User WHERE ContactId IN :keyContactMap.values()]) {
+			keyContactUserMap.put(user.ContactId, user);
+		}
 		Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend = new Map<ID,List<Messaging.SingleEmailMessage>>();
 		List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 		for (Account acc: accs){
@@ -2024,76 +2029,91 @@ global class ANG_OscarProcessHelper {
  		return contacts[0];
 	}
 
+	/**
+	 * It send various types of notifications for the FOP process
+	 * params:
+	 * 	Map<String,Map<Id,Case>> notifTempNameCaseMap: key: Notification_Template__c Name; Value: a map of cases to send this kind of notification
+	 * 	Map<Id,List<Contact>> mapCaseContacts: Key: Case Id; Value: Contact list to receive a notification for that particular case
+	 * 	Map<String,String> mapNotificationsTemplates: Key: Notifcation_Template__c Name; Value: EmailTemplate Name
+	 */
+	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<Id,List<Contact>> mapCaseContacts, Map<String,String> mapNotificationsTemplates){
 
-	public static void sendFOPPortalNotificationAndEmail(Map<String,Map<Id,Case>> notifTempNameCaseMap, Map<String,Set<Id>> templateContIdMap, Map<String,String> mapNotificationsTemplates){
-
-		List<String> notificationTargets = new List<String>();
-		Map<Id,Case> contactCaseMap = new Map<Id,Case>();
-		Set<Id> conIds = new Set<Id>();
-
-		for (String key : templateContIdMap.keySet()){
-			conIds.addAll(templateContIdMap.get(key));
+		// create a map for all input Contats in mapCaseContacts
+		Map<Id,Contact> mapContacts = new Map<Id,Contact>();
+		for (List<Contact> listContact : mapCaseContacts.values()){
+			mapContacts.putAll(listContact);
 		}
-
-		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c, Account.Name, Account.ANG_PCI_compliance_expiry_date__c
-														FROM Contact WHERE Id IN :conIds]);
-
-		for(String key :notifTempNameCaseMap.keySet()){
-			for(case cse :notifTempNameCaseMap.get(key).values()){
-				notificationTargets.add(cse.ContactId+':'+key);
-				contactCaseMap.put(cse.ContactId,cse);
+		
+		//Find users related to contacts in keyContactMap, to send emails to users instead of contacts when possible
+		Map<Id,User> mapContactUser = new Map<Id,User>();
+		for (User user : [SELECT Id, ContactId FROM User WHERE ContactId IN :mapContacts.keyset()]) {
+			mapContactUser.put(user.ContactId, user);
+		}
+		
+		// Prepare Notification__c records
+		List<String> notificationTargets = new List<String>();
+		for(String templateName :notifTempNameCaseMap.keySet()){
+			for(case cse :notifTempNameCaseMap.get(templateName).values()){
+				for (Contact contact: mapCaseContacts.get(cse.Id)) {
+					notificationTargets.add(contact.Id + ':' + templateName);
+				}
 			}
 		}
 
 		List<Notification__c> notifications = ISSP_CreateNotification.createnotification(notificationTargets, false);
-
 		for (Notification__c nt :notifications){
+			Contact contact = mapContacts.get(nt.Contact__c);
 			nt.Message__c = nt.Message__c
-				.replace('#CONTACTNAME',contacts.get(nt.Contact__c).Name)
-				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#PCICOMPLIANCEEXPIRYDATE',((contacts.get(nt.Contact__c) != null && contacts.get(nt.Contact__c).Account.ANG_PCI_compliance_expiry_date__c != null) ? String.valueOf(contacts.get(nt.Contact__c).Account.ANG_PCI_compliance_expiry_date__c) : ''))
-				.replace('#ACCOUNTNAME', contacts.get(nt.Contact__c).Account.Name)
+				.replace('#CONTACTNAME',contact.Name)
+				.replace('#IATACODE',contact.Account.IataCode__c)
+				.replace('#PCICOMPLIANCEEXPIRYDATE',(contact?.Account?.ANG_PCI_compliance_expiry_date__c != null) ? String.valueOf(contact.Account.ANG_PCI_compliance_expiry_date__c) : '')
+				.replace('#ACCOUNTNAME', contact.Account.Name)
 				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
 
 			nt.Subject__c = nt.Subject__c
-				.replace('#IATACODE', contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#ACCOUNTNAME',contacts.get(nt.Contact__c).Account.Name);
-			nt.Subject__c = nt.Subject__c.length() > 140 ? nt.Subject__c.substring(0,140) : nt.Subject__c; //Notification__c.Subjec -> max size 140
-
+				.replace('#IATACODE', contact.Account.IataCode__c)
+				.replace('#ACCOUNTNAME',contact.Account.Name)
+				.left(140);
 		}
 
 		if (!notifications.isEmpty())
 			insert notifications;
 
-		System.debug('## notifications created: '+notifications.size());
-
 		//send emails
-		OrgWideEmailAddress[] owea;
-		owea = new OrgWideEmailAddress[]{AMS_AgencyRegulationAutoRenewal.getAgencyManagementOwa()};
+		OrgWideEmailAddress[] owea = new OrgWideEmailAddress[]{AMS_AgencyRegulationAutoRenewal.getAgencyManagementOwa()};
 
-		// casesByTemplateName map {TemplateId, Map<CaseId,Case>}
 		Map<ID,List<Messaging.SingleEmailMessage>> mailsToSend = new Map<ID,List<Messaging.SingleEmailMessage>>();
 		List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 
-		for (String conId :templateContIdMap.keyset()){
+		for (String templateName :notifTempNameCaseMap.keyset()){
+			Map<String, Id> countryTemplates = AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(templateName), null, false);
+			for(Case caseToProcess: notifTempNameCaseMap.get(templateName).values()){
+				for (Contact contact: mapCaseContacts.get(caseToProcess.Id)) {
+					// create the recipients list to send emails, using a User (if exists) or a Contact
+					List<sObject> recipients = new List<sObject>();
+					User user = mapContactUser.get(contact.Id);
+					if (user!=null) {
+						user.Contact = contact;
+						recipients.add(user);
+						mapContacts.put(user.Id,contact);
+					} else {
+						recipients.add(contact);
+					}
 
-			Map<String, Id> countryTemplates = AMS_OSCARTriggerHandler.ANGemailTemplates(mapNotificationsTemplates.get(conId), null, false);
-			
-			for(Id caseId: notifTempNameCaseMap.get(conId).KeySet()){
-
-				Case caseToProcess = notifTempNameCaseMap.get(conId).get(caseId);
-
-				List<Contact> contactIdList = new List<Contact>();
-				contactIdList.add(contacts.get(caseToProcess.ContactId));
-
-				List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(contactIdList, contactCaseMap.get(caseToProcess.ContactId).OSCAR__c, countryTemplates, caseToProcess.Id, owea[0], false, null, false);
-				mailsToSend.put(caseToProcess.Id, mailListAux);
-				emailsToSend.addAll(mailListAux);
+					List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(recipients, caseToProcess.OSCAR__c, countryTemplates, caseToProcess.Id, owea[0], false, null, false);
+					list<Messaging.SingleEmailMessage> listEmailMessage = mailsToSend.get(caseToProcess.Id);
+					if (listEmailMessage == null) {
+						listEmailMessage = new list<Messaging.SingleEmailMessage>();
+					}
+					listEmailMessage.addAll(mailListAux);
+					mailsToSend.put(caseToProcess.Id, listEmailMessage);
+					emailsToSend.addAll(mailListAux);
+				}
 			}
 		}
 
 		//Bulkified process to send emails and create SingleEmailMessage
-		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea, contacts);
+		sendEmailAndCreateSingleEmailMessage(mailsToSend, emailsToSend, owea, mapContacts);
 
 	}
 

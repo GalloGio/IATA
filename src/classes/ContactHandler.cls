@@ -20,7 +20,12 @@ public class ContactHandler{
 		//create a copy because this contact list is readonly
 		list<Contact> listCloned = listNews.deepClone(true);
 		addAccountRecords(listCloned);
-		grantAccessToPortalApps(listCloned);
+
+		if (System.isFuture() || System.isBatch() || Test.isRunningTest()){ 
+			grantAccessToPortalApps(listCloned);
+		} else {
+			grantAccessToPortalAppsFuture(JSON.serialize(listCloned));
+		}
 	}
 
 	/**
@@ -31,9 +36,15 @@ public class ContactHandler{
 		populateCanAllowPortalSelfReg(listNews);
 		// account info is required in grantAccessToPortalAppsBefore() and revokeAccessToPortalAppsBefore()
 		addAccountRecords(listNews);
-		grantAccessToPortalAppsBefore(listNews,mapOlds);
-		revokeAccessToPortalAppsBefore(listNews,mapOlds);
 		allowOnlyOneDistributionRiskLeaderForUpdate(listNews,mapOlds);
+
+		if (System.isFuture() || System.isBatch() || Test.isRunningTest() ){
+			grantAccessToPortalAppsBefore(listNews,mapOlds);
+			revokeAccessToPortalAppsBefore(listNews,mapOlds);
+		} else {
+			grantAccessToPortalAppsBeforeFuture(JSON.serialize(listNews), JSON.serialize(mapOlds));
+			revokeAccessToPortalAppsBeforeFuture(JSON.serialize(listNews), JSON.serialize(mapOlds));
+		}
 	}
 
 	/**
@@ -205,6 +216,13 @@ public class ContactHandler{
 		grants the access to portal application services
 		only used in insert
 	**/
+	@future(callout=false)
+	public static void grantAccessToPortalAppsFuture(String contactsToUpdateIds){
+		
+		List<Contact> contactsToUpdate = (List<Contact>)JSON.deserialize(contactsToUpdateIds, List<Contact>.class);
+		grantAccessToPortalApps(contactsToUpdate);
+	}
+
 	private static void grantAccessToPortalApps(list<Contact> listNews) {
 		// create new app rights for each new role
 		list<Portal_Application_Right__c> listAppRight = new list<Portal_Application_Right__c>();
@@ -248,6 +266,14 @@ public class ContactHandler{
 		only used in update
 	**/
 	private static list<Portal_Application_Right__c> LIST_GRANT_APPS = new list<Portal_Application_Right__c>();
+
+	@future(callout=false)	
+	public static void grantAccessToPortalAppsBeforeFuture(String listNewsIds, String oldMap){
+
+		List<Contact> listNews = (List<Contact>)JSON.deserialize(listNewsIds, List<Contact>.class);
+		grantAccessToPortalAppsBefore(listNews, (Map<id, Contact>)JSON.deserialize(oldMap, map<id, Contact>.class));
+	}
+
 	private static void grantAccessToPortalAppsBefore(list<Contact> listNews, Map<Id,Contact> mapOlds) {
 		map<Id,list<Portal_Application_Right__c>> mapContactRights = new map<Id,list<Portal_Application_Right__c>>();
 		// create new app rights for each new role
@@ -319,6 +345,14 @@ public class ContactHandler{
 		revokes the access to portal application services
 	**/
 	private static list<Portal_Application_Right__c> LIST_REVOKE_APPS  = new list<Portal_Application_Right__c>();
+
+	@future(callout=false)
+	public static void revokeAccessToPortalAppsBeforeFuture(String listNewsIds, String oldMap){
+
+		List<Contact> listNews = (List<Contact>)JSON.deserialize(listNewsIds, List<Contact>.class);
+		revokeAccessToPortalAppsBefore(listNews, (Map<id, Contact>)JSON.deserialize(oldMap, map<id, Contact>.class));
+	}
+	
 	private static void revokeAccessToPortalAppsBefore(list<Contact> listNews, Map<Id,Contact> mapOlds) {
 		list<Contact> listPortalContacts = new list<Contact>();
 		for (Contact contactNew: listNews) {
@@ -431,14 +465,17 @@ public class ContactHandler{
 			}
 		}
 
+		if (mapAccountDRLs != null) {
+
 		//if there are duplicates among the contacts in the database then throw an error
-		for (Account account: [ SELECT Id,
-								(SELECT Id FROM Contacts WHERE Airline_Credit_Risk_Manager__c = true)
-								FROM Account
-								WHERE Id IN :mapAccountDRLs.keyset()]) {
-			if (account.contacts.size() > 0) {
-				for (Contact contact: mapAccountDRLs.get(account.Id)) {
-					contact.addError('Only allowed one Distribution Risk Leader per Account');
+			for (Account account: [ SELECT Id,
+									(SELECT Id FROM Contacts WHERE Airline_Credit_Risk_Manager__c = true)
+									FROM Account
+									WHERE Id IN :mapAccountDRLs.keyset()]) {
+				if (account.contacts.size() > 0) {
+					for (Contact contact: mapAccountDRLs.get(account.Id)) {
+						contact.addError('Only allowed one Distribution Risk Leader per Account');
+					}
 				}
 			}
 		}
