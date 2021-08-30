@@ -8,6 +8,7 @@ import getUserRole from "@salesforce/apex/CW_Utilities.getUserRole";
 import labels from 'c/cwOneSourceLabels';
 import getSelfRegisterUrl from '@salesforce/apex/CW_LoginController.getSelfRegisterUrl';
 import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
+import { CurrentPageReference } from 'lightning/navigation';
 
 export default class CwHeader extends LightningElement {
     label = labels.labels();
@@ -37,6 +38,10 @@ export default class CwHeader extends LightningElement {
     urlICGHomePage;
     urlPrivateArea;
     rawUserInfo;
+
+    @wire(CurrentPageReference)
+    currentPageReference;
+
     @wire(getUserInfo, {})
     wiredUserInfo(result) {
         this.rawUserInfo = result;
@@ -156,6 +161,14 @@ export default class CwHeader extends LightningElement {
 
     get isBetaOrg(){
         return this.environmentVariables && this.environmentVariables.data && this.environmentVariables.data.Is_Beta_Org__c === true;
+    }
+
+    get isLoaded(){
+        return this.loadedCss && (!this.isHomePage || this.isHomePage && this.environmentVariables && this.environmentVariables.data) ;
+    }
+
+    get isHomePage(){
+        return this.currentPageReference ? this.currentPageReference.attributes.name === 'Home' : false;
     }
 
     goToPreRegister(){
