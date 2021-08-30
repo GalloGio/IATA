@@ -39391,7 +39391,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
         <value>Download this document and upload a signed version:
- &lt;a target=&quot;#&quot; href=&quot;https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=0151r000005g5rF&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+ &lt;a target=&quot;#&quot; href=&quot;https://www.iata.org/contentassets/3c9d2e2266c74c77be3301f32aa0997e/sis-bank-details-form.pdf&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</fullName>
@@ -39698,7 +39698,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/contentassets/3c9d2e2266c74c77be3301f32aa0997e/sis-sign-up-guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</fullName>
@@ -39874,7 +39874,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/contentassets/3c9d2e2266c74c77be3301f32aa0997e/sis-sign-up-guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</fullName>
@@ -39898,7 +39898,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</shortDescription>
-        <value>This section allows the selection of Additional Services to be used, in addition to the provision of the Service under the main agreement. These services are provided at an extra cost, as published in &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Attachment-D-Pricing-Schedule_ISUA.pdf&quot; target=&quot;#&quot;&gt;Attachment D-Pricing Schedule&lt;/a&gt;.</value>
+        <value>This section allows the selection of Additional Services to be used, in addition to the provision of the Service under the main agreement. These services are provided at an extra cost, as published in &lt;a href=&quot;https://www.iata.org/contentassets/9b1d8d19a6244e4e8cb8c7d7ad3f45e5/attachment-d-pricing-schedule_isua.pdf&quot; target=&quot;#&quot;&gt;Attachment D-Pricing Schedule&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section5_Title</fullName>
