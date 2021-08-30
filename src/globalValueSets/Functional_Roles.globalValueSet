@@ -226,16 +226,6 @@
         <label>IFTP</label>
     </customValue>
     <customValue>
-        <fullName>Startup Hotlist</fullName>
-        <default>false</default>
-        <label>Startup Hotlist</label>
-    </customValue>
-    <customValue>
-        <fullName>IGOM</fullName>
-        <default>false</default>
-        <label>IGOM</label>
-    </customValue>
-    <customValue>
         <fullName>Insurance Providers</fullName>
         <default>false</default>
         <label>Insurance Providers</label>
@@ -369,22 +359,6 @@
         <fullName>Treasury Dashboard - Premium</fullName>
         <default>false</default>
         <label>Treasury Dashboard - Premium</label>
-    </customValue>
-    <customValue>
-        <fullName>OAG</fullName>
-        <default>false</default>
-        <label>OAG</label>
-    </customValue>
-    <customValue>
-        <fullName>Timatic</fullName>
-        <default>false</default>
-        <label>Timatic</label>
-    </customValue>
-    <customValue>
-        <fullName>Lab Registry</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Lab Registry</label>
     </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
