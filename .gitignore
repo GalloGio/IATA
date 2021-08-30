@@ -177,3 +177,4 @@ sfdx-project.json
 .vscode/
 src/lwc/jsconfig.json
 src/lwc/.eslintrc.json
+manifest/package.xml
