@@ -53562,12 +53562,12 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>complete</value>
     </labels>
     <labels>
-        <fullName>ig_completition</fullName>
+        <fullName>ig_completion</fullName>
         <categories>IATA IGOM Report</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>ig completition</shortDescription>
-        <value>Completition</value>
+        <shortDescription>ig completion</shortDescription>
+        <value>Completion</value>
     </labels>
     <labels>
         <fullName>ig_conformity</fullName>
@@ -54008,14 +54008,6 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>ig remove variation in other lang</shortDescription>
         <value>Remove variation in other language</value>
-    </labels>
-    <labels>
-        <fullName>ig_required_field</fullName>
-        <categories>IATA IGOM Report</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ig required field</shortDescription>
-        <value>Required field</value>
     </labels>
     <labels>
         <fullName>ig_save</fullName>

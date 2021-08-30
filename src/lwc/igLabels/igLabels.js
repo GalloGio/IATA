@@ -19,7 +19,7 @@ import ig_child_request from '@salesforce/label/c.ig_child_request';
 import ig_close from '@salesforce/label/c.ig_close';
 import ig_comments from '@salesforce/label/c.ig_comments';
 import ig_complete from '@salesforce/label/c.ig_complete';
-import ig_completition from '@salesforce/label/c.ig_completition';
+import ig_completition from '@salesforce/label/c.ig_completion';
 import ig_conformity from '@salesforce/label/c.ig_conformity';
 import ig_continue from '@salesforce/label/c.ig_continue';
 import ig_continue_draft from '@salesforce/label/c.ig_continue_draft';
@@ -76,7 +76,6 @@ import ig_remove_document_title from '@salesforce/label/c.ig_remove_document_tit
 import ig_remove_document_warning from '@salesforce/label/c.ig_remove_document_warning';
 import ig_remove_reference from '@salesforce/label/c.ig_remove_reference';
 import ig_remove_variation_in_other_lang from '@salesforce/label/c.ig_remove_variation_in_other_lang';
-import ig_required_field from '@salesforce/label/c.ig_required_field';
 import ig_save from '@salesforce/label/c.ig_save';
 import ig_selected_gap_analsis from '@salesforce/label/c.ig_selected_gap_analsis';
 import ig_select_another_igom from '@salesforce/label/c.ig_select_another_igom';
@@ -184,7 +183,6 @@ const label = {
         ig_remove_document_warning: ig_remove_document_warning,
         ig_remove_reference: ig_remove_reference,
         ig_remove_variation_in_other_lang: ig_remove_variation_in_other_lang,
-        ig_required_field: ig_required_field,
         ig_save: ig_save,
         ig_selected_gap_analsis: ig_selected_gap_analsis,
         ig_select_another_igom: ig_select_another_igom,
