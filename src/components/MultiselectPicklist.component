@@ -142,7 +142,7 @@
         for ( var x = 0; x < listTo.options.length; x++) {
           listTo.options[x].selected = false;
         }
-        
+
         for ( var x = 0; x < listFrom.options.length; x++) {
           if (listFrom.options[x].selected == true) {
             listTo.appendChild(listFrom.options[x]);
