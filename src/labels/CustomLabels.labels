@@ -41266,6 +41266,14 @@ CNS Customer Services</value>
         <value>GFA Communication queue</value>
     </labels>
     <labels>
+        <fullName>ISSP_View_My_Company_MITA_BIETA_Agreements</fullName>
+        <categories>ISSP, MITA</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP View My Company MITA/BIETA Agreements</shortDescription>
+        <value>View My Company MITA/BIETA Agreements</value>
+    </labels>
+    <labels>
         <fullName>ISSP_View_PWC_Lithuania_DC</fullName>
         <language>en_US</language>
         <protected>false</protected>
