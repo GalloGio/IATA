@@ -71600,7 +71600,6 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Major shareholding</fullName>
                 <default>false</default>
             </values>
-<<<<<<< HEAD
         </picklistValues>
         <picklistValues>
             <picklist>STEP52__c</picklist>
@@ -71611,8 +71610,6 @@ The values selected by the analyst will determine the reason why the application
         </picklistValues>
         <picklistValues>
             <picklist>STEP5__c</picklist>
-=======
->>>>>>> feature/WMO-1288-individual-ae-he-going-standalo
             <values>
                 <fullName>Minor shareholding</fullName>
                 <default>false</default>
