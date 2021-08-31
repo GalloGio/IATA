@@ -85,7 +85,7 @@
 ) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_2896423478</name>
+        <name>formula_2_myRule_1_A1_5137975455</name>
         <dataType>String</dataType>
         <expression>CASE({!myVariable_current.Region__c} ,
   &apos;Europe&apos;, &apos;00G1r000002xKTB&apos;,
@@ -108,7 +108,7 @@
                 <stringValue>&quot;#C &quot; + TEXT([Case].Region__c) + &quot;-&quot; + [Case].CaseNumber + &quot; &quot; + [Case].Subject</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_A1_9433525747</name>
+        <name>formula_3_myRule_1_A1_2358444495</name>
         <dataType>String</dataType>
         <expression>&quot;#C &quot; + TEXT({!myVariable_current.Region__c}) + &quot;-&quot; + {!myVariable_current.CaseNumber} + &quot; &quot; + {!myVariable_current.Subject}</expression>
     </formulas>
@@ -178,7 +178,7 @@
    )
 )</expression>
     </formulas>
-    <interviewLabel>Case_Complaints_Creation-2_InterviewLabel</interviewLabel>
+    <interviewLabel>Case_Complaints_Creation-3_InterviewLabel</interviewLabel>
     <label>Case Complaints Creation</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -424,6 +424,42 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Case Origin</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Origin</field>
+            <value>
+                <stringValue>IATA Internal User</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
                     <stringValue>ID</stringValue>
                 </value>
             </processMetadataValues>
@@ -453,7 +489,7 @@
             </processMetadataValues>
             <field>OwnerId</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_2896423478</elementReference>
+                <elementReference>formula_2_myRule_1_A1_5137975455</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -597,7 +633,7 @@
             </processMetadataValues>
             <field>Subject</field>
             <value>
-                <elementReference>formula_3_myRule_1_A1_9433525747</elementReference>
+                <elementReference>formula_3_myRule_1_A1_2358444495</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

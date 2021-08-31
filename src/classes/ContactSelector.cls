@@ -3,8 +3,8 @@ public class ContactSelector {
 		return [SELECT Id, AccountId FROM Contact WHERE Email IN :emailList];
 	}
 
-	public static List<Contact> selectByIds(Set<Id> contactIdSet){
-		return [SELECT Id, AccountId FROM Contact WHERE Id IN :contactIdSet];
+	public static Map<Id,Contact> selectByIds(Set<Id> contactIdSet){
+		return new Map<Id, Contact>([SELECT Id, Email, AccountId FROM Contact WHERE Id IN :contactIdSet]);
 	}
 
 	public static Map<Id,Contact> selectIdMapByContactSet(Set<Contact> contactSet){

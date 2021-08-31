@@ -10,6 +10,7 @@ import updateCapabilitiesEdited_ from "@salesforce/apex/CW_CapabilitiesManagerCo
 import editAllCapabilitiesFromStation_ from "@salesforce/apex/CW_CapabilitiesManagerController.editAllCapabilitiesFromStation";
 import labels from "c/cwOneSourceLabels";
 import pubsub from "c/cwPubSub";
+import { requiredFieldsMissingResult } from "c/cwUtilities";
 import { loadStyle } from "lightning/platformResourceLoader";
 
 export default class CwCapabilitiesManagerContainer extends LightningElement {
@@ -143,6 +144,10 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.dispatchEvent(evt);
 	}
 	//end notification toast
+	
+	get isCommunity() {
+		return false;
+	}
 
 	get dataInformed() {
 		return this.data != null ? true : false;
@@ -1041,61 +1046,17 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		
 	}
 
-	get checkRequiredFields() {
-		let obligationLinkField = 'more_info_link__c';
-		let uploadDocumentationField = 'more_info_document__c';
-
-		let listFieldByEquipments = [];
-		let returnValue = true;
-		this.listAddedRows.forEach(element => {
-			let fieldByEquipmentRequired = {
-				equipment: "",
-				fields: []
-			};
-			element.fields.forEach(field => {
-				if (field.required.toString() === "true" && field.field != "equipment__c") {
-					if (field.value === "") {
-						if(field.field === obligationLinkField || field.field === uploadDocumentationField){
-							if(field.field === obligationLinkField){
-								let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
-
-								returnValue = selectField[0].value != null ? true :  false;
-							}
-							else if(field.field === uploadDocumentationField){
-								let selectField = element.fields.filter(row => row.field === obligationLinkField);
-								returnValue = selectField[0].value != null ? true :  false;
-							}
-						}						
-						else{
-							returnValue = false;
-						}
-						fieldByEquipmentRequired.equipment = element.equipment_label;
-						fieldByEquipmentRequired.fields.push(field.label);
-					}
-				}
-			});
-			if (returnValue === false) {
-				listFieldByEquipments.push(fieldByEquipmentRequired);
-				returnValue=true;
-			}
-		});
-
-		return listFieldByEquipments;
-	}
-
 	saveCapabilities() {
 		this.actionToExecute.action = "save";
 		this.actionToExecute.result = true;
 
-		let listFieldByEquipments = this.checkRequiredFields;
+		let listFieldByEquipments = requiredFieldsMissingResult(this.listAddedRows);
 		let result = listFieldByEquipments.length > 0 ? false : true;
 		if (result === "false" || result === false) {
 			if (listFieldByEquipments.length > 0) {
 				listFieldByEquipments.forEach(elem => {
 					let message = 'The Equipment: "' + elem.equipment + '" required the Fields: ';
-					elem.fields.forEach(f => {
-						message += f + " ,";
-					});
+					message += elem.fields.join(', ');
 					this._title = "Error";
 					this._message = message;
 					this._variant = "error";

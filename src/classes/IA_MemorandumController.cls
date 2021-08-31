@@ -58,8 +58,8 @@ public with sharing class IA_MemorandumController {
 		List<MITA_Agreement__c> lsitAgreements = [
 			SELECT MITAorBIETA__c, Active__c, Airline_1__c, Airline_1__r.Name, Airline_2__c, Airline_2__r.Name, Effective_date__c, Agreement_Processed_Date__c, Agreement_type__c, Created_date__c, Withdrawal_Request_Reception_Date__c, Cancellation_processed_date__c, Cancellation_date__c
 			FROM MITA_Agreement__c
-			WHERE Agreement_Processed_Date__c >= :this.memorandumDate
-			AND Agreement_Processed_Date__c <= :this.memorandumLastDate
+			WHERE Effective_Date__c >= :this.memorandumDate
+			AND Effective_Date__c <= :this.memorandumLastDate
 			ORDER BY Airline_1__r.Name, Effective_Date__c];
 
 		Map<String,List<WrapperAgreement>> mapAllAgreements = new Map<String,List<WrapperAgreement>>();
@@ -91,9 +91,9 @@ public with sharing class IA_MemorandumController {
 		List<MITA_Agreement__c> res = [
 			SELECT MITAorBIETA__c, Active__c, Airline_1__c, Airline_1__r.Name, Airline_2__c, Airline_2__r.Name, Effective_date__c, Agreement_Processed_Date__c, Agreement_type__c, Created_date__c, Withdrawal_Request_Reception_Date__c, Cancellation_processed_date__c, Cancellation_date__c
 			FROM MITA_Agreement__c
-			WHERE Cancellation_Processed_Date__c >= :this.memorandumDate
-			AND Cancellation_Processed_Date__c <= :this.memorandumLastDate
-			AND Cancellation_Reason__c in (:IA_util.REASON_REQUESTED_AIRLINE1, :IA_util.REASON_REQUESTED_AIRLINE2)
+			WHERE Cancellation_Date__c >= :this.memorandumDate
+			AND Cancellation_Date__c <= :this.memorandumLastDate
+			AND Cancellation_Reason__c in (:IA_util.REASON_CANCELLATION_AIRLINE1, :IA_util.REASON_CANCELLATION_AIRLINE2)
 			ORDER BY Airline_1__r.Name, Cancellation_Date__c];
 
 		Map<String,List<WrapperAgreement>> mapAllAgreements = new Map<String,List<WrapperAgreement>>();

@@ -23,7 +23,7 @@ private class ContactSelectorTest {
 	@IsTest
 	static void testSelectByIds(){
 		Contact contact = ContactSelector.selectByEmails(new Set<String>{TestDataFactory_Contacts.DEFAULTEMAIL + '0'}).get(0);
-		List<Contact> contactList = ContactSelector.selectByIds(new Set<Id>{contact.Id});
+		List<Contact> contactList = ContactSelector.selectByIds(new Set<Id>{contact.Id}).values();
 		System.assertEquals(1, contactList.size(), 'Expected 1 Contact but got ' + contactList.size());
 	}
 

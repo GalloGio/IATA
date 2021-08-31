@@ -8797,6 +8797,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
+        <label><!-- General Error Message --></label>
+        <name>General_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -19146,10 +19150,6 @@ Em caso de suspensão de uma companhia aérea, que resulte na regularização de
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active agreements --></label>
-        <name>ISSP_Active_agreements</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP Add FAP Contact --></label>
         <name>ISSP_Add_FAP_Contact</name>
     </customLabels>
@@ -19188,10 +19188,6 @@ Em caso de suspensão de uma companhia aérea, que resulte na regularização de
     <customLabels>
         <label><!-- ISSP Agreement type --></label>
         <name>ISSP_Agreement_type</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Agreements available --></label>
-        <name>ISSP_Agreements_available</name>
     </customLabels>
     <customLabels>
         <label>Companhia aérea</label>
@@ -19296,10 +19292,6 @@ Em caso de suspensão de uma companhia aérea, que resulte na regularização de
     <customLabels>
         <label>Serviços disponíveis</label>
         <name>ISSP_Available_services</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Available types --></label>
-        <name>ISSP_Available_types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_BSPLink --></label>
@@ -20484,10 +20476,6 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_Excess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Existing Agreements --></label>
-        <name>ISSP_Existing_Agreements</name>
-    </customLabels>
-    <customLabels>
         <label>Links externos</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -21232,10 +21220,6 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_InactiveUser_Subscription_Portal</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Inactive agreements --></label>
-        <name>ISSP_Inactive_agreements</name>
-    </customLabels>
-    <customLabels>
         <label>Senha inválida.</label>
         <name>ISSP_InvalidPassword</name>
     </customLabels>
@@ -21384,56 +21368,8 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_MIR_Rates_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Mita Add Contact --></label>
-        <name>ISSP_MITA_Add_Contact</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP MITA Agreements Service Name --></label>
         <name>ISSP_MITA_Agreements_Service_Name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP MITA Edit Contact message --></label>
-        <name>ISSP_MITA_EditContactMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP MITA Edit Contact Success --></label>
-        <name>ISSP_MITA_EditContactSuccess</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP MITA Remove Contact message --></label>
-        <name>ISSP_MITA_RemoveContactMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Active MITA Contacts --></label>
-        <name>ISSP_MITA_SUBTAB_01</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Airline Available Contacts --></label>
-        <name>ISSP_MITA_SUBTAB_02</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search At Least 3 Chars --></label>
-        <name>ISSP_MITA_Search_At_Least3Chars</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Search by email or name --></label>
-        <name>ISSP_MITA_Search_Button</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search Text Above button --></label>
-        <name>ISSP_MITA_Search_Text01</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search Text Below button --></label>
-        <name>ISSP_MITA_Search_Text02</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search Check Valid Input --></label>
-        <name>ISSP_MITA_Search_ValidInput</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Airline Contacts --></label>
-        <name>ISSP_MITA_TAB</name>
     </customLabels>
     <customLabels>
         <label>Aprovar como administrador</label>
@@ -23529,10 +23465,6 @@ Se desejar redefinir a sua senha, volte à tela de login e use a função Esquec
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Show all the agreements --></label>
-        <name>ISSP_Show_all_the_agreements</name>
-    </customLabels>
-    <customLabels>
         <label>Mostrando a página</label>
         <name>ISSP_Showing_page</name>
     </customLabels>
@@ -24027,10 +23959,6 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
     <customLabels>
         <label><!-- ISSP_View_GFA_Communication --></label>
         <name>ISSP_View_GFA_Communication</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP View My Company MITA/BIETA Agreements --></label>
-        <name>ISSP_View_My_Company_MITA_BIETA_Agreements</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_View_PWC_Lithuania_DC --></label>
@@ -25141,6 +25069,10 @@ O painel permite que as tesourarias das empresas  aérea  ganhe visibilidade tot
     <customLabels>
         <label><!-- NewGenApp_ServiceRequested --></label>
         <name>NewGenApp_ServiceRequested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- New Opportunity --></label>
+        <name>New_Opportunity</name>
     </customLabels>
     <customLabels>
         <label>Nova senha</label>
@@ -30478,6 +30410,26 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>PortalService</name>
     </customLabels>
     <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Body --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Body</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 1 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 2 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Title --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Configurações</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>
@@ -30776,6 +30728,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save &amp; Close --></label>
+        <name>SaveClose</name>
     </customLabels>
     <customLabels>
         <label><!-- Search --></label>
@@ -42948,7 +42904,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>ONE Source Contact Role Details</name>
         </sections>
         <sections>
-            <label><!-- OS Stations --></label>
+            <label>Relatorios / Reportes</label>
             <name>OS Stations</name>
         </sections>
     </reportTypes>
@@ -43067,7 +43023,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>Account Role Relationships (From)</name>
         </sections>
         <sections>
-            <label><!-- Account Roles --></label>
+            <label>Relatorios / Reportes</label>
             <name>Account Roles</name>
         </sections>
         <sections>
@@ -43183,7 +43139,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Orders with Payment Transaction Number --></label>
         <name>Orders_with_Payment_Transaction_Number</name>
         <sections>
-            <label><!-- Orders --></label>
+            <label>Relatorios / Reportes</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
@@ -43689,6 +43645,19 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Service Resources and Skills --></description>
+        <label><!-- Service Resources and Skills --></label>
+        <name>Service_Resources_and_Skills</name>
+        <sections>
+            <label><!-- Service Resource Skills --></label>
+            <name>Service Resource Skills</name>
+        </sections>
+        <sections>
+            <label><!-- Service Resources --></label>
+            <name>Service Resources</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Services with contacts associated --></description>
         <label><!-- Services with contacts associated --></label>
         <name>Services_with_contacts_associated</name>
@@ -44105,6 +44074,15 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <sections>
             <label><!-- User Provisioning Requests --></label>
             <name>User Provisioning Requests</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Service Resources and skills --></description>
+        <label><!-- Users with Service Resources and skills --></label>
+        <name>Users_with_Service_Resources_and_skills</name>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
         </sections>
     </reportTypes>
     <reportTypes>

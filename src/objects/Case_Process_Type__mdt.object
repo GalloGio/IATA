@@ -64,6 +64,25 @@ If this WHERE clause evaluates to true then the custom metadata record will be a
     </fields>
     <label>Case Process Type</label>
     <listViews>
+        <fullName>Airline_Participation_KPIs</fullName>
+        <columns>MasterLabel</columns>
+        <columns>Type__c</columns>
+        <columns>DeveloperName</columns>
+        <columns>KPI_Reference_Value__c</columns>
+        <columns>KPI_Reference_Field__c</columns>
+        <columns>Reason__c</columns>
+        <columns>Record_Type__c</columns>
+        <columns>Other_Conditions__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Record_Type__c</field>
+            <operation>equals</operation>
+            <value>IDFS_Airline_Participation_Process</value>
+        </filters>
+        <label>Airline Participation KPIs</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>All_w_details</fullName>
         <columns>MasterLabel</columns>
         <columns>Type__c</columns>

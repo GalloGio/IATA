@@ -19,7 +19,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	deletecustom = resources + "/icons/delete-custom.svg";
 	locationwhite = resources + "/icons/ic-white-location.svg";
 	searchbycompanywhite = resources + "/icons/search-by-company-white.svg";
-	CertifiedAirline = resources + "/img/certifications/UfW_CertifiedAirline.png";
+	CertifiedAirline = resources + "/img/certifications/united_of_wildlife_stamp.png";
 	animatedBanner = resources + "/img/animated-banner.gif";
 	animatedBannerRegister = resources + "/img/animated-banner-register.gif";
 

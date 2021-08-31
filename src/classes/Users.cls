@@ -1,4 +1,4 @@
-public with sharing class Users {
+public inherited sharing class Users {
 	public static final Profile DEFAULTPROFILE = [SELECT Id FROM Profile WHERE Name='ISS Portal Airline User (Partner)'];
 	public List<User> records { get; private set; }
 
@@ -63,20 +63,6 @@ public with sharing class Users {
 			user.IsActive = true;
 			user.TimeZoneSidKey='America/Los_Angeles';
 			records.add(user);
-		}
-		return records;
-	}
-
-	public List<User> updatePortalUserFrozenCheckbox(boolean newValue){
-		for(User user : records){
-			user.Portal_User_Frozen_Checkbox__c = newValue;
-		}
-		return records;
-	}
-
-	public List<User> populateFederationId(){
-		for(User user : records){
-			user.FederationIdentifier = String.valueOf(user.ContactId).substring(0,15);
 		}
 		return records;
 	}

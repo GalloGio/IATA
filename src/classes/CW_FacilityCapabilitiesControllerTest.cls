@@ -461,4 +461,14 @@ public class CW_FacilityCapabilitiesControllerTest {
 		System.assertEquals('jpg', photos[0].fileExtension, 'Photos [0] extension must be jpg');
 		Test.stopTest();
 	}
+
+	@isTest
+	public static void getMapTooltipBySuperCategoryTest() {
+		Test.startTest();
+		
+		Map<String, List<String>> result = CW_FacilityCapabilitiesController.getMapTooltipBySuperCategory();
+		system.assertNotEquals(null, result);
+		
+		Test.stopTest();
+	}
 }

@@ -232,6 +232,23 @@ global class Order_Ext
 		}
 	} //*** end of "Order_Ext"
 
+	public void setRelatedInformation(){
+		String oid = ApexPages.currentPage().getParameters().get('oid');
+		if(String.isNotEmpty(oid)){
+			List<Opportunity> opps = [SELECT Id, Related_Contact__c FROM Opportunity WHERE ID = :oid LIMIT 1];
+			if(!opps.isEmpty()){
+				vfOrder.Opportunity = opps.get(0);
+				if(String.isNotEmpty(vfOrder.Opportunity.Related_Contact__c)){
+					vfOrder.ShipTo_same_BillTo__c = true;
+					vfOrder.BillToContactId = vfOrder.Opportunity.Related_Contact__c;
+					vfOrder.ShipToContactId = vfOrder.BillToContactId;
+					getContactLocations();
+					getContactShipToLocations();
+				}
+			}
+		}
+	}
+
 	public PageReference pageLoad(){
 
 		//Initialize all variables
@@ -245,6 +262,8 @@ global class Order_Ext
 		billToZipCodeRequired	= false;
 		shipToZipCodeRequired	= false;
 		countryAndStateEditable	= false;
+
+		setRelatedInformation();
 
 		//*** check SAP partners and try to create them if missing
 		if(vfOrder.Id != null && vfOrder.Status == 'New' &&

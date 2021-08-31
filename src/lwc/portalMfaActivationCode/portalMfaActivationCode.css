@@ -1,0 +1,46 @@
+input[type="text"] {
+    background-color: transparent !important;
+    border: none;
+    border-bottom: 2px solid #efefef;
+    display: inline-block;
+    font-size: 20px;
+    margin: 0 4px;
+    width: 1rem;
+    text-align: center;
+    outline: none;
+}
+
+input[type="text"]:focus-visible{
+    outline: none;
+}
+
+.border-small {
+    border: 1px solid #efefef;
+    border-radius: 5px;
+}
+
+.border-small:focus-within {
+    border-color: #3333ff;
+}
+
+.error {
+    border: 1px solid red !important;
+}
+
+span {
+    color: red;
+    text-align: left;
+}
+
+a {
+    font-weight: normal;
+}
+
+@supports (-webkit-touch-callout: none) {
+    @media screen and (max-width:480px){
+        /* CSS specific to iOS mobile devices */ 
+        input[type="text"] {
+            font-size: 10px;
+        }
+    }
+}

@@ -1,0 +1,196 @@
+<apex:page controller="MFA_LoginFlowController" showHeader="false" sidebar="false" language="{!activeLanguage}" title="Login">
+	<apex:includeLightning />
+	<apex:SLDS />
+
+	<apex:form >
+		<apex:outputPanel rendered="{!NOT(isloggedUser)}">
+			You are not allowed to access this page.
+			<apex:commandButton action="{!redirectGuestToLoginPage}" value="Take me to login page" id="redirectButton"/>	
+		</apex:outputPanel>
+		<apex:actionFunction name="callFinishFlow" action="{!finishLoginFlowHome}" id="finishFlow" />
+		<apex:actionFunction name="callRedirectToLogin" action="{!redirectToLoginPage}" id="redirectToLogin" />
+		<apex:actionFunction name="addFirstLoginToUrl" action="{!setFirstSetupParameter}" id="firstSetup" />
+	</apex:form>
+
+	<apex:outputPanel rendered="{!isloggedUser}" layout="block">
+		<div id="LightningComponentid"></div>
+	</apex:outputPanel>	
+	
+	<style>
+		@font-face {
+			font-family: 'DaMaWebFont';
+			font-weight: 400;
+			font-style: normal;
+			font-style: normal;
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}");
+			/* IE9 Compat Modes */
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+			/* IE6-IE8 */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+			/* Super Modern Browsers */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff');
+			/* Pretty Modern Browsers */
+		}
+		@font-face {
+			font-family: 'DaMaWebFont';
+			font-weight: 500;
+			font-style: normal;
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}");
+			/* IE9 Compat Modes */
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+			/* IE6-IE8 */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+			/* Super Modern Browsers */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff');
+			/* Pretty Modern Browsers */
+		}
+        body *{
+            font-family: DaMaWebFont;
+        }
+	</style>
+
+	<script>
+
+		var meta = document.createElement('meta');
+		meta.name='viewport';
+		meta.content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0';
+		document.getElementsByTagName('head')[0].appendChild(meta);
+
+		var lwcCMP;
+		var secret;
+
+		document.addEventListener("savesecurityquestion", function(event){
+			lwcCMP.startLoad();
+			saveSecurityQuestionAnswer(event.detail.question, event.detail.answer);
+		});
+
+		document.addEventListener("checkanswer", function(event){
+			lwcCMP.startLoad();
+			callCheckAnswer(event.detail.answer);
+		});
+
+		document.addEventListener("goback", function(event){
+			lwcCMP.refresh('{!hasMFAEnabled}', 'true' ,'true');
+		});
+
+		document.addEventListener("initregistertotp", function(event){
+			callInitRegisterTOTP();
+		});
+
+		document.addEventListener("validatemfacode", function(event){
+			lwcCMP.startLoad();
+			if(secret){
+				callVerifyRegisterTotp(event.detail.vcode);
+			}else{
+				callVerifyTotp(event.detail.vcode);
+			}			
+		});
+
+		document.addEventListener("resetmfa", function(event){
+			lwcCMP.startLoad();
+			callResetMFA();
+		});
+
+		document.addEventListener("closemodal", function(event){
+			lwcCMP.startLoad();
+			callRedirectToLogin();
+		});
+
+		document.addEventListener("finishFlow", function(event){
+			callFinishFlow();
+		});
+	
+		function callInitRegisterTOTP(){
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.MFA_LoginFlowController.initRegisterTotp}',
+				function(result,event){
+					if(!result.registered){
+						secret = result.secret;
+						lwcCMP.setSecret(secret);
+						lwcCMP.setQRCode(result.qrCodeUrl);
+					}
+				}
+			);
+		}
+
+		function callVerifyRegisterTotp(otp){
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.MFA_LoginFlowController.verifyRegisterTotp}', secret, otp,
+				function(result,event){
+					lwcCMP.finishLoad();
+					if(result.isValid){
+						if(result.firstLogin){
+							addFirstLoginToUrl();
+						}else{
+							callFinishFlow();
+						}
+					}else{
+						lwcCMP.setError(result.error);
+					}
+				}
+			);
+		}
+
+		function callVerifyTotp(otp){
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.MFA_LoginFlowController.verifyVerificationTotp}', otp,
+				function(result,event){
+					lwcCMP.finishLoad();
+					if(result){
+						callFinishFlow();
+					}else{
+						lwcCMP.setError();
+					}
+				}
+			);
+		}
+	
+		function saveSecurityQuestionAnswer(question, answer){
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.MFA_LoginFlowController.saveQuestionAnswer}', question, answer, 
+				function(result,event){
+					lwcCMP.finishLoad();
+					if(result){
+						lwcCMP.setSecurityQuestion(question);
+						lwcCMP.refresh('{!hasMFAEnabled}', JSON.stringify(result) , '{!hasAuthConfigured}');
+					}
+				}
+			);
+		}
+
+		function callCheckAnswer(answer){
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.MFA_LoginFlowController.checkSecurityAnswerCurrentUser}', answer, 
+				function(result,event){
+					lwcCMP.finishLoad();
+					if(result){
+						callResetMFA();
+					}else{
+						lwcCMP.setValidationError();
+					}
+				}
+			);
+		}
+
+		function callResetMFA(){
+			Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.MFA_LoginFlowController.deregisterVerificationTotp}', 
+				function(result,event){
+					lwcCMP.finishLoad();
+					if(result){
+						lwcCMP.refresh('{!hasMFAEnabled}', 'true' ,'false');
+					}
+				}
+			);
+		}
+
+		//Lightining out, loads inner lwc container
+		$Lightning.use("c:portalWelcomePanelApp", function() {
+			var isLoggedUser = document.getElementById("LightningComponentid");
+			if(isLoggedUser != null){
+				$Lightning.createComponent("c:portalCustomMFAContainer",
+											{"hasMFAEnabled" : "{!hasMFAEnabled}", "hasQuestionAndAnswer" : "{!hasQuestionAndAnswer}",
+											 "hasAuthConfigured" : "{!hasAuthConfigured}", "securityQuestion" : "{!currentUserInfo.X2FA_Security_Question__c}"}, "LightningComponentid",
+											function(cmp){
+												//Save component reference for future methods calls
+												lwcCMP = cmp;
+											});
+			}			
+		}, "{!($Label.CSP_PortalBaseURL)}/faq" 
+		);
+	</script>
+</apex:page>

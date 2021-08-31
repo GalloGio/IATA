@@ -81,6 +81,11 @@
         <label>Bank account changes</label>
     </customValue>
     <customValue>
+        <fullName>BCP</fullName>
+        <default>false</default>
+        <label>BCP</label>
+    </customValue>
+    <customValue>
         <fullName>Billing Adjustments</fullName>
         <default>false</default>
         <label>Billing Adjustments</label>
@@ -94,6 +99,11 @@
         <fullName>Billing Rerun</fullName>
         <default>false</default>
         <label>Billing Rerun</label>
+    </customValue>
+    <customValue>
+        <fullName>BPM</fullName>
+        <default>false</default>
+        <label>BPM</label>
     </customValue>
     <customValue>
         <fullName>BSP billing discrepancies</fullName>
@@ -181,6 +191,11 @@
         <label>Code Administration</label>
     </customValue>
     <customValue>
+        <fullName>Complaints</fullName>
+        <default>false</default>
+        <label>Complaints</label>
+    </customValue>
+    <customValue>
         <fullName>Compliance related</fullName>
         <default>false</default>
         <label>Compliance related</label>
@@ -194,6 +209,11 @@
         <fullName>Content enquiry</fullName>
         <default>false</default>
         <label>Content enquiry</label>
+    </customValue>
+    <customValue>
+        <fullName>Continuous Improvement</fullName>
+        <default>false</default>
+        <label>Continuous Improvement</label>
     </customValue>
     <customValue>
         <fullName>Course and Exam content/quality</fullName>
@@ -284,6 +304,11 @@
         <fullName>EasyPay</fullName>
         <default>false</default>
         <label>EasyPay</label>
+    </customValue>
+    <customValue>
+        <fullName>Exceptions</fullName>
+        <default>false</default>
+        <label>Exceptions</label>
     </customValue>
     <customValue>
         <fullName>Excess payment refund</fullName>
@@ -431,6 +456,11 @@
         <label>Immediate suspension (non-RHC related)</label>
     </customValue>
     <customValue>
+        <fullName>Incidents</fullName>
+        <default>false</default>
+        <label>Incidents</label>
+    </customValue>
+    <customValue>
         <fullName>Incoming payment related</fullName>
         <default>false</default>
         <label>Incoming payment related</label>
@@ -484,6 +514,11 @@
         <fullName>IP infringement</fullName>
         <default>false</default>
         <label>IP infringement</label>
+    </customValue>
+    <customValue>
+        <fullName>ISO / Service Charter</fullName>
+        <default>false</default>
+        <label>ISO / Service Charter</label>
     </customValue>
     <customValue>
         <fullName>ISS Joining</fullName>
@@ -736,6 +771,11 @@
         <label>SIS related</label>
     </customValue>
     <customValue>
+        <fullName>SOP</fullName>
+        <default>false</default>
+        <label>SOP</label>
+    </customValue>
+    <customValue>
         <fullName>Suspension / Risk Event</fullName>
         <default>false</default>
         <label>Suspension / Risk Event</label>
@@ -811,28 +851,10 @@
         <label>Web interface</label>
     </customValue>
     <customValue>
-        <fullName>Validation management</fullName>
+        <fullName>Airline suspension</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Validation management</label>
-    </customValue>
-    <customValue>
-        <fullName>Market communication</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Market communication</label>
-    </customValue>
-    <customValue>
-        <fullName>Airline joining</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Airline joining</label>
-    </customValue>
-    <customValue>
-        <fullName>Airline leaving</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Airline leaving</label>
+        <label>Airline suspension</label>
     </customValue>
     <customValue>
         <fullName>Airline changes</fullName>
@@ -841,16 +863,28 @@
         <label>Airline changes</label>
     </customValue>
     <customValue>
-        <fullName>Maestro</fullName>
+        <fullName>Airline leaving</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Maestro</label>
+        <label>Airline leaving</label>
     </customValue>
     <customValue>
-        <fullName>myIATA</fullName>
+        <fullName>Airline joining</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>myIATA</label>
+        <label>Airline joining</label>
+    </customValue>
+    <customValue>
+        <fullName>Market communication</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Market communication</label>
+    </customValue>
+    <customValue>
+        <fullName>Validation management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Validation management</label>
     </customValue>
     <customValue>
         <fullName>Yearly Review</fullName>
@@ -871,12 +905,18 @@
         <label>ISIS</label>
     </customValue>
     <customValue>
-        <fullName>Airline suspension</fullName>
+        <fullName>Maestro</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Airline suspension</label>
+        <label>Maestro</label>
+    </customValue>
+    <customValue>
+        <fullName>myIATA</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>myIATA</label>
     </customValue>
     <description>Values used for Case complaint subcategories and Continuous Improvement Process subcategories</description>
     <masterLabel>Complaint Subcategories</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

@@ -115,7 +115,7 @@
 									<th style="width: 23%;">Airline 1</th>
 									<th style="width: 23%;">Airline 2</th>
 									<th style="width: auto;">Agreement Type</th>
-									<th style="width: 12%;">Effective date</th>
+									<th style="width: 15%;">{!IF(CONTAINS(title,'Concurrences'),'Effective date','Cancellation date')}</th>
 								</tr>
 								<apex:repeat value="{!listAgreements}" var="row">
 								<tr>
@@ -124,7 +124,7 @@
 									<td><apex:outputText value="{!row.agreement.Agreement_type__c}"/></td>
 									<td>
 										<apex:outputText value="{0,date,d MMM yyyy}">
-											<apex:param value="{!row.agreement.Agreement_processed_date__c}"/>
+											<apex:param value="{!IF(CONTAINS(title,'Concurrences'),row.agreement.Effective_Date__c,row.agreement.Cancellation_Date__c)}"/>
 										</apex:outputText>
 									</td>
 								</tr>

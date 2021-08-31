@@ -1657,6 +1657,10 @@
             </dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Two Factor Authentication</label>
+                    <name>Two_Factor_Authentication</name>
+                </dataCategory>
+                <dataCategory>
                     <label>General Information</label>
                     <name>PORTAL_General_Information</name>
                 </dataCategory>

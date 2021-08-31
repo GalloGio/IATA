@@ -1,0 +1,43 @@
+<template>
+    <template if:true={labels}>
+        <c-portal-login-step-container title={labels.Portal_MFA_Reset_2FA_Title} button-label={labels.CSP_Submit}
+        back-label={labels.Portal_MFA_Reset_2FA_Back} onbuttonclick={submitHandle} onbackclick={navigateStepBack}
+        link-p-class="slds-p-top_small" remove-footer-border>
+            <div slot="mfa-login-body" class="slds-col">
+                <div class="slds-grid slds-align_absolute-center">
+                    <div class="slds-col">
+                        <span>{labels.Portal_MFA_Reset_2FA_Paragraph_1}</span>
+                    </div>
+                </div>
+                <div class="slds-grid slds-align_absolute-center">
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="slds-row">
+                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                                <label class="mfa-text-input-label">{labels.Portal_Question}</label>
+                                <input class="slds-input mfa-text-input" type="text" value={securityQuestion} disabled/>
+                            </div>
+                        </div>
+                        <div class="slds-row slds-p-bottom_large">
+                            <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                                <label class="mfa-text-input-label">{labels.Portal_Answer}</label>
+                                <input class={answerInputClasses} type="text" oninput={updateAnswer}/>
+                            </div>
+                            <div class="slds-grid error">
+                                <span if:true={_codeHasError}>{labels.Portal_MFA_Reset_2FA_Validation_Message}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div if:true={_codeHasError} slot="mfa-login-footer" class="slds-col">
+                <div class="slds-grid slds-text-align_center mfa-troubleshoot-text">
+                    <span>{labels.Portal_MFA_Paragraph_2}</span>
+                </div>
+                <div class="slds-grid slds-p-top_xx-small slds-align_absolute-center">
+                    <a href="" class="mfa-link">{labels.Portal_MFA_Troubleshooting_Form}</a>
+                </div>
+            </div>
+        </c-portal-login-step-container>
+    </template>
+</template>

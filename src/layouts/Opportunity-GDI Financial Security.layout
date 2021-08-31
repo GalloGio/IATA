@@ -47,6 +47,10 @@
                 <behavior>Edit</behavior>
                 <field>Offer_exchange_rate_date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

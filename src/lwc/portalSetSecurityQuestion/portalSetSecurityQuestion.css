@@ -1,0 +1,70 @@
+.containedButtonDisabled, .containedButtonDisabled button, .containedButtonDisabled button:disabled {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	background-color: #f7f8fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #999999;
+    height: 56px;
+    width: 100%;
+    word-break: break-all;
+    border: none;
+    box-shadow: none;
+}
+
+.containedButtonLogin, .containedButtonLogin button, .containedButtonLogin button:active, .containedButtonLogin button:visited, .containedButtonLogin button:focus {
+    -webkit-transition-duration: 0.4s; /* Safari */
+  	transition-duration: 0.4s;
+    border-radius: 1px;
+  	box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+  	background-color: #3333ff;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    word-break: break-all;
+    border: none;
+    min-height: 56px;
+    width: 100%;
+    display: inline-block;
+}
+
+.containedButtonLogin button:hover {
+	border-radius: 1px;
+    box-shadow: 0 6px 16px 0 rgba(56, 86, 235, 0.24), 0 1px 2px 0 rgba(56, 86, 235, 0.16);
+    background-color: #1e32fa;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+    word-break: break-all;
+    border: none;
+	min-height: 56px;
+    width: 100%;
+    display: inline-block;
+}
+
+@media (max-width: 600px)  {
+
+  .mfa-left-btn {
+    padding: 6% 22%;
+  }
+
+  .mfa-right-btn {
+    padding: 6% 22%;
+  }
+}

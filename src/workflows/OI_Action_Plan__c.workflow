@@ -13,7 +13,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/OI_Action_Plan_D_15_days</template>
+        <template>Quality/OI_Action_Plan_D_15_days</template>
     </alerts>
     <alerts>
         <fullName>OI_Action_Plan_Remnder_5_days_before_due_date</fullName>
@@ -28,7 +28,7 @@
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
-        <template>unfiled$public/OI_Action_Plan_D_5_days</template>
+        <template>Quality/OI_Action_Plan_D_5_days</template>
     </alerts>
     <fieldUpdates>
         <fullName>OI_Action_Plan_Fill_in_Initial_Due_date</fullName>

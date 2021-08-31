@@ -1,0 +1,21 @@
+<template>
+    <div if:true={labels} class="sticky-menu">
+        <div class="slds-theme_default mfa-custom-box-shadow clickable-cursor">
+            <div id="security-question" class={secQuestionClass} onclick={selectItem}>
+                <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium mfa-medium-txt">
+                    {labels.Portal_Question}
+                </div>
+            </div>
+            <div id="two-factor-auth" class={twoFactAuthClass} onclick={selectItem}>
+                <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium mfa-medium-txt">
+                    {labels.Portal_MFA_Activation_Container_Title}
+                </div>
+            </div>
+            <div id="change-pass" class={changePassClass} onclick={selectItem}>
+                <div class="slds-col slds-size_1-of-1 slds-p-vertical_medium mfa-medium-txt">
+                    {label.CSP_Change_Password}
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

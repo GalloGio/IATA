@@ -163,8 +163,15 @@ public with sharing class CW_CapabilitiesUtilities {
 		// Reorganice data in Super Categories and Sections
 		List<Map<String, Object>> superCategories = new List<Map<String, Object>>();
 
+		Map<String, List<String>> tooltipsBySuperCategory = CW_FacilityCapabilitiesController.getMapTooltipBySuperCategory();
+		Map<String, List<String>> tooltipsBySection = CW_FacilityCapabilitiesController.getMapTooltipBySection();
+
 		for (Map<String, Object> currentSuperCategory : CW_FacilityCapabilitiesController.getMapSectionsBySupercategory()) {
 			Map<String, Object> currentSuperCategoryMap = new Map<String, Object>{ 'label' => currentSuperCategory.get('label'), 'order' => currentSuperCategory.get('order'), CW_CapabilitiesUtilities.SECTIONS => new List<Object>(), CW_CapabilitiesUtilities.CATEGORIES_AVAILABLE => 0, CW_CapabilitiesUtilities.CONTAINS_DATA => false };
+			if (tooltipsBySuperCategory.containsKey(((String)currentSuperCategory.get('label')).toLowerCase())) {
+				currentSuperCategoryMap.put('iconPath', tooltipsBySuperCategory.get(((String)currentSuperCategory.get('label')).toLowerCase())[0]);
+				currentSuperCategoryMap.put('iconTooltip', tooltipsBySuperCategory.get(((String)currentSuperCategory.get('label')).toLowerCase())[1]);
+			}
 			List<String> sectionsInCurrentSuperCategory = (List<String>) currentSuperCategory.get(CW_CapabilitiesUtilities.SECTIONS);
 			Boolean containDataSuperCategory = false;
 
@@ -172,7 +179,8 @@ public with sharing class CW_CapabilitiesUtilities {
 			List<Map<String, Object>> currentSections = new List<Map<String, Object>>();
 			List<Map<String, Object>> mapRecordTypesBySection = CW_FacilityCapabilitiesController.getMapRecordTypesBySection();
 			for (Map<String, Object> cSection : mapRecordTypesBySection) {
-				Boolean includeSection = sectionsInCurrentSuperCategory.contains((String) cSection.get('label'));
+				String cSectionLabel = (String) cSection.get('label');
+				Boolean includeSection = sectionsInCurrentSuperCategory.contains(cSectionLabel);
 
 				if (includeSection) {
 					Boolean containDataSection = false;
@@ -191,9 +199,13 @@ public with sharing class CW_CapabilitiesUtilities {
 								}
 							}
 
-							Map<String, Object> currentSectionObject = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', (String) cSection.get('label'));
+							Map<String, Object> currentSectionObject = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', cSectionLabel);
 							if (currentSectionObject == null) {
-								currentSectionObject = new Map<String, Object>{ 'label' => (String) cSection.get('label'), CW_CapabilitiesUtilities.CAPABILITIES => new List<Map<String, Object>>(), CW_CapabilitiesUtilities.CONTAINS_DATA => false };
+								currentSectionObject = new Map<String, Object>{ 'label' => cSectionLabel, CW_CapabilitiesUtilities.CAPABILITIES => new List<Map<String, Object>>(), CW_CapabilitiesUtilities.CONTAINS_DATA => false };
+								if (tooltipsBySection.containsKey(cSectionLabel.toLowerCase())) {
+									currentSectionObject.put('iconPath', tooltipsBySection.get(cSectionLabel.toLowerCase())[0]);
+									currentSectionObject.put('iconTooltip', tooltipsBySection.get(cSectionLabel.toLowerCase())[1]);
+								}
 								currentSections.add(currentSectionObject);
 							}
 							if (listSectionsIncluded.contains(currentRecordType)) {
@@ -208,7 +220,7 @@ public with sharing class CW_CapabilitiesUtilities {
 					}
 					//If it contains any sections from a capability
 					if (containDataSection) {
-						currentSections.get(currentSections.indexOf((Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', (String) cSection.get('label')))).put(CW_CapabilitiesUtilities.CONTAINS_DATA, true);
+						currentSections.get(currentSections.indexOf((Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap(currentSections, 'label', cSectionLabel))).put(CW_CapabilitiesUtilities.CONTAINS_DATA, true);
 					}
 				}
 			}
@@ -326,9 +338,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentCapatibility.put(CW_CapabilitiesUtilities.CATEGORIES, new List<Map<String, Object>>());
 		currentCapatibility.put('summary', new List<Map<String, Object>>());
 		currentCapatibility.put(CW_CapabilitiesUtilities.CONTAINS_DATA, false);
-		if (CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES != null) {
-			currentCapatibility.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
-		}
+		currentCapatibility.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.containsKey(rtDevNameLC));
 
 		// Categories
 		for (String currentCategory : mapCategoriesByRecordTypeDevName.get(rtDevNameLC)) {
@@ -413,7 +423,7 @@ public with sharing class CW_CapabilitiesUtilities {
 			}
 
 			categoryFound.put('isMultirecord', isMultiRecordCapabilities);
-			categoryFound.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
+			categoryFound.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.containsKey(rtDevNameLC));
 		}
 
 		return categoryFound;
@@ -463,7 +473,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		List<String> requiredFields = CW_CapabilitiesManagerController.getRequiredFieldsForCapability(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
 		currentObject.put('requiredFields', requiredFields);
 
-		Boolean isEditableRecordType = CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC);
+		Boolean isEditableRecordType = CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.containsKey(rtDevNameLC);
 
 		// Set processed info.
 		currentObject.put('id', currentDetailId);

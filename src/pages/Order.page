@@ -965,7 +965,7 @@
                                                     <div class="col-md-5"><apex:outputLabel value="{!$ObjectType.Order.Fields.ShipTo_same_BillTo__c.Label}" /></div>
                                                     <div class="col-md-7">
                                                         <apex:inputField value="{!vfOrder.ShipTo_same_BillTo__c}">
-                                                            <apex:actionSupport event="onchange" reRender="ShipToReadOnly" />
+                                                            <apex:actionSupport event="onchange" reRender="ShipToReadOnly" action="{!getContactShipToLocations}"/>
                                                         </apex:inputField>
                                                     </div>
                                                 </apex:outputPanel>

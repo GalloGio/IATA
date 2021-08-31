@@ -1,6 +1,6 @@
 <template>
-    <c-cw-spinner width="25%" if:false={loadedCss} overlay="true" position="position-fixed"></c-cw-spinner>
-    <template if:true={loadedCss}>
+    <c-cw-spinner width="25%" if:false={isLoaded} overlay="true" position="position-fixed"></c-cw-spinner>
+    <template if:true={isLoaded}>
         <div class="companyHeader row desktop-menu">
             <div class="header-blue-line">
             </div>

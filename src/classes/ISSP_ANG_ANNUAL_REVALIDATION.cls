@@ -678,6 +678,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public PageReference loadIataCode() {
 		resetErrors();
 
+		if(getForm(currentIataCode)==null)
+			createForm(currentIataCode);
+
 		this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(currentIataCode),
 															getStatus(currentIataCode),
 															getForm(currentIataCode),
@@ -1178,6 +1181,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return isoCountryMap.containsKey(isoCode) ? isoCountryMap.get(isoCode) : null;
 	}
 
+	private void createForm(string sIataCodeToCreate) {
+		// Create the forms for all these accounts.
+		// At this point we are not saving any of these forms. They are saved only when the user decides to update details
+		account a = accountsMap.get(sIataCodeToCreate);
+
+		formsMap.put(sIataCodeToCreate, new ANG_AnnualRevFormWrapper(createNewForm(sIataCodeToCreate),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousOwner),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentOwner),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentCompanyOwner),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousCompanyOwner)));
+	}
+
 	private void createFormsForAccountsStatusOpenAndConfirmed() {
 		Set<Id> accounts = new Set<Id>();
 		Set<String> iataCodes = new Set<String>();
@@ -1191,18 +1206,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		// This list will have the owners for all accounts
 		lstAccreditationContact = getAllAMS_Account_Role(accounts);
-
-		// Create the forms for all these accounts.
-		// At this point we are not saving any of these forms. They are saved only when the user decides to update details
-		for(String iataCode : iataCodes) {
-			account a = accountsMap.get(iataCode);
-
-			formsMap.put(iataCode, new ANG_AnnualRevFormWrapper(createNewForm(iataCode),
-																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousOwner),
-																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentOwner),
-																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentCompanyOwner),
-																getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousCompanyOwner)));
-		}
 	}
 
 	private AMS_Pax_Accreditation_Form__c createNewForm(String iataCode) {
@@ -1470,6 +1473,9 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), topChildren, childrenList, jsonValue, headEntity.IATA_ISO_Country__r.Name);
 
 		if(this.setHe) {
+			if(getForm(headEntity.IATACode__c)==null)
+				createForm(headEntity.IATACode__c);
+			
 			this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(headEntity.IATACode__c),
 																getStatus(headEntity.IATACode__c),
 																getForm(headEntity.IATACode__c),

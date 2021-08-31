@@ -2523,6 +2523,7 @@ private class CaseBeforeTriggerTest {
 		
 		cases.add(cases.get(0).clone());
 		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone());
 		cases.add(cases.get(0).clone()); // 4 cases with bank error in the last 365 days
 		
 		Test.StartTest();

@@ -8007,6 +8007,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MFA_LoginFlowController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MFA_LoginFlowControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MITA_AgreementTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -8264,6 +8272,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OSCARstatusBatchTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OS_Account_Role_Detail_CapabilityHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -10480,14 +10492,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserSelectorTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserService</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserServiceTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -23769,6 +23773,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Reference_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approved_By__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approver_Email__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Availability__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -23960,6 +23984,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Cart_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24239,6 +24273,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Quantity__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24399,6 +24443,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Servicing_Height_Max__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24410,6 +24474,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Supply_Flowrate_In_Kg_Sec__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24530,6 +24604,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.VPPC_Quarantine_Room_Dimensions_W__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Version_Edition_No__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26078,9 +26157,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Action__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -26103,7 +26182,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26158,7 +26237,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.File_Identifier_picklist__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26173,12 +26252,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Original_Received__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Owner_Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26188,7 +26267,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Review_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26198,7 +26277,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Size_MB__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26208,7 +26287,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Source__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26218,12 +26297,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AmazonFile__c.isPublic__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35611,6 +35690,11 @@
         <editable>true</editable>
         <field>Custom_Related_case__c.Related_Case__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Custom_metadata_label_translation__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -49664,8 +49748,18 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Operational_Improvements__c.Apparent_Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Operational_Improvements__c.Approval_process_selector__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Area_of_Concern__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -50050,6 +50144,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Operational_Improvements__c.QRM_Analysis_Conclusions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Quality_Response_Categorization__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -52691,6 +52790,11 @@
         <editable>false</editable>
         <field>Portal_Applications__c.Visible__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_MFA_Setting__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -59148,6 +59252,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Questions_Answer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>User.dgai__active_user_settings__c</field>
         <readable>true</readable>
@@ -61084,6 +61198,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61117,6 +61235,10 @@
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.Security_Equipment_And_Measures</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
@@ -62315,6 +62437,12 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Custom_Related_case__c-Related case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Custom_metadata_label__mdt-Custom metadata label Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Custom_metadata_label_translation__mdt-Custom metadata label translation Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Customer_Invoice_Payment_Link__mdt-Customer Invoice Payment Link Config Layout</layout>
@@ -63548,6 +63676,9 @@
     <layoutAssignments>
         <layout>Portal_Applications__c-Portal Application Layout</layout>
         <recordType>Portal_Applications__c.ISS_Portal_Application</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Portal_MFA_Setting__mdt-Portal MFA Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Portal_Service_Account_Preference__c-Portal Service Account Preference Layout</layout>
@@ -70506,6 +70637,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MFA_LoginFlowPage</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MITA_Agreements</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -71681,6 +71816,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -71722,6 +71862,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.Security_Equipment_And_Measures</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -71929,17 +72074,18 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AmazonFile__c.Certificate</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>AmazonFile__c.EF_File</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AmazonFile__c.File</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

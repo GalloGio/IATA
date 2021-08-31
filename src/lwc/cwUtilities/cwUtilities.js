@@ -1,3 +1,7 @@
+const ACCOUNT_RT_OPERATOR = 'operator';
+const ACCOUNT_RT_AIRLINE = 'iata_airline';
+const STATION_RT_AIRLINE = 'airline';
+
 export function removeFromArray(array, value) {
 	return array.filter(function (element) {
 		return element !== value;
@@ -439,16 +443,26 @@ export function getIataSrc(showIcon, recordTypeDevName, location, locationClass,
 	return src;
 }
 
-export function getIataTooltip(showIcon, recordTypeDevName, location, locationClass, label) {
+export function getIataTooltip(showIcon, recordTypeDevName, location, locationClass, label, accountRecordType) {
 	let tooltip = "";
+
+	if (showIcon !== true) {
+		return tooltip;
+	}
 
 	let freightForwarderValid = recordTypeDevName === "Freight_Forwarder" && locationClass && locationClass.toLowerCase() === "c";
 	let locationIsUS = location && location.location && location.location.Country === "United States";
 
 	if (freightForwarderValid && locationIsUS) {
 		tooltip = label.icg_cns_endorsed_agent;
-	} else if (freightForwarderValid || showIcon) {
+	} else if (freightForwarderValid) {
 		tooltip = label.icg_accredited_agent;
+	}
+	else if (recordTypeDevName.toLowerCase() === STATION_RT_AIRLINE && accountRecordType.toLowerCase() === ACCOUNT_RT_OPERATOR) {
+		tooltip = label.icg_accredited_agent;
+	}
+	else if (recordTypeDevName.toLowerCase() === STATION_RT_AIRLINE && accountRecordType.toLowerCase() === ACCOUNT_RT_AIRLINE) {
+		tooltip = label.icg_accredited_airline;
 	}
 
 	return tooltip;
@@ -549,7 +563,7 @@ export function getQueryParameters() {
 
 	search.split("&").forEach(element => {
 		if (element.startsWith("?q=") || element.startsWith("q=")) {
-			let decompressedValue = decompressQueryParams(element.split("=")[1]);
+			let decompressedValue = decompressQueryParams(decodeURIComponent(element.split("=")[1]));
 			searchParams.push("q=" + decompressedValue);
 		} else {
 			searchParams.push(element);
@@ -697,4 +711,50 @@ export function reachedLimit(environmentVariables, filtersCount) {
 export function reachedLimitWithAll(environmentVariables, array, count){
 	let potentialSelect = array ? array.reduce((acc, field) => field.selected ? ++acc : acc, 0) : 0;
 	return reachedLimit(environmentVariables, (count + potentialSelect));
+}
+
+// @description Get the result of the validation for each field for each equipment.
+// @return 		Array of objects.
+// 				Each object has two properties:
+// 				 - equipment: string that indicates the equipment in which the validation failed
+// 				 - fields: array of string wich contains every field in which the validation failed.
+export function requiredFieldsMissingResult(dataInput) {
+
+	let returnValue = [];
+	let moreInfoLinkField = "more_info_link__c";
+	let moreInfoDocumentField = "more_info_document__c";
+
+	dataInput.forEach((element) => {
+		let isValidationOk = true;
+		let fieldByEquipmentRequired = { equipment: "", fields: [] };
+
+		element.fields.forEach((field) => {
+			if (field.field != "equipment__c" && field.required.toString() === "true" && field.value === "") {
+				if (field.field === moreInfoLinkField || field.field === moreInfoDocumentField) {
+					let otherReqFieldName = field.field === moreInfoLinkField ? moreInfoDocumentField : moreInfoLinkField;
+					let otherReqField = element.fields.filter((row) => row.field === otherReqFieldName);
+					if (otherReqField.length > 0) {
+						isValidationOk = otherReqField[0].value != null && otherReqField[0].value != "" ? true : false;
+					} else {
+						isValidationOk = false;
+					}
+				} else {
+					isValidationOk = false;
+				}
+				fieldByEquipmentRequired.equipment = element.equipment_label || element.equipment;
+				fieldByEquipmentRequired.fields.push(field.label || field.field);
+			}
+		});
+		if (isValidationOk === false) {
+			returnValue.push(fieldByEquipmentRequired);
+		}
+	});
+	return returnValue;
+}
+
+// @description Get the result of the validation.
+// @return 		Boolean.
+// 				Indicates if the validation is ok or not. If one field of one equipment fail the validation, the result is false.
+export function areRequiredFieldsFilled(dataInput, srcDev) {
+	return requiredFieldsMissingResult(dataInput, srcDev).length === 0;
 }

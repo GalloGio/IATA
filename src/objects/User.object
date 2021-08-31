@@ -2440,6 +2440,28 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>X2FA_Security_Question__c</fullName>
+        <description>Security question used for 2FA for external users</description>
+        <externalId>false</externalId>
+        <label>2FA Security Question</label>
+        <length>100</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>X2FA_Security_Questions_Answer__c</fullName>
+        <description>Security question&apos;s answer used for 2FA for external users</description>
+        <externalId>false</externalId>
+        <label>2FA Security Question’s Answer</label>
+        <length>50</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>dgai__active_user_settings__c</fullName>
         <defaultValue>false</defaultValue>
         <deprecated>false</deprecated>

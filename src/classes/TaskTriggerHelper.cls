@@ -39,12 +39,14 @@ public with sharing class TaskTriggerHelper {
 		}
 		String kpiReportingId = kpiReporting.get(0).Id;
 		for(Task t : tasks) {
-			String rtDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', t.What.RecordTypeId).developerName;
-			Integer points = Integer.valueOf(configMap.get(rtDevName).Points__c);
-			if(String.isNotBlank(t.Subject) && t.Subject.toUpperCase() == CALL_SUCCESSFUL && rtDevName == 'SIDRA')
-				points = 2;
-			KPI_Value__c valueToInsert = createKPIReportingValue(t.WhatId, points, kpiReportingId);
-			kpiValuesToInsert.add(valueToInsert);
+            if(t.TaskSubtype != 'Email'){
+				String rtDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', t.What.RecordTypeId).developerName;
+				Integer points = Integer.valueOf(configMap.get(rtDevName).Points__c);
+				if(String.isNotBlank(t.Subject) && t.Subject.toUpperCase() == CALL_SUCCESSFUL && rtDevName == 'SIDRA')
+					points = 2;
+				KPI_Value__c valueToInsert = createKPIReportingValue(t.WhatId, points, kpiReportingId);
+				kpiValuesToInsert.add(valueToInsert);
+			}
 		}
 
 

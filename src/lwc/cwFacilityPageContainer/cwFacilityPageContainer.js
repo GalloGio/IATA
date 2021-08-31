@@ -19,7 +19,7 @@ import updateFacility_ from "@salesforce/apex/CW_CreateFacilityController.update
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import labels from "c/cwOneSourceLabels";
 import { loadScript } from "lightning/platformResourceLoader";
-import { shMenu, sIcons, shButtonUtil, prButton, shareBtn, connectFacebook, connectTwitter, connectLinkedin, sendMail, concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, getImageString, getIataSrc, getIataTooltip, hideHover, compressQueryParams } from "c/cwUtilities";
+import { shMenu, sIcons, shButtonUtil, prButton, shareBtn, connectFacebook, connectTwitter, connectLinkedin, sendMail, concatinateFacilityAddress, concatinateAddressString, removeLastCommaAddress, getImageString, getIataSrc, getIataTooltip, areRequiredFieldsFilled } from "c/cwUtilities";
 import fetchAirports from "@salesforce/apex/CW_LandingSearchBarController.fetchAirports";
 import getOnAirportStations from '@salesforce/apex/CW_CreateFacilityController.getOnAirportStations';
 import getNearestAirportForFacility from "@salesforce/apex/CW_CreateFacilityController.getNearestAirportForFacility";
@@ -826,38 +826,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		return this.areatype === "private";
 	}
 
-	checkRequiredFields(){
-		let returnValue=true;
-		let obligationLinkField = 'more_info_link__c';
-		let uploadDocumentationField = 'more_info_document__c';
-
-		this.listCapabilitiesRow.forEach(element => {
-			element.fields.forEach(field => {
-				if(field.required.toString() === "true" ){
-					if(field.value === ""){
-
-						if(field.field === obligationLinkField || field.field === uploadDocumentationField){
-							if(field.field === obligationLinkField){
-								let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
-								returnValue = selectField[0].value != "" ? true :  false;
-							}
-							else if(field.field === uploadDocumentationField){
-								let selectField = element.fields.filter(row => row.field === obligationLinkField);
-								returnValue = selectField[0].value != "" ? true :  false;
-							}
-						}						
-						else{
-							returnValue = false;
-						}
-						
-					}					
-				}
-			});
-						
-		});	
-		return returnValue;
-	}
-
 	handleSaveChanges() {
 		if (this.readOnlyHandlersAirline === false || this.readOnlyHandlersCargo === false || this.readOnlyHandlersRamp === false) {
 			this.template.querySelectorAll("c-cw-handler-detail").forEach(element => {
@@ -872,7 +840,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				}
 			});
 		} else if(this.isEditSectionCapabMangment === true){
-			if(!this.checkRequiredFields()){
+			if(!areRequiredFieldsFilled(this.listCapabilitiesRow)){
 				this.showToast("Error", "Complete required fields", "error");
 				return;
 			}
@@ -1087,7 +1055,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	tooltipText() {
 		if (this.facility && this.label) {
-			return getIataTooltip(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label);
+			return getIataTooltip(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label, this.facility.typeDevName);
 		}
 
 		return "";

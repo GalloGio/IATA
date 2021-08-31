@@ -26,16 +26,7 @@ public with sharing class LogPhoneCaseController {
 			ContactId = ApexPages.currentPage().getParameters().get('ContactId');
 			con = [SELECT Id, AccountId, Account.Region_formula__c, Account.Site, Account.Account_Type__c, Account.IATA_ISO_Country__r.Name, Email, Preferred_Language__c FROM Contact WHERE Id = :ContactId];
 
-			String usrRoleId = UserInfo.getUserRoleId();
-			UserRole usrRole = [SELECT Id, Name FROM UserRole WHERE Id = :usrRoleId];
-	
-			strSelectedRType = caseRecordTypesMap.get('Cases - Europe');
-	
-			for (String rolePrefix : mapCaseRTNamePerUserRole.keyset()) {
-				if (usrRole.Name.startsWith(rolePrefix)) {
-					strSelectedRType = caseRecordTypesMap.get(mapCaseRTNamePerUserRole.get(rolePrefix));
-				}
-			}
+			this.strSelectedRType = getDefaultRecordType();
 
 		} else if (ApexPages.currentPage().getParameters().get('CaseId') != null ) {
 			// the request originates from a Case page
@@ -146,6 +137,19 @@ public with sharing class LogPhoneCaseController {
 			options.add(RecordTypeSingleton.getInstance().getRecordTypeById('Case',caseRecordTypesMap.get(s)));
 		}
 		return options;
+	}
+
+	@AuraEnabled(cacheable=false)
+	public static Id getDefaultRecordType() {
+		String usrRoleId = UserInfo.getUserRoleId();
+		UserRole usrRole = [SELECT Id, Name FROM UserRole WHERE Id = :usrRoleId];
+
+		for (String rolePrefix : mapCaseRTNamePerUserRole.keyset()) {
+			if (usrRole.Name.startsWith(rolePrefix)) {
+				return caseRecordTypesMap.get(mapCaseRTNamePerUserRole.get(rolePrefix));
+			}
+		}
+		return caseRecordTypesMap.get('Cases - Europe');
 	}
 
 }

@@ -8003,6 +8003,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MFA_LoginFlowController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MFA_LoginFlowControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MITA_AgreementTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -8260,6 +8268,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OSCARstatusBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OS_Account_Role_Detail_CapabilityHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -10476,14 +10488,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserSelectorTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserService</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UserServiceTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -23773,6 +23777,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Reference_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approved_By__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approver_Email__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Availability__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -23964,6 +23988,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Cart_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24243,6 +24277,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Quantity__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24403,6 +24447,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Servicing_Height_Max__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24414,6 +24478,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Supply_Flowrate_In_Kg_Sec__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24534,6 +24608,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.VPPC_Quarantine_Room_Dimensions_W__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Version_Edition_No__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35618,6 +35697,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Custom_metadata_label_translation__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Customer_Invoice__c.Bank_Account_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -38699,7 +38783,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Financial_Institution__c.Agent_IATA_code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -38709,7 +38793,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Financial_Institution__c.Country__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -38754,7 +38838,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Financial_Institution__c.Institution_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -49668,7 +49752,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Operational_Improvements__c.Apparent_Cause__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Approval_process_selector__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Area_of_Concern__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -50054,6 +50148,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.QRM_Analysis_Conclusions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Quality_Response_Categorization__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -52695,6 +52794,11 @@
         <editable>false</editable>
         <field>Portal_Applications__c.Visible__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_MFA_Setting__mdt.Value__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -59152,6 +59256,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Questions_Answer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>User.dgai__active_user_settings__c</field>
         <readable>true</readable>
@@ -61088,6 +61202,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61121,6 +61239,10 @@
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.Security_Equipment_And_Measures</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
@@ -62319,6 +62441,12 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Custom_Related_case__c-Related case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Custom_metadata_label__mdt-Custom metadata label Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Custom_metadata_label_translation__mdt-Custom metadata label translation Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Customer_Invoice_Payment_Link__mdt-Customer Invoice Payment Link Config Layout</layout>
@@ -63551,6 +63679,9 @@
         <recordType>Portal_Applications__c.ISS_Portal_Application</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Portal_MFA_Setting__mdt-Portal MFA Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Portal_Service_Account_Preference__c-Portal Service Account Preference Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -64474,6 +64605,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>FDS_KPI_Reporting__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Financial_Institution__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -67248,6 +67388,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MFA_LoginFlowPage</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MITA_Agreements</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -68422,6 +68566,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -68463,6 +68612,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.Security_Equipment_And_Measures</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -69358,6 +69512,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Financial_Institution__c.Generic_FI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -70571,7 +70726,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Financial_Institution__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Financial_Security_Request</tab>

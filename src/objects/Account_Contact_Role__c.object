@@ -884,6 +884,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Trained Staff Certification</fullName>
                 <default>false</default>
             </values>
@@ -1214,6 +1218,10 @@
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1551,6 +1559,10 @@
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1892,6 +1904,10 @@
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2237,6 +2253,10 @@
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>

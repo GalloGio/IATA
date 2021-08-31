@@ -1,0 +1,29 @@
+<template>
+    <template if:true={labels}>
+        <div class={containerClass}>
+            <template if:true={authenticationAppsToDisplay} for:each={authenticationAppsToDisplay} for:item="app">
+                <div key={app.id} class="slds-grid slds-gutters_xx-small slds-p-vertical_small">
+                    <div class="slds-large-size_2-of-6 slds-x-small-size_4-of-12 align-right">
+                        <b>{app.label}</b>
+                    </div>
+                    <div class="slds-small-size_1-of-6 slds-x-small-size_0-of-12 middle-div"></div>
+                    <div if:true={app.androidLink} class="slds-large-size_3-of-12 slds-x-small-size_4-of-12">
+                        <img width="21" src={icons.android}/>
+                        <a class="slds-p-left_x-small" href={app.androidLink} target="_blank">Android</a>
+                    </div>
+                    <div if:false={app.androidLink} if:true={app.explorerLink} class="slds-large-size_3-of-12 slds-x-small-size_4-of-12">
+                        <img width="14" src={icons.explorer}/>
+                        <a class="slds-p-left_x-small" href={app.explorerLink} target="_blank">Chrome</a>
+                    </div>
+                    <div if:true={app.appleLink} class="slds-size_3-of-12 slds-p-left_x-small">
+                        <img width="18" src={icons.ios}/>
+                        <a class="slds-p-left_x-small" href={app.appleLink} target="_blank">iOS</a>
+                    </div>
+                </div>
+            </template>
+            <div class="slds-grid slds-align_absolute-center slds-p-bottom_small mfa-link">
+                <a href={labels.Portal_See_All_URL} target="_blank" style="font-weight: bold;">{labels.CSP_SeeAll}</a>
+            </div>
+        </div>
+    </template>
+</template>

@@ -25,7 +25,12 @@
 				<div key={currentsupercategory.value.key}>
 					<div key={currentsupercategory.value.label} class="row m-0 p-0 mt-4 mb-1 mr-2">
 						<div key={currentsupercategory.value.label}>
-							<h4><b>{currentsupercategory.value.label}</b></h4>
+							<h4>
+								<b>{currentsupercategory.value.label}</b>
+								<span if:true={currentsupercategory.value.iconPath} title={currentsupercategory.value.iconTooltip}>
+									<img  src={currentsupercategory.value.iconPath} class="icon margin-icon" width="20px">
+								</span>
+							</h4>
 							<hr class="yellow-underline mb-2">
 						</div>
 					</div>
@@ -38,6 +43,9 @@
 							<h5 data-item={currentsection.value.key} class={cargoHandlingCss} onclick={toggleSection}
 								data-key={currentsection.value.label} data-section="content">
 								<b>{currentsection.value.label}</b>
+								<span if:true={currentsection.value.iconPath} title={currentsection.value.iconTooltip}>
+									<img  src={currentsection.value.iconPath} class="icon margin-icon" width="20px">
+								</span>
 								<img src={chevrondown} class="icon btn-icon margin-icon" width="20px"
 									data-key={currentsection.value.label} data-section="content">
 							</h5>
@@ -499,7 +507,7 @@
 																								property-name={currentfield.value.name}
 																								aux-type={currentCategory.auxType}
 																								type={currentfield.value.type} values={currentfield.value.values}
-																								edit-mode=false onfieldupdated={addFieldToList}>
+																								edit-mode=false is-community={isCommunity} onfieldupdated={addFieldToList}>
 																							</c-cw-capabilities-manager-inputs>
 
 																						</b>
@@ -567,7 +575,7 @@
 																															row-index={rowIndex} category-index={categoryIndex} item={row}
 																															property-name={currentfield.value.name}
 																															type={currentfield.value.type} values={currentfield.value.values}
-																															max-characters="20" edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
+																															max-characters="20" edit-mode={row.isNotEditable} is-community={isCommunity} onfieldupdated={addFieldToList}>
 																															</c-cw-capabilities-manager-inputs>	
 																														</td>
 																													</template>
@@ -669,12 +677,14 @@
 																												</button>
 																											</template>
 																											<template if:false={currentfield.value.isfileupload}>
-																												<c-cw-html-tag-generator  
-																												label={label}
-																												row-index={rowIndex} item={row}
-																												property-name={currentfield.value.name}
-																												max-characters="20">
-																												</c-cw-html-tag-generator>
+																												<div class="tooltipCapabilitiesPublic">
+																													<c-cw-html-tag-generator  
+																													label={label}
+																													row-index={rowIndex} item={row}
+																													property-name={currentfield.value.name}
+																													max-characters="20">
+																													</c-cw-html-tag-generator>
+																												</div>
 																											</template>
 																											
 
@@ -731,12 +741,14 @@
 																							</template>
 
 																							<template if:false={currentfield.value.isfileupload}>
-																								<c-cw-html-tag-generator
-																									label={label}
-																									row-index={rowIndex} item={row}
-																									property-name={currentfield.value.name}
-																									max-characters="20">
-																								</c-cw-html-tag-generator>
+																								<div class="tooltipCapabilitiesPublic">
+																									<c-cw-html-tag-generator
+																										label={label}
+																										row-index={rowIndex} item={row}
+																										property-name={currentfield.value.name}
+																										max-characters="20">
+																									</c-cw-html-tag-generator>
+																								</div>
 																							</template>
 
 																						</template>

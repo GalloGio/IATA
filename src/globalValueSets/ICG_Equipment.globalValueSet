@@ -790,6 +790,16 @@
         <default>false</default>
         <label>Forklift</label>
     </customValue>
+    <customValue>
+        <fullName>Hold_baggage_Security_System</fullName>
+        <default>false</default>
+        <label>Hold Baggage Security System</label>
+    </customValue>
+    <customValue>
+        <fullName>Security_Program_Details</fullName>
+        <default>false</default>
+        <label>Security Program Details</label>
+    </customValue>
     <masterLabel>ONE Source Equipment</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

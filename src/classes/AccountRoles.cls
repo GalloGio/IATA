@@ -1,6 +1,6 @@
 public with sharing class AccountRoles {
-	public static final String STATUSACTIVE = 'Active';
-	public static final String STATUSINACTIVE = 'Inactive';
+	public final String STATUSACTIVE = 'Active';
+	public final String STATUSINACTIVE = 'Inactive';
 
 	public List<Account_Role__c> records { get; private set; }
 
@@ -34,17 +34,15 @@ public with sharing class AccountRoles {
 	//returns a list of new account role records for specified account id set and functional role
 	//no status is set
 	public List<Account_Role__c> create(Set<Id> accountIdSet, String functionalRoleName){
+		List<Account_Role__c> accountRoleList = new List<Account_Role__c>();
 		if(!Test.isRunningTest() && FunctionalRoleMetadataSelector.selectByName(functionalRoleName) == null)
 			throw new AccountRoleDomainException('Functional role by name ' + functionalRoleName + ' does not exist in Functional Role Custom Metadata');
 
 		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account_Role__c', 'Default');
 		for(Id accountId : accountIdSet){
-			if(Test.isRunningTest())
-				records.add(new Account_Role__c(RecordTypeId = recordTypeId, Account__c = accountId));
-			else
-				records.add(new Account_Role__c(RecordTypeId = recordTypeId, Account__c = accountId, Functional_Role__c = functionalRoleName) );
+			accountRoleList.add(new Account_Role__c(RecordTypeId = recordTypeId, Account__c = accountId, Functional_Role__c = functionalRoleName) );
 		}
-		return records;
+		return accountRoleList;
 	}
 
 	/*

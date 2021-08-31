@@ -542,6 +542,7 @@ public without sharing class CW_SearchEngine {
 	public class Facility {
 		public String name { get; set; }
 		public String type { get; set; }
+		public String typeDevName { get; set; }
 		public String image { get; set; }
 		public String description { get; set; }
 		public String phone { get; set; }
@@ -617,6 +618,7 @@ public without sharing class CW_SearchEngine {
 				this.formattedAddress = acr.Formatted_Address__c;
 				this.secondAddress = acr.Secondary_Address__c;
 				this.type = acr.Account_Role__r.Account__r.RecordType.Name;
+				this.typeDevName = acr.Account_Role__r.Account__r.RecordType.DeveloperName;
 				this.recordTypeIcon = PageReference.forResource('ICG_Resources', 'icons/company_type/' + acr.RecordType.DeveloperName.toLowerCase().replaceAll('_', '-') + '.svg').getUrl();
 				this.NumberEmployees = acr.Number_of_Employees__c;
 				this.FacilitySize = acr.Overall_Facility_Size_m2__c;
