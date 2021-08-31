@@ -791,10 +791,6 @@ background-color:#428bca;
                 Prorate Dashboard</a> </li>
       </ul>
 
-      <ul  class="nav navbar-nav collapse" id="seven">
-          <li> <a href="/MITA_PortalMyAgreements?mid=M7S1" id="M7S1" >{!$Label.ISSP_View_My_Company_MITA_BIETA_Agreements}</a> </li>
-      </ul>
-
       <ul class="pull-right" id="searchbox">
     <li style="list-style:none"> <!--  searchbox -->
 
