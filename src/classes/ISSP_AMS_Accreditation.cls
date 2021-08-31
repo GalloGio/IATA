@@ -654,7 +654,7 @@ public without sharing class ISSP_AMS_Accreditation {
 			newForm.Notify_Change_Accreditation_Type__c = true;
 		}
 
-		if(this.con.Account.location_type__c == 'GE' ){
+		if(this.con.Account.location_type__c == AMS_Utils.GE ){
 			this.isGEAccountHierarchy = true;
 			this.newForm.Type_of_Change__c = 'No';
 		}
@@ -2063,11 +2063,11 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference save() {
-		if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == 'GE - Change to Gostandard' || newForm.Scope_of_Change__c == 'GE - Change to Golite') && selectedCountryIsos.size() > 1){
+		if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOSTANDARD || newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOLITE) && selectedCountryIsos.size() > 1){
 			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_Change_of_Accreditation_Type_More_Than_one_Country_Error));
 			return null;
 		}
-		if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == 'GE - Change to Gostandard' || newForm.Scope_of_Change__c == 'GE - Change to Golite') && selectedCountryIsos.isEmpty()){
+		if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOSTANDARD || newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOLITE) && selectedCountryIsos.isEmpty()){
 			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_Change_for+': '+ Label.ANG_ISSP_CountryConcerned+': '+Label.ISSP_YouMustEnter));
 			return null;
 		}
@@ -2561,7 +2561,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.Shipping_ISO_Country__c = null;
 			}/*** AMSU-121 ***/
 			
-			if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == 'GE - Change to Gostandard' || newForm.Scope_of_Change__c == 'GE - Change to Golite')){
+			if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOSTANDARD || newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOLITE)){
 				for (SelectOption country: selectedCountryIsos) {
 					newForm.MultiCountry_Countries_Concerned__c = country.getValue();
 				}
@@ -4170,9 +4170,9 @@ public without sharing class ISSP_AMS_Accreditation {
 				}
 			}
 			
-			if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == 'GE - Change to Golite'){
+			if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOLITE){
 				typeOfProcess = AMS_Utils.ANGPARTCONVERTMCTOLT;
-			}else if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == 'GE - Change to Gostandard'){
+			}else if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOSTANDARD){
 				typeOfProcess = AMS_Utils.ANGPARTCONVERTMCTOST;
 			}else if(isChangeOfAccreditationType){
 				typeOfProcess = AMS_Utils.NGCONVERSIONMCTOST;
@@ -4253,9 +4253,9 @@ public without sharing class ISSP_AMS_Accreditation {
 		dmo.assignmentRuleHeader.useDefaultRule = true;
 		Database.update(newCase, dmo);
 
-		if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == 'GE - Change to Golite'){
+		if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOLITE){
 			OSCARIntegration(geMCForm.HO_Account__c, geMCForm.Id, AMS_Utils.ANGPARTCONVERTMCTOLT, newCase.Id);
-		}else if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == 'GE - Change to Gostandard'){
+		}else if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOSTANDARD){
 			OSCARIntegration(geMCForm.HO_Account__c, geMCForm.Id, AMS_Utils.ANGPARTCONVERTMCTOST, newCase.Id);
 		}else if(isChangeOfAccreditationType){
 			OSCARIntegration(geMCForm.HO_Account__c, geMCForm.Id, AMS_Utils.NGCONVERSIONMCTOST, newCase.Id);
@@ -7129,7 +7129,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.Confirm_Location_Details_are_correct__c = true;
 				newForm.Confirm_Ownership_details_are_correct__c = true;
 				newForm.Type_of_Change__c = 'No';
-				if(newForm.Scope_of_Change__c == 'GE - Change to Golite'){
+				if(newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOLITE){
 					newForm.ANG_Accreditation_Model_to_Change__c = 'Cashless';
 				}else{
 					newForm.ANG_Accreditation_Model_to_Change__c = 'Cash';
@@ -9056,9 +9056,9 @@ public without sharing class ISSP_AMS_Accreditation {
 		upsert newCase;
 
 		saveAMSForm();
-		if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == 'GE - Change to Golite'){
+		if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOLITE){
 			ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, AMS_Utils.ANGPARTCONVERTMCTOLT, newCase.Id);
-		}else if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == 'GE - Change to Gostandard'){
+		}else if(isChangeOfAccreditationType && newForm.Scope_of_Change__c == AMS_Utils.MULTICOUNTRYGECHANGETOGOSTANDARD){
 			ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, AMS_Utils.ANGPARTCONVERTMCTOST, newCase.Id);
 		}else if(isChangeOfAccreditationType){
 			ISSP_AMS_Accreditation.OSCARIntegration(newCase.Account_Concerned__c, newForm.Id, AMS_Utils.NGCONVERSIONMCTOST, newCase.Id);
