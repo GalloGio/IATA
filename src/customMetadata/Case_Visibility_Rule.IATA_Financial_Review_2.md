@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Reason1__c =, Origin =</value>
+        <value xsi:type="xsd:string">Reason1__c =, Origin =, Status !=</value>
     </values>
     <values>
         <field>Origin__c</field>
@@ -40,6 +40,6 @@
     </values>
     <values>
         <field>Status__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Closed_Withdrawn</value>
     </values>
 </CustomMetadata>
