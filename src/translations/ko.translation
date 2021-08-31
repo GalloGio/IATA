@@ -23956,10 +23956,6 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>ISSP_View_GFA_Communication</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP View My Company MITA/BIETA Agreements --></label>
-        <name>ISSP_View_My_Company_MITA_BIETA_Agreements</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP_View_PWC_Lithuania_DC --></label>
         <name>ISSP_View_PWC_Lithuania_DC</name>
     </customLabels>

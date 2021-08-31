@@ -23953,10 +23953,6 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>ISSP_View_GFA_Communication</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP View My Company MITA/BIETA Agreements --></label>
-        <name>ISSP_View_My_Company_MITA_BIETA_Agreements</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP_View_PWC_Lithuania_DC --></label>
         <name>ISSP_View_PWC_Lithuania_DC</name>
     </customLabels>
