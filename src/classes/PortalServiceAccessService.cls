@@ -39,7 +39,7 @@ public without sharing class PortalServiceAccessService {
 	public static void processPortalServiceAccessService(List<PortalServiceAccess> portalServiceAccessList){
 		if(portalServiceAccessList == null || portalServiceAccessList.isEmpty())
 			throw new PortalServiceAccessServiceException('Portal Service Access List not specified');
-		
+
 		//get the portal service (functional role)
 		String functionalRoleName = portalServiceAccessList.get(0).functionalRoleName;
 		//get the operation to be performed (e.g. access granted)
@@ -56,6 +56,12 @@ public without sharing class PortalServiceAccessService {
 				IATAPayService.manageUserOnboarding(portalServiceAccessList);
 			} catch(Exception e){
 				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IATAPayService.FUNCTIONALROLE + ', ' + e.getStackTraceString(), e);
+			}
+		} else if (functionalRoleName.equals(IGOMService.FUNCTIONALROLE)) {
+			try{
+				IGOMService.manageUserOnboarding(contactSet, accessStatus);
+			} catch(Exception e){
+				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IGOMService.FUNCTIONALROLE, e);
 			}
 		} else{
 			try{
@@ -77,13 +83,13 @@ public without sharing class PortalServiceAccessService {
 		@InvocableVariable(label = 'Portal Application Right' required = false)
 		public Portal_Application_Right__c portalApplicationRight;
 		public Account_Role__c accountRole;
-		public Account_Contact_Role__c accountContactRole;	
+		public Account_Contact_Role__c accountContactRole;
 
 		public Boolean equals(Object obj){
 			if(obj instanceof PortalServiceAccess){
 				PortalServiceAccess portalServiceAccess = (PortalServiceAccess) obj;
 				return (
-					(functionalRoleName == portalServiceAccess.functionalRoleName) && 
+					(functionalRoleName == portalServiceAccess.functionalRoleName) &&
 					(accessStatus == portalServiceAccess.accessStatus) &&
 					(contact.Id == portalServiceAccess.contact.Id)
 				);
@@ -92,8 +98,8 @@ public without sharing class PortalServiceAccessService {
 		}
 
 		public Integer hashCode(){
-			return 13 + 
-			(31 * System.hashCode(functionalRoleName == null ? '' : functionalRoleName)) + 
+			return 13 +
+			(31 * System.hashCode(functionalRoleName == null ? '' : functionalRoleName)) +
 			(31* System.hashCode(accessStatus == null ? '' : accessStatus)) +
 			(31 * System.hashCode(contact.Id  == null ? '' : contact.Id ));
 		}
@@ -174,7 +180,7 @@ public without sharing class PortalServiceAccessService {
 
 		//get acrs and related ars for denied psa's (acr selector + ar fields) based on contact id and functional role
 		Map<Id, Account_Contact_Role__c> existingAccountContactRoleMap = AccountContactRoleSelector.selectAccountContactRoleMap(contactMap.keySet());
-		
+
 		//create a set of ar id's for any acr's that are modified
 		Set<Id> accountRoleWithModifiedContactRoleIdSet = new Set<Id>();
 		for(PortalServiceAccess portalServiceAccess : deniedPortalServiceAccessList){

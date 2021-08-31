@@ -979,7 +979,7 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <fullName>IATA EasyPay %28MSTS%29</fullName>
                 <default>false</default>
             </values>
-            <values>
+			<values>
                 <fullName>IATA Pay</fullName>
                 <default>false</default>
             </values>
@@ -1021,6 +1021,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IGOM</fullName>
                 <default>false</default>
             </values>
             <values>

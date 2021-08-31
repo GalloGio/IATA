@@ -1,0 +1,100 @@
+<template>
+    <div class="igom-reader background">
+        <!-- Header  -->
+        <header class="header slds-grid slds-wrap slds-p-around_medium">
+            <div class="slds-size_1-of-2">
+                <template if:true={igom}>
+                    <h1 class="header-title slds-m-right_medium">{igom.manual.Document_Name__c} Ed.{igom.manual.Edition__c}</h1>
+                    <a if:true={showAllManuals} onclick={showManualSelectorModal} class="text-blue">{label.custom.ig_select_another_igom}</a>
+                </template>
+                <template if:false={igom}>
+                    <h1 class="header-title slds-m-right_medium">-</h1>
+                </template>
+            </div>
+            <div class="header-right slds-size_1-of-2 slds-text-align_right">
+                <a if:true={allowManualUpload} class="slds-m-right_medium" href={resources.example_igom}>
+                    {label.custom.ig_download_file_template} 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                        <use xlink:href={resources.icons.info}></use>
+                    </svg>
+                </a>
+                <button if:true={allowManualUpload} class="button btn-ig-primary upload-igom-btn" onclick={showUploadModal}>{label.custom.ig_upload_new_igom}</button>
+            </div>
+            <div class="slds-size_1-of-1">
+                <template if:true={igom}>
+                    <span class="header-data slds-m-right_medium">{label.custom.ig_effective_date}: {igom.manual.Effective_Date__c}</span>
+                    <span class="header-data">{label.custom.ig_reminder_date}: {igom.manual.Review_Date__c}</span>
+                </template>
+            </div>
+        </header>
+        <!-- / Header -->
+        <template if:true={igom}>
+            <main class="slds-grid slds-wrap">
+                <!-- Sidebar -->
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3 slds-p-around_medium">
+                    <div class="shadow-drop">
+                        <c-ig-igom-reader-chapter-menu igom={igom} onchapterchange={chapterChangeHandler} onsectionchange={sectionChangeHandler}></c-ig-igom-reader-chapter-menu>
+                    </div>
+                </div>
+                <!-- / Sidebar -->
+                <!-- Procedures -->
+                <div class="slds-size_1-of-1 slds-medium-size_2-of-3 slds-large-size_2-of-3 slds-p-around_medium">
+
+                    <template if:true={selectedChapter}>
+                        <h2 class="slds-m-bottom_medium">{selectedChapter.index} - {selectedChapter.procedure.Name__c}</h2>
+
+                        <template if:true={selectedSection}>
+                            <h3 class="slds-m-bottom_medium line-through"><span>{selectedSection.index} - {selectedSection.procedure.Name__c}</span></h3>
+                            <c-ig-igom-reader-chapter-display section={selectedSection}></c-ig-igom-reader-chapter-display>
+                        </template>
+
+                        <template if:false={selectedSection}>
+                            <h2 class="slds-m-bottom_medium">{label.custom.ig_no_section_selected}</h2>
+                        </template>
+
+                    </template>
+
+                    <template if:false={selectedChapter}>
+                        <h2 class="slds-m-bottom_medium">{label.custom.ig_no_chapter_selected}</h2>
+                    </template>
+
+                </div>
+                <!-- / Procedures -->
+            </main>
+        </template>
+        <!-- Upload modal -->
+        <c-ig-igom-reader-upload-modal onupdated={manualUploaded}>
+        </c-ig-igom-reader-upload-modal>
+        <!-- / Upload modal -->
+        <!-- IGOM Selector modal -->
+        <c-ig-modal class="selector-modal" onaccept={selectorModalAcceptHandler} header="Select another IGOM manual" accept-button-label="Read manual">
+            <template for:each={igomManualList} for:item="manual">
+                <template if:true={manual.selected}>
+                    <a key={manual.Id} data-id={manual.Id} onclick={selectManualHandler}>
+                        <div class="slds-box slds-grid slds-m-bottom_small slds-theme_shade slds-theme_info">
+                            <div class="slds-size_1-of-2">
+                                <b>{manual.Document_Name__c}</b> - Ed{manual.Edition__c}
+                            </div>
+                            <div class="slds-size_1-of-2 slds-text-align_right">
+                                <lightning-formatted-date-time value={manual.CreatedDate}></lightning-formatted-date-time>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+                <template if:false={manual.selected}>
+                    <a key={manual.Id} data-id={manual.Id} onclick={selectManualHandler}>
+                        <div class="slds-box slds-grid slds-m-bottom_small">
+                            <div class="slds-size_1-of-2">
+                                <b>{manual.Document_Name__c}</b> - Ed{manual.Edition__c}
+                            </div>
+                            <div class="slds-size_1-of-2 slds-text-align_right">
+                                <lightning-formatted-date-time value={manual.CreatedDate}></lightning-formatted-date-time>
+                            </div>
+                        </div>
+                    </a>
+                </template>
+            </template>
+        </c-ig-modal>
+        <!-- / IGOM Selector modal -->
+    </div>
+</template>

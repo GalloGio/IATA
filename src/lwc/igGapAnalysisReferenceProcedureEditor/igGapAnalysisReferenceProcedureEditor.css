@@ -1,0 +1,24 @@
+.removed-text {
+    text-decoration: line-through;
+    color: red;
+}
+
+.critical-variation {
+    border: 1px solid #E3240D;
+}
+
+.non-critical-variation {
+    border: 1px solid #ED9C00;
+}
+
+.border-red {
+    border-color: red;
+}
+
+.critical-label {
+    color: #E3240D;
+}
+
+.non-critical-label {
+    color: #ED9C00;
+}

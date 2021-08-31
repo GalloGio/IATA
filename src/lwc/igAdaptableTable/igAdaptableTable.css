@@ -1,0 +1,61 @@
+.faux-table .slds-grid .slds-col {
+    flex-grow: 1;
+}
+
+.faux-data {
+    padding: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.faux-data.highlighted {
+    color: #1E32FA;
+    background: #F4F5FF;
+}
+
+.faux-data.highlighted:nth-child(odd) {
+    background: #F4F5FF;
+}
+
+.faux-data img {
+    height: 1em;
+}
+
+.faux-header {
+    padding: 5px;
+    padding-left: 16px;
+    color: #90A0B7;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.faux-table {
+    border: 1px solid #C2CFE0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    background: white;
+    width: 100%;
+    overflow: auto;
+}
+
+.faux-data:nth-child(odd) {
+    background: #FFF9EB;
+}
+
+.faux-column div {
+    border-bottom: 1px solid #E3ECF9;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.link {
+    color: blue;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
