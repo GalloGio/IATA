@@ -1,4 +1,4 @@
-import { LightningElement, api, track, wire } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 
 import email from '@salesforce/label/c.Email';
@@ -10,19 +10,22 @@ import invite from '@salesforce/label/c.EF_Invite';
 import pageNumbering from '@salesforce/label/c.Page_Numbering';
 import emailFormatErr from '@salesforce/label/c.Email_Wrong_Format';
 import reInvite from '@salesforce/label/c.Re_Invite';
+import Id from '@salesforce/user/Id';
 
 //import user id
-import userId from '@salesforce/user/Id';
 import getRoles from '@salesforce/apex/InvitationService.getInvitableRoles'; // Param: Id portalApplicationId - Return: List<String>
 import getInvitationList from '@salesforce/apex/InvitationService.getInvitationList'; // Param: Id portalApplicationId, List<Id> userIdList - Return: List<EncodedInvitation>
 import inviteUsers from '@salesforce/apex/InvitationService.inviteUsers'; // Param: List<EncodedInvitation> encodedInvitationList - Return: void
 import cancelInvitation from '@salesforce/apex/InvitationService.cancelInvitation'; // Param: List<EncodedInvitation> encodedInvitationList - Return: void
+import getUserContactRoleAccountId from '@salesforce/apex/InvitationService.getUserContactRoleAccountId'; // Param: Id loggedInUserId, Id portalApplicationId - Return: Id
 
 const activeLbl = 'Active';
 const cancelledLbl = 'Cancelled';
 
 export default class ServiceInvitation extends LightningElement {
-    @api accountId;
+    loggedInUserId = Id;
+
+    @wire(getUserContactRoleAccountId, {loggedInUserId: '$loggedInUserId', portalApplicationId: '$portalApplicationId'}) invitationAccountId;
     
     label = {
         email,
@@ -34,7 +37,7 @@ export default class ServiceInvitation extends LightningElement {
         pageNumbering,
         emailFormatErr,
         reInvite
-	};
+    };
 
     paramKey = 'serviceId';
     portalApplicationId = this.getUrlParamValue(window.location.href, this.paramKey);
@@ -64,7 +67,7 @@ export default class ServiceInvitation extends LightningElement {
 
             this.sortInvitations();
         }
-	}
+    }
 
     @track invitationInfo = {};
     
@@ -72,6 +75,8 @@ export default class ServiceInvitation extends LightningElement {
     getRolesWired({data, error}){
         if(data && data.length !== 0){
             this.roleOptionList = [];
+            //add default null option
+            this.roleOptionList.push({ label: '', value: '' });
             data.forEach(element => {
                 this.roleOptionList.push({ label: element, value: element });
             });
@@ -139,7 +144,7 @@ export default class ServiceInvitation extends LightningElement {
         let invitationToResend = this.invitationsToDisplay.filter(inv => {
             return inv.id == invitationId;
         });
-        this.sendInvitation(invitationToResend[0].id, invitationToResend[0].email, invitationToResend[0].role);
+        this.sendInvitation(null, invitationToResend[0].email, invitationToResend[0].role);
     }
     
     cancelInvitation(event){
@@ -171,7 +176,8 @@ export default class ServiceInvitation extends LightningElement {
 
     //Private functions
     validateEmail(email){
-        return /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(email);
+        var pattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/gm;
+        return pattern.test(email);
     }
 
     getUrlParamValue(url, key) {
@@ -202,19 +208,18 @@ export default class ServiceInvitation extends LightningElement {
     }
 
     sendInvitation(id, email, role){
-        var invitationList = [];
-        
-        invitationList.push({
-            id: id,
+        const encodedInvitation = {
+            id : id,
             emailAddress: email,
             portalApplicationId: this.portalApplicationId,
             userRole: role,
-            accountId: this.accountId,
+            accountId: this.invitationAccountId.data,
             status: activeLbl
-        });
+        };
+        let invitationList = [encodedInvitation];
+
         inviteUsers({encodedInvitationList: invitationList}).then(data => {
             refreshApex(this.invitationEntireListWired);
         });
-
     }
 }

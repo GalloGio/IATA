@@ -282,28 +282,18 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	@track showMassApprove = false;
 	@track showMassDeny = false;
 
-	/* Invitation service variables - Start */
-    _isServiceAdministrator = false;
-    accountId;
-	/* Invitation service variables - End */
+	accountId;
 
-	/* Invitation service functionality - Start */
-    @wire(isServiceAdministrator, { portalApplicationId : '$portalApplicationId', userIdList : '$userIdList' })
-    isServiceAdministratorWired({data, error}){
-        if(data){
-            var userAdminList = Array.from(data, ([userId, isAdmin]) => ({ userId, isAdmin }));
-            var activeUserAdmin = userAdminList.filter(userAdmin => {
-                return userAdmin.userId === userId;
-            })[0];
-            this._isServiceAdministrator = activeUserAdmin.isAdmin;
-        }
-    }
+	setIsServiceAdmin(){
+		const userIdList = [this.userID];
+		isServiceAdministrator({portalApplicationId: this.serviceId, userIdList: userIdList}).then(result => {
+			this.isServiceAdmin = result[this.userID];
+		});
+	}
 
-    get isServiceAdmin(){
-        return this._isServiceAdministrator;
-    }
-	/* Invitation service functionality - End */
-
+	get isServiceAdmin(){
+		return this.isServiceAdmin;
+	}
 
 	checkMassActionButtons() {
 		if(this.selectedRecords && this.selectedRecords.length > 0) {
@@ -337,6 +327,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		this.pageParams = getParamsFromPage();
 		if (this.pageParams) {
 			this.serviceId = this.pageParams.serviceId;
+
+			this.setIsServiceAdmin();
 
 			if (this.pageParams.openRequestService) {
 				this.showConfirm = true;
@@ -472,7 +464,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 					this.serviceName = this.serviceRecord.recordService.ServiceName__c;
 					this.serviceFullName = this.serviceRecord.recordService.Name;
 					this.isIFG_Service = this.serviceRecord.isIFGPending;
-
 
 					//in E&F service it doesn't matter if the user is admin or not
 					if(this.serviceName.includes('E&F APPS')) {

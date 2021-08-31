@@ -24,8 +24,9 @@ public without sharing class PortalServiceAccessService {
 		Map<Id,Contact> contactMap = ContactSelector.selectByIds(contactIdSet);
 		Map<Id, Account_Role__c> existingAccountRoleMap = AccountRoleSelector.selectAccountRoleWithRelatedAccountRolesByFunctionalRoleSet(functionalRoleSet);
 
+		Map<Id, List<Invitation__c>> contactIdInvitationMap = createContactIdInvitationMap(contactMap, portalServiceAccessList);
 		if(!grantedPortalServiceAccessList.isEmpty())
-			processGrantedPortalServiceAccesses(grantedPortalServiceAccessList, null, functionalRoleSet, existingAccountRoleMap);
+			processGrantedPortalServiceAccesses(grantedPortalServiceAccessList, contactIdInvitationMap, functionalRoleSet, existingAccountRoleMap);
 		if(!deniedPortalServiceAccessList.isEmpty())
 			processDeniedPortalServiceAccesses(deniedPortalServiceAccessList, contactMap, functionalRoleSet, existingAccountRoleMap);
 
@@ -57,11 +58,11 @@ public without sharing class PortalServiceAccessService {
 			} catch(Exception e){
 				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IATAPayService.FUNCTIONALROLE + ', ' + e.getStackTraceString(), e);
 			}
-		} else if (functionalRoleName.equals(IGOMService.FUNCTIONALROLE)) {
+		} else if(functionalRoleName.equals(IGOMService.FUNCTIONALROLE)){
 			try{
-				IGOMService.manageUserOnboarding(contactSet, accessStatus);
+				IGOMService.manageUserOnboarding(portalServiceAccessList);
 			} catch(Exception e){
-				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IGOMService.FUNCTIONALROLE, e);
+				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IGOMService.FUNCTIONALROLE + ', ' + e.getStackTraceString(), e);
 			}
 		} else{
 			try{
@@ -82,6 +83,7 @@ public without sharing class PortalServiceAccessService {
 		public Contact contact;
 		@InvocableVariable(label = 'Portal Application Right' required = false)
 		public Portal_Application_Right__c portalApplicationRight;
+		public Invitation__c invitation;
 		public Account_Role__c accountRole;
 		public Account_Contact_Role__c accountContactRole;
 
@@ -106,10 +108,25 @@ public without sharing class PortalServiceAccessService {
 	}
 
 	private static void processGrantedPortalServiceAccesses(List<PortalServiceAccess> grantedPortalServiceAccessList, Map<Id, List<Invitation__c>> contactIdInvitationMap, Set<String> functionalRoleSet, Map<Id, Account_Role__c> existingAccountRoleMap){
+		Invitations invitations = new Invitations();
 		AccountRoles accountRoles = new AccountRoles();
 		AccountContactRoles accountContactRoles = new AccountContactRoles();
 
+		Set<Invitation__c> invitationsToUpdateSet = new Set<Invitation__c>();
 		for(PortalServiceAccess portalServiceAccess : grantedPortalServiceAccessList){
+			//if invitation functional role == psa functional role && invitation email == pas.contact email)
+			//overwrite contact account id to the account id from invitation (for account role creation)
+			List<Invitation__c> invitationList = contactIdInvitationMap.get(portalserviceaccess.contact.Id);
+			invitationList = invitationList == null ? new List<Invitation__c>() : invitationList;
+			for(Invitation__c invitation : invitationList){
+				if(portalServiceAccess.functionalRoleName.equals(invitation.Functional_Role__c) && portalServiceAccess.contact.Email.equals(invitation.Email__c)){
+					portalServiceAccess.contact.AccountId = invitation.Account__c;
+					invitation.Status__c = invitations.COMPLETED;
+					portalServiceAccess.invitation = invitation;
+					invitationsToUpdateSet.add(invitation);
+					break;
+				}
+			}
 			//update status of existing account roles to active
 			for(Account_Role__c existingAccountRole : existingAccountRoleMap.values()){
 				if(portalServiceAccess.contact.AccountId.equals(existingAccountRole.Account__c) && functionalRoleSet.contains(existingAccountRole.Functional_Role__c)){
@@ -139,6 +156,10 @@ public without sharing class PortalServiceAccessService {
 				portalServiceAccess.accountContactRole = accountContactRoles.create(new Set<Contact>{portalServiceAccess.contact}, portalServiceAccess.functionalRoleName).get(0);
 				portalServiceAccess.accountContactRole.Status__c = accountContactRoles.STATUSACTIVE;
 			}
+			//update role from invitation (if present) on account contact role
+			if(portalServiceAccess.invitation.Role_Name__c != null && portalServiceAccess.invitation.Role_Name__c.equals('Service Administrator')){
+				portalServiceAccess.accountContactRole.Is_Service_Administrator__c = true;
+			}
 
 			//add updated/new account role to domain class if not aleady existing (where account Id and Functional Role are same)
 			boolean matchFound = false;
@@ -158,6 +179,7 @@ public without sharing class PortalServiceAccessService {
 		SavePoint savePoint = Database.setSavePoint();
 		try{
 			upsert accountRoles.records;
+			update new List<Invitation__c>(invitationsToUpdateSet);
 
 			//update account contact role account role id field with ids from upserted account roles
 			for(PortalServiceAccess portalServiceAccess : grantedPortalServiceAccessList){
@@ -175,6 +197,7 @@ public without sharing class PortalServiceAccessService {
 	}
 
 	private static void processDeniedPortalServiceAccesses(List<PortalServiceAccess> deniedPortalServiceAccessList, Map<Id, Contact> contactMap, Set<String> functionalRoleSet, Map<Id, Account_Role__c> existingAccountRoleMap){
+		Invitations invitations = new Invitations();
 		AccountRoles accountRoles = new AccountRoles();
 		AccountContactRoles accountContactRoles = new AccountContactRoles();
 
@@ -190,6 +213,8 @@ public without sharing class PortalServiceAccessService {
 				if(existingAccountContactRole.Functional_Role__c.equals(portalServiceAccess.functionalRoleName) && existingAccountContactRole.Contact__c.equals(portalServiceAccess.contact.Id)){
 					//update the status to inactive
 					existingAccountContactRole.Status__c = accountContactRoles.STATUSINACTIVE;
+					//update the is service administrator to false
+					existingAccountContactRole.Is_Service_Administrator__c = false;
 					//add updated account contact role to domain class
 					accountContactRoles.records.add(existingAccountContactRole);
 					accountRoleWithModifiedContactRoleIdSet.add(existingAccountContactRole.Account_Role__c);
@@ -238,65 +263,35 @@ public without sharing class PortalServiceAccessService {
 		}
 	}
 
-	public class PortalServiceAccessServiceException extends Exception {}
+	private static Map<Id, List<Invitation__c>> createContactIdInvitationMap(Map<Id,Contact> contactMap, List<PortalServiceAccess> portalServiceAccessList){
+		Invitations invitations = new Invitations();
 
-	public void fakemethod () {
-  Integer i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
-  i=0;
+		//create contact id, email map
+		Map<Id, String> contactIdEmailMap = new Map<Id, String>();
+		for(Contact contact : contactMap.values()){
+			contactIdEmailMap.put(contact.Id, contact.Email);
+		}
+		//query active invitations for emails of contacts in portalserviceaccess list
+		Map<Id, Invitation__c> invitationMap;
+		invitationMap = InvitationSelector.selectInvitationsByEmailSetAndStatus(new Set<String>(contactIdEmailMap.values()), invitations.ACTIVE);
+		//create contactId, List<invitation> map (a contact can be invited to many services)
+		Map<Id, List<Invitation__c>> contactIdInvitationMap = new Map<Id, List<Invitation__c>>();
+		for(PortalServiceAccess portalServiceAccess : portalServiceAccessList){
+			for(Invitation__c invitation : invitationMap.values()){
+				for(Contact contact : contactMap.values()){
+					if(invitation.Functional_Role__c.equals(portalServiceAccess.functionalRoleName) && invitation.Email__c.equals(contact.Email)){
+						if(contactIdInvitationMap.get(contact.Id) == null){
+							contactIdInvitationMap.put(contact.Id, new List<Invitation__c>{invitation});
+						} else{
+							contactIdInvitationMap.get(contact.Id).add(invitation);
+						}
+						break;
+					}
+				}
+			}
+		}
+		return contactIdInvitationMap;
 	}
+
+	public class PortalServiceAccessServiceException extends Exception {}
 }

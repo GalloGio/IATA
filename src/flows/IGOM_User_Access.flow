@@ -16,13 +16,13 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The IGOM_User_Access-4 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke IGOM_User_Access-4, such as other processes, check the value for this input: SObjectId.</stringValue>
+                <stringValue>The IGOM_User_Access-7 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke IGOM_User_Access-7, such as other processes, check the value for this input: SObjectId.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>axel.martinez@adesso.es</stringValue>
+                <stringValue>chauhanm@iata.org</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -42,7 +42,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The IGOM_User_Access-4 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke IGOM_User_Access-4, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
+                <stringValue>The IGOM_User_Access-7 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke IGOM_User_Access-7, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
 -An SObject or SObject ID wasn&apos;t specified.
 -A value might have been included, but it was null at runtime. </stringValue>
             </value>
@@ -50,7 +50,7 @@
         <inputParameters>
             <name>emailAddresses</name>
             <value>
-                <stringValue>axel.martinez@adesso.es</stringValue>
+                <stringValue>chauhanm@iata.org</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -61,14 +61,14 @@
                 <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_3_A1</name>
+        <name>myRule_1_A1</name>
         <label>Assign permission set</label>
-        <locationX>300</locationX>
+        <locationX>100</locationX>
         <locationY>200</locationY>
         <actionName>PermissionSetAssignments</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>myRule_3_A2</targetReference>
+            <targetReference>myRule_1_A2</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -204,15 +204,12 @@
                 <stringValue>Portal Service Access</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_3_A2</name>
-        <label>Process Portal Service Access Requests</label>
-        <locationX>300</locationX>
-        <locationY>300</locationY>
+        <name>myRule_1_A3</name>
+        <label>Portal Service Access</label>
+        <locationX>100</locationX>
+        <locationY>400</locationY>
         <actionName>PortalServiceAccessService</actionName>
         <actionType>apex</actionType>
-        <connector>
-            <targetReference>myRule_3_A3</targetReference>
-        </connector>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -247,12 +244,54 @@
             <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
             <name>functionalRoleName</name>
             <value>
-                <stringValue>IGOM</stringValue>
+                <elementReference>SObject.Portal_Application__r.Functional_Role__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>contact</name>
+            <value>
+                <elementReference>SObject.Contact__r</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -307,25 +346,25 @@
             <processMetadataValues>
                 <name>isRequired</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>Contact</stringValue>
+                    <stringValue>Portal Application Right</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>maxOccurs</name>
                 <value>
-                    <numberValue>0.0</numberValue>
+                    <numberValue>1.0</numberValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue>Contact</stringValue>
+                    <stringValue>Portal_Application_Right__c</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -334,9 +373,9 @@
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>contact</name>
+            <name>portalApplicationRight</name>
             <value>
-                <elementReference>SObject.Contact__r</elementReference>
+                <elementReference>SObject</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -347,14 +386,14 @@
                 <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_5_A1</name>
+        <name>myRule_3_A1</name>
         <label>Unassign permission set</label>
-        <locationX>500</locationX>
+        <locationX>300</locationX>
         <locationY>200</locationY>
         <actionName>PermissionSetAssignments</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>myRule_5_A2</targetReference>
+            <targetReference>myRule_3_A2</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -490,15 +529,12 @@
                 <stringValue>Portal Service Access</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_5_A2</name>
-        <label>Process Portal Service Access Requests</label>
-        <locationX>500</locationX>
-        <locationY>300</locationY>
+        <name>myRule_3_A3</name>
+        <label>Portal Service Access</label>
+        <locationX>300</locationX>
+        <locationY>400</locationY>
         <actionName>PortalServiceAccessService</actionName>
         <actionType>apex</actionType>
-        <connector>
-            <targetReference>myRule_5_A3</targetReference>
-        </connector>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -533,12 +569,54 @@
             <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
             <name>functionalRoleName</name>
             <value>
-                <stringValue>IGOM</stringValue>
+                <elementReference>SObject.Portal_Application__r.Functional_Role__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>contact</name>
+            <value>
+                <elementReference>SObject.Contact__r</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -593,25 +671,25 @@
             <processMetadataValues>
                 <name>isRequired</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>Contact</stringValue>
+                    <stringValue>Portal Application Right</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>maxOccurs</name>
                 <value>
-                    <numberValue>0.0</numberValue>
+                    <numberValue>1.0</numberValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue>Contact</stringValue>
+                    <stringValue>Portal_Application_Right__c</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -620,9 +698,9 @@
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>contact</name>
+            <name>portalApplicationRight</name>
             <value>
-                <elementReference>SObject.Contact__r</elementReference>
+                <elementReference>SObject</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -697,13 +775,13 @@
                 <leftValueReference>SObject.Right__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Access Requested</stringValue>
+                    <stringValue>Access Granted</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
-            <label>Access Requested</label>
+            <label>Access Granted</label>
         </rules>
     </decisions>
     <decisions>
@@ -717,64 +795,9 @@
         <label>myDecision2</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision4</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_3</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <processMetadataValues>
-                    <name>inputDataType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>leftHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>operatorDataType</name>
-                    <value>
-                        <stringValue>String</stringValue>
-                    </value>
-                </processMetadataValues>
-                <processMetadataValues>
-                    <name>rightHandSideType</name>
-                    <value>
-                        <stringValue>Picklist</stringValue>
-                    </value>
-                </processMetadataValues>
-                <leftValueReference>SObject.Right__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Access Granted</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>myRule_3_A1</targetReference>
-            </connector>
-            <label>Access Granted</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <processMetadataValues>
-            <name>index</name>
-            <value>
-                <numberValue>2.0</numberValue>
-            </value>
-        </processMetadataValues>
-        <name>myDecision4</name>
-        <label>myDecision4</label>
-        <locationX>50</locationX>
-        <locationY>0</locationY>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>myRule_5</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -808,7 +831,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_5_A1</targetReference>
+                <targetReference>myRule_3_A1</targetReference>
             </connector>
             <label>Access Rejected</label>
         </rules>
@@ -854,7 +877,7 @@
         </rules>
     </decisions>
     <description>Manages the access to the IGOM portal.</description>
-    <interviewLabel>IGOM_User_Access-4_InterviewLabel</interviewLabel>
+    <interviewLabel>IGOM_User_Access-7_InterviewLabel</interviewLabel>
     <label>IGOM User Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -864,257 +887,13 @@
     </processMetadataValues>
     <processType>InvocableProcess</processType>
     <recordCreates>
-        <name>myRule_1_A1</name>
-        <label>Create access request task</label>
-        <locationX>100</locationX>
-        <locationY>200</locationY>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>Picklist</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Currency ISO Code</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Picklist</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>CurrencyIsoCode</field>
-            <value>
-                <stringValue>USD</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Description</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Description</field>
-            <value>
-                <stringValue>A user has requested access to the IGOM portal and his request has to be reviewed.</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Assigned To ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue>Group;User</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideLabel</name>
-                <value>
-                    <stringValue>IGOM_Portal_approvals</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Queue</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>OwnerId</field>
-            <value>
-                <stringValue>00G5E0000082xLrUAI</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>Picklist</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Priority</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Picklist</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Priority</field>
-            <value>
-                <stringValue>Normal</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>Picklist</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Status</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Picklist</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Status</field>
-            <value>
-                <stringValue>Not Started</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Subject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>Subject</field>
-            <value>
-                <stringValue>IGOM Portal access requested</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Related To ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue>ACCA_Service_Request__c;AMS2GDP_Log__c;AMS_Accreditation_Organization__c;AMS_Address__c;AMS_Affiliation__c;AMS_Agency_A_Change_code_History__c;AMS_Agency_Profile__c;AMS_Agency__c;AMS_Certificate_Request__c;AMS_Inspection__c;AMS_OSCAR_Event__c;AMS_OSCAR__c;AMS_Operation__c;AMS_Owner__c;AMS_Person__c;AMS_Settlement_System__c;AMS_eBulletin_Profile__c;ANG_Agency_Risk_Event__c;ANG_RHC_Information__c;APXTConga4__Composer_QuickMerge__c;APXTConga4__Conga_Email_Staging__c;APXTConga4__Conga_Email_Template__c;AWS_S3_Object__c;Account;Account_Contact_Role__c;Address_Role_Business_Context__c;Airline_Input__c;Airline_Suspension__c;Asset;AssetRelationship;Backlog_history__c;BatchError__c;BatchNumber__c;Business_Context__c;CRMfusionDBR101__Duplicate_Warning__c;CSS_Tracking__c;Campaign;Card_Visibility__c;Case;Cases_Open__c;Certification__c;ChannelProgram;ChannelProgramLevel;Charge_Request__c;CommSubscriptionConsent;Comment__c;Complaint_Action__c;Complaint__c;ContactRequest;Contract;ContractLineItem;Country_Profile__c;Course_Assignment__c;Course__c;Currency_Center_Survey__c;Custom_Related_case__c;DSE__DS_DuplicateBean__c;DSE__DS_Duplicates__c;Data_Submission__c;DelegatedAccount;E2CP__Widespread_Issue_Communication__c;E2CP__Widespread_Issue_Report__c;E2CP__Widespread_Issue_Solution__c;E2CP__Widespread_Issue__c;EBC_Campaign_Email_Tracking__c;EBC_Campaign__c;EF_Billing_Agreement__c;EF_Contact_EF_Contract__c;EF_Contact_Relationship__c;EF_Material_Line_Item__c;ENZ__FTPAttachmentAccessLog__c;E_F_Asset__c;E_and_F_Account_Role_Detail__c;E_and_F_Contact_Role_Detail__c;EmailTemplate__c;Entitlement;FDS_KPI_Reporting__c;Financial_Assessment_Result__c;Financial_Institution__c;Financial_Security__c;IATA_Process_Orchestrator_Step_Action__c;IATA_Process_Orchestrator__c;ICCS_Checklist__c;ID_Card_Application__c;Image;Instant_Surveys__c;Integration_Log__c;KPI_Value__c;Lesson_Learned__c;ListEmail;LiveAgentSession;LiveChatTranscript;LocalGovernance_Meeting__c;LocalGovernance__c;Local_Bank_Mandate_Checklist__c;Location;Mange_Fees_Checklist__c;Objective__c;One_Id_User_Applications__c;Operational_Improvements__c;Opportunity;Order;Participant__c;Participation_Application_Requirement__c;Participation_Online_Application__c;PartnerFundAllocation;PartnerFundClaim;PartnerFundRequest;PartnerMarketingBudget;PartyConsent;PortalUserLocaleSetting__c;Portal_Application_Right__c;Product2;Quality__c;Recommendations_Visibility__c;Release_Task__c;Release__c;Requirement_Basic__c;SFDC_Acct_Plan__c;SFDC_Script__c;SFDC_Strategy__c;ServiceContract;ServiceResource;Services_Rendered__c;Solution;Support_Service_Survey__c;Test_Object_for_Admin__c;Test_Plan__c;Test_Scripts__c;Work_Order__c;Zuora__CustomerAccount__c;Zuora__Payment__c;Zuora__SubscriptionProductCharge__c;Zuora__SubscriptionProductFeature__c;Zuora__SubscriptionRatePlanChargeTier__c;Zuora__SubscriptionRatePlan__c;Zuora__Subscription__c;dglc__Live_Chat_Message__c;eTSP_Certification__c;metazoa3__snapshot_asset__c;metazoa3__snapshot_push__c;operational_Calendar__c;unbabelapi__Unbabel_Translation_Request__c</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Reference</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>WhatId</field>
-            <value>
-                <elementReference>SObject.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Task</object>
-    </recordCreates>
-    <recordCreates>
-        <name>myRule_3_A3</name>
+        <name>myRule_1_A2</name>
         <label>Portal Service Access Event</label>
-        <locationX>300</locationX>
-        <locationY>400</locationY>
+        <locationX>100</locationX>
+        <locationY>300</locationY>
+        <connector>
+            <targetReference>myRule_1_A3</targetReference>
+        </connector>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
@@ -1238,10 +1017,13 @@
         <object>PortalServiceAccess__e</object>
     </recordCreates>
     <recordCreates>
-        <name>myRule_5_A3</name>
+        <name>myRule_3_A2</name>
         <label>Portal Service Access Event</label>
-        <locationX>500</locationX>
-        <locationY>400</locationY>
+        <locationX>300</locationX>
+        <locationY>300</locationY>
+        <connector>
+            <targetReference>myRule_3_A3</targetReference>
+        </connector>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
@@ -1385,8 +1167,8 @@
         <queriedFields>Portal_Application__c</queriedFields>
         <queriedFields>Right__c</queriedFields>
         <queriedFields>RecordTypeId</queriedFields>
-        <queriedFields>Id</queriedFields>
         <queriedFields>Contact__c</queriedFields>
+        <queriedFields>Id</queriedFields>
     </recordLookups>
     <startElementReference>sobjectInputCheckDecision</startElementReference>
     <status>Active</status>

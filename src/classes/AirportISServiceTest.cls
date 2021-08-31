@@ -4,11 +4,11 @@ private class AirportISServiceTest {
 	static void makeData(){
 		List<Account> accountList = TestDataFactory_Accounts.createDefaultAccounts(1);
 		insert accountList;
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
+		contactList.get(0).AccountId = accountList.get(0).Id;
+		contactList.get(1).AccountId = accountList.get(0).Id;
 		insert contactList;
-		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		portalApplication.Functional_Role__c = AirportISService.FUNCTIONALROLE;
-		insert portalApplication;
+		insert TestDataFactory_PortalApplications.createDefaultPortalApplication(1);		
 	}
 
 	@IsTest

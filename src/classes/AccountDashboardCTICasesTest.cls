@@ -19,7 +19,9 @@ public with sharing class AccountDashboardCTICasesTest {
 		}
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList[0].id,2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
+		contactList.get(0).AccountId = accountList.get(0).Id;
+		contactList.get(1).AccountId = accountList.get(0).Id;
 		insert contactList;
 
 		Case testCase = ISSP_ObjectFactory.createNewCase();

@@ -4,14 +4,15 @@ private  class ISSP_UtilitiesTest {
 		Account acc = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
-		insert contact;
+		Contact con = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		con.AccountId= acc.Id;
+		insert con;
 
 		Case testCase = ISSP_ObjectFactory.createNewCase();
 		insert testCase;
 		ISSP_Utilities.SendErrorNotificationEMail('test');
-		ISSP_Utilities.getContactTypeById(contact.Id);
-		ISSP_Utilities.sendEmailToAdmins(contact.Id);
+		ISSP_Utilities.getContactTypeById(con.Id);
+		ISSP_Utilities.sendEmailToAdmins(con.Id);
 		ISSP_Utilities.DMLOpt(new set<ID>{testCase.Id});
 		ISSP_Utilities.isCNS();
 	}
@@ -27,7 +28,8 @@ private  class ISSP_UtilitiesTest {
 			acc.CNS_Account__c = true;
 			insert acc;
 
-			con = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+			con = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+			con.AccountId= acc.Id;
 			insert con;
 
 			testCase = ISSP_ObjectFactory.createNewCase();
@@ -67,15 +69,20 @@ private  class ISSP_UtilitiesTest {
 		Account account = TestDataFactory_Accounts.createStandardAccounts(1).get(0);
 		insert account;
 		// test contacts
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(account.id,2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
+		Contact contact1 = contactList.get(0);
+		contact1.AccountId = account.Id;
+		Contact contact2 = contactList.get(1);
+		contact2.AccountId = account.Id;
 		insert contactList;
 		// create portal right as denied to test the change to granted
-		Portal_Application_Right__c par = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(app.Id, contactList[1].Id);
+		// create portal right as denied to test the change to granted
+		Portal_Application_Right__c par = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(app.Id, contact2.Id);
 		par.Right__c = TestDataFactory_PortalApplicationRights.DENIED;
 		insert par;
 
 		Test.StartTest();
-		ISSP_WS_Utilities.grantAccessToSIS(new list<Id>{contactList[0].Id,contactList[1].Id});
+		ISSP_WS_Utilities.grantAccessToSIS(new list<Id>{contact1.Id,contact2.Id});
 		Test.stopTest();
 
 		list<Portal_Application_Right__c> listResult = [

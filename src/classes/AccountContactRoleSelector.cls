@@ -1,6 +1,6 @@
-public class AccountContactRoleSelector{
+public class AccountContactRoleSelector {
 	public static List<Account_Contact_Role__c> selectListByContactId(Set<Id> idSet){
-		return selectQuery('Id, Account__c, Account_Role__c, Contact__c, Status__c', 'Contact__c', idSet).values();
+		return selectQuery('Id, Account__c, Account_Role__c, Contact__c, Status__c, Functional_Role__c, Is_Service_Administrator__c', 'Contact__c', idSet).values();
 	}
 
 	//returns a map of Contact ID, Account_Contact_Role__c for a provided functional role and contact Id set
@@ -47,12 +47,63 @@ public class AccountContactRoleSelector{
 		return accountContactRoleMap;
 	}
 
+	//returns a map of user Id and Account_Contact_Role (Id, Contact__c, and Is_Service_Admin__c) for an input Set<Id> userId
+	public static Map<Id,Account_Contact_Role__c> selectUserIdMapByUserIdSetAndFunctionalRole(Set<Id> userIdSet, String functionalRole){
+		AccountContactRoles accountContactRoles = new AccountContactRoles();
+		List<User> userList = [
+			SELECT Id, ContactId 
+			FROM User 
+			WHERE Id IN :userIdSet
+			AND ContactId
+			IN (
+				SELECT Contact__c 
+				FROM Account_Contact_Role__c
+				WHERE Status__c = :accountContactRoles.STATUSACTIVE AND Functional_Role__c =:functionalRole
+			)
+		];
+
+		List<Account_Contact_Role__c> accountContactRoleList = [
+			SELECT Id, Contact__c, Is_Service_Administrator__c
+			FROM Account_Contact_Role__c 
+			WHERE Status__c = :accountContactRoles.STATUSACTIVE AND Functional_Role__c =:functionalRole AND Contact__c IN (SELECT ContactId FROM User WHERE Id IN :userIdSet)
+		];
+
+		Map<Id, Account_Contact_Role__c> userIdAccountContactRoleMap = new Map<Id, Account_Contact_Role__c>();
+		for(Account_Contact_Role__c accountContactRole : accountContactRoleList){
+			for(User user : userList){
+				if(user.ContactId.equals(accountContactRole.Contact__c)){
+					userIdAccountContactRoleMap.put(user.Id, accountContactRole);
+					break;
+				}
+			}
+		}
+		return userIdAccountContactRoleMap;
+	}
+
+	//returns map of Account Contact Role with related Account Roles using a set of Contact Ids and Functional Role
+	public static Map<Id,List<Account_Contact_Role__c>> selectContactIdAccountRolesByContactIdMap (Set<Id> contactIdSet){
+		AccountContactRoles accountContactRoles = new AccountContactRoles();
+
+		//create return map of contact id and account contact role
+		Map<Id, List<Account_Contact_Role__c>> contactIdAccountContactRoleList = new Map<Id, List<Account_Contact_Role__c>>();
+
+		List<Account_Contact_Role__c> accountContactRoleList = new List<Account_Contact_Role__c>([SELECT Id, Status__c, Contact__c, Functional_Role__c, Account_Role__c, Account_Role__r.Status__c, Account_Role__r.Functional_Role__c, Account_Role__r.Account__c FROM Account_Contact_Role__c WHERE Contact__c IN :contactIdSet]);
+		for(Account_Contact_Role__c accountContactRole : accountContactRoleList){
+			if(contactIdAccountContactRoleList.get(accountContactRole.Contact__c) == null)
+				contactIdAccountContactRoleList.put(accountContactRole.Contact__c, new List<Account_Contact_Role__c>{accountContactRole});
+			else{
+				contactIdAccountContactRoleList.get(accountContactRole.Contact__c).add(accountContactRole);
+			}
+		}
+		return contactIdAccountContactRoleList;
+	}
+
 	public static Map<Id, Account_Contact_Role__c> selectAccountContactRoleMap(Set<Id> contactIdSet){
 		String fields = 'Id, Contact__c, Functional_Role__c, Status__c, Account_Role__c, Account_Role__r.Functional_Role__c, Account_Role__r.Status__c';
 		return selectQuery(fields, 'Contact__c', contactIdSet);
-	}
+	} 
 
-private static Map<Id, Account_Contact_Role__c> selectQuery(String fields, String conditions, Set<Id> conditionInputSet){
+	private static Map<Id, Account_Contact_Role__c> selectQuery(String fields, String conditions, Set<Id> conditionInputSet){
 		String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Account_Contact_Role__c';
 		if(conditions != null && String.isNotEmpty(conditions))
 			query += ' WHERE ' + conditions;

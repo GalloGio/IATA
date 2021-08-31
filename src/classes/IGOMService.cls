@@ -1,25 +1,25 @@
-public with sharing class IGOMService {
-    
-    public static final String FUNCTIONALROLE = 'IGOM';
+public without sharing class IGOMService {
+	
+	public static final String FUNCTIONALROLE = 'IGOM';
 
-	public static void manageUserOnboarding(Set<Contact> contactSet, String accessStatus) {
-		SavePoint savePoint = Database.setSavePoint();
-
+	public static void manageUserOnboarding(List<PortalServiceAccessService.PortalServiceAccess> portalServiceAccessList) {
+		// Call the manageUserOnboarding on PortalServiceAccessService to manage account and contact roles
+		portalServiceAccessList = PortalServiceAccessService.manageUserOnboarding(portalServiceAccessList);
 		Set<Id> contactIds = new Set<Id>();
 		Set<Id> accountIds = new Set<Id>();
-		for (Contact contact : contactSet) {
-			contactIds.add(contact.Id);
-			accountIds.add(contact.AccountId);
+		for (PortalServiceAccessService.PortalServiceAccess portalServiceAccess : portalServiceAccessList) {
+			contactIds.add(portalServiceAccess.accountContactRole.Contact__c);
+			accountIds.add(portalServiceAccess.accountRole.Account__c);
 		}
 
-		// Call the manageUserOnboarding on PortalServiceAccessService
-		PortalServiceAccessService.manageUserOnboarding(contactSet, accessStatus, FUNCTIONALROLE);
+		//create domain class
+		PortalApplicationRights portalApplicationRights = new PortalApplicationRights();
 
 		Map<Id, Account_Role__c> accountRoleIdToAccountRole = new Map<Id, Account_Role__c>(AccountRoleSelector.selectByAccountIdSetAndRole(accountIds, FUNCTIONALROLE));
 		Map<Id, Account_Contact_Role__c> contactIdToContactRole = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(FUNCTIONALROLE, contactIds);
 
-		if (accessStatus.equals(PortalApplicationRights.ACCESSGRANTED)) {
-
+		SavePoint savePoint = Database.setSavePoint();
+		if (portalServiceAccessList.get(0).accessStatus.equals(portalApplicationRights.ACCESSGRANTED)) {
 			// Get the new account roles, to create account roles and grant admin on these
 			Map<Id, Account_Role__c> accountIdToAccountRole = new Map<Id, Account_Role__c>();
 			for (Account_Role__c accountRole : accountRoleIdToAccountRole.values()) {
@@ -29,24 +29,21 @@ public with sharing class IGOMService {
 			// Query all the account role details (created and new ones)
 			Map<Id, IGOM_Account_Role_Detail__c> accountRoleIdToAccountRoleDetail = new Map<Id, IGOM_Account_Role_Detail__c>();
 			Set<Id> newAccountRoleIds = new Set<Id>(accountRoleIdToAccountRole.keySet());
+			//todo move soql query to AccounRoleDetailSelector class
 			for (IGOM_Account_Role_Detail__c accountRoleDetail : [SELECT Id, Account_Role__r.Account__c FROM IGOM_Account_Role_Detail__c WHERE Account_Role__c = :(accountRoleIdToAccountRole.keySet())]) {
 				accountRoleIdToAccountRoleDetail.put(accountRoleDetail.Account_Role__c, accountRoleDetail);
 				newAccountRoleIds.remove(accountRoleDetail.Account_Role__c);
 			}
-
 			// Create the detail records
 			try{
 				// Create the IGOM Account Role Details when needed
 				List<IGOM_Account_Role_Detail__c> accountRoleDetails = new List<IGOM_Account_Role_Detail__c>();
 
 				for (Id accountRoleId : newAccountRoleIds) {
-					final IGOM_Account_Role_Detail__c accountRoleDetail = new IGOM_Account_Role_Detail__c(
-						Account_Role__c = accountRoleId
-					);
+					final IGOM_Account_Role_Detail__c accountRoleDetail = new IGOM_Account_Role_Detail__c(Account_Role__c = accountRoleId);
 					accountRoleDetails.add(accountRoleDetail);
 					accountRoleIdToAccountRoleDetail.put(accountRoleId, accountRoleDetail);
 				}
-				
 				insert accountRoleDetails;
 
 				// Create the IGOM Contact Role Details
@@ -60,15 +57,12 @@ public with sharing class IGOMService {
 						Role__c = newAccountRoleIds.contains(relatedAccountRoleDetail.Account_Role__c) ? IGOMConstants.ROLES.ADMIN : null
 					));
 				}
-
 				insert contactRoleDetails;
-
 			} catch(Exception e) {
 				Database.rollback(savePoint);
-				throw new IGOMServiceException('Error creating detail roles', e);
+				throw new IGOMServiceException('Error creating detail roles ' + e.getStackTraceString(), e);
 			}
-		} else if (accessStatus.equals(PortalApplicationRights.ACCESSDENIED)) {
-
+		} else if (portalServiceAccessList.get(0).accessStatus.equals(portalApplicationRights.ACCESSDENIED)) {
 			try {
 				// Remove all the contact's role details
 				// Remove the account role details if they don't have any contact assigned (the last user(s) left)
@@ -100,13 +94,10 @@ public with sharing class IGOMService {
 
 			} catch(Exception e) {
 				Database.rollback(savePoint);
-				throw new IGOMServiceException('Error removing roles', e);
+				throw new IGOMServiceException('Error removing roles ' + e.getStackTraceString(), e);
 			}
-			
 		}
-
 	}
 
 	public class IGOMServiceException extends Exception {}
-
 }

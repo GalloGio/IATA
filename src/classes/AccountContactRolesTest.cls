@@ -4,9 +4,8 @@ private class AccountContactRolesTest {
 	static void makeData(){
 		Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 		insert account;
-		Account_Role__c accountRole = TestDataFactory_AccountRoles.createBaseAccountRoles(new List<Account>{account}).get(0);
-		insert accountRole;
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(account.Id, 1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = account.Id;
 		insert contact;
 	}
 
@@ -19,10 +18,4 @@ private class AccountContactRolesTest {
 		List<Account_Contact_Role__c> accountContactRoleList = accountContactRoles.create(new Set<Contact>{contact}, functionalRole);
 		System.assertEquals(1, accountContactRoleList.size(), 'Expected 1 Account Role');
 	}
-
-	@IsTest
-	static void fakeMethod(){
-		AccountContactRoles accountContactRoles = new AccountContactRoles();
-		accountContactRoles.fakemethod();
-	}	
 }

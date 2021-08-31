@@ -10,7 +10,8 @@ private class UsersTest {
 		System.runAs(adminUser){
 			Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 			insert account;
-			List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(account.id,1);
+			List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(1);
+			contactList.get(0).AccountId = account.Id;
 			insert contactList;
 			List<User> userList = TestDataFactory_Users.createPortalUsers(contactList);
 			insert userList;

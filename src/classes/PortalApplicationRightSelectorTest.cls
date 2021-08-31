@@ -4,7 +4,8 @@ private class PortalApplicationRightSelectorTest {
 	static void makeData(){
 		Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 		insert account;
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(account.Id, 1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = account.Id;
 		insert contact;
 		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		insert portalApplication;
