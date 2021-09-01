@@ -1,5 +1,5 @@
 import getTranslatedLabels from '@salesforce/apex/MFA_LoginFlowController.getMetadataLabelsByLanguage';
-import { getParamsFromPage } from 'c/navigationUtils'; 
+import { getParamsFromPage } from 'c/navigationUtils';
 
 /**
  * @description Method to retrieve the active language established on params
