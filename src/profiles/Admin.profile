@@ -8039,22 +8039,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MITA_PortalAgreementsCtrl</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MITA_PortalAgreementsCtrl_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MITA_PortalMyAgreementsCtrl</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MITA_PortalTest</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>MITA_TxtCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -70657,14 +70641,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>MITA_PortalAgreements</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>MITA_PortalMyAgreements</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>MITA_Txt</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -75067,6 +75043,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageEmailClientConfig</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageEncryptionKeys</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
