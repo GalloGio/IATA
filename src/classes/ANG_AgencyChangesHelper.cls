@@ -730,7 +730,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(acct.Id)){
 					pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 				}
-				riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects(AMS_Utils.LOCATIONRISKEVENTSFIELD');
+				riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects(AMS_Utils.LOCATIONRISKEVENTSFIELD);
 				if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 					for(ANG_Agency_Risk_Event__c are : riskEventsLst){
 						riskEventsIdsToUpdate.add(are.id);
