@@ -12,14 +12,13 @@ export default class PortalCustomMFAContainer extends LightningElement {
 	labels;
 	qrCode;
 	secret;
-	isLoading = false;
+	isLoading = true;
 	otpCode;
 	showQuestionAndAnser = false;
 	
 	//Init
 	renderedCallback(){
 		this.updateLoginFlowStep();
-		//this.isLoading = false;
 	}
 
 	/**
@@ -29,8 +28,10 @@ export default class PortalCustomMFAContainer extends LightningElement {
 		var container = this;
 		labelUtil.getTranslations().then((result) => {
 			container.labels = result;
-			let loginContainer = this.template.querySelector('c-portal-login-container');
-			loginContainer.handleTranslations(this.translations);
+			if (this.template.querySelector('c-portal-login-container')) {
+				this.template.querySelector('c-portal-login-container').handleTranslations(this.translations);
+			}
+			this.isLoading = false;
 		});
 	}
 
@@ -79,7 +80,9 @@ export default class PortalCustomMFAContainer extends LightningElement {
 	 * @description	Set error on mfa reset component
 	 */
 	@api setValidationError(){
-		this.template.querySelector('c-portal-mfa-reset-2-fa').setCodeHasError();
+		if (this.template.querySelector('c-portal-mfa-reset-2-fa')) {
+			this.template.querySelector('c-portal-mfa-reset-2-fa').setCodeHasError();
+		}
 	}
 
 	/**
@@ -96,7 +99,6 @@ export default class PortalCustomMFAContainer extends LightningElement {
 	 */
 	@api finishLoad(){
 		this.showQuestionAndAnser = false;
-		console.log('Set security question ');
 		this.isLoading = false;
 	}
 
