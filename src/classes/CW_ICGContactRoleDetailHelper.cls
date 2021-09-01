@@ -36,12 +36,12 @@ public without sharing class CW_ICGContactRoleDetailHelper {
 				}
 			}
 
-			String dynamicKey = currentKey+'##'+ard.City_FOR__c+'##'+ard.Name;
+			String dynamicKey = currentKey+'##'+(ard.City_FOR__c != null?ard.City_FOR__c+'##':'')+ard.Name;
 			if (mapUpdated.containsKey(dynamicKey)) {
 				mapUpdated.get(dynamicKey).value += 1;
 				mapUpdated.get(dynamicKey).stationsIds += '#'+ard.Id;	
 			} else {
-				CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.Search_By_Company__c+'#'+ard.City_FOR__c+'#'+ard.Name,ard.Name,1,null,' (' + ard.City_FOR__c +', '+ard.Country_FOR__c + ')',CW_LandingSearchBarController.STATIONSTR,dynamicKey,null,ard.Id);
+				CW_LandingSearchBarController.RowInfo loc = new CW_LandingSearchBarController.RowInfo(ard.Search_By_Company__c+'#'+(ard.City_FOR__c != null?ard.City_FOR__c+'#':'')+ard.Name,ard.Name,1,null,' (' + (ard.City_FOR__c != null?ard.City_FOR__c+', ':'') +ard.Country_FOR__c + ')',CW_LandingSearchBarController.STATIONSTR,dynamicKey,null,ard.Id);
 				mapUpdated.put(dynamicKey, loc);
 			}
 			

@@ -630,9 +630,16 @@ export function getPredictiveData(dataType, apexJsFn) {
 									return b.value - a.value;
 							  })
 							: [];
-						window.localStorage.setItem(cachedDataKey, JSON.stringify(data));
-						window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
-						resolve(data);
+						try {
+							window.localStorage.setItem(cachedDataKey, JSON.stringify(data));
+							window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
+						} catch (error) {
+							// Currently cache is overloaded with data, at least promise should return value if it has one
+							reject(error);
+						}
+						if (data) {
+							resolve(data);
+						}
 					})
 					.catch(errorResponse => {
 						reject(errorResponse);
@@ -641,9 +648,16 @@ export function getPredictiveData(dataType, apexJsFn) {
 				apexJsFn
 					.then(response => {
 						let data = response ? JSON.parse(response) : [];
-						window.localStorage.setItem(cachedDataKey, JSON.stringify(data));
-						window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
-						resolve(data);
+						try {
+							window.localStorage.setItem(cachedDataKey, JSON.stringify(data));
+							window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
+						} catch (error) {
+							// Currently cache is overloaded with data, at least promise should return value if it has one
+							reject(error);
+						}
+						if (data) {
+							resolve(data);
+						}
 					})
 					.catch(errorResponse => {
 						reject(errorResponse);
@@ -656,9 +670,16 @@ export function getPredictiveData(dataType, apexJsFn) {
 									return b.value - a.value;
 							  })
 							: [];
-						window.localStorage.setItem(cachedDataKey, JSON.stringify(data));
-						window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
-						resolve(data);
+						try {
+							window.localStorage.setItem(cachedDataKey, JSON.stringify(data));
+							window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
+						} catch (error) {
+							// Currently cache is overloaded with data, at least promise should return value if it has one
+							reject(error);
+						}
+						if (data) {
+							resolve(data);
+						}
 					})
 					.catch(errorResponse => {
 						reject(errorResponse);
