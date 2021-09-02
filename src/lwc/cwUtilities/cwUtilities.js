@@ -635,7 +635,7 @@ export function getPredictiveData(dataType, apexJsFn) {
 							window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
 						} catch (error) {
 							// Currently cache is overloaded with data, at least promise should return value if it has one
-							reject(error);
+							console.warn(error);
 						}
 						if (data) {
 							resolve(data);
@@ -653,7 +653,7 @@ export function getPredictiveData(dataType, apexJsFn) {
 							window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
 						} catch (error) {
 							// Currently cache is overloaded with data, at least promise should return value if it has one
-							reject(error);
+							console.warn(error);
 						}
 						if (data) {
 							resolve(data);
@@ -675,7 +675,7 @@ export function getPredictiveData(dataType, apexJsFn) {
 							window.localStorage.setItem(cachedDataAtKey, JSON.stringify(Date.now()));
 						} catch (error) {
 							// Currently cache is overloaded with data, at least promise should return value if it has one
-							reject(error);
+							console.warn(error);
 						}
 						if (data) {
 							resolve(data);
