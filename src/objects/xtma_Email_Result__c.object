@@ -477,6 +477,7 @@
         <columns>NAME</columns>
         <columns>Date_Sent__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>From_Address__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
