@@ -28034,6 +28034,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Case_age_natural_hours__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Case_count_last_30_days__c</field>
         <readable>false</readable>
     </fieldPermissions>
