@@ -262,7 +262,7 @@ private class PortalServiceAccessServiceTest {
 		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
 		Account_Role__c accountRole = TestDataFactory_AccountRoles.createAccountRoles(new List<Account>{account}, functionalRole).get(0);
 		accountRole.Status__c = accountRoles.STATUSACTIVE;
-		accountRole.RecordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Account_Role__c', 'Default');
+		accountRole.RecordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account_Role__c', 'Default');
 		insert accountRole;
 
 		Contact contact = ContactSelector.selectByEmails(new Set<String>{TestDataFactory_Contacts.DEFAULTEMAIL + '0'}).get(0);
@@ -315,7 +315,7 @@ private class PortalServiceAccessServiceTest {
 		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
 		Account_Role__c accountRole = TestDataFactory_AccountRoles.createAccountRoles(new List<Account>{account}, functionalRole).get(0);
 		accountRole.Status__c = accountRoles.STATUSACTIVE;
-		accountRole.RecordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Account_Role__c', 'Default');
+		accountRole.RecordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account_Role__c', 'Default');
 		insert accountRole;
 
 		Contact contact = ContactSelector.selectByEmails(new Set<String>{TestDataFactory_Contacts.DEFAULTEMAIL + '0'}).get(0);

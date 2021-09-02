@@ -959,7 +959,6 @@
             <value>
                 <fullName>IGOM</fullName>
                 <default>false</default>
-                <label>IGOM</label>
             </value>
             <values>
                 <fullName>Other</fullName>
