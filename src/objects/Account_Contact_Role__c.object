@@ -956,10 +956,10 @@
                 <fullName>GADM</fullName>
                 <default>false</default>
             </values>
-            <value>
+            <values>
                 <fullName>IGOM</fullName>
                 <default>false</default>
-            </value>
+            </values>
             <values>
                 <fullName>Other</fullName>
                 <default>true</default>
