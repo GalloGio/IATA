@@ -38,8 +38,6 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 			con.User_Portal_Status__c = 'Approved User';
 			insert con;
 
-			Profile p = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)' LIMIT 1];
-
 			newUser = TestDataFactory_Users.createPortalUsers(new List<Contact>{con}).get(0);
 			insert newUser;
 		}

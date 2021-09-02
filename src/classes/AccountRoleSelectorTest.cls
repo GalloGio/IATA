@@ -58,8 +58,8 @@ private class AccountRoleSelectorTest {
 	static void testSelectAccountRoleWithRelatedAccountRolesByAccountRoleIdSet(){
 		Map<Id, Account_Role__c> accountRoleMap = new Map<Id, Account_Role__c>([SELECT Id FROM Account_Role__c]);
 		Map<Id, Account_Role__c> retreivedAccountRoleMap = AccountRoleSelector.selectAccountRoleWithRelatedAccountRolesByAccountRoleIdSet(accountRoleMap.keySet());
-
 		Account_Role__c retreivedAccountRole = retreivedAccountRoleMap.values().get(0);
+		
 		System.assert(retreivedAccountRole != null);
 		System.assert(!retreivedAccountRole.Account_Contacts_Role__r.isEmpty());
 		System.assert(accountRoleMap.keySet().contains(retreivedAccountRole.Account_Contacts_Role__r.get(0).Account_Role__c));
