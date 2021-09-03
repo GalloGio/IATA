@@ -8,6 +8,12 @@ public class ANG_RHCAlertTriggerHandler{
 	private static final String SMAP_EDS_SUBJECT_PREFIX = 'SMAP - EDS';
 
 	private static Map<Id, Id> countries = new Map<Id, Id>();
+	private static final Set<String> PCR_PCA_ACCOUNT_STATUS = new Set<String> {
+		AMS_Utils.ACC_S0_TERMINATED,
+		AMS_Utils.ACC_S5_CASHNOCOMMISSION,
+		AMS_Utils.ACC_S6_CASHWITHCOMMISSION,
+		AMS_Utils.ACC_S7_UNDERREVIEW
+	};
 
 	private class RegionNotificationWrapper {
 		public String region;
@@ -542,6 +548,8 @@ public class ANG_RHCAlertTriggerHandler{
 			if(changeCode.reasonDesc == null && accountsChangeCode.get(acctToAddCC.Id) != null){
 				changeCode.reasonDesc = accountsChangeCode.get(acctToAddCC.Id).Reason_Description__c;
 			}
+			if(PCR_PCA_ACCOUNT_STATUS.contains(acctToAddCC.Status__c))
+				changeCode.publishedOnEBulletin = false;
 
 			changeCode.status  = toUse.Account_status_change__c;
 
@@ -638,7 +646,7 @@ public class ANG_RHCAlertTriggerHandler{
 								(SELECT Id, Email, IsEmailBounced, User_Portal_Status__c, AccountId, Account.Top_Parent__c,
 									 Financial_Assessment_Contact__c
 								 FROM contacts
-								 WHERE Status__c = :AMS_Utils.ACTIVE)
+								 WHERE Status__c = :AMS_Utils.ACTIVE AND User_Portal_Status__c IN (:ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,:ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_USER,:ANG_Risk_Helper.USER_PORTAL_STATUS_PENDING_APPROVAL))
 							FROM Account
 							WHERE ID IN :accIdSet
 								OR Top_Parent__c IN :accIdSet]) {
