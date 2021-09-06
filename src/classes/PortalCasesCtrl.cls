@@ -740,12 +740,15 @@ public with sharing class PortalCasesCtrl {
 		};
 		Case newCase = getCaseById(caseId);
 		boolean isMSO = isMSOcase(newCase);
+		boolean isModelB = isModelBcase(newCase);
 		
 		List<Case> cases = [SELECT Id, RecordType.Id
 							FROM Case
 							WHERE RecordType.Id = :newCase.RecordType.Id
 								AND (RecordType.DeveloperName IN :validRecordtypes)];
-		
+		if(isModelB)
+			return false;
+
 		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13))
 			|| (newCase.Status == 'Pending Closure' && newCase.Portal_Closure_Status__c == 'Started') || isMSO);
 	}
@@ -754,12 +757,16 @@ public with sharing class PortalCasesCtrl {
 	public static Boolean getHideAddNewDocumentsDGR(String caseId) {
 		Case newCase = getCaseById(caseId);
 		return ((newCase.OSCAR__c != null && newCase.OSCAR__r.recordType.DeveloperName == 'CERTIFICATION')
-				&& newCase.recordType.DeveloperName == 'OSCAR_Communication'
+				&& newCase.RecordTypeId == AMS_UTILS.RECTYPE_OSCARCOMM
 				&& newCase.Status == 'Closed');
 	}
 	
 	private Static boolean isMSOcase(Case newCase){
-		return (newCase.RecordType.DeveloperName == 'OSCAR_Communication' && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
+		return (newCase.RecordTypeId == AMS_UTILS.RECTYPE_OSCARCOMM && (newCase.Reason1__c == 'GSA / MSO / Handling Agent' || newCase.Subject.startsWith('MSO code ') ));
+	}
+
+	private Static boolean isModelBcase(Case newCase){
+		return (newCase.RecordTypeId == AMS_UTILS.RECTYPE_OSCARCOMM && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ONBOARDING_IEP_MODEL_B_PLUS || newCase.Reason1__c == AMS_UTILS.CASE_REASON_SCREENING_IEP_MODEL_B ));
 	}
 	
 	private Static Case buildSubject(Case caseAux){
