@@ -2,7 +2,6 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Notify_on_Operational_Improvement_Creation</fullName>
-        <ccEmails>GDCQuality@iata.org</ccEmails>
         <description>Notify on Operational Improvement Creation</description>
         <protected>false</protected>
         <recipients>

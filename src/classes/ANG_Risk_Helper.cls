@@ -75,6 +75,8 @@ public with sharing class ANG_Risk_Helper{
 
 	//Contact - User_Portal_Status__c
 	public static final String USER_PORTAL_STATUS_APPROVED_ADIM = 'Approved Admin';
+	public static final String USER_PORTAL_STATUS_APPROVED_USER = 'Approved User';
+	public static final String USER_PORTAL_STATUS_PENDING_APPROVAL = 'Pending Approval';
 
 	// Case - Origin
 	public static final String CASE_ORIGIN_INTERNAL_CASE = 'Internal case';
