@@ -46,7 +46,7 @@ public with sharing class SidraLiteHelperForSMAP {
 				newCase.Reason_for_Default__c = 'Suspension - Prejudiced Collection of Funds';
 				newCase.SIDRA_Lite_Default_Date__c = Date.Today();
 				newCase.Confirmation_moneys_not_received__c = Date.today();
-				newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+				newCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(cse.account);
 				newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
 			} else {
 				newCase.IRR_Withdrawal_Reason__c = 'Default Prev';

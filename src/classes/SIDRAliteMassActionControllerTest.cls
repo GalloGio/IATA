@@ -20,10 +20,9 @@ public class SIDRAliteMassActionControllerTest {
 			Location_Type__c = 'HO',
 			IATACode__c = '1234567',
 			Type = 'IATA Cargo Agent',
+			Location_Class__c = AMS_Utils.LC_CARGO,
 			Status__c = 'Approved'
 		);
-		//Type = 'IATA Passenger Sales Agent'
-		//Type = 'IATA Cargo Agent'
 		insert account;
 
 		IATA_ISO_Country__c[] associatedCountry = [Select i.Name, i.Id From IATA_ISO_Country__c i where Name = :account.BillingCountry];

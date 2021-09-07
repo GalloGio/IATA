@@ -212,6 +212,7 @@ public with sharing class SidraLiteManager {
 			BSPCountry__c, BusinessHoursId, Reason1__c, SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, AccountID, Financial_Review_Result__c, Assessment_Performed_Date__c, Account.Country_ISO_Code__c,
 			Documentation_Complete__c, Bank_Guarantee_received__c, Has_the_agent_paid_invoice__c, isClosed, Bank_Guarantee_deadline__c, Comments__c,
 			Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Financial_Review_Type__c, CreatedDate, IFAP_Financial_Year__c,
+			Account.Location_Class__c, account.IATA_ISO_Country__r.ISO_Code__c,
 			(Select Id, CaseNumber, SIDRA_lite_Reason__c, SIDRA_Lite_Default_Date__c,SAAM_Deadline_Date__c, New_IFAP_Deadline_date__c, Termination_date__c, Comments__c  from Cases where RecordtypeId = :RECORDTYPE_SIDRA_LITE )
 			from Case
 			where RecordtypeId in (:RECORDTYPE_IFAP,:RECORDTYPE_SMAP,:RECORDTYPE_SAAM,:RECORDTYPE_OSCAR,:RECORDTYPE_INVOICING)
@@ -222,7 +223,7 @@ public with sharing class SidraLiteManager {
 		map<Id,Account> mapAccounts = new map<Id,Account>();
 		if (!listAccountId.isEmpty()) {
 			mapAccounts = new map<Id,Account>(
-			[Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c, ANG_IsNewGenAgency__c, CNS_Agency__c
+			[Select Id, Type, Status__c, Accumulated_Irregularities__c, Category__c, ANG_IsNewGenAgency__c, CNS_Agency__c, Location_Class__c, IATA_ISO_Country__r.ISO_Code__c
 			from Account
 			where id in :listAccountId]);
 		}
@@ -403,7 +404,7 @@ public with sharing class SidraLiteManager {
 			cse.Reason_for_Default__c = 'Suspension - Prejudiced Collection of Funds';
 			cse.SIDRA_Lite_Default_Date__c = Date.Today();
 			cse.Confirmation_moneys_not_received__c = Date.today();
-			cse.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+			cse.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(account);
 			cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
 		} else {
 			cse.IRR_Withdrawal_Reason__c = 'Default Prev';
@@ -476,7 +477,7 @@ public with sharing class SidraLiteManager {
 					cse.IRR_Type__c = 'Double Irregularity';
 					cse.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
 				}
-				if (SidraLiteUtil.isAgent(account)) {
+				if (SidraLiteUtil.isTIDSAgent(account)) {
 					cse.Propose_Default__c = DateTime.now();
 					cse.Termination_Reason__c = 'Non payment of Annual Fee';
 				}
