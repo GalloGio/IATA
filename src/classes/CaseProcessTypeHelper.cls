@@ -292,6 +292,7 @@ public with sharing class CaseProcessTypeHelper {
 	 * allowing field names like 'AMS_OSCAR.Step1__c' or 'OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_type__c'
 	 */
 	private static String getFieldValue(Sobject obj, String fieldname) {
+		if (obj==null) return null;
 		list<String> parts = fieldname.split('[.]');
 		if (parts.size()==1) {
 			return String.ValueOf(obj.get(fieldName));
