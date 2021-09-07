@@ -129,6 +129,17 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
     <fields>
+        <fullName>Assigned_User__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Sales representative following this prospect, independent of the prospect native ownership</description>
+        <externalId>false</externalId>
+        <label>Assigned User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Campaign_Members</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>CampaignId</fullName>
         <type>Lookup</type>
     </fields>
@@ -179,6 +190,17 @@
     </fields>
     <fields>
         <fullName>HasResponded</fullName>
+    </fields>
+    <fields>
+        <fullName>Joined__c</fullName>
+        <description>Represents the date a prospect was added to a campaign.
+This field was created because is not possible to add the createddate standard field in the related list</description>
+        <externalId>false</externalId>
+        <formula>CreatedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Joined</label>
+        <required>false</required>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>Key__c</fullName>
