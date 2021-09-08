@@ -41273,8 +41273,8 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Cases with / without parent cases --></description>
-        <label><!-- Cases with / without parent cases --></label>
+        <description><!-- Cases with / without related cases --></description>
+        <label><!-- Cases with / without related cases --></label>
         <name>Cases_with_without_parent_cases</name>
         <sections>
             <label><!-- Cases --></label>

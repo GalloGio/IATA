@@ -41248,8 +41248,8 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Cases with / without parent cases --></description>
-        <label><!-- Cases with / without parent cases --></label>
+        <description><!-- Cases with / without related cases --></description>
+        <label><!-- Cases with / without related cases --></label>
         <name>Cases_with_without_parent_cases</name>
         <sections>
             <label><!-- Cases --></label>
