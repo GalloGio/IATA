@@ -449,6 +449,10 @@ public without sharing class AMS_Utils {
 	public static final String LC_PASSENGER = 'P';
 	public static final String LC_POSTAL_OPERATOR = 'L';
 	public static final String LC_TIDS = 'T';
+	public static final String LC_CARGO = 'C';
+	public static final String LC_CASS_ASSOCIATE = 'R';
+	public static final String LC_IMPORT_AGENT = 'I';
+	public static final String LC_DOMESTIC_AGENT = 'D';
 
 	//CNS new PROCESS Location Type requested
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'New BR / IP - CNS Endorsement';

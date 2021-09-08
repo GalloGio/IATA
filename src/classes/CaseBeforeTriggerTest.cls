@@ -2675,6 +2675,46 @@ private class CaseBeforeTriggerTest {
 		Test.stopTest();
 	}
 
+	@isTest
+	static void testSidraBankErrorValidation_update_CASS() {
+		// tests the SIDRACaseHelper.validateBankError logic
+		Contact con = setDataForBankError();
+
+		List<Case> cases = new List<Case>();
+		
+		ID SidraPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA');
+		
+		cases.add(new Case(ContactId = con.Id, AccountId = con.AccountId, Subject = 'TestCase Sidra Bank Error', Origin = 'Web',
+			RecordTypeId = SidraPcaseRecordTypeID, Billing_Amount__c = 2000000, Short_Payment_Amount__c = 1010, CurrencyExchangeRateUSD__c = 1,
+			SIDRA_exchange_rate_updated__c = true, BSP_CASS__c = 'CASS', Late_Payment_Date__c = Date.today()));
+		
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone());
+		cases.add(cases.get(0).clone()); // 4 cases with bank error in the last 365 days
+		
+		Test.StartTest();
+
+		try {
+			insert cases;
+		} catch (Exception e) {
+			System.assert(false, 'Unexpected exception with "' + e.getMessage() + '"');
+		}
+
+		cases = [SELECT Id FROM Case];
+		for (Case c : Cases) {
+			c.DEF_Withdrawal_Reason__c = 'Bank Error';
+			c.DEF_Withdrawal_Approval_Rejection_Date__c = System.today();
+		}
+
+		try {
+			update cases; //SIDRACaseHelper.validateBankError validation should not apply for CASS
+		} catch (Exception e) {
+			System.assert(false, 'Not Expected an exception with "' + SIDRACaseHelper.BANK_ERROR_MESSAGE + '"');
+		}
+
+		Test.stopTest();
+	}
+
 	private static Contact setDataForBankError() {
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(Name = 'BSP-SG', RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			Settlement_Model__c = 'Funds Received');

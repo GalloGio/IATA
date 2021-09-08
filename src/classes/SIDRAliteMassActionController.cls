@@ -11,9 +11,9 @@ public with sharing class SIDRAliteMassActionController {
 	public static final RecordType RECORDTYPE_INVOICING = RecordTypeSingleton.getInstance().getRecordType('Case', 'Invoicing_Collection_Cases');
 
 
-	public static final set<String> TYPE_ACCOUNT_PAX =   SidraLiteUtil.TYPE_ACCOUNT_PAX;
-	public static final set<String> TYPE_ACCOUNT_CARGO = SidraLiteUtil.TYPE_ACCOUNT_CARGO;
-	public static final set<String> TYPE_ACCOUNT_AGENT = SidraLiteUtil.TYPE_ACCOUNT_AGENT;
+	public static final set<String> LOCATION_CLASS_BSP = SidraLiteUtil.LOCATION_CLASS_BSP;
+	public static final set<String> LOCATION_CLASS_CASS = SidraLiteUtil.LOCATION_CLASS_CASS;
+	public static final set<String> LOCATION_CLASS_TIDS_AGENT = SidraLiteUtil.LOCATION_CLASS_TIDS_AGENT;
 	public static final set<String> STATUS_FOR_FS = SidraLiteHelperForIFAP.STATUS_FOR_FS;
 	public static final set<String> STATUS_FOR_FA = SidraLiteHelperForIFAP.STATUS_FOR_FA;
 
@@ -362,14 +362,16 @@ public with sharing class SIDRAliteMassActionController {
 
 			// no third non compliance for certificare DGR
 		}
+
 		// Annual Fees
 		if (isEmpty(this.filter.cse.Reason1__c) || SidraLiteHelperForSAAM.VALID_REASONS3.contains(this.filter.cse.Reason1__c)) {
+			list<String> listValidLocationClasses = new list<String>{AMS_Utils.LC_PASSENGER, AMS_Utils.LC_CARGO, AMS_Utils.LC_TIDS, AMS_Utils.LC_CASS_ASSOCIATE};
 			String query1 = getBaseQuery(RECORDTYPE_SAAM.Id);
 			query1 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
 			query1 += ' AND SAAM_Deadline_Date__c < TODAY';
 			query1 += ' AND New_IFAP_deadline_Date__c = null';
 			query1 += ' AND Termination_date__c = null';
-			query1 += ' AND account.type IN (\'IATA Passenger Sales Agent\',\'IATA Cargo Agent\',\'TIDS Agent\',\'CASS Associate\')';
+			query1 += ' AND account.Location_Class__c IN ' + serialize(listValidLocationClasses);
 			query1 += ' AND isClosed = false';
 			if (!isEmpty(this.filter.dateFilter)) {
 				query1 += ' AND SAAM_Deadline_Date__c = ' + this.filter.dateFilter;
@@ -379,7 +381,7 @@ public with sharing class SIDRAliteMassActionController {
 			String query2 = getBaseQuery(RECORDTYPE_SAAM.Id);
 			query2 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
 			query2 += ' AND (';
-			query2 += '     (account.type IN :TYPE_ACCOUNT_PAX';
+			query2 += '     (account.Location_Class__c IN :LOCATION_CLASS_BSP';
 			query2 += '     AND Termination_date__c = null';
 			query2 += '     AND New_IFAP_Deadline_date__c < TODAY';
 			if (!isEmpty(this.filter.dateFilter)) {
@@ -387,7 +389,7 @@ public with sharing class SIDRAliteMassActionController {
 			}
 			query2 += '     )';
 			query2 += '     OR';
-			query2 += '     (account.type IN :TYPE_ACCOUNT_CARGO';
+			query2 += '     (account.Location_Class__c IN :LOCATION_CLASS_CASS';
 			query2 += '     AND Termination_date__c < TODAY';
 			if (!isEmpty(this.filter.dateFilter)) {
 				query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
@@ -399,7 +401,7 @@ public with sharing class SIDRAliteMassActionController {
 
 			String query3 = getBaseQuery(RECORDTYPE_SAAM.Id);
 			query3 += ' AND Reason1__c IN ' + serialize(SidraLiteHelperForSAAM.VALID_REASONS3);
-			query3 += ' AND account.type IN :TYPE_ACCOUNT_PAX';
+			query3 += ' AND account.Location_Class__c IN :LOCATION_CLASS_BSP';
 			query3 += ' AND Termination_date__c < TODAY';
 			query3 += ' AND isClosed = false';
 			if (!isEmpty(this.filter.dateFilter)) {
@@ -506,7 +508,7 @@ public with sharing class SIDRAliteMassActionController {
 
 		String query1 = getBaseQuery(RECORDTYPE_INVOICING.Id);
 		query1 += ' AND SAAM_Deadline_Date__c < TODAY';
-		query1 += ' AND (account.type IN :TYPE_ACCOUNT_PAX OR account.type IN :TYPE_ACCOUNT_CARGO OR account.type IN :TYPE_ACCOUNT_AGENT)';
+		query1 += ' AND (account.Location_Class__c IN :LOCATION_CLASS_BSP OR account.Location_Class__c IN :LOCATION_CLASS_CASS OR account.Location_Class__c IN :LOCATION_CLASS_TIDS_AGENT)';
 		query1 += ' AND Has_the_agent_paid_invoice__c IN ' + serialize(SidraLiteHelperForInvoicing.VALID_AGENT_PAID);
 		if (!isEmpty(this.filter.dateFilter)) {
 			query1 += ' AND SAAM_Deadline_Date__c = ' + this.filter.dateFilter;
@@ -516,14 +518,14 @@ public with sharing class SIDRAliteMassActionController {
 		String query2 = getBaseQuery(RECORDTYPE_INVOICING.Id);
 		query2 += ' AND Termination_date__c = null';
 		query2 += ' AND (';
-		query2 += ' (account.type IN :TYPE_ACCOUNT_PAX';
+		query2 += ' (account.Location_Class__c IN :LOCATION_CLASS_BSP';
 		query2 += ' AND New_IFAP_Deadline_date__c < TODAY';
 		if (!isEmpty(this.filter.dateFilter)) {
 			query2 += ' AND New_IFAP_Deadline_date__c = ' + this.filter.dateFilter;
 		}
 		query2 += ' )';
 		query2 += ' OR';
-		query2 += ' (account.type IN :TYPE_ACCOUNT_CARGO';
+		query2 += ' (account.Location_Class__c IN :LOCATION_CLASS_CASS';
 		query2 += ' AND Termination_date__c < TODAY )';
 		if (!isEmpty(this.filter.dateFilter)) {
 			query2 += ' AND Termination_date__c = ' + this.filter.dateFilter;
@@ -533,7 +535,7 @@ public with sharing class SIDRAliteMassActionController {
 		listCase2 = executeQuery(query2);
 
 		String query3 = getBaseQuery(RECORDTYPE_INVOICING.Id);
-		query3 += ' AND account.type IN :TYPE_ACCOUNT_PAX';
+		query3 += ' AND account.Location_Class__c IN :LOCATION_CLASS_BSP';
 		query3 += ' AND Termination_date__c < TODAY';
 		query3 += ' AND Has_the_agent_paid_invoice__c IN ' + serialize(SidraLiteHelperForInvoicing.VALID_AGENT_PAID);
 		if (!isEmpty(this.filter.dateFilter)) {
@@ -549,7 +551,7 @@ public with sharing class SIDRAliteMassActionController {
 		}
 		for (Case cse: listCase2) {
 			if (!cse.cases.isEmpty()) {
-				if (!(TYPE_ACCOUNT_CARGO.contains(cse.account.type) && cse.Cases[0].Propose_Default__c!=null)) {
+				if (!(LOCATION_CLASS_CASS.contains(cse.account.Location_Class__c) && cse.Cases[0].Propose_Default__c!=null)) {
 					addWrapper(new WrapperCase(cse, cse.Cases[0], SECOND_NON_COMPLIANCE));
 				}
 			}
@@ -624,7 +626,7 @@ public with sharing class SIDRAliteMassActionController {
 				ContactId, IFAP_Agent_Type__c, AccountId, CaseNumber, Origin, Subject, IFAP_Agent_Code__c, Region__c, Account_Billing_Country__c,
 				BSP_CASS__c, Reason_for_Default__c, Confirmation_moneys_not_received__c, DEF_Approval_Rejection__c, Termination_date_manual_entry__c,
 				TER_Approval_Rejection__c, Termination_Reason__c, Propose_Default__c, NOT_Date__c, Comments__c,
-				Account.Id, Account.Type, Account.Status__c
+				Account.Id, Account.Location_Class__c, Account.Status__c
 			FROM Case
 			WHERE RecordtypeId = :RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite')
 			AND ParentId in :listParentId]) {
