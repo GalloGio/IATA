@@ -53,7 +53,7 @@ parentCase.Documentation_Complete__c.format() + ')');
 						if ( parentCase.isClosed ) {
 								throw new SidraLiteException('Non-Compliance action cannot be triggered because the case is closed');
 						}
-						if (!SidraLiteUtil.isPassenger(account) && !SidraLiteUtil.isCargoCASS(account) && !SidraLiteUtil.isAgent(account)) {
+						if (!SidraLiteUtil.isPassenger(account) && !SidraLiteUtil.isCargoCASS(account) && !SidraLiteUtil.isTIDSAgent(account)) {
 								throw new SidraLiteException('You cannot create a SIDRA Lite for Annual Fees Reason for this account Category');
 						}
 
@@ -85,7 +85,7 @@ parentCase.Documentation_Complete__c.format() + ')');
 							newCase.SIDRA_Lite_Default_Date__c = Date.Today();
 							newCase.Reason_for_Default__c = 'DGR Certificate';
 							newCase.NOT_Date__c = Date.today();
-							newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+							newCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(parentCase.account);
 					} else {
 							newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
 							newCase.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(parentCase.account);
@@ -104,7 +104,7 @@ parentCase.Documentation_Complete__c.format() + ')');
 									newCase.IRR_Type__c = 'Double Irregularity';
 									newCase.Total_Irregularities__c = String.ValueOf(parentCase.account.Accumulated_Irregularities__c);
 
-							} else if (SidraLiteUtil.isAgent(parentCase.account)) {
+							} else if (SidraLiteUtil.isTIDSAgent(parentCase.account)) {
 									newCase.Propose_Default__c = DateTime.now();
 									newCase.Termination_Reason__c = 'Non payment of Annual Fee';
 
@@ -112,7 +112,7 @@ parentCase.Documentation_Complete__c.format() + ')');
 									newCase.SIDRA_Lite_Default_Date__c = Date.today();
 									newCase.Reason_for_Default__c = 'Annual Fees';
 									//WMO-522
-									newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+									newCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(parentCase.account);
 							}
 					} else {
 						newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
@@ -202,12 +202,11 @@ parentCase.Documentation_Complete__c.format() + ')');
 										if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
 												childCase.SIDRA_Lite_Default_Date__c = Date.today();
 												childCase.Reason_for_Default__c = 'Annual Fees';
-												childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
 												childCase.Status = 'Re-opened';
 										} else {
 												childCase.IRR_Withdrawal_Reason__c = 'Default Prev';
 										}
-										parentCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+										parentCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(parentCase.account);
 								}
 								// 3th non compliance
 								else {
@@ -228,7 +227,7 @@ parentCase.Documentation_Complete__c.format() + ')');
 								}
 						}
 						// If agent no 2nd non compliance allowed
-						if ( SidraLiteUtil.isAgent(childCase.account)) {
+						if ( SidraLiteUtil.isTIDSAgent(childCase.account)) {
 								throw new SidraLiteException('SIDRA Lite case already existed. Cannot create another SIDRA Lite case');
 						}
 						// IF cargo, only 2nd non-compliance
@@ -267,7 +266,7 @@ parentCase.Documentation_Complete__c.format() + ')');
 								}
 								if (SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) {
 										childCase.NOT_Date__c = Date.today();
-										childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+										childCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(parentCase.account);
 										childCase.Status = 'Re-opened';
 								} else {
 										childCase.IRR_Withdrawal_Reason__c = 'Default Prev';

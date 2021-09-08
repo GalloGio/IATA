@@ -41226,6 +41226,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Cases with / without parent cases --></description>
+        <label><!-- Cases with / without parent cases --></label>
+        <name>Cases_with_without_parent_cases</name>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- Parent case --></label>
+            <name>Parent case</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Certificate requests --></description>
         <label><!-- Certificate requests --></label>
         <name>Certificate_requests</name>
