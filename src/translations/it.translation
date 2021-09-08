@@ -19148,10 +19148,6 @@ Qualora la sospensione di una compagnia aerea dovesse determinare una rettifica 
         <name>ISSP_Active</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Active agreements --></label>
-        <name>ISSP_Active_agreements</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP Add FAP Contact --></label>
         <name>ISSP_Add_FAP_Contact</name>
     </customLabels>
@@ -19190,10 +19186,6 @@ Qualora la sospensione di una compagnia aerea dovesse determinare una rettifica 
     <customLabels>
         <label><!-- ISSP Agreement type --></label>
         <name>ISSP_Agreement_type</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Agreements available --></label>
-        <name>ISSP_Agreements_available</name>
     </customLabels>
     <customLabels>
         <label>Linea aerea</label>
@@ -19298,10 +19290,6 @@ Qualora la sospensione di una compagnia aerea dovesse determinare una rettifica 
     <customLabels>
         <label>Servizi disponibili</label>
         <name>ISSP_Available_services</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Available types --></label>
-        <name>ISSP_Available_types</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_BSPLink --></label>
@@ -20490,10 +20478,6 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_Excess</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Existing Agreements --></label>
-        <name>ISSP_Existing_Agreements</name>
-    </customLabels>
-    <customLabels>
         <label>Collegamenti esterni</label>
         <name>ISSP_External_Links</name>
     </customLabels>
@@ -21238,10 +21222,6 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_InactiveUser_Subscription_Portal</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Inactive agreements --></label>
-        <name>ISSP_Inactive_agreements</name>
-    </customLabels>
-    <customLabels>
         <label>Password non valida.</label>
         <name>ISSP_InvalidPassword</name>
     </customLabels>
@@ -21390,56 +21370,8 @@ La preghiamo di indicarci il paese per il quale richiede assistenza</label>
         <name>ISSP_MIR_Rates_Link</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Mita Add Contact --></label>
-        <name>ISSP_MITA_Add_Contact</name>
-    </customLabels>
-    <customLabels>
         <label><!-- ISSP MITA Agreements Service Name --></label>
         <name>ISSP_MITA_Agreements_Service_Name</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP MITA Edit Contact message --></label>
-        <name>ISSP_MITA_EditContactMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP MITA Edit Contact Success --></label>
-        <name>ISSP_MITA_EditContactSuccess</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP MITA Remove Contact message --></label>
-        <name>ISSP_MITA_RemoveContactMsg</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Active MITA Contacts --></label>
-        <name>ISSP_MITA_SUBTAB_01</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Airline Available Contacts --></label>
-        <name>ISSP_MITA_SUBTAB_02</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search At Least 3 Chars --></label>
-        <name>ISSP_MITA_Search_At_Least3Chars</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Search by email or name --></label>
-        <name>ISSP_MITA_Search_Button</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search Text Above button --></label>
-        <name>ISSP_MITA_Search_Text01</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search Text Below button --></label>
-        <name>ISSP_MITA_Search_Text02</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP Mita Search Check Valid Input --></label>
-        <name>ISSP_MITA_Search_ValidInput</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Airline Contacts --></label>
-        <name>ISSP_MITA_TAB</name>
     </customLabels>
     <customLabels>
         <label>Approvare come amministratore</label>
@@ -23535,10 +23467,6 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>ISSP_Should_be_mandatory</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Show all the agreements --></label>
-        <name>ISSP_Show_all_the_agreements</name>
-    </customLabels>
-    <customLabels>
         <label>Mostrando pagina _PAGE_ di _PAGES_</label>
         <name>ISSP_Showing_page</name>
     </customLabels>
@@ -24032,10 +23960,6 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label><!-- ISSP_View_GFA_Communication --></label>
         <name>ISSP_View_GFA_Communication</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- ISSP View My Company MITA/BIETA Agreements --></label>
-        <name>ISSP_View_My_Company_MITA_BIETA_Agreements</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_View_PWC_Lithuania_DC --></label>
@@ -41320,6 +41244,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Cases --></label>
             <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Cases with / without related cases --></description>
+        <label><!-- Cases with / without related cases --></label>
+        <name>Cases_with_without_parent_cases</name>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- Parent case --></label>
+            <name>Parent case</name>
         </sections>
     </reportTypes>
     <reportTypes>

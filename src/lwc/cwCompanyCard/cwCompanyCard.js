@@ -74,7 +74,7 @@ export default class CwCompanyCard extends LightningElement {
 
 	tooltipText() {
 		if (this.input && this.label) {
-			return getIataTooltip(this.input.IATA_icon, this.input.recordTypeDevName, this.input.location, this.input.locationClass, this.label);
+			return getIataTooltip(this.input.IATA_icon, this.input.recordTypeDevName, this.input.location, this.input.locationClass, this.label, this.input.typeDevName);
 		}
 
 		return "";

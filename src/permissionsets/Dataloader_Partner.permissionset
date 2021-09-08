@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to grant access to the Dataloader Partner connected app, and therefore access to salesforce data loader application.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Dataloader Partner</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiEnabled</name>
+    </userPermissions>
+</PermissionSet>

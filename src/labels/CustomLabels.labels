@@ -31865,14 +31865,6 @@ In case of an airline suspension resulting in an adjusted billing amount, the ag
         <value>Active</value>
     </labels>
     <labels>
-        <fullName>ISSP_Active_agreements</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Active agreements</shortDescription>
-        <value>Active agreements</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Add_FAP_Contact</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -31950,14 +31942,6 @@ In case of an airline suspension resulting in an adjusted billing amount, the ag
         <protected>false</protected>
         <shortDescription>ISSP Agreement type</shortDescription>
         <value>Agreement type</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Agreements_available</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Agreements available</shortDescription>
-        <value>Agreements available</value>
     </labels>
     <labels>
         <fullName>ISSP_Airline</fullName>
@@ -32162,14 +32146,6 @@ In case of an airline suspension resulting in an adjusted billing amount, the ag
         <protected>false</protected>
         <shortDescription>ISSP_Available_services</shortDescription>
         <value>Available Services</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Available_types</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Available types</shortDescription>
-        <value>Available types</value>
     </labels>
     <labels>
         <fullName>ISSP_BSPLink</fullName>
@@ -34484,14 +34460,6 @@ Please add below all your company valid email domains, including different ones 
         <value>Excess</value>
     </labels>
     <labels>
-        <fullName>ISSP_Existing_Agreements</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Existing Agreements</shortDescription>
-        <value>Active Agreements</value>
-    </labels>
-    <labels>
         <fullName>ISSP_External_Links</fullName>
         <categories>ISSP, Homepage</categories>
         <language>en_US</language>
@@ -35951,14 +35919,6 @@ this is the tiess topic help</value>
         <value>IMPORTANT - The following persons have an active product subscription. Their user cannot be deactivated. Please contact IATA if these contacts no longer work for your company.</value>
     </labels>
     <labels>
-        <fullName>ISSP_Inactive_agreements</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Inactive agreements</shortDescription>
-        <value>Inactive agreements</value>
-    </labels>
-    <labels>
         <fullName>ISSP_InvalidPassword</fullName>
         <categories>ISSP_ChangePassword</categories>
         <language>en_US</language>
@@ -36251,108 +36211,12 @@ this is the tiess topic help</value>
         <value>The exchange rate used to convert local currencies to US dollars for the Management Information Report is derived from the Five Day Rates (FDR) product. The FDR service is available for purchase and can be requested using this &lt;a href=&quot;https://www.iataonline.com/Store/Products/Product+Detail.htm?cs_id=7031%2D01&amp;cs_catalog=Publications&quot; target=&quot;_blank&quot;&gt;&lt;font color=&quot;0000EE&quot;&gt;link&lt;/font&gt;&lt;/a&gt;.</value>
     </labels>
     <labels>
-        <fullName>ISSP_MITA_Add_Contact</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Mita Add Contact</shortDescription>
-        <value>Add MITA Contact</value>
-    </labels>
-    <labels>
         <fullName>ISSP_MITA_Agreements_Service_Name</fullName>
         <categories>ISSP, MITA</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP MITA Agreements Service Name</shortDescription>
         <value>MITA Agreements</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_EditContactMsg</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP MITA Edit Contact message</shortDescription>
-        <value>Only MITA Contact type can be changed here, to make changes to other contact information like Name, Email or phone number, please contact your IATA portal administrator.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_EditContactSuccess</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP MITA Edit Contact Success</shortDescription>
-        <value>Contact details changed succesfully</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_RemoveContactMsg</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP MITA Remove Contact message</shortDescription>
-        <value>By clicking on remove, all MITA Contact types will be cleared from this contact and the contact will be removed from the &quot;Active MITA Contact list&quot;. Removing the contact here will not delete the contact from the airline account</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_SUBTAB_01</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Active MITA Contacts</shortDescription>
-        <value>Active MITA Contacts</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_SUBTAB_02</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Airline Available Contacts</shortDescription>
-        <value>Airline Available Contacts</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_Search_At_Least3Chars</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Mita Search At Least 3 Chars</shortDescription>
-        <value>Please input at least 3 character</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_Search_Button</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Search by email or name</shortDescription>
-        <value>Search by email or name</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_Search_Text01</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Mita Search Text Above button</shortDescription>
-        <value>To add a new contact the &quot;Active MITA Contacts&quot; list, please search for an available contact by name or email and edit the MITA contact type.</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_Search_Text02</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Mita Search Text Below button</shortDescription>
-        <value>If the contact you are attempting to add is not available in the airline contact list, please request your admin user to add the contact through IATA Customer Service Portal</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_Search_ValidInput</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Mita Search Check Valid Input</shortDescription>
-        <value>Please input only characters and numbers or a valid email address</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_MITA_TAB</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Airline Contacts</shortDescription>
-        <value>Airline Contacts</value>
     </labels>
     <labels>
         <fullName>ISSP_MakeAdmin</fullName>
@@ -39391,7 +39255,7 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_BankMandateDescription</shortDescription>
         <value>Download this document and upload a signed version:
- &lt;a target=&quot;#&quot; href=&quot;https://iata--c.eu12.content.force.com/servlet/servlet.FileDownload?file=0151r000005g5rF&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
+ &lt;a target=&quot;#&quot; href=&quot;https://www.iata.org/contentassets/3c9d2e2266c74c77be3301f32aa0997e/sis-bank-details-form.pdf&quot;&gt;Download Bank Mandate&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_Billing_Value_Confirmation_Helptext</fullName>
@@ -39698,7 +39562,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISPA_Section5_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/contentassets/3c9d2e2266c74c77be3301f32aa0997e/sis-sign-up-guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISPA_Section5_Subtitle2</fullName>
@@ -39874,7 +39738,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section4_Subtitle1</shortDescription>
-        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/SIS-Sign-Up-Guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
+        <value>Submission of billing data to SIS can be done manually over the IS-Web interface or through file submission (IS-IDEC, IS-XML). For file submission prior testing and certification is required, and can be only done in the SIS Sandbox environment, through iiNET. Please refer to the &lt;a href=&quot;https://www.iata.org/contentassets/3c9d2e2266c74c77be3301f32aa0997e/sis-sign-up-guide.zip&quot; target=&quot;#&quot;&gt;SIS Certification Guide&lt;/a&gt; for detailed steps on how to perform testing and certification.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section4_Subtitle2</fullName>
@@ -39898,7 +39762,7 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_ISUA_Section5_Subtitle1</shortDescription>
-        <value>This section allows the selection of Additional Services to be used, in addition to the provision of the Service under the main agreement. These services are provided at an extra cost, as published in &lt;a href=&quot;https://www.iata.org/services/finance/sis/Documents/Attachment-D-Pricing-Schedule_ISUA.pdf&quot; target=&quot;#&quot;&gt;Attachment D-Pricing Schedule&lt;/a&gt;.</value>
+        <value>This section allows the selection of Additional Services to be used, in addition to the provision of the Service under the main agreement. These services are provided at an extra cost, as published in &lt;a href=&quot;https://www.iata.org/contentassets/9b1d8d19a6244e4e8cb8c7d7ad3f45e5/attachment-d-pricing-schedule_isua.pdf&quot; target=&quot;#&quot;&gt;Attachment D-Pricing Schedule&lt;/a&gt;.</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_ISUA_Section5_Title</fullName>
@@ -40467,14 +40331,6 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <protected>false</protected>
         <shortDescription>ISSP Should be mandatory</shortDescription>
         <value>Should be mandatory</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_Show_all_the_agreements</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP Show all the agreements</shortDescription>
-        <value>Show all the agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_Showing_page</fullName>
@@ -41408,14 +41264,6 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP_View_GFA_Communication</shortDescription>
         <value>GFA Communication queue</value>
-    </labels>
-    <labels>
-        <fullName>ISSP_View_My_Company_MITA_BIETA_Agreements</fullName>
-        <categories>ISSP, MITA</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP View My Company MITA/BIETA Agreements</shortDescription>
-        <value>View My Company MITA/BIETA Agreements</value>
     </labels>
     <labels>
         <fullName>ISSP_View_PWC_Lithuania_DC</fullName>

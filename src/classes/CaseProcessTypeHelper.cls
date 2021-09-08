@@ -4,6 +4,7 @@
  */
 public with sharing class CaseProcessTypeHelper {
 
+	private static final String ALL_REASONS = 'ALL'; // keyword that represents all kind of reasons in the Case_Process_Type__mdt
 	private static final Id CASE_RT_OSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	// Values for the standard field Case.Status marked as a closed
@@ -61,7 +62,8 @@ public with sharing class CaseProcessTypeHelper {
 	private static map<String,List<String>> getRelatedFields() {
 		if (mapRelatedFields==null) {
 			Set<String> setOscarFields = new Set<String>{'Case_Reason__c'};
-			Set<String> setAccountFields = new Set<String>();
+			Set<String> setAccountFields = new Set<String>{'Id'};
+			Set<String> setParentCaseFields = new Set<String>{'Id'};
 			for(Case_Process_Type__mdt process : [SELECT Other_Conditions__c, KPI_Reference_Field__c FROM Case_Process_Type__mdt]) {
 				// possible field used in KPI_Reference_Field__c
 				list<String> parts = process.KPI_Reference_Field__c.split('[.]');
@@ -72,10 +74,12 @@ public with sharing class CaseProcessTypeHelper {
 				String condition = process.Other_Conditions__c;
 				setOscarFields.addAll(extractRelatedFields(condition, 'OSCAR__r'));
 				setAccountFields.addAll(extractRelatedFields(condition, 'Account'));
+				setParentCaseFields.addAll(extractRelatedFields(condition, 'Parent'));
 			}
 			mapRelatedFields = new map<String,List<String>>();
 			mapRelatedFields.put('OSCAR__r', new list<String>(setOscarFields));
 			mapRelatedFields.put('Account', new list<String>(setAccountFields));
+			mapRelatedFields.put('Case', new list<String>(setParentCaseFields));
 		}
 		return mapRelatedFields;
 	}
@@ -109,20 +113,28 @@ public with sharing class CaseProcessTypeHelper {
 	private static Set<String> SET_CASE_KPI_PROCESSED = new Set<String>();
 	public static void processKPI(List<Case> cases, Map<Id,Case> oldMap) {
 		Set<Id> oscarIds = new Set<Id>(); //WMO-564 - ACAMBAS
+		Set<Id> accountIds = new Set<Id>();
+		Set<Id> parentCaseIds = new Set<Id>();
 		List<Case> casesToProcess = new List<Case>();
 
 		for(Case cse : cases) {
 			if (!SET_CASE_KPI_PROCESSED.contains(cse.Id)) {
 				Case oldRecord = oldMap.get(cse.Id);
 				Boolean beingClosed = cse.Status!=oldRecord.Status && CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
-				Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
+				Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null &&
+					(getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null || getMapRTsToReasons().get(cse.RecordTypeId).get(ALL_REASONS) != null);
 				Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
 				Boolean isOscar = cse.RecordTypeId == CASE_RT_OSCAR;
 				if(hasConfig && beingClosed && validSubject &&
 						( (isOscar && cse.OSCAR__c!=null) || !isOscar)) {
 					SET_CASE_KPI_PROCESSED.add(cse.Id);
 					casesToProcess.add(cse);
-					oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
+					if (cse.OSCAR__c!=null) { 
+						oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
+					} else {
+						accountIds.add(cse.AccountId);
+						parentCaseIds.add(cse.ParentId);
+					}
 				}
 			}
 		}
@@ -132,12 +144,24 @@ public with sharing class CaseProcessTypeHelper {
 		}
 
 		Map<Id, AMS_OSCAR__c> mapOscars = getMapOscar(oscarIds);
+		Map<Id, Account> mapAccount = getMapAccount(accountIds);
+		Map<Id, Case> mapParentCase = getMapParentCase(parentCaseIds);
 
 		for(Case cse : casesToProcess) {
 			AMS_OSCAR__c oscar = mapOscars.get(cse.OSCAR__c); //WMO-564 - ACAMBAS
 			if (oscar!=null) {
 				cse.OSCAR__r = oscar;
 				cse.Account = oscar.Account__r;
+			}
+			// add related account object inside case
+			Account account = mapAccount.get(cse.AccountId);
+			if (account!=null) {
+				cse.Account = account;
+			}
+			// add related Parent Case object inside case
+			Case parentCase = mapParentCase.get(cse.ParentId);
+			if (parentCase!=null) {
+				cse.Parent = parentCase;
 			}
 			Case_Process_Type__mdt process = getRightProcess(cse);
 			if (process!=null) {
@@ -155,7 +179,7 @@ public with sharing class CaseProcessTypeHelper {
 		set<String> setOscarFields = new set<String>(getRelatedFields().get('OSCAR__r')); //adding oscar records
 		setOscarFields.add('Id');
 		setOscarFields.add('Account__r.Id');
-		setOscarFields.addAll(getRelatedAccountFields()); // adding account records from the Account__r lookup
+		setOscarFields.addAll(getRelatedFieldNames('Account','Account__r.')); // adding account records from the Account__r lookup
 		List<String> listFields = new List<String>(setOscarFields);
 		String query = 'SELECT ' + String.join(listFields,',') + ' FROM AMS_OSCAR__c';
 		query += ' WHERE Id IN (\'' + String.join(new list<Id>(oscarIds),'\',\'') + '\')';
@@ -164,15 +188,40 @@ public with sharing class CaseProcessTypeHelper {
 	}
 
 	/**
-	 * Returns the list of meaningful fields required from Account but adding the related
-	 * lookup field to be used inside an OSCAR query
+	 * Creates a map of Account records based on the input Ids
+	 * Fields in the SELECT are based on those used in the Custom metadata Case_Process_Type__mdt
 	 */
-	private static list<String> getRelatedAccountFields() {
-		list<String> listAccountFields = new list<String>();
-		for (String fieldname: getRelatedFields().get('Account')) {
-			listAccountFields.add('Account__r.' + fieldname);
+	private static map<Id,Account> getMapAccount(Set<Id> setAccount) {
+		if (setAccount.isEmpty()) return new map<Id,Account>();
+		List<String> listAccountFields = new List<String>(getRelatedFieldNames('Account',''));// adding account records from the Account lookup
+		String query = 'SELECT ' + String.join(listAccountFields,',') + ' FROM Account';
+		query += ' WHERE Id IN (\'' + String.join(new list<Id>(setAccount),'\',\'') + '\')';
+		list<Account> listAccount = Database.query(query);
+		return new map<Id,Account>(listAccount);
+	}
+
+	/**
+	 * Creates a map of Account records based on the input Ids
+	 * Fields in the SELECT are based on those used in the Custom metadata Case_Process_Type__mdt
+	 */
+	private static map<Id,Case> getMapParentCase(Set<Id> setParentCase) {
+		if (setParentCase.isEmpty()) return new map<Id,Case>();
+		List<String> listParentCaseFields = new List<String>(getRelatedFieldNames('Case',''));// adding account records from the Parent Case lookup
+		String query = 'SELECT ' + String.join(listParentCaseFields,',') + ' FROM Case';
+		query += ' WHERE Id IN (\'' + String.join(new list<Id>(setParentCase),'\',\'') + '\')';
+		list<Case> listCase = Database.query(query);
+		return new map<Id,Case>(listCase);
+	}
+
+	/**
+	 * Returns the list of meaningful Object fields required from a specific lookup field name
+	 */
+	private static Set<String> getRelatedFieldNames(String objectName, String lookupName) {
+		Set<String> setFieldNames = new Set<String>();
+		for (String fieldname: getRelatedFields().get(objectName)) {
+			setFieldNames.add(lookupName + fieldname);
 		}
-		return listAccountFields;
+		return setFieldNames;
 	}
 
 	/**
@@ -180,6 +229,9 @@ public with sharing class CaseProcessTypeHelper {
 	 */
 	public static Case_Process_Type__mdt getRightProcess(Case cse) {
 		list<Case_Process_Type__mdt> listProcess = getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c);
+		if (listProcess==null) {
+			listProcess = getMapRTsToReasons().get(cse.RecordTypeId).get(ALL_REASONS);
+		}
 		if (listProcess!=null) {
 			for (Case_Process_Type__mdt process: listProcess) {
 				if (processOtherConditions(cse,process.Other_Conditions__c)) {
@@ -240,6 +292,7 @@ public with sharing class CaseProcessTypeHelper {
 	 * allowing field names like 'AMS_OSCAR.Step1__c' or 'OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_type__c'
 	 */
 	private static String getFieldValue(Sobject obj, String fieldname) {
+		if (obj==null) return null;
 		list<String> parts = fieldname.split('[.]');
 		if (parts.size()==1) {
 			return String.ValueOf(obj.get(fieldName));
@@ -268,7 +321,7 @@ public with sharing class CaseProcessTypeHelper {
 	 * Returns a set of oscar field names which are important to recalculate the Accreditation_Process_Type__c
 	 * These fields are basically avery field used in the Case_Process_Type__mdt record used for the input oscar
 	 */
-	 public static set<String> getRelevantFields(AMS_OSCAR__c oscar) {
+	public static set<String> getRelevantFields(AMS_OSCAR__c oscar) {
 		 // Case_Reason__c is always a relevant field
 		set<String> setFields = new set<String>{'Case_Reason__c'};
 		list<Case_Process_Type__mdt> listProcess = getMapRTsToReasons().get(CASE_RT_OSCAR).get(oscar.Case_Reason__c);
@@ -290,14 +343,13 @@ public with sharing class CaseProcessTypeHelper {
 	private static void calculateKPI(Case cse, AMS_OSCAR__c oscar, Case_Process_Type__mdt process) {
 		//WMO-564 - ACAMBAS: Begin
 		List<String> refFieldList = process.KPI_Reference_Field__c.split('\\.');
-		Integer recordValue;
 
 		if(refFieldList.size() == 2 && refFieldList[0] == 'AMS_Oscar__c') {
-		 	recordValue = Integer.valueOf(oscar.get(refFieldList[1]));
+			Double recordValue = Double.valueOf(oscar.get(refFieldList[1]));
 			cse.KPI_Calculation__c = recordValue == process.KPI_Reference_Value__c ? 1 : 0;
 		}
 		else if(refFieldList.size() == 1) { //Case
-			recordValue = Integer.valueOf(cse.get(process.KPI_Reference_Field__c));
+			Double recordValue = Double.valueOf(cse.get(process.KPI_Reference_Field__c));
 			cse.KPI_Calculation__c = recordValue <= process.KPI_Reference_Value__c ? 1 : 0;
 		}
 		else {

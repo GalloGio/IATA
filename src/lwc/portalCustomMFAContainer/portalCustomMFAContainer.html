@@ -1,5 +1,5 @@
 <template>
-	<c-portal-login-container>
+	<c-portal-login-container if:false={isLoading}>
 		<span slot="pageBody">
 			<div if:true={stepQA}>
 				<c-portal-set-security-question translations={translations}></c-portal-set-security-question>

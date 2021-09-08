@@ -212,7 +212,8 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(!contactList.isEmpty()){
 			config.contact = contactList.get(0);
 			config.selectedCustomerType = getCustomerTypeFromSectorAndCategory(config.contact.Account.Sector__c, config.contact.Account.Category__c);
-			GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(config.selectedCustomerType);
+			GCS_Customer_Type_For_Registration__mdt selectedMetadataCustomerType = getMetadataCustomerType(config.selectedCustomerType);			
+		if(selectedMetadataCustomerType != null){	
 			if(selectedMetadataCustomerType.Type__c == 'Category'){
 				config.category = selectedMetadataCustomerType.DeveloperName;
 				config.sector = selectedMetadataCustomerType.Parent__c;
@@ -228,6 +229,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 				config.category = selectedMetadataCustomerType.Filter_on_Category__c;
 				config.extraChoice = selectedMetadataCustomerType.DeveloperName;
 			}
+		}else{
+			config.sector = config.contact.Account.Sector__c != null ? config.contact.Account.Sector__c : 'Sector';
+			config.category = config.contact.Account.Category__c != null ? config.contact.Account.Category__c : 'Category';
+			config.extraChoice = config.contact.Account.Sector__c != null ? config.contact.Account.Sector__c : 'Sector';
+		}
 			config.isGeneralPublic = config.contact.Account.is_General_Public_Account__c;
 		}
 		config.contactLabelMap = getContactLabels();

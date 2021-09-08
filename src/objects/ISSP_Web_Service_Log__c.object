@@ -724,11 +724,6 @@
             <operation>equals</operation>
             <value>Standards Setting Workspace</value>
         </filters>
-        <filters>
-            <field>CREATEDBY_USER</field>
-            <operation>contains</operation>
-            <value>guerreiro</value>
-        </filters>
         <label>. mgo - kavy today</label>
         <language>en_US</language>
         <sharedTo>

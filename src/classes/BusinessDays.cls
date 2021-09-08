@@ -4,6 +4,7 @@ public class BusinessDays {
 	//private List<Boolean> businessDay = new Boolean[7];
 	// is the bshours id changing making fire the trigger and what is the filed related to the business days.....
 
+	private static final Id RT_CASES_GLOBAL = RecordTypeSingleton.getInstance().getRecordType('Case', 'Cases_Global').Id;
 	private static final Date knownSunday = date.newInstance(2012, 7, 1);
 
 	public static boolean isAllowedRunTwice = False;
@@ -63,6 +64,7 @@ public class BusinessDays {
 			updatedCase.Time_With_Support__c = updatedCase.Time_With_Support__c == null ? 0 : updatedCase.Time_With_Support__c;
 			updatedCase.Time_Escalated__c = updatedCase.Time_Escalated__c == null ? 0 : updatedCase.Time_Escalated__c;
 			updatedCase.Time_Escalated_Externally__c = updatedCase.Time_Escalated_Externally__c == null ? 0 : updatedCase.Time_Escalated_Externally__c;
+			updatedCase.Case_age_natural_hours__c = updatedCase.Case_age_natural_hours__c == null ? 0 : updatedCase.Case_age_natural_hours__c;
 
 		}
 		return  TriggerNewMap;
@@ -70,144 +72,135 @@ public class BusinessDays {
 
 	private static final set<String> REOPENINGREASONS = new set<string> {'new query', 'thank you', 'no action'};
 
-		public static void calculateTheKpis( set<Id> casesIdSoCalculate , map<Id, Case> TriggerNewMap, map<Id, Case> TriggerOldMap) {
 
-
-			// TO DO THIS GOES TO ANOTHER CLASS.....
-			BusinessHours defaultHours = [select Id from BusinessHours where IsDefault = true];
-
-			map<string, string> stopStatusSetPerBucket = new map<string, string>();
-			// to do we should handle somehow the uniquess of the statutess making another field filled
-			// via workflow on te stopstatus object
-
-			//Get the stop statuses
-			for (Stop_Status__c stopStatus : [Select Name, Status_Bucket__c From Stop_Status__c]) {
-				stopStatusSetPerBucket.put(stopStatus.Name, stopStatus.Status_Bucket__c );
-
+	//Get a map with the stop statuses on the stopstatus object
+	private static BusinessHours defaultHours {
+		get {
+			if (defaultHours==null) {
+				defaultHours = [SELECT Id FROM BusinessHours WHERE IsDefault = true];
 			}
-
-
-			//Get the closed statuses (because at the point of this trigger Case.IsClosed won't be set yet)
-			Set<String> closedStatusSet = new Set<String>();
-			for (CaseStatus status : [Select MasterLabel From CaseStatus where IsClosed = true]) {
-				closedStatusSet.add(status.MasterLabel);
-			}
-
-			TriggerNewMap = initializTheOldOnes(TriggerNewMap);
-
-			//For any case where the status is changed, recalc the business hours in the buckets
-			for (ID caseID : casesIdSoCalculate) {
-
-				Case updatedCase = TriggerNewMap.get(caseID);
-				Case oldCase = TriggerOldMap.get(caseID);
-				/*
-				dateTime originalCreated = updatedCase.CreatedDate;
-				dateTime createDatePlusOne = updatedCase.CreatedDate.addHours(1);
-				dateTime result  =   businessHours.nextStartDate( updatedCase.businessHoursId, createDatePlusOne);
-				updatedCase.First_Business_Day__c   = createDatePlusOne.day() == result.day() ?  originalCreated : result;
-				*/
-				//OK, the status has changed or the businessHoursChanged
-
-				dateTime originalCreated = updatedCase.CreatedDate;
-				dateTime createdDatePlusOne = updatedCase.CreatedDate.addHours(1);
-
-				boolean isCreatedDateWithinBH = businessHours.isWithin(updatedCase.businessHoursId, originalCreated);
-				boolean isCreatedDatePlusOneWithinBH = businessHours.isWithin(updatedCase.businessHoursId, createdDatePlusOne);
-
-				//------- Covers the 4 scenarios: ---------
-				//CD - True  && CD+1 - True  - Created date time
-				//CD - False && CD+1 - False - Next start date time
-				//CD - True  && CD+1 - False - Next start date time
-				//CD - False && CD+1 - True  - Next start date time
-				if(isCreatedDateWithinBH && isCreatedDatePlusOneWithinBH){
-					updatedCase.First_Business_Day__c = originalCreated;
-				}
-				else {
-					updatedCase.First_Business_Day__c =  businessHours.nextStartDate( updatedCase.businessHoursId, createdDatePlusOne);
-				}
-
-				if (
-					!oldCase.IsClosed
-					||
-					(oldCase.IsClosed && updatedCase.Reopening_reason__c <>  null && !REOPENINGREASONS.contains(updatedCase.Reopening_reason__c) ) // as required
-
-				) {
-
-					//We only update the buckets for open cases
-					//to do be sure that the business hours default are not assigned to any other country
-
-					//On the off-chance that the business hours on the case are null, use the default ones instead
-					Id hoursToUse = updatedCase.BusinessHoursId != null ? updatedCase.BusinessHoursId : defaultHours.Id;
-
-
-					Id processRTId = RecordTypeSingleton.getInstance().getRecordType('Case', 'CS_Process_IDFS_ISS').Id;
-					Id globalRT = RecordTypeSingleton.getInstance().getRecordType('Case', 'Cases_Global').Id;
-					//hoursToUse  = '01m200000000S6AAAU'; // germany
-
-					Double timeSinceLastStatus = 0;
-					if(!oldCase.IsClosed){
-						//The diff method comes back in milliseconds, so we divide by 3600000 to get hours.
-						timeSinceLastStatus = BusinessHours.diff(hoursToUse, updatedCase.Last_Status_Change__c, System.now()) / 3600000.0;
-						System.debug(timeSinceLastStatus);
-						// millisecond()
-					}
-
-					Double normaleDatetimeSinceLastStatus = (System.now().getTime() -  updatedCase.Last_Status_Change__c.getTime()) / 3600000.0;
-					System.debug('+++TA in BA: '+ normaleDatetimeSinceLastStatus);
-
-					Double unassignedTime = Math.abs(normaleDatetimeSinceLastStatus - timeSinceLastStatus);
-
-					System.debug('+++TA as unassigned: '+ unassignedTime);
-
-					System.debug('+++ST ' + oldCase.Status);
-					System.debug('+++STB '+ stopStatusSetPerBucket.get(oldCase.Status));
-
-					if (oldCase.RecordTypeId != globalRT && oldCase.BusinessHoursId  == defaultHours.Id) {
-						updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
-					}
-					else if (stopStatusSetPerBucket.get(oldCase.Status) == 'With Customer') {
-
-						// to do  hard coded.....beware.....how about a custom setting?
-
-						updatedCase.Time_With_Customer__c += normaleDatetimeSinceLastStatus;
-
-					} else  if (stopStatusSetPerBucket.get(oldCase.Status) == 'Escalated Internally') { // Internally
-
-						// to do  hard coded.....beware.....how about a custom setting?
-
-						updatedCase.Time_Escalated__c += timeSinceLastStatus;
-						if (oldCase.RecordTypeId == globalRT) {
-							updatedCase.Time_Unassigned__c += unassignedTime;
-						}
-
-
-						//Time_Escalated_Externally__c
-					} else  if (stopStatusSetPerBucket.get(oldCase.Status) == 'Escalated Externally') { // eXTERNALLY
-
-						updatedCase.Time_Escalated_Externally__c += timeSinceLastStatus;
-
-						if (oldCase.RecordTypeId == globalRT) {
-							updatedCase.Time_Unassigned__c += unassignedTime;
-						}
-
-
-					} else {
-
-						updatedCase.Time_With_Support__c += timeSinceLastStatus;
-						if (oldCase.RecordTypeId == globalRT) {
-							updatedCase.Time_Unassigned__c += unassignedTime;
-						}
-					}
-				}
-
-				updatedCase.Last_Status_Change__c = System.now();
-
-			}
+			return defaultHours;
 		}
+		set;
+	}
+
+	//Get a map with the stop statuses on the stopstatus object
+	private static map<string, string> stopStatusSetPerBucket {
+		get {
+			if (stopStatusSetPerBucket==null) {
+				stopStatusSetPerBucket = new map<string, string>();
+				for (Stop_Status__c stopStatus : [SELECT Name, Status_Bucket__c FROM Stop_Status__c]) {
+					stopStatusSetPerBucket.put(stopStatus.Name, stopStatus.Status_Bucket__c );
+				}
+			}
+			return stopStatusSetPerBucket;
+		}
+		set;
+	}
+
+	public static void calculateTheKpis( set<Id> casesIdSoCalculate , map<Id, Case> TriggerNewMap, map<Id, Case> TriggerOldMap) {
+
+		TriggerNewMap = initializTheOldOnes(TriggerNewMap);
+
+		//For any case where the status is changed, recalc the business hours in the buckets
+		for (ID caseID : casesIdSoCalculate) {
+
+			Case updatedCase = TriggerNewMap.get(caseID);
+			Case oldCase = TriggerOldMap.get(caseID);
+
+			//OK, the status has changed or the businessHoursChanged
+
+			dateTime originalCreated = updatedCase.CreatedDate;
+			dateTime createdDatePlusOne = updatedCase.CreatedDate.addHours(1);
+
+			boolean isCreatedDateWithinBH = businessHours.isWithin(updatedCase.businessHoursId, originalCreated);
+			boolean isCreatedDatePlusOneWithinBH = businessHours.isWithin(updatedCase.businessHoursId, createdDatePlusOne);
+
+			//------- Covers the 4 scenarios: ---------
+			//CD - True  && CD+1 - True  - Created date time
+			//CD - False && CD+1 - False - Next start date time
+			//CD - True  && CD+1 - False - Next start date time
+			//CD - False && CD+1 - True  - Next start date time
+			if(isCreatedDateWithinBH && isCreatedDatePlusOneWithinBH){
+				updatedCase.First_Business_Day__c = originalCreated;
+			} else {
+				updatedCase.First_Business_Day__c =  businessHours.nextStartDate( updatedCase.businessHoursId, createdDatePlusOne);
+			}
+
+			if (
+				!oldCase.IsClosed
+				||
+				(oldCase.IsClosed && updatedCase.Reopening_reason__c <>  null && !REOPENINGREASONS.contains(updatedCase.Reopening_reason__c) ) // as required
+
+			) {
+
+				//We only update the buckets for open cases
+				//to do be sure that the business hours default are not assigned to any other country
+
+				//On the off-chance that the business hours on the case are null, use the default ones instead
+				Id hoursToUse = updatedCase.BusinessHoursId != null ? updatedCase.BusinessHoursId : defaultHours.Id;
+
+				Double timeSinceLastStatus = 0;
+				if(!oldCase.IsClosed){
+					//The diff method comes back in milliseconds, so we divide by 3600000 to get hours.
+					timeSinceLastStatus = BusinessHours.diff(hoursToUse, updatedCase.Last_Status_Change__c, System.now()) / 3600000.0;
+				}
+
+				Double normaleDatetimeSinceLastStatus = (System.now().getTime() -  updatedCase.Last_Status_Change__c.getTime()) / 3600000.0;
+
+				Double unassignedTime = Math.abs(normaleDatetimeSinceLastStatus - timeSinceLastStatus);
+
+				// Set the time that the case is in an opened status
+				if(!oldCase.IsClosed){
+					updatedCase.Case_age_natural_hours__c += normaleDatetimeSinceLastStatus;
+				}
+
+				if (oldCase.RecordTypeId != RT_CASES_GLOBAL && oldCase.BusinessHoursId  == defaultHours.Id) {
+					updatedCase.Time_Unassigned__c += normaleDatetimeSinceLastStatus;
+				}
+				else if (stopStatusSetPerBucket.get(oldCase.Status) == 'With Customer') {
+
+					// to do  hard coded.....beware.....how about a custom setting?
+
+					updatedCase.Time_With_Customer__c += normaleDatetimeSinceLastStatus;
+
+				} else  if (stopStatusSetPerBucket.get(oldCase.Status) == 'Escalated Internally') { // Internally
+
+					// to do  hard coded.....beware.....how about a custom setting?
+
+					updatedCase.Time_Escalated__c += timeSinceLastStatus;
+					if (oldCase.RecordTypeId == RT_CASES_GLOBAL) {
+						updatedCase.Time_Unassigned__c += unassignedTime;
+					}
+
+
+					//Time_Escalated_Externally__c
+				} else  if (stopStatusSetPerBucket.get(oldCase.Status) == 'Escalated Externally') { // eXTERNALLY
+
+					updatedCase.Time_Escalated_Externally__c += timeSinceLastStatus;
+
+					if (oldCase.RecordTypeId == RT_CASES_GLOBAL) {
+						updatedCase.Time_Unassigned__c += unassignedTime;
+					}
+
+
+				} else {
+
+					updatedCase.Time_With_Support__c += timeSinceLastStatus;
+					if (oldCase.RecordTypeId == RT_CASES_GLOBAL) {
+						updatedCase.Time_Unassigned__c += unassignedTime;
+					}
+				}
+			}
+
+			updatedCase.Last_Status_Change__c = System.now();
+
+		}
+	}
 
 	/**
-add n working days to input date based on given BusinessHours
-**/
+	 * add n working days to input date based on given BusinessHours
+	**/
 	public static DateTime addNBusinessDays(DateTime inputDate, Integer addDays, Id BusinessHoursId) {
 		DateTime currentDate = BusinessHours.nextStartDate(BusinessHoursId, inputDate);
 		for ( integer i = 0; i<addDays; i++) {

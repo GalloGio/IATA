@@ -24,13 +24,13 @@ public with sharing class SidraLiteHelperForInvoicing {
 						if (parentCase.Reason1__c == ANNUAL_FEES &&
 								!SidraLiteUtil.isPassenger(parentCase.account) &&
 								!SidraLiteUtil.isCargoCASS(parentCase.account) &&
-								!SidraLiteUtil.isAgent(parentCase.account)) {
+								!SidraLiteUtil.isTIDSAgent(parentCase.account)) {
 										throw new SidraLiteException('You cannot create a SIDRA Lite for "' + ANNUAL_FEES + '" Reason for this account Category');
 						}
 						if (parentCase.Reason1__c == ADMIN_CHARGES &&
 								!SidraLiteUtil.isPassenger(parentCase.account) &&
-								!SidraLiteUtil.isCASS(parentCase.account) &&
-								!SidraLiteUtil.isAgent(parentCase.account)) {
+								!SidraLiteUtil.isCASSAssociate(parentCase.account) &&
+								!SidraLiteUtil.isTIDSAgent(parentCase.account)) {
 										throw new SidraLiteException('You cannot create a SIDRA Lite for "' + ADMIN_CHARGES + '" Reason for this account Category');
 						}
 						if (parentCase.Has_the_agent_paid_invoice__c == null || !VALID_AGENT_PAID.contains(parentCase.Has_the_agent_paid_invoice__c)) {
@@ -84,7 +84,7 @@ public with sharing class SidraLiteHelperForInvoicing {
 									newCase.IRR_Type__c = 'Double Irregularity';
 									newCase.Total_Irregularities__c = String.ValueOf(account.Accumulated_Irregularities__c);
 
-							} else if (SidraLiteUtil.isAgent(account)) {
+							} else if (SidraLiteUtil.isTIDSAgent(account)) {
 									newCase.Propose_Default__c = DateTime.now();
 									newCase.Termination_Reason__c = 'Non payment of Annual Fee';
 
@@ -92,7 +92,7 @@ public with sharing class SidraLiteHelperForInvoicing {
 									newCase.SIDRA_Lite_Default_Date__c = Date.today();
 									newCase.Reason_for_Default__c = ANNUAL_FEES;
 									//WMO-522
-									newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+									newCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(account);
 							}
 					} else {
 							newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
@@ -111,7 +111,7 @@ public with sharing class SidraLiteHelperForInvoicing {
 							newCase.SIDRA_Lite_Default_Date__c = Date.today();
 							newCase.Reason_for_Default__c = ADMIN_CHARGES;
 							newCase.NOT_Date__c = Date.today();
-							newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+							newCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(account);
 					} else {
 							newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
 							newCase.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(account);
@@ -175,12 +175,11 @@ public with sharing class SidraLiteHelperForInvoicing {
 									if ((SidraLiteUtil.isAccountActive(parentCase.account) || SidraLiteUtil.isLastSidraCase(childCase)) && (!SidraLiteUtil.SidraLiteCaseMustNotBeUpdated(childCase))) {
 											childCase.SIDRA_Lite_Default_Date__c = Date.today();
 											childCase.Reason_for_Default__c = ANNUAL_FEES;
-											childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
 											childCase.Status = 'Re-opened';
 									} else {
 											childCase.IRR_Withdrawal_Reason__c = 'Default Prev';
 									}
-									parentCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+									parentCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(childCase.account);
 							}
 							// 3th non compliance
 							else {
@@ -199,7 +198,7 @@ public with sharing class SidraLiteHelperForInvoicing {
 							}
 					}
 					// If agent no 2nd non compliance allowed
-					if ( SidraLiteUtil.isAgent(childCase.account)) {
+					if ( SidraLiteUtil.isTIDSAgent(childCase.account)) {
 							throw new SidraLiteException('SIDRA Lite case already existed. Cannot create another SIDRA Lite case');
 					}
 					// IF cargo, only 2nd non-compliance
