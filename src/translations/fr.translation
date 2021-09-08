@@ -41284,8 +41284,8 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Cases with / without parent cases --></description>
-        <label><!-- Cases with / without parent cases --></label>
+        <description><!-- Cases with / without related cases --></description>
+        <label><!-- Cases with / without related cases --></label>
         <name>Cases_with_without_parent_cases</name>
         <sections>
             <label><!-- Cases --></label>
