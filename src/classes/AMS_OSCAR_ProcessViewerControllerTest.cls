@@ -152,6 +152,8 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
 
 		Boolean isNotNewGenProcessValue = controller.isNotNewGenProcess;
 
+		oscar.Process__c = AMS_Utils.NEWGESTANDARD;
+		update oscar;
 		result = controller.showRequiredOverlay;
 		stringResult = controller.getEffectiveDate();
 		result = controller.getIsAgencyChange();
@@ -169,8 +171,8 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
 		System.assert(! controller.isNewGE);
 		System.assert(! controller.isValidationCompleted);
 		System.assert(! controller.isNewgenRT);
-		System.assert(! controller.blockFAoptOut);
-		System.assert(controller.hideFAoptOut);
+		System.assert(controller.blockFAoptOut);
+		System.assert(!controller.hideFAoptOut);
 		Test.stopTest();
 	}
 
