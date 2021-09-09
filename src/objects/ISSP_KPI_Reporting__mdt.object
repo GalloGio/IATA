@@ -190,6 +190,7 @@
         <columns>Value_From__c</columns>
         <columns>Value_To__c</columns>
         <columns>Points__c</columns>
+        <columns>Field_API_Name__c</columns>
         <filterScope>Everything</filterScope>
         <label>GCS Perf matrix</label>
         <language>en_US</language>
