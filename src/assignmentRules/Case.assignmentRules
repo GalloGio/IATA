@@ -6842,7 +6842,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>E_F_Invoice_and_accounting</assignedTo>
+            <assignedTo>Cases_E_F_Payment_confirmation</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
