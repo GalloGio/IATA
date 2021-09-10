@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Allow users to use Messaging</description>
+    <description>Allow users to use Messaging.
+It had &quot;Customize application so it could have &quot;configure messaging&quot;. Whatever change of configuration needs to go through the salesforce team.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Messaging User</label>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ConfigureLiveMessage</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>CustomizeApplication</name>
-    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>LMOutboundMessagingUserPerm</name>
