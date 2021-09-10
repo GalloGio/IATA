@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Manage users &amp; DEFERRAL, Change records with inactive owners</description>
+    <description>DEFERRAL, Change records with inactive owners.
+!NOTE! it requires &quot;manage users&quot;, can only be granted to admins</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Defer Group/Sharing calculations</label>
     <license>Salesforce</license>
