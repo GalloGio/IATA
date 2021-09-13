@@ -28,6 +28,16 @@
 				$('[id$=typeOfChangeMultipicklist_unselected]').find('option:contains("Accreditation type")').remove();
 			}
         }
+
+		function disableAndEnableNewParent(aux){
+			if (aux == true) {
+				$('[id$=newParentField]').attr('disabled','disabled');
+				$('[id$=newParentField_lkwgt]').hide();
+			}else{
+				$('[id$=newParentField]').attr('disabled',false);
+				$('[id$=newParentField_lkwgt]').show();
+			}
+        }
 		
 		function closeTab(){
 			sforce.console.getEnclosingTabId(closeSubtab);
@@ -117,7 +127,13 @@
 				timeoutInPlace = true;
 			}
 		}
-	
+		$( document ).ready(function() {
+			chechSplitOfAccountHE();
+		});
+
+		function checkCleanApexMessages(){
+			cleanApexMessages();
+		}
 </script>
 
 
@@ -141,11 +157,12 @@
 			margin-left: -16px;
 			}
 	</style>
-	
 	<apex:sectionHeader title="Newgen ISS Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
-	<apex:form styleClass="pos-relative">
-		<apex:pageBlock mode="edit" rendered="{!editable}">
+	<apex:form id="myForm" styleClass="pos-relative">
+		<apex:actionFunction name="chechSplitOfAccountHE" action="{!chechSplitOfAccountHEForStart}" reRender="myForm"/>
+		<apex:pageBlock mode="edit" rendered="{!editable}" id="firstPageBlock">
 		<apex:actionFunction name="rerenderNotes" rerender="notes" />
+		<apex:actionFunction action="{!cleanApexMessages}" name="cleanApexMessages" rerender="myForm"></apex:actionFunction>
 
 			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
 				<apex:pageBlockSection id="controlField" columns="1">
@@ -155,9 +172,17 @@
 					<apex:outputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!isChinaConversion}" />
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
-					<apex:inputField id="newParentField" value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}">
+					<apex:inputField id="newParentField2" value="{!oscar.New_parent__c}" rendered="{!AND(showTargetAgency, !isPARTCashOrCashless)}">
 						<apex:actionSupport event="onchange" onsubmit="beforeSubmitNewParent(this); return;" status="blockEditing" />
 					</apex:inputField>
+					<apex:inputField id="newParentField" value="{!oscar.New_parent__c}" rendered="{!AND(showTargetAgency, isPARTCashOrCashless)}" onchange="checkCleanApexMessages()">
+						<script type="text/javascript">
+								disableAndEnableNewParent({!newParentSelected});
+						</script>  
+						<apex:actionSupport event="onchange" onsubmit="beforeSubmitNewParent(this); return;" status="blockEditing" />
+					</apex:inputField>
+					<apex:outputText rendered="{!AND(showTargetAgency, isPARTCashOrCashless)}">{!IATACodeToShowOnSplitAccountMultiCountry}</apex:outputText>
+					
 				</apex:pageBlockSection>
 				
 				<apex:actionFunction name="fetchParent" status="blockEditing" rerender="notes, BSPTable, BSPList" action="{!FetchNewParent}"/>
@@ -191,12 +216,12 @@
 					<apex:column >
 						<apex:facet name="header">
 							<apex:inputCheckbox value="{!selectAll}" disabled="{!isChinaConversion}">
-								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table, notes, BSPTable, BSPList, bspErrors"/>
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table, notes, BSPTable, BSPList, bspErrors, myForm"/>
 							</apex:inputCheckbox>
 						</apex:facet>
 						
 						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"  disabled="{!isChinaConversion}">
-							<apex:actionSupport event="onchange" action="{!handleSelection}" reRender="BSPTable, BSPList, bspErrors"/>
+							<apex:actionSupport event="onchange" action="{!handleSelection}" reRender="BSPTable, BSPList, bspErrors, myForm"/>
 						</apex:inputCheckbox>
 					</apex:column>
 
