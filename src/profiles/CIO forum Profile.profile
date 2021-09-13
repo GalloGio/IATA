@@ -276,11 +276,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_AccountManagementController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_AccountNewsFeedExtension</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_AccountNewsFeedExtensionTest</apexClass>
@@ -288,7 +288,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_BMAExtensionTest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_Batch_EmailChatterDigest</apexClass>
@@ -296,7 +296,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_BoardMonitoredActivitiesExtension</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_ChatterBroadcastToolController</apexClass>
@@ -316,7 +316,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_CoreRelationshipExtension</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_CoreRelationshipExtensionTest</apexClass>
@@ -332,7 +332,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_Groups_ParticipationController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_Groups_ParticipationControllerTest</apexClass>
@@ -348,23 +348,23 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_IssuesAndPrioritiesExtension</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_IssuesAndprioritiesExtensionTest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_KeyAccountPlanExtension</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_KeyAccountPlanExtensionTest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_KeyContactsController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_KeyContactsControllerTest</apexClass>
@@ -376,15 +376,15 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_OwnershipController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_OwnershipControllerTest</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_ProductsController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_ReplyToPostFromDigestByTopic</apexClass>
@@ -396,7 +396,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_ServicesExtension</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_SmallTests</apexClass>
@@ -404,7 +404,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMP_WrapperParticipant</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMSAgencyKPIController</apexClass>
@@ -1760,7 +1760,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_GenericHistoryViewerController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_HierarchyTriggerTest</apexClass>
@@ -2292,27 +2292,27 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AccountGroupsCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AccountHeaderCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AccountIdentificationCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AccountOwnershipCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AccountPlanCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AccountProfileCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AgencyManagementTest</apexClass>
@@ -2324,23 +2324,23 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_CoreRelationshipCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_HeadOfficesCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_KeyContactsCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_PerformanceCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_ProductsServicesCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AccRoleRelationshipTriggerHandler</apexClass>
@@ -2448,7 +2448,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AccountHeaderController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AccountHeaderControllerTest</apexClass>
@@ -2748,11 +2748,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AmazonCredentials</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AmazonFile</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AmazonFileTest</apexClass>
@@ -2820,7 +2820,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ApexMessageHandling</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ArchiveAttachmentListController</apexClass>
@@ -2860,7 +2860,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AttachmentListCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AttachmentListCtrlTest</apexClass>
@@ -3012,7 +3012,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Base_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>BatchCreateCasesFromPWC</apexClass>
@@ -3204,7 +3204,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CSP_Utils</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CSP_UtilsTest</apexClass>
@@ -3744,7 +3744,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ChooseCommunityCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ChooseCommunityCtrlTest</apexClass>
@@ -3916,7 +3916,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Contact_Roles_Helper</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Contact_Roles_Helper_TEST</apexClass>
@@ -4128,7 +4128,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DAL_WithoutSharing</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DAL_WithoutSharingTest</apexClass>
@@ -4172,7 +4172,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Data_Submission_List_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Data_Submission_List_CTRL_TEST</apexClass>
@@ -4208,11 +4208,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>DescribeDataCategoryGroupStructures</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DetailPageMessages</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>DetailPageMessagesTest</apexClass>
@@ -4572,7 +4572,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>File_Upload_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>File_Upload_CTRL_TEST</apexClass>
@@ -4580,7 +4580,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>File_Upload_Lookup_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>File_Upload_Lookup_CTRL_TEST</apexClass>
@@ -4728,7 +4728,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_ExternalUserContactDetail_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_ExternalUserContactDetail_CTRL_TEST</apexClass>
@@ -4736,7 +4736,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_ExternalUserContactList_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_ExternalUserContactList_CTRL_TEST</apexClass>
@@ -4752,7 +4752,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_HomePageContainer_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_InternalUsersHandler</apexClass>
@@ -4764,7 +4764,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_RelatedFilesCategorizedLists_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_RelatedFilesCategorizedLists_TEST</apexClass>
@@ -4772,7 +4772,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_TabsContainerController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GADM_TabsContainerController_TEST</apexClass>
@@ -4780,7 +4780,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GADMwrapper_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GADMwrapper_CTRL_TEST</apexClass>
@@ -4788,15 +4788,15 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GCS_AccountCreation</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GCS_CustomerType</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GCS_RegistrationController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GCS_RegistrationControllerTest</apexClass>
@@ -4812,7 +4812,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_AccessControl_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_AccessControl_CTRL_TEST</apexClass>
@@ -4828,7 +4828,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_Helper</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_Helper_TEST</apexClass>
@@ -4836,7 +4836,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_Landing_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_Landing_CTRL_TEST</apexClass>
@@ -4844,7 +4844,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_Logout_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_Logout_CTRL_Test</apexClass>
@@ -4852,7 +4852,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_RequestList_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_RequestList_CTRL_TEST</apexClass>
@@ -4860,7 +4860,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_SubscriptionsAndInterests_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_SubscriptionsAndInterests_CTRL_TEST</apexClass>
@@ -4868,7 +4868,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_WebToCase_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDPR_WebToCase_CTRL_TEST</apexClass>
@@ -4920,7 +4920,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GDRP_UserInfo_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GDRP_UserInfo_CTRL_Test</apexClass>
@@ -5064,7 +5064,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IATA_ServiceList_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>IATA_ServiceList_CTRL_TEST</apexClass>
@@ -6332,7 +6332,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_AMC_ApiCallLightningComponent</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_AMC_Application_And_Changes</apexClass>
@@ -6436,7 +6436,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_AMC_FlowDAO</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_AMC_FlowDAO_Test</apexClass>
@@ -6452,7 +6452,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_AMC_Integration</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_AMC_Integration_Test</apexClass>
@@ -7460,7 +7460,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_PortalUserStatusChange</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_PortalUserStatusChangeTest</apexClass>
@@ -7732,7 +7732,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IdentityFirstLogin</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>IdentityFirstLoginTest</apexClass>
@@ -7824,11 +7824,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IntegrationLogUtils</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Invite_User_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Invite_User_CTRL_TEST</apexClass>
@@ -7840,7 +7840,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IsraelDisputesCreateNewCaseCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>IsraelDisputesCreateNewCaseTest</apexClass>
@@ -7916,7 +7916,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LightningConnectedAppHelper</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>LightningConnectedAppHelper_Test</apexClass>
@@ -7924,7 +7924,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LightningRegistrationProcess</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>LightningRegistrationProcess_Test</apexClass>
@@ -8000,7 +8000,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>LookupSObjectController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>MFA_LoginFlowController</apexClass>
@@ -8236,7 +8236,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>NotificationCenterController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>NotificationCenterControllerTest</apexClass>
@@ -8272,7 +8272,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdForgotPasswordController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdForgotPasswordControllerTest</apexClass>
@@ -8288,11 +8288,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdLanguageHandlerController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdLightningLoginFormController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdLightningLoginFormControllerTest</apexClass>
@@ -8300,7 +8300,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdProfileCompanySettings</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdProfileCompanySettingsTest</apexClass>
@@ -8324,7 +8324,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdRequestNotificationList</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdRequestNotificationListTest</apexClass>
@@ -8332,7 +8332,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdTermsAndConditions</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdTermsAndConditionsTest</apexClass>
@@ -8340,7 +8340,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdUtils</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneIdUtilsTest</apexClass>
@@ -8356,7 +8356,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_AccountSearch</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_AccountSearchTest</apexClass>
@@ -8364,7 +8364,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_AddressDoctor</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_AddressDoctorMockImpl</apexClass>
@@ -8376,7 +8376,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_Fred_AccountSelection_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_Fred_AccountSelection_CTRL_TEST</apexClass>
@@ -8396,7 +8396,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_NDCMatchmakerController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_NDCMatchmakerController_Test</apexClass>
@@ -8404,7 +8404,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_NDCProductsAndServicesController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_NDCProductsController_Test</apexClass>
@@ -8412,7 +8412,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_NDCRelationsController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_NDCRelationsController_Test</apexClass>
@@ -8432,7 +8432,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_RegistrationProcessController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_RegistrationProcessControllerTest</apexClass>
@@ -8440,7 +8440,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_Troubleshooting_Controller</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>OneId_Troubleshooting_Controller_Test</apexClass>
@@ -8592,7 +8592,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Pardot_API</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Pardot_API_RequestMock_Test</apexClass>
@@ -8688,7 +8688,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalBreadcrumbCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalBreadcrumbCtrlTest</apexClass>
@@ -8696,7 +8696,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalCalendarCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalCalendarCtrlTest</apexClass>
@@ -8712,7 +8712,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalCasesCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalCasesCtrlTest</apexClass>
@@ -8720,7 +8720,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalCreatePasswordController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalCreatePasswordControllerTest</apexClass>
@@ -8728,7 +8728,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalDocumentsController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalDocumentsCtrlTest</apexClass>
@@ -8736,7 +8736,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalFAQsCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalFAQsCtrlTest</apexClass>
@@ -8752,7 +8752,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalForgotPasswordController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalForgotPasswordControllerTest</apexClass>
@@ -8760,11 +8760,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalGlobalSearchCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalHeaderCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalHeaderCtrlTest</apexClass>
@@ -8772,7 +8772,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalHomeCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalHomeCtrlTest</apexClass>
@@ -8780,7 +8780,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalIftEmployeeRecordsManagement</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalIftEmployeeRecordsManagementTest</apexClass>
@@ -8788,7 +8788,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalIftpStationsManagement</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalIftpStationsManagementTest</apexClass>
@@ -8796,7 +8796,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalIftpUtils</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalIftpUtilsTest</apexClass>
@@ -8812,7 +8812,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalLoginCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalLoginCtrlTest</apexClass>
@@ -8820,7 +8820,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalLookupSearchResult</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalLookupSearchResultTest</apexClass>
@@ -8828,7 +8828,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalMyProfileCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalMyProfileCtrlTest</apexClass>
@@ -8836,7 +8836,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalNewsController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalNewsCtrlTest</apexClass>
@@ -8844,7 +8844,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalPasswordHandler</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalPasswordHandlerTest</apexClass>
@@ -8852,7 +8852,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalProfileCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalProfileCtrlTest</apexClass>
@@ -8860,7 +8860,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRecommendationCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRecommendationCtrlTest</apexClass>
@@ -8868,7 +8868,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRegistrationFirstLevelCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRegistrationFirstLevelCtrlTest</apexClass>
@@ -8876,7 +8876,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRegistrationSecondLevelCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRegistrationSecondLevelCtrlTest</apexClass>
@@ -8892,7 +8892,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRegistrationUtils</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalRegistrationUtilsTest</apexClass>
@@ -8900,7 +8900,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalResetPasswordController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalResetPasswordControllerTest</apexClass>
@@ -8908,7 +8908,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalSearchFilterWrapper</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalSearchFilterWrapperTest</apexClass>
@@ -8952,7 +8952,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalServicesCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalServicesCtrlTest</apexClass>
@@ -8968,7 +8968,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalSupportReachUsCreateNewCaseCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalSupportReachUsCreateNewCaseTest</apexClass>
@@ -8976,7 +8976,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalSupportReachUsCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PortalWrapperClasses</apexClass>
@@ -9004,7 +9004,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PowerBI_Embedded_Container_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PowerBI_Embedded_Container_CTRL_TEST</apexClass>
@@ -9012,7 +9012,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PowerBI_Embedded_Dashboard_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PowerBI_Embedded_Dashboard_CTRL_TEST</apexClass>
@@ -9020,11 +9020,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PowerBI_Embedded_Dashboard_List_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PowerBiCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PowerBiCtrlTest</apexClass>
@@ -9300,7 +9300,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RecordSharingController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>RecordSharingControllerTest</apexClass>
@@ -9328,7 +9328,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RegistrationComunicationsController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>RegistrationComunicationsControllerTest</apexClass>
@@ -9844,7 +9844,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>SelectOptionWrapper</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>SelectTrackedEmailAttachmentsController</apexClass>
@@ -9896,7 +9896,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Service_Notification_List_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Service_Notification_List_CTRL_TEST</apexClass>
@@ -9904,7 +9904,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Service_Usage_Tracker_CTRL</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Service_Usage_Tracker_CTRL_TEST</apexClass>
@@ -10304,7 +10304,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TrackingValueStatusController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TrackingValueStatusControllerTest</apexClass>
@@ -10340,7 +10340,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TreasuryDashboardCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>TreasuryDashboardCtrlTest</apexClass>
@@ -10432,7 +10432,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>UserControllerTest</apexClass>
@@ -10448,7 +10448,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserProvisioningRequestController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>UserProvisioningRequestHandler</apexClass>
@@ -10628,7 +10628,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>WebserviceTableController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>WebserviceTableController_test</apexClass>
@@ -10648,7 +10648,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>WrapperAttach</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>WrapperAttachTest</apexClass>
@@ -11008,7 +11008,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>csp_redirectorController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>csp_redirectorControllerTest</apexClass>
@@ -11112,7 +11112,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>portalIftpEmployeeCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>portalIftpEmployeeCtrlTest</apexClass>
@@ -11120,7 +11120,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>portalIftpHistoryManagement</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>portalIftpHistoryManagementTest</apexClass>
@@ -11132,7 +11132,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>portalIftpTrainingRecords</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>portalIftpTrainingRecordsTest</apexClass>
@@ -11140,7 +11140,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>portalProfileCustomBoxCtrl</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>portalProfileCustomBoxCtrlTest</apexClass>
@@ -11148,7 +11148,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>portal_OscarProgressBar</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>portal_OscarProgressBar_Test</apexClass>
@@ -11172,7 +11172,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>sendToRecicleBinCaseController</apexClass>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>sendToRecicleBinCaseControllerTest</apexClass>
@@ -27244,7 +27244,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>CampaignMember.Assigned_User__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>CampaignMember.Comments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>CampaignMember.Joined__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

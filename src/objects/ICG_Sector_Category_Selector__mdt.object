@@ -34,6 +34,18 @@ If the values is &apos;*&apos;, it applies to all categories.</description>
         <unique>false</unique>
     </fields>
     <label>OS Sector Category Selector</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>MasterLabel</columns>
+        <columns>ONE_Source_Account_Role_Detail_Type__c</columns>
+        <columns>DeveloperName</columns>
+        <columns>NamespacePrefix</columns>
+        <columns>Category__c</columns>
+        <columns>Sector__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>OS Sector Category Selector</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>

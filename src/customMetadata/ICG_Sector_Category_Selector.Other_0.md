@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Category__c</field>
-        <value xsi:type="xsd:string">Pharmaceutical Industry,Manufacturing Industry</value>
+        <value xsi:type="xsd:string">Pharmaceutical Industry,Manufacturing Industry,Retail Industry</value>
     </values>
     <values>
         <field>ONE_Source_Account_Role_Detail_Type__c</field>

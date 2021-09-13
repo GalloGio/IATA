@@ -152,7 +152,8 @@ private class ANG_EarlyDetectionSystemTest {
 			AccountId = agentSG.Id,
 			Status__c = 'Active',
 			Email = 'agent.singapore@test.com',
-			Financial_Assessment_Contact__c = true
+			Financial_Assessment_Contact__c = true,
+			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM
 		);
 
 		Contact contPT = new Contact(

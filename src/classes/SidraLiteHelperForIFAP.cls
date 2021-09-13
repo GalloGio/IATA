@@ -228,7 +228,7 @@ public with sharing class SidraLiteHelperForIFAP {
 				}
 				//update child
 				childCase.SIDRA_Lite_Default_Date__c = Date.today();
-				childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+				childCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(account);
 				childCase.Status = 'Re-opened';
 			}
 			// Third non-compliance, allowed
@@ -273,7 +273,7 @@ public with sharing class SidraLiteHelperForIFAP {
 					childCase.SIDRA_Lite_Default_Date__c = Date.today();
 				}
 				//update child
-				childCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+				childCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(account);
 				childCase.Reason_for_Default__c  = 'Suspension - FA Non Compliance';
 				childCase.Status = 'Re-opened';
 			}

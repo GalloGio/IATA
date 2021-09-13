@@ -85,14 +85,14 @@ public with sharing class EmailMessageHandler {
 		// a valid RT and closed fror more than 2 weeks
 		map<Id,Case> mapCases = new map<Id,Case>();
 		for (Case cse: [
-				SELECT Id, ClosedDate, ContactId,
+				SELECT Id, ClosedDate, ContactId, RecordTypeId, Reason1__c,
 					contact.CNS_Contact__c, contact.Preferred_Language__c, account.Source_System__c
 				FROM Case
 				WHERE id IN :mapCaseIdEmail.keyset()
 				AND RecordType.DeveloperName IN :LIST_VALID_RT
 				AND ContactId != null AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')]
 				) {
-			if (cse.ClosedDate < Date.today().addDays(-14)) {
+			if (cse.ClosedDate < Date.today().addDays(-14) && !isModelBcase(cse)) {
 				mapCases.put(cse.Id, cse);
 			}
 		}
@@ -123,6 +123,10 @@ public with sharing class EmailMessageHandler {
 
 		// send emails created if exist
 		if (!listSendEmail.isEmpty()) Messaging.sendEmail(listSendEmail);
+	}
+
+	private Static boolean isModelBcase(Case newCase){
+		return (newCase.RecordTypeId == AMS_UTILS.RECTYPE_OSCARCOMM && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ONBOARDING_IEP_MODEL_B_PLUS || newCase.Reason1__c == AMS_UTILS.CASE_REASON_SCREENING_IEP_MODEL_B ));
 	}
 
 	public static map<String,Id> CASE_CLOSED_TEMPLATES;
