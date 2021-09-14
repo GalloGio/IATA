@@ -12237,7 +12237,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             NOT( ISPICKVAL(BSPCountry__c, &quot;Israel&quot;)),
             OR(ISCHANGED(RecordType__c),ISCHANGED(IRR_Approval_Rejection__c),ISCHANGED(BSPCountry__c))
         )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>SIN Complaint assignment to Complaint team</fullName>
