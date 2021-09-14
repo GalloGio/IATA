@@ -33,6 +33,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 	private static String NEWNGLOBAL = 'ANG.NEW.GE.STANDARD.1.0';
 	public static String CONVERT_TO_MC = 'ANG.CONVERT.ST.TO.MC';
 	public static String CONVERT_TO_ST = 'ANG.CONVERT.MC.TO.ST';
+	public static String ANGPARTCONVERTMCTOLT = 'ANG.PARTCONVERT.MC.TO.LT';
+	public static String ANGPARTCONVERTMCTOST = 'ANG.PARTCONVERT.MC.TO.ST';
+	
 	private static Id mainRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Agencies_Hierarchy__c', 'MAIN');
 
 	public static Set<String> accountConcernedProcesses = new Set <String>{NEWBR_PV, NEWBRABRD_PV, MAJOR_CHANGES_PV, NEWSA_PV, NEWNAE, MCAE, MAJOR_CHANGESNEWGEN_PV,IEP_BANK_ACCOUNT_SETUP,IEP_MODEL_A_ACCOUNT_SETUP, IEP_MODEL_B_ACCOUNT_SETUP,  IEP_MODEL_B_PLUS_ACCOUNT_SETUP,NEWVR_PV, AMS_Utils.new_PASS_BR};
@@ -84,12 +87,12 @@ global without sharing class AMS_RecordCreatorWebservice {
 					ownerId = cse.OwnerId;
 				}
 
-				if(cse.Origin == 'Portal' && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC || typeOfProcess == CONVERT_TO_ST)){
+				if(cse.Origin == AMS_Utils.CASEORIGINPORTAL && (typeOfProcess == NEWNGLOBAL || typeOfProcess == MCAE || typeOfProcess == MAJOR_CHANGESNEWGEN_PV || typeOfProcess == CONVERT_TO_MC || typeOfProcess == CONVERT_TO_ST || typeOfProcess == ANGPARTCONVERTMCTOLT || typeOfProcess == ANGPARTCONVERTMCTOST)){
 					ownerId = AMS_OscarCaseTriggerHelper.fetchOscarRegionQueueId(cse.Account.Region_Formula__c);
 				}
 			}
 
-			if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == 'Portal'){
+			if(typeOfProcess.equalsIgnoreCase(NEWCER_PV) && cases.get(0).Origin == AMS_Utils.CASEORIGINPORTAL){
 				String selectedAccount = cases.get(0).Account_Concerned__c;
 				oscarId = createOscar(selectedAccount,  typeOfProcess, oscarRecordType ,  'Open',  accreditationId, ownerId, caseId,accountId );
 
@@ -121,7 +124,9 @@ global without sharing class AMS_RecordCreatorWebservice {
 					|| typeOfProcess.equalsIgnoreCase(MAJOR_CHANGES_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV)
 					|| typeOfProcess.equalsIgnoreCase(MCAE) || typeOfProcess.equalsIgnoreCase(NEWNAE)
 					|| typeOfProcess.equalsIgnoreCase(MAJOR_CHANGESNEWGEN_PV) || typeOfProcess.equalsIgnoreCase(NEWVR_PV)
-					|| typeOfProcess.equalsIgnoreCase(CONVERT_TO_ST)) {
+					|| typeOfProcess.equalsIgnoreCase(CONVERT_TO_ST)
+					|| typeOfProcess.equalsIgnoreCase(ANGPARTCONVERTMCTOLT)
+					|| typeOfProcess.equalsIgnoreCase(ANGPARTCONVERTMCTOST)) {
 					if (oscarCase.AccountId != realAccountId)
 						oscarCase.AccountId = realAccountId;
 				}
@@ -371,6 +376,14 @@ global without sharing class AMS_RecordCreatorWebservice {
 			return AMS_Utils.RECTYPE_NGCONVERSIONTOSTANDARD;
 		}
 
+		if (typeOfProcess.equalsIgnoreCase(ANGPARTCONVERTMCTOLT)) {
+			return AMS_Utils.RECTYPE_NGPARTCONVERSIONTOLITE;
+		}
+
+		if (typeOfProcess.equalsIgnoreCase(ANGPARTCONVERTMCTOST)) {
+			return AMS_Utils.RECTYPE_NGPARTCONVERSIONTOSTANDARD;
+		}
+		
 		return null;
 	}
 
@@ -473,7 +486,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 			processOscarProcessDetail(oscar,accreditationObj,accountId);
 		}
 
-		if (processType.equalsIgnoreCase(CONVERT_TO_MC)) {
+		if (processType.equalsIgnoreCase(CONVERT_TO_MC) || processType.equalsIgnoreCase(CONVERT_TO_ST) || processType.equalsIgnoreCase(ANGPARTCONVERTMCTOLT) || processType.equalsIgnoreCase(ANGPARTCONVERTMCTOST)) {
 			accreditationObj = fetchAccreditationObject(accreditationId);
 			createProcessDetailsForConversion(oscar.Id, getSelectedBranchList(accreditationObj.Agency_Codes_Concerned__c.split(',')));
 		}
