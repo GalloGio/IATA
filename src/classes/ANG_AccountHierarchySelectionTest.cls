@@ -360,6 +360,9 @@ private class ANG_AccountHierarchySelectionTest {
 		Account HE = [SELECT Id FROM Account WHERE Name = 'Main HE Account HE'];
 		AMS_OSCAR__c oscar = [SELECT Account__c, ANG_Type_Of_Change__c, New_parent__c, Change_of_location_type_behavior__c, STEP6__c, Process__c, RecordTypeId, Account__r.ANG_Accreditation_Model__c
 		FROM AMS_OSCAR__c WHERE ANG_Type_Of_Change__c <> :AMS_Utils.CONVERTTOLEGACY LIMIT 1];
+		IATA_ISO_Country__c ct = [SELECT id, ANG_Enable_NewGen__c, Multicountry_Enabled__c FROM IATA_ISO_Country__c WHERE ISO_Code__c = 'US' LIMIT 1];
+		Account HE2 = [SELECT Id, ANG_Accreditation_Model__c FROM Account WHERE Id =: oscar.Account__c];
+		HE2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 
 		Test.startTest();
 
@@ -404,6 +407,143 @@ private class ANG_AccountHierarchySelectionTest {
 		con.getDisableNext();
 		con.updateRelatedRecords();
 		con.save();
+		ct.ANG_Enable_NewGen__c = true;
+		ct.Multicountry_Enabled__c = true;
+		update ct;
+		Account acc = new Account();
+		acc.Name = 'Main GE1 PT Account test';
+		acc.Sector__c = 'Travel Agent';
+		acc.IATACode__c = '222222200';
+		acc.Category__c = 'IATA Passenger Sales Agent';
+		acc.Location_Class__c = 'P';
+		acc.Location_Type__c = AMS_Utils.HE;
+		acc.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		acc.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		acc.ANG_IEP_HE_AccntNum__c = '1232132323';
+		acc.ANG_IEP_Status__c = 'Suspended' ;
+		acc.ANG_HE_CashCondition__c = true;
+		acc.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+		acc.ANG_HE_RiskStatus__c = 'Not Applicable';
+		acc.IATA_ISO_Country__c = ct.Id;
+		insert acc;
+		oscar.New_parent__c = acc.Id;
+		oscar.Process__c =AMS_Utils.ANGPARTCONVERTMCTOLT;
+		update oscar;
+
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
+
+		List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = HE.Id));
+
+		insert agenciesinvolved;
+		PageReference pg2 = Page.ANG_AccountHierarchySelection;
+		pg2.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg2);
+
+		con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+		con.selectAll = true;
+		con.getDisablePrevious();
+		con.Beginning();
+		con.Previous();
+		con.Next();
+		con.End();
+		con.isMovingTopLocationTypeAccount();
+		con.isSingleDestinationHierarchy(HE.Id);
+		con.isAllHierarchySelected();
+		con.hasTopLocationType(HE.Id);
+		con.isTerminatedAccount(HE.Id);
+		con.newParentIncluded(HE.Id);
+		con.isJustOneAgencySelected();
+		con.getDisableNext();
+		con.updateRelatedRecords();
+		con.save();
+		con.singleSelect();
+		acc.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		update acc;
+		con.newParent = acc;
+		con.FetchNewParent();
+		con.handleSelection();
+		con.cleanApexMessages();
+		con.chechSplitOfAccountHEForStart();
+		boolean showBSPPanel = con.showBSPPanel;
+		Map<Id,ANG_AccountHierarchySelectionController.HEPerBSP> hesPerBSPs = con.hesPerBSPs;
+		String JSONHEsPerBSPs = con.JSONHEsPerBSPs;
+		List<List<ANG_AccountHierarchySelectionController.HEPerBSP>> hesPerBSPsForDisplay = con.hesPerBSPsForDisplay;
+		Integer totalPagesForHEPerBSP = con.totalPagesForHEPerBSP;
+
+
+		Account acc2 = new Account();
+		acc2.Name = 'Main GE1 PT Account test';
+		acc2.Sector__c = 'Travel Agent';
+		acc2.IATACode__c = '222222333';
+		acc2.Category__c = 'IATA Passenger Sales Agent';
+		acc2.Location_Class__c = 'P';
+		acc2.Location_Type__c = AMS_Utils.GE;
+		acc2.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		acc2.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		acc2.ANG_IEP_HE_AccntNum__c = '1232132323';
+		acc2.ANG_IEP_Status__c = 'Suspended' ;
+		acc2.ANG_HE_CashCondition__c = true;
+		acc2.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+		acc2.ANG_HE_RiskStatus__c = 'Not Applicable';
+		acc2.IATA_ISO_Country__c = ct.Id;
+		insert acc2;
+		oscar.New_parent__c = acc2.Id;
+		oscar.Process__c =AMS_Utils.ANGPARTCONVERTMCTOLT;
+		update oscar;
+		con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+		PageReference pg3 = Page.ANG_AccountHierarchySelection;
+		pg3.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg3);
+		con.FetchNewParent();
+		con.handleSelection();
+
+		Account acc3 = new Account();
+		acc3.Name = 'Main GE1 PT Account test';
+		acc3.Sector__c = 'Travel Agent';
+		acc3.IATACode__c = '222222333';
+		acc3.Category__c = 'IATA Passenger Sales Agent';
+		acc3.Location_Class__c = 'P';
+		acc3.Location_Type__c = AMS_Utils.GE;
+		acc3.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
+		acc3.Status__c = AMS_Utils.ACC_S9_APPROVED;
+		acc3.ANG_IEP_HE_AccntNum__c = '1232132323';
+		acc3.ANG_IEP_Status__c = 'Suspended' ;
+		acc3.ANG_HE_CashCondition__c = true;
+		acc3.ANG_HE_RiskHistoryAssessment__c = 'Not Applicable';
+		acc3.ANG_HE_RiskStatus__c = 'Not Applicable';
+		acc3.IATA_ISO_Country__c = ct.Id;
+		insert acc3;
+		oscar.Account__c = acc3.Id;
+		update oscar;
+		con = new ANG_AccountHierarchySelectionController(new ApexPages.StandardController(oscar));
+		PageReference pg4 = Page.ANG_AccountHierarchySelection;
+		pg4.getParameters().put('Id', oscar.Id);
+
+		Test.setCurrentPage(pg4);
+		con.doSelectAll();
+		con.getDisablePrevious();
+		con.selectMain();
+		con.FetchNewParent();
+		con.Beginning();
+		con.Previous();
+		con.Next();
+		con.End();
+		con.isMovingTopLocationTypeAccount();
+		con.isSingleDestinationHierarchy(HE.Id);
+		con.isAllHierarchySelected();
+		con.hasTopLocationType(HE.Id);
+		con.isTerminatedAccount(HE.Id);
+		con.newParentIncluded(HE.Id);
+		con.isJustOneAgencySelected();
+		con.getDisableNext();
+		con.updateRelatedRecords();
+		con.save();
+		ANG_AccountHierarchySelectionController.HEPerBSP aaa = new ANG_AccountHierarchySelectionController.HEPerBSP(ct.Id, acc3.Id);
+		ANG_AccountHierarchySelectionController.HEPerBSP aa2 = new ANG_AccountHierarchySelectionController.HEPerBSP(ct.Id, 'Teste', 'PT');
 
 		Test.stopTest();
 	}
