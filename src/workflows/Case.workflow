@@ -12230,22 +12230,13 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA Lite</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IRR_Approval_Rejection__c</field>
-            <operation>equals</operation>
-            <value>Approved,Rejected</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notEqual</operation>
-            <value>Israel</value>
-        </criteriaItems>
         <description>Update field Date/Time IRR Approval</description>
+        <formula>AND(
+            CONTAINS(RecordType__c, &quot;SIDRA&quot;), 
+            OR(ISPICKVAL(IRR_Approval_Rejection__c, &quot;Approved&quot;),ISPICKVAL(IRR_Approval_Rejection__c, &quot;Rejected&quot;)), 
+            NOT( ISPICKVAL(BSPCountry__c, &quot;Israel&quot;)),
+            OR(ISCHANGED(RecordType__c),ISCHANGED(IRR_Approval_Rejection__c),ISCHANGED(BSPCountry__c))
+        )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
