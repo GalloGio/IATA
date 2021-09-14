@@ -27255,7 +27255,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMember.Joined__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -63525,6 +63525,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>AMS_OSCAR__c.ANG_Part_Convert_MC_To_LT</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>AMS_OSCAR__c.BANK_ACCOUNT_SETUP</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -63561,6 +63566,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_OSCAR__c.NGFormsOfPayment</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>AMS_OSCAR__c.NG_Part_Convert_MC_To_ST</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
