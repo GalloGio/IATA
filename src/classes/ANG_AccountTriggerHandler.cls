@@ -119,7 +119,7 @@ public class ANG_AccountTriggerHandler {
 				Account acc = newMap.get(a.Id);
 				acc.ANG_HE_RiskHistoryAssessment__c = a.ANG_HE_RiskHistoryAssessment__c;
 				acc.ANG_HE_RiskStatus__c = a.ANG_HE_RiskStatus__c;
-				acc.ANG_HE_CashCondition__c = a.ANG_HE_CashCondition__c;
+				acc.ANG_HE_CashCondition__c = a.ANG_HE_CashCondition__c || a.ANG_FA_Opt_out__c;
 				acc.Financial_Review_Result__c = a.Financial_Review_Result__c;
 			}
 		}
