@@ -209,6 +209,10 @@
         <name>AMS_Conga_Merge</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS Console Account Hierarchy Split account multicountry --></label>
+        <name>AMS_Console_Account_Hierarchy_Split_account_multicountry</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS_CountrySAttr_Validation --></label>
         <name>AMS_CountrySAttr_Validation</name>
     </customLabels>
@@ -13935,6 +13939,10 @@ and
         <name>ISSP_AMS_Accept_TOS_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Accreditation type change --></label>
+        <name>ISSP_AMS_Accreditation_type_change</name>
+    </customLabels>
+    <customLabels>
         <label>เพิ่มบริษัท</label>
         <name>ISSP_AMS_Add_Company</name>
     </customLabels>
@@ -14025,6 +14033,14 @@ and
     <customLabels>
         <label><!-- ISSP AMS Associate Entity Cashless --></label>
         <name>ISSP_AMS_Associate_Entity_Multicountry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate entities of a country change to Golite --></label>
+        <name>ISSP_AMS_Associate_entities_of_a_country_change_to_Golite</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Associate entities of a country change to Gostandard --></label>
+        <name>ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Authorised Sig --></label>
@@ -14697,6 +14713,22 @@ and
     <customLabels>
         <label><!-- ISSP_AMS_Completed_dangerous_goods_training --></label>
         <name>ISSP_AMS_Completed_dangerous_goods_training</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Console new parent HE error --></label>
+        <name>ISSP_AMS_Console_new_parent_HE_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Console new parent Status error --></label>
+        <name>ISSP_AMS_Console_new_parent_Status_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Console new parent empty error --></label>
+        <name>ISSP_AMS_Console_new_parent_empty_error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Console remittance Frequency error --></label>
+        <name>ISSP_AMS_Console_remittance_Frequency_error</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Contact Info --></label>
@@ -16007,6 +16039,10 @@ and
         <name>ISSP_AMS_NoC_HE_All_Branches</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS NoC HE All Branches Multicountry --></label>
+        <name>ISSP_AMS_NoC_HE_All_Branches_Multicountry</name>
+    </customLabels>
+    <customLabels>
         <label>นิติบุคคลหลักและบริษัทในเครือหนึ่งแห่งหรือมากกว่า</label>
         <name>ISSP_AMS_NoC_HE_Some_Branches</name>
     </customLabels>
@@ -16911,6 +16947,10 @@ and
         <name>ISSP_AMS_Step0_Change_Not_Allowed</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step0_Change_Of_Accreditation_Type --></label>
+        <name>ISSP_AMS_Step0_Change_Of_Accreditation_Type</name>
+    </customLabels>
+    <customLabels>
         <label>การเปลี่ยนแปลงข้อมูลสมาชิก</label>
         <name>ISSP_AMS_Step0_Changes</name>
     </customLabels>
@@ -16993,6 +17033,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agent Multicountry --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_for_Nam_Pax_Agent_Multicountry</name>
     </customLabels>
     <customLabels>
         <label>แบบฟอร์มอื่นๆที่อาจเป็นประโยชน์</label>
@@ -18671,6 +18715,14 @@ and
         <name>ISSP_ANG_OptIn_OptOut_DateInfo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP ANG.PARTCONVERT.MC.TO.LT Accreditation type Error --></label>
+        <name>ISSP_ANG_PARTCONVERT_MC_TO_LT_Accreditation_type_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP ANG.PARTCONVERT.MC.TO.ST Accreditation type Error --></label>
+        <name>ISSP_ANG_PARTCONVERT_MC_TO_ST_Accreditation_type_Error</name>
+    </customLabels>
+    <customLabels>
         <label>รหัสที่ได้รับการรับรองของ IATA</label>
         <name>ISSP_ANG_PCI_Choose_IATA_Code</name>
     </customLabels>
@@ -19609,6 +19661,10 @@ and
     <customLabels>
         <label><!-- ISSP Change Request Description --></label>
         <name>ISSP_Change_Request_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Change of Accreditation Type More Than one Country Error --></label>
+        <name>ISSP_Change_of_Accreditation_Type_More_Than_one_Country_Error</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP China Domestic --></label>
@@ -21387,6 +21443,10 @@ and
         <name>ISSP_Mandatory</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Milticountry Request Change of Accreditation Type --></label>
+        <name>ISSP_Milticountry_Request_Change_of_Accreditation_Type</name>
+    </customLabels>
+    <customLabels>
         <label>กรณีที่ปิดแล้ว</label>
         <name>ISSP_MyClosedCases</name>
     </customLabels>
@@ -21557,6 +21617,10 @@ and
     <customLabels>
         <label><!-- ISSP NoC HE with AEs Warning --></label>
         <name>ISSP_NoC_HE_with_AEs_Warning_MC</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP NoC HE with AEs Warning Multicountry --></label>
+        <name>ISSP_NoC_HE_with_AEs_Warning_Multicountry</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP NoC Head Entity Becoming a AE --></label>
@@ -22288,6 +22352,10 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
     <customLabels>
         <label>บริการพอร์ทัล</label>
         <name>ISSP_Portal_Services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Portal Updated Legal Status GE message --></label>
+        <name>ISSP_Portal_Updated_Legal_Status_GE_message</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_Portal_further_clarification --></label>
