@@ -333,12 +333,10 @@ public static Map<String, String> getUserOptions(String portalUser){
 						
 		integer passwordDays = integer.ValueOF(ISSP_CS__c.getValues('PasswordResetPeriod').value__c);
 			
-		User u=[select id, uid__C,LastPasswordChangeDate from user where id=:userid];
-		return  string.isNotEmpty(u.UID__c) || (u.LastPasswordChangeDate != null && u.LastPasswordChangeDate.addDays(passwordDays) < system.now());
-			
+		User u=[select id, uid__C, LastPasswordChangeDate, IsActive, Portal_User_Frozen_Checkbox__c, Contact.Status__c from user where id=:userid];
+		return  string.isNotEmpty(u.UID__c) || 
+				(u.LastPasswordChangeDate != null && u.LastPasswordChangeDate.addDays(passwordDays) < system.now()) ||
+				(u.IsActive = false && u.Portal_User_Frozen_Checkbox__c && u.Contact.Status__c == 'Active');			
 	}
-
-
-
 
 }
