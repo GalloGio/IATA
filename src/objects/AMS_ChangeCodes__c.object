@@ -694,6 +694,10 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
     <listViews>
         <fullName>RVW_Change_Code</fullName>
         <columns>Class_Type__c</columns>
+        <columns>Change_Code__c</columns>
+        <columns>Account_status_change__c</columns>
+        <columns>Reason_Code__c</columns>
+        <columns>Reason_Code_Description__c</columns>
         <columns>Field1__c</columns>
         <columns>Field1Values__c</columns>
         <columns>Field2__c</columns>
@@ -702,17 +706,13 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field3Values__c</columns>
         <columns>Field4__c</columns>
         <columns>Field4Values__c</columns>
-        <columns>Field5__c</columns>
-        <columns>Field5Values__c</columns>
-        <columns>Field6__c</columns>
-        <columns>Field6Values__c</columns>
         <columns>Accreditation_Model__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>RVW</value>
+            <value>RWD,DFW</value>
         </filters>
         <label>RVW Change Code</label>
         <language>en_US</language>
