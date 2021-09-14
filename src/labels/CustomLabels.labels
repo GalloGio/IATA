@@ -66,6 +66,14 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_Console_Account_Hierarchy_Split_account_multicountry</fullName>
+        <categories>AMS Console</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS Console Account Hierarchy Split account multicountry</shortDescription>
+        <value>Please reorganize the hierarchy for Saudi Arabia by assigning a new HE through a separate case by choosing &apos;&apos;Location Type&apos;&apos; under &apos;&apos;Type Of Change</value>
+    </labels>
+    <labels>
         <fullName>AMS_CountrySAttr_Validation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -21882,6 +21890,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Please accept the Terms and Conditions before submitting your Agency Endorsement application to CNS.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Accreditation_type_change</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Accreditation type change</shortDescription>
+        <value>Accreditation type change</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Add_Company</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22060,6 +22075,20 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate Entity Cashless</shortDescription>
         <value>New Associate Entity - GoGlobal</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Associate_entities_of_a_country_change_to_Golite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate entities of a country change to Golite</shortDescription>
+        <value>Associate entities of a country change to Golite</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate entities of a country change to Gostandard</shortDescription>
+        <value>Associate entities of a country change to Gostandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
@@ -23271,6 +23300,34 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Completed_dangerous_goods_training</shortDescription>
         <value>Completed dangerous goods training</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_new_parent_HE_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console new parent HE error</shortDescription>
+        <value>Please select New parent from same country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_new_parent_Status_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console new parent Status error</shortDescription>
+        <value>Please select an active New parent</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_new_parent_empty_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console new parent empty error</shortDescription>
+        <value>Please select New parent!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_remittance_Frequency_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console remittance Frequency error</shortDescription>
+        <value>Please align the Remittance Frequencies of the splitting codes to the acquiring HE</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Contact_Info</fullName>
@@ -25788,6 +25845,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Head Entity &amp; All Associate Entities</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_HE_All_Branches_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC HE All Branches Multicountry</shortDescription>
+        <value>Head entity &amp; all associate entities change to GoStandard</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_HE_Some_Branches</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -27555,6 +27619,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Changes can only be made once your Agency has submitted its application for accreditation to IATA.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Change_Of_Accreditation_Type</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Change_Of_Accreditation_Type</shortDescription>
+        <value>Change of Accreditation Type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_Changes</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -27719,6 +27791,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg PostalOperator</shortDescription>
         <value>For changes to your Location, Company Name or Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Changes_Msg_for_Nam_Pax_Agent_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agent Multicountry</shortDescription>
+        <value>Notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
@@ -30941,6 +31020,21 @@ Separate legal entities cannot share the same Legal Name.</value>
         <value>Date from which Airlines can Opt-Out of IATA EasyPay for this country on the portal.</value>
     </labels>
     <labels>
+        <fullName>ISSP_ANG_PARTCONVERT_MC_TO_LT_Accreditation_type_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG.PARTCONVERT.MC.TO.LT Accreditation type Error</shortDescription>
+        <value>Please select New parent with accreditation type Cashless</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PARTCONVERT_MC_TO_ST_Accreditation_type_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG.PARTCONVERT.MC.TO.ST Accreditation type Error</shortDescription>
+        <value>Please select New parent with accreditation type Cash</value>
+    </labels>
+    <labels>
         <fullName>ISSP_ANG_PCI_Choose_IATA_Code</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -32777,6 +32871,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <protected>false</protected>
         <shortDescription>ISSP Change Request Description</shortDescription>
         <value>This service allows you to change your BSP / CASS Participation details - Local address, Tax number or Financial / Admin Contact (MasterTable) and IATA Easy Pay opt-in or opt-out</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Change_of_Accreditation_Type_More_Than_one_Country_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Change of Accreditation Type More Than one Country Error</shortDescription>
+        <value>For the Change of Accreditation Type process, only one country can be chosen. If you want to submit a change for another country, please log a separate change request through the Customer Portal</value>
     </labels>
     <labels>
         <fullName>ISSP_China_Domestic</fullName>
@@ -36259,6 +36361,14 @@ this is the tiess topic help</value>
         <value>Mandatory</value>
     </labels>
     <labels>
+        <fullName>ISSP_Milticountry_Request_Change_of_Accreditation_Type</fullName>
+        <categories>Issp, portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Milticountry Request Change of Accreditation Type</shortDescription>
+        <value>Request Change of Accreditation Type</value>
+    </labels>
+    <labels>
         <fullName>ISSP_MyClosedCases</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -36593,6 +36703,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
         <value>The change will only be effective if only agencies belonging to the same legal structure have been selected.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_HE_with_AEs_Warning_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC HE with AEs Warning Multicountry</shortDescription>
+        <value>Please return to the Accreditation &amp; Changes page to choose Accreditation Type change</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_Head_Entity_Becoming_a_AE</fullName>
@@ -38006,6 +38123,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_Portal Services</shortDescription>
         <value>Portal services</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Updated_Legal_Status_GE_message</fullName>
+        <categories>Issp, portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Updated Legal Status GE message</shortDescription>
+        <value>You are only able to change the accreditation type in the current form. If you want to notify IATA of any other legal changes, please log a separate case through &apos;&apos;Other Changes&apos;&apos; in the IATA Accreditation &amp; Changes service</value>
     </labels>
     <labels>
         <fullName>ISSP_Portal_further_clarification</fullName>
