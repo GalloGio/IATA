@@ -165,10 +165,12 @@
         <fields>TITLE</fields>
         <fields>COMPANY</fields>
         <fields>COUNTRY</fields>
-        <fields>LC_OWNER</fields>
+        <fields>EMAIL</fields>
+        <fields>Joined__c</fields>
+        <fields>Assigned_User__c</fields>
         <relatedList>RelatedCampaignMemberList</relatedList>
-        <sortField>COUNTRY</sortField>
-        <sortOrder>Asc</sortOrder>
+        <sortField>Joined__c</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

@@ -4,6 +4,69 @@ public with sharing class AMS_OSCAR_Automation {
 		Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar);
 	}
 
+
+	
+
+	public class AMS_OSCAR_Step6_inProgress implements IClassFactory {
+		
+		public Boolean processWork(AMS_OSCAR_Event__c lce, AMS_OSCAR__c oscar) {
+			system.debug('Start AUTOMATION AMS_OSCAR_Step6_inProgress.processWork');
+
+			Boolean res = False;
+			if (oscar != null) {
+
+				if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+					Set<Id> accountIds = new Set<Id>();
+					Map<Id, List<AMS_Agencies_relationhip__c>> relationshipMap = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{oscar.Account__c});
+					accountIds.add(oscar.Account__c);
+
+					Map<Id, AMS_Process_Detail__c> processDetails = new Map<Id, AMS_Process_Detail__c>();
+					String countryNameToShowOnSplitAccountMultiCountry = '';
+					for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name FROM AMS_Process_Detail__c WHERE Oscar__c = :oscar.Id and recordtype.developername =: AMS_Utils.OSCARAGENCYINVOLVEDDEVELOPERNAME ]){
+						processDetails.put(pd.Account__c, pd);
+						countryNameToShowOnSplitAccountMultiCountry = pd.Account__r.IATA_ISO_Country__r.Name;
+					}
+					for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
+						accountIds.add(r.Child_Account__c);
+						accountIds.add(r.Parent_Account__c);
+					}
+					Map<Id, List<Account>> accountListByCountry = new Map<Id, List<Account>>();
+					Id countrySelected = null;
+					Integer numberOffAccountsSelected = 0;
+					Boolean oneHEisSelected = false;
+					for(Account a : Database.query('SELECT Id, Name, Location_Type__c, Location_Class__c, IATA_ISO_Country__c FROM Account WHERE Id IN :accountIds')){
+						
+						if(accountListByCountry.get(a.IATA_ISO_Country__c) == null) {
+							accountListByCountry.put(a.IATA_ISO_Country__c, new List<Account>{a});
+						}else{
+							accountListByCountry.get(a.IATA_ISO_Country__c).add(a);
+						}
+						
+						if(processDetails.containsKey(a.Id)){
+							if(a.Location_Type__c == AMS_Utils.HE){
+								oneHEisSelected = true;
+							}
+							numberOffAccountsSelected++;
+							countrySelected = a.IATA_ISO_Country__c;
+						}
+					}
+					if(accountListByCountry.containsKey(countrySelected)){
+						if(oneHEisSelected && accountListByCountry.get(countrySelected).size() > numberOffAccountsSelected){
+							oscar.addError(Label.AMS_Console_Account_Hierarchy_Split_account_multicountry.replace('HEAccount.iso_country__c', countryNameToShowOnSplitAccountMultiCountry));
+							return false;
+						}else{
+							res = true;
+						}
+					}
+				}
+				
+				
+			}
+
+			return res;
+		}
+	}
+
 	//OK
 	public class AMS_OSCAR_Step6_succeeded implements IClassFactory {
 
@@ -12,9 +75,7 @@ public with sharing class AMS_OSCAR_Automation {
 			system.debug('Start AUTOMATION AMS_OSCAR_Step6_succeeded.processWork');
 
 			Boolean res = False;
-
 			if (oscar != null) {
-
 				oscar.Sanity_check_received__c = Date.today();
 
 				if(oscar.Process__c == AMS_Utils.VOLRELINQUISH_CA || oscar.Process__c == AMS_Utils.VOLRELINQUISH){
@@ -559,7 +620,7 @@ public with sharing class AMS_OSCAR_Automation {
 				}
 			}
 
-			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != 'Not Started') || (oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || oscar.Process__c == AMS_Utils.new_PASS_HO || oscar.Process__c == AMS_Utils.new_PASS_BR))
+			if (oscar != null && ((oscar.STEP12__c != AMS_Utils.IN_PROGRESS && oscar.STEP12__c != AMS_Utils.OSCARSTPESNOTSTARTED) || (oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.NEWHELITE || oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || oscar.Process__c == AMS_Utils.NEWAE || oscar.Process__c == AMS_Utils.NGCHANGES || oscar.Process__c == AMS_Utils.MCAE || oscar.Process__c == AMS_Utils.NGCHINACONVERSION || oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || oscar.Process__c == AMS_Utils.new_PASS_HO || oscar.Process__c == AMS_Utils.new_PASS_BR))
 				&& !hasFRRequiredStep) {
 				oscar.Dossier_Validation__c = Date.today();
 				oscar.Validation_result__c = 'Passed';
@@ -911,16 +972,16 @@ public with sharing class AMS_OSCAR_Automation {
 				res = True;
 
 				//restart manager approval step
-				oscar.STEP2__c = 'Not Started';
-				oscar.RPM_Approval__c = 'Not Started';
+				oscar.STEP2__c = AMS_Utils.OSCARSTPESNOTSTARTED;
+				oscar.RPM_Approval__c = AMS_Utils.OSCARSTPESNOTSTARTED;
 
 				//restart validation step
 				if(oscar.Process__c == AMS_Utils.AGENCYCHANGES){
 
-					oscar.STEP25__c = 'Not Started';
+					oscar.STEP25__c = AMS_Utils.OSCARSTPESNOTSTARTED;
 				} else {
 
-					oscar.STEP15__c = 'Not Started';
+					oscar.STEP15__c = AMS_Utils.OSCARSTPESNOTSTARTED;
 				}
 
 				oscar.Validation_result__c = 'N/A';

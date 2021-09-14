@@ -2,16 +2,16 @@
 
     <apex:messages />
     <apex:message />
-    <apex:includeScript value="/support/console/30.0/integration.js" />
+    <apex:includeScript value="/support/console/48.0/integration.js" />
     <apex:includeScript value="/soap/ajax/26.0/connection.js" />
     <apex:includeScript value="/soap/ajax/26.0/apex.js" />
     <apex:includeScript value="{!$Resource.jquery2_1_4}" />
-    <apex:includeScript value="{!$Resource.keyCustomerAlert}"/>
-
+    <apex:includeScript value="{!$Resource.keyCustomerAlert}" />
 
     <script type="text/javascript">
 
         var caseId = ("{!cse.Id}").substring(0, 15);
+        var canSendTrackedEmails = "{!$Permission.Can_send_a_tracked_email}";
 
         function getCountryEmail() {
             sforce.connection.sessionId = "{!$Api.Session_ID}";
@@ -30,16 +30,19 @@
 
                 var isEmailDeleted = sforce.apex.execute("IDFS_Util", "DeleteEmail", { messageID: id });
 
-                if(isEmailDeleted == 'true')
-                {
-                    // TODO: reload page
-                    //window.top.location.reload();
-                    //window.parent.location.reload();
-                    // var temp = window.top.location;
-                    window.open("{!$Site.BaseURL}/" + caseId, '_blank');                    
+                if (isEmailDeleted == 'true') {
+                    var redirectUrlOne = "{!$Label.SF_Base_URL}/" + caseId;
+                    if (sforce.console.isInConsole()) {
+                        sforce.console.getEnclosingTabId(function (enclosingResult) {
+                            sforce.console.getEnclosingPrimaryTabId(function (primaryResult) {
+                                sforce.console.refreshSubtabById(primaryResult.id, false);
+                            });
+                        });
+                    } else {
+                        window.top.location = redirectUrlOne;
+                    }
                 }
-                else
-                {
+                else {
                     alert('Email cannot be deleted at the moment');
                 }
             }
@@ -51,21 +54,18 @@
             var redirectUrlOne = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId + "&p26=" + countryEmail;
             var redirectUrlTwo = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId;
 
-            if(countryEmail != '')
-            {
-                //window.top.location = redirectUrlOne;
+            if (countryEmail != '') {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.open(redirectUrlOne, '_blank');
+                    window.top.location = redirectUrlOne;
                 }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.open(redirectUrlTwo, '_blank');
+                    window.top.location = redirectUrlTwo;
                 }
-
             }
         }
 
@@ -75,26 +75,23 @@
             var redirectUrlOne = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId + "&p26=" + countryEmail;
             var redirectUrlTwo = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId;
 
-            if(countryEmail != '')
-            {
-                //window.top.location = redirectUrlOne;
+            if (countryEmail != '') {
+
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.open(redirectUrlOne, '_blank');
+                    window.top.location = redirectUrlOne;
                 }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.open(redirectUrlTwo, '_blank');
+                    window.top.location = redirectUrlTwo;
                 }
-
             }
         }
 
-        function ServiceConsoleIntegration(redirectUrl)
-        {
+        function ServiceConsoleIntegration(redirectUrl) {
             if (sforce.console.isInConsole()) {
                 sforce.console.getEnclosingTabId(function (enclosingResult) {
                     sforce.console.getEnclosingPrimaryTabId(function (primaryResult) {
@@ -108,36 +105,21 @@
 
         function SendEmail() {
 
-            //ACAMBAS - WMO-436 - Begin
-            
             var countryEmail = getCountryEmail();
-            var targetURL = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
+            var targetURL = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
 
-            if(countryEmail != '') {
+            if (countryEmail != '') {
                 targetURL = targetURL + "&p26=" + countryEmail;
-            }  
-
+            }
             if({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
                 displayKeyCustomerAlert(targetURL, "{!$Label.KEY_CUSTOMER_ALERT_TITLE}", "{!$Label.KEY_CUSTOMER_ALERT}");
-            }
-            else {
-                window.open(targetURL, '_blank');
-            }
-
-            //ACAMBAS - WMO-436 - End
-            
-        }
-
-        function SendEmailUnbabel() {
-            var redirectUrlOne = "{!$Label.SF_Base_URL}/apex/unbabelsc__UnbabelSendEmail?id=" + caseId;
-
-            if (sforce.console.isInConsole()) {
-                ServiceConsoleIntegration(redirectUrlOne);
             } else {
-                window.top.location = redirectUrlOne;
-
+                if (sforce.console.isInConsole()) {
+                    ServiceConsoleIntegration(targetURL);
+                } else {
+                    window.top.location = targetURL;
+                }
             }
-
         }
 
         function openSubTab(id) {
@@ -169,28 +151,42 @@
         }
 
         function sendTrackedRedirection(redirectURL) {
-            if({!$Permission.Can_send_a_tracked_email}){
-            if (sforce.console.isInConsole()) {
-                ServiceConsoleIntegration(redirectURL + "&isInConsole=true");
-            } else {
-                window.open(redirectURL, '_blank');
+            if (canSendTrackedEmails) {
+                if (sforce.console.isInConsole()) {
+                    ServiceConsoleIntegration(redirectURL);
+                } else {
+                    window.top.location = redirectURL;
+                }
+            }
+            else {
+                alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
             }
         }
-            else {
-            alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
-        }
-        }
+    
     </script>
 
     <apex:pageMessages />
 
     <style type="text/css">
-    A:link {text-decoration: none; color: #015ba7;}
-    A:visited {text-decoration: none}
-    A:active {text-decoration: none}
-    A:hover {text-decoration: underline; color: #015ba7;}
+        A:link {
+            text-decoration: none;
+            color: #015ba7;
+        }
+
+        A:visited {
+            text-decoration: none
+        }
+
+        A:active {
+            text-decoration: none
+        }
+
+        A:hover {
+            text-decoration: underline;
+            color: #015ba7;
+        }
     </style>
-    <apex:form >
+    <apex:form>
 
         <apex:pageblock id="CustomList" Title="Emails" helpTitle="Emails Help" helpUrl="https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US">
             <apex:facet name="header">
@@ -203,11 +199,11 @@
                                     <h3 id="50011000000m9Uv_RelatedEmailMessageList_title">&nbsp;Emails</h3>
                                 </td>
                                 <td class="pbButton">
-                                <input value="Send an Email" class="btn" name="newEmail" onclick="SendEmail();return false;" title="Send an Email" type="button"/>
-                                <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email"
-                                    type="button" style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}" />
-                                <!-- <input value="Send an Email with Translation" class="btn" name="newEmail" onclick="SendEmailUnbabel();return false;" title="Send an Email with Translation"
-                                    type="button" /> -->
+                                    <input value="Send an Email" class="btn" name="newEmail" onclick="SendEmail();return false;" title="Send an Email" type="button"
+                                    />
+                                    <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email"
+                                        type="button" style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}"
+                                    />
                                 </td>
                                 <td class="pbHelp">
                                     <span class="help" title="Emails Help (New Window)">
@@ -224,8 +220,6 @@
             </apex:facet>
             <apex:pageBlockButtons location="top" title="Emails">
                 <apex:commandButton onclick="SendEmail();return false;" value="Send an email" id="theButton" />
-                <!-- <apex:commandButton onclick="SendEmailUnbabel();return false;" value="Send an Email with Translation"
-                    id="theButtonUnbabel" /> -->
             </apex:pageBlockButtons>
             <div style="height: 200px; overflow-y:auto; display:{!IF(EmailsAvailable==false,'none','block')}">
                 <!-- VERSION JFO -->
@@ -283,14 +277,16 @@
                                     </div>
                                 </td>
                                 <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_blank" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
+                                    <a style="font-weight: bold;" href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_blank" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
                                     <br/>
                                     <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
                                 </td>
                                 <td class=" dataCell ">
                                     <apex:outputText value="{!message.emailAddress}" />
                                 </td>
-                            <td class=" dataCell "><apex:outputText value=" {!message.MessageDate}"/></td>
+                                <td class=" dataCell ">
+                                    <apex:outputText value=" {!message.MessageDate}" />
+                                </td>
                             </tr>
                         </apex:repeat>
                     </tbody>

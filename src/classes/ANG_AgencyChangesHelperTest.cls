@@ -16,7 +16,7 @@ public class ANG_AgencyChangesHelperTest {
 		}
 		insert bspAttrLst;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[0].id, Allow_Cash_FOP_for_Cashless_Agencies__c = false)  ;
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Due_diligence_mandatory__c = true, Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[0].id, Allow_Cash_FOP_for_Cashless_Agencies__c = false)  ;
 		insert ctry ;
 
 		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
@@ -3293,5 +3293,545 @@ public class ANG_AgencyChangesHelperTest {
 
 	}
 
+	@isTest static void changeOfLocationTypePartConvertionSTTest(){
+		insert new ANG_AgencyChangesConfig__c(Name = 'MulticountryToStandardConversion', 
+			TCA_Sanity_check__c = 'CNV', 
+			TCA_Application_withdrawal__c = 'CWD', 
+			TCA_Manager_approval__c = 'CVF',
+			TC_Hierarchy__c = false,
+			Valid_Accreditation_Models__c = 'Cash',
+			TC_Conversion__c = true);
 
+		 	AMS_ChangeCodes__c cdlCode = new AMS_ChangeCodes__c(
+		 		Name = 'CDL',
+		 		Account_status_change__c = '8;9',
+		 		Billable__c = true,
+		 		Change_Code__c = 'CDL',
+		 		Reason_Code_Description__c = 'CHANGE IN PROCESS',
+		 		Reason_Code__c = '81',
+		 		Integration_RecId__c = 'C',
+		 		Class_Type__c = 'P',
+		 		Billable_Location_Class__c = 'P;D'
+		 	);
+
+		 	AMS_ChangeCodes__c cdfCode = new AMS_ChangeCodes__c(
+		 		Name = 'CDF',
+		 		Account_status_change__c = '9;8',
+		 		Change_Code__c = 'CDF',
+		 		Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
+		 		Reason_Code__c = '91',
+		 		Integration_RecId__c = 'C',
+		 		Class_Type__c = 'P'
+		 	);
+
+		 	AMS_ChangeCodes__c cwdCode = new AMS_ChangeCodes__c(
+		 		Name = 'CWD',
+		 		Account_status_change__c = '9;8',
+		 		Bulletin_Memo_Text__c = 'ACCREDITED-MEET-STANDARDS',
+		 		Reason_Code__c = '91',
+		 		Change_Code__c = 'CWD',
+		 		Integration_RecId__c = 'C',
+		 		Published_in_bulletin__c = true
+		 	);
+
+		 	insert new List<AMS_ChangeCodes__c>{cdlCode, cdfCode, cwdCode};
+
+		Account acct =
+			[SELECT
+				Id,
+				Name,
+				ParentId,
+				IATA_ISO_Country__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c,
+				ANG_Accreditation_Model__c,
+				Location_Class__c,
+				Location_Type__c
+			 FROM
+			 	Account
+			 WHERE
+			 	ANG_IsNewGenAgency__c = TRUE
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			 LIMIT 1
+			];
+
+		Account acct2 =
+			[SELECT
+				Id,
+				Name,
+				ParentId,
+				IATA_ISO_Country__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c,
+				ANG_Accreditation_Model__c,
+				Location_Class__c,
+				Location_Type__c
+			 FROM
+			 	Account
+			 WHERE
+			 	Name = 'Main HE Account H1'
+			 LIMIT 1
+			];
+
+		ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(
+			ANG_Order__c = 1,
+			ANG_Occurrence_Num__c = 1,
+			ANG_Adjusted__c = ANG_Risk_Helper.ADJ_NO,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = ANG_Risk_Helper.RECTYPE_RULES);
+		
+		insert rule;
+
+		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
+				Name = 'Risk Event Test',
+				ANG_Description__c = 'Risk Event Test',
+				ANG_Expiration__c = 24,
+				ANG_Risk_ID__c = 'testRiskId',
+				ANG_Agency_Risk_Calculation__c = rule.Id,
+				Limit_Cash_conditions__c = false
+			);
+		insert ret;
+
+		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
+				ANG_AccountId__c = acct2.id,
+				ANG_Risk_Type__c = ret.id,
+				ANG_Issued_Date__c = System.today(),
+				ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE
+			);
+
+		insert re1;
+
+		AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+		insert ah1;
+		AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c = ah1.id, Child_Account__c = acct.id,Parent_Account__c = acct2.id);
+		insert ar1;
+
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+
+		insert new List<Agency_Authorization__c>{
+			new Agency_Authorization__c(Account__c = acct2.Id, 
+				ANG_FormOfPayment_ID__c = 'CA', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRT),
+
+			new Agency_Authorization__c(Account__c = acct2.Id, 
+				ANG_FormOfPayment_ID__c = 'EP', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRT)
+		};
+
+		Contact cont = new Contact(
+				AccountId = acct.id,
+				Firstname = 'Richard',
+				Lastname = 'Vaughan',
+				Phone = '666123456',
+				MobilePhone = '911111111',
+				Email = 'richard.vaughan@test.com',
+				Financial_Assessment_Contact__c = false
+			);
+
+		insert cont;
+
+
+
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = acct.Id,
+			Process__c = AMS_Utils.ANGPARTCONVERTMCTOST,
+			RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES,
+			Status__c = 'Open',
+			STEP10__c = 'Passed',
+			New_parent__c = acct2.id
+		);
+
+		insert oscar;
+		Account acct3 =
+			[SELECT
+				Id,
+				Name,
+				ParentId,
+				IATA_ISO_Country__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c,
+				Location_Class__c,
+				ANG_Accreditation_Model__c,
+				Location_Type__c
+			 FROM
+			 	Account
+			 WHERE
+			 	Name = 'Account AE3 H1'
+			 LIMIT 1
+			];
+			
+		ID rtAgencyInvolved =RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
+		List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = acct3.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = acct2.Id));
+
+		insert agenciesinvolved;
+		
+		Case oscarCase = new Case();
+		oscarCase.Oscar__c = oscar.Id;
+		oscarCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
+		oscarCase.AccountId = acct.Id;
+		oscarCase.ContactId = cont.Id;
+		insert oscarCase;
+
+		loadCredentials();
+
+		AmazonFile__c aFile = new AmazonFile__c(
+			Full_Name_Unique__c = 'Attachment Required',
+			Case__c = oscarCase.Id
+		);
+
+		insert aFile;
+
+		AMS_Pax_Accreditation_Form__c staging = new AMS_Pax_Accreditation_Form__c();
+
+		staging.RecordTypeId = AMS_Utils.RECTYPE_NEWGEN_CHANGES_PAX;
+		staging.Account_Name__c = acct.Name;
+		staging.ISSP_AMS_Legal_Status__c = 'Association';
+		staging.Branch_Office_Country__c = acct.IATA_ISO_Country__c;
+		staging.Branch_Office_Street_name_number__c = 'sdfsdf';
+		staging.Branch_Office_City__c = 'sdfsdfdf';
+		staging.IATA_ISO_State__c = acct.Iso_State__c;
+		staging.Branch_Office_Email__c = 'sdfsdfgdg@f3434.com';
+		staging.Branch_Office_Phone__c = '123123123';
+		staging.ISSP_AMS_Premises_located_at_airport__c = 'No';
+		staging.Abbreviated_name__c = 'Multicountry ';
+		staging.Abbreviated_Address__c = 'sdfsdf';
+		staging.Remittance_frequency__c = 'M';
+		staging.Solicitation_Flag__c = false;
+		staging.Location_Class__c = acct.Location_Class__c;
+		staging.Location_Type__c = acct.Location_Type__c;
+		staging.SAAM_Case__c = oscarCase.Id;
+		staging.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		staging.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
+
+		insert staging;
+
+		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = staging.Id,
+			First_name__c = 'Richard',
+			Last_name__c = 'Vaughan',
+			Agency_owner__c = true,
+			Email__c = 'richard.vaughan@test.com',
+			PhoneNational__c = '123123123',
+			Phone__c = '123123123',
+			Contact__c = cont.Id,
+			Financial_interest__c = 100,
+			RecordTypeId = AMS_Utils.AccreditationContactPersonRT
+		);
+
+		insert acontact;
+
+		Set<Id> accountsInvolvedSet = new Set<Id> {acct.Id, acct.ParentId};
+
+		oscar.AMS_Online_Accreditation__c = staging.Id;
+		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		update oscar;
+
+		Test.startTest();
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+		update oscar;
+		
+		oscar.STEP12__c = AMS_Utils.PASSED;
+		oscar.STEP15__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		List<Agency_Applied_Change_code__c> appliedChangeCodesLst = new List<Agency_Applied_Change_code__c>(
+			[SELECT
+				Id,
+				Account__c,
+				Change_Code__c
+			 FROM
+			 	Agency_Applied_Change_code__c
+			 WHERE
+			 	Account__c IN :accountsInvolvedSet
+			]
+		);
+
+        System.assertEquals(appliedChangeCodesLst.size(), accountsInvolvedSet.size());
+
+		Test.stopTest();
+
+	}
+
+	@isTest static void changeOfLocationTypePartConvertionLTTest(){
+		insert new ANG_AgencyChangesConfig__c(Name = 'MulticountryToStandardConversion', 
+			TCA_Sanity_check__c = 'CVL', 
+			TCA_Application_withdrawal__c = 'CWD', 
+			TCA_Manager_approval__c = 'CVF',
+			TC_Hierarchy__c = false,
+			Valid_Accreditation_Models__c = 'Cashless',
+			TC_Conversion__c = true);
+
+		 	AMS_ChangeCodes__c cdlCode = new AMS_ChangeCodes__c(
+		 		Name = 'CDL',
+		 		Account_status_change__c = '8;9',
+		 		Billable__c = true,
+		 		Change_Code__c = 'CDL',
+		 		Reason_Code_Description__c = 'CHANGE IN PROCESS',
+		 		Reason_Code__c = '81',
+		 		Integration_RecId__c = 'C',
+		 		Class_Type__c = 'P',
+		 		Billable_Location_Class__c = 'P;D'
+		 	);
+
+		 	AMS_ChangeCodes__c cdfCode = new AMS_ChangeCodes__c(
+		 		Name = 'CDF',
+		 		Account_status_change__c = '9;8',
+		 		Change_Code__c = 'CDF',
+		 		Reason_Code_Description__c = 'ACCREDITED-MEET-STANDARDS',
+		 		Reason_Code__c = '91',
+		 		Integration_RecId__c = 'C',
+		 		Class_Type__c = 'P'
+		 	);
+
+		 	AMS_ChangeCodes__c cwdCode = new AMS_ChangeCodes__c(
+		 		Name = 'CWD',
+		 		Account_status_change__c = '9;8',
+		 		Bulletin_Memo_Text__c = 'ACCREDITED-MEET-STANDARDS',
+		 		Reason_Code__c = '91',
+		 		Change_Code__c = 'CWD',
+		 		Integration_RecId__c = 'C',
+		 		Published_in_bulletin__c = true
+		 	);
+
+		 	insert new List<AMS_ChangeCodes__c>{cdlCode, cdfCode, cwdCode};
+
+		Account acct =
+			[SELECT
+				Id,
+				Name,
+				ParentId,
+				IATA_ISO_Country__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c,
+				ANG_Accreditation_Model__c,
+				Location_Class__c,
+				Location_Type__c
+			 FROM
+			 	Account
+			 WHERE
+			 	ANG_IsNewGenAgency__c = TRUE
+			 AND
+			 	Location_Type__c = :AMS_Utils.AE
+			 LIMIT 1
+			];
+
+		Account acct2 =
+			[SELECT
+				Id,
+				Name,
+				ParentId,
+				IATA_ISO_Country__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c,
+				ANG_Accreditation_Model__c,
+				Location_Class__c,
+				Location_Type__c
+			 FROM
+			 	Account
+			 WHERE
+			 	Name = 'Main HE Account H1'
+			 LIMIT 1
+			];
+
+		ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(
+			ANG_Order__c = 1,
+			ANG_Occurrence_Num__c = 1,
+			ANG_Adjusted__c = ANG_Risk_Helper.ADJ_NO,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = ANG_Risk_Helper.RECTYPE_RULES);
+		
+		insert rule;
+
+		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
+				Name = 'Risk Event Test',
+				ANG_Description__c = 'Risk Event Test',
+				ANG_Expiration__c = 24,
+				ANG_Risk_ID__c = 'testRiskId',
+				ANG_Agency_Risk_Calculation__c = rule.Id,
+				Limit_Cash_conditions__c = false
+			);
+		insert ret;
+
+		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
+				ANG_AccountId__c = acct2.id,
+				ANG_Risk_Type__c = ret.id,
+				ANG_Issued_Date__c = System.today(),
+				ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE
+			);
+
+		insert re1;
+
+		AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+		insert ah1;
+		AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c = ah1.id, Child_Account__c = acct.id,Parent_Account__c = acct2.id);
+		insert ar1;
+
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+
+		insert new List<Agency_Authorization__c>{
+			new Agency_Authorization__c(Account__c = acct2.Id, 
+				ANG_FormOfPayment_ID__c = 'CA', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRT),
+
+			new Agency_Authorization__c(Account__c = acct2.Id, 
+				ANG_FormOfPayment_ID__c = 'EP', 
+				Status__c = 'Non-Active', 
+				RecordTypeId = formOfPaymentRT)
+		};
+
+		Contact cont = new Contact(
+				AccountId = acct.id,
+				Firstname = 'Richard',
+				Lastname = 'Vaughan',
+				Phone = '666123456',
+				MobilePhone = '911111111',
+				Email = 'richard.vaughan@test.com',
+				Financial_Assessment_Contact__c = false
+			);
+
+		insert cont;
+
+
+
+		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
+
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
+			Account__c = acct.Id,
+			Process__c = AMS_Utils.ANGPARTCONVERTMCTOLT,
+			RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES,
+			Status__c = 'Open',
+			STEP10__c = 'Passed',
+			New_parent__c = acct2.id
+		);
+
+		insert oscar;
+		Account acct3 =
+			[SELECT
+				Id,
+				Name,
+				ParentId,
+				IATA_ISO_Country__c,
+				IATA_ISO_Country__r.AMS_Settlement_System__c,
+				Iso_State__c,
+				Location_Class__c,
+				ANG_Accreditation_Model__c,
+				Location_Type__c
+			 FROM
+			 	Account
+			 WHERE
+			 	Name = 'Account AE3 H1'
+			 LIMIT 1
+			];
+			
+		ID rtAgencyInvolved =RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
+		List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
+
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = acct3.Id));
+		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = oscar.Id, Account__c = acct2.Id));
+
+		insert agenciesinvolved;
+		
+		Case oscarCase = new Case();
+		oscarCase.Oscar__c = oscar.Id;
+		oscarCase.RecordTypeId = AMS_Utils.RECTYPE_OSCARCOMM;
+		oscarCase.AccountId = acct.Id;
+		oscarCase.ContactId = cont.Id;
+		insert oscarCase;
+
+		loadCredentials();
+
+		AmazonFile__c aFile = new AmazonFile__c(
+			Full_Name_Unique__c = 'Attachment Required',
+			Case__c = oscarCase.Id
+		);
+
+		insert aFile;
+
+		AMS_Pax_Accreditation_Form__c staging = new AMS_Pax_Accreditation_Form__c();
+
+		staging.RecordTypeId = AMS_Utils.RECTYPE_NEWGEN_CHANGES_PAX;
+		staging.Account_Name__c = acct.Name;
+		staging.ISSP_AMS_Legal_Status__c = 'Association';
+		staging.Branch_Office_Country__c = acct.IATA_ISO_Country__c;
+		staging.Branch_Office_Street_name_number__c = 'sdfsdf';
+		staging.Branch_Office_City__c = 'sdfsdfdf';
+		staging.IATA_ISO_State__c = acct.Iso_State__c;
+		staging.Branch_Office_Email__c = 'sdfsdfgdg@f3434.com';
+		staging.Branch_Office_Phone__c = '123123123';
+		staging.ISSP_AMS_Premises_located_at_airport__c = 'No';
+		staging.Abbreviated_name__c = 'Multicountry ';
+		staging.Abbreviated_Address__c = 'sdfsdf';
+		staging.Remittance_frequency__c = 'M';
+		staging.Solicitation_Flag__c = false;
+		staging.Location_Class__c = acct.Location_Class__c;
+		staging.Location_Type__c = acct.Location_Type__c;
+		staging.SAAM_Case__c = oscarCase.Id;
+		staging.ANG_Accreditation_type__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		staging.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
+
+		insert staging;
+
+		AMS_Accreditation_Contact__c acontact = new AMS_Accreditation_Contact__c(
+			AMS_Pax_Accreditation_Form__c = staging.Id,
+			First_name__c = 'Richard',
+			Last_name__c = 'Vaughan',
+			Agency_owner__c = true,
+			Email__c = 'richard.vaughan@test.com',
+			PhoneNational__c = '123123123',
+			Phone__c = '123123123',
+			Contact__c = cont.Id,
+			Financial_interest__c = 100,
+			RecordTypeId = AMS_Utils.AccreditationContactPersonRT
+		);
+
+		insert acontact;
+
+		Set<Id> accountsInvolvedSet = new Set<Id> {acct.Id, acct.ParentId};
+
+		oscar.AMS_Online_Accreditation__c = staging.Id;
+		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_HIERARCHY;
+		update oscar;
+
+		Test.startTest();
+		oscar.STEP6__c = AMS_Utils.PASSED;
+		oscar.Is_PCI_compliant__c = 'Yes';
+		oscar.Change_effective_as_of__c = System.today();
+		oscar.ANG_PCI_compliance_expiry_date__c = System.today();
+		update oscar;
+		
+		oscar.STEP12__c = AMS_Utils.PASSED;
+		oscar.STEP15__c = AMS_Utils.PASSED;
+		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
+		update oscar;
+
+		List<Agency_Applied_Change_code__c> appliedChangeCodesLst = new List<Agency_Applied_Change_code__c>(
+			[SELECT
+				Id,
+				Account__c,
+				Change_Code__c
+			 FROM
+			 	Agency_Applied_Change_code__c
+			 WHERE
+			 	Account__c IN :accountsInvolvedSet
+			]
+		);
+
+        System.assertEquals(appliedChangeCodesLst.size(), accountsInvolvedSet.size());
+		Test.stopTest();
+	}
 }

@@ -1404,7 +1404,7 @@ private class ANG_MulticountryAgencyChangesTest {
 		con.save();
 
 		Test.startTest();
-
+		oscar.New_parent__c = newParentAcct.Id;
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.Change_effective_as_of__c = System.today();
 
@@ -1624,6 +1624,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.startTest();
 
+		oscar.New_parent__c = newParentAcct.Id;
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.Change_effective_as_of__c = System.today();
 
@@ -1724,6 +1725,7 @@ private class ANG_MulticountryAgencyChangesTest {
 
 		Test.startTest();
 
+		oscar.New_parent__c = newParentAcct.Id;
 		oscar.STEP6__c = AMS_Utils.PASSED;
 		oscar.Change_effective_as_of__c = System.today();
 
