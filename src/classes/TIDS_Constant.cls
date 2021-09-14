@@ -59,6 +59,19 @@ public without sharing class TIDS_Constant {
 	public final static String NEW_BR='NEW_BR';
 	public final static String NEW_VB='NEW_VB';
 	public final static String NEW_HO='NEW_HO';
+
+	public final static String RELINQ_HO = 'request-relinquish-ho';
+	public final static String RELINQ_VB = 'request-relinquish-vb';
+	public final static String RELINQ_BR = 'request-relinquish-br';
+	public final static String REINSTATE_HO = 'request-reinstate-ho';
+	public final static String REINSTATE_BR = 'request-reinstate-br';
+	public final static String REINSTATE_VB = 'request-reinstate-vb';
+
+	public final static String CHG_NAME='chg-name-company';
+	public final static String CHG_ADDRESS='chg-address-contact';
+	public final static String CHG_PROFILE='chg-business-profile-specialization';
+	public final static String RQT_VIRTUALB='request-virtual-branch-service';
+
 	public final static String TIDS_T='T';
 	public final static String TIDS_BR='BR';
 	public final static String TIDS_VB='VB';
@@ -105,11 +118,6 @@ public without sharing class TIDS_Constant {
 	public final static String IS_TERMINATED='Terminated';
 	public final static String IS_REJECTED='Rejected';
 	public final static String IS_APPREJECTED='Application Rejected';
-
-	public final static String CHG_NAME='chg-name-company';
-	public final static String CHG_ADDRESS='chg-address-contact';
-	public final static String CHG_PROFILE='chg-business-profile-specialization';
-	public final static String RQT_VIRTUALB='request-virtual-branch-service';
 
 	public final static String TIDS_ACTION_ADD='add';
 	public final static String TIDS_ACTION_REMOVE='remove';

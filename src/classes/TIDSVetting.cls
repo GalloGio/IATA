@@ -71,11 +71,14 @@ public class TIDSVetting {
 						TidsBatchRelinquishment nb = new TidsBatchRelinquishment();
 						nb.caseId=vcase.Id;
 						Database.executeBatch(nb,100);
+						TIDS_Controller.createChangeCode(mcase[0].AccountId, TIDS_Constant.RELINQ_HO);
 					}else{
 						TidsBatchHelper.finishBuilderRelinquishment(vcase.Id);
+						TIDS_Controller.createChangeCode(mcase[0].AccountId, TIDS_Constant.RELINQ_BR);
 					}
 				}else if (isReinstateRequest){
 					TidsBatchHelper.finishBuilderReinstatement(vcase.Id);
+					TIDS_Controller.createChangeCode(mcase[0].AccountId, TIDS_Constant.REINSTATE_HO);
 				}
 			}
 		} catch (exception e){
