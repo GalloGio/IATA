@@ -27244,9 +27244,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>CampaignMember.Assigned_User__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -27256,7 +27256,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMember.Joined__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -60607,11 +60607,19 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AMS_OSCAR__c-OSCAR Layout</layout>
+        <recordType>AMS_OSCAR__c.ANG_Part_Convert_MC_To_LT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AMS_OSCAR__c-OSCAR Layout</layout>
         <recordType>AMS_OSCAR__c.NEW</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AMS_OSCAR__c-OSCAR Layout</layout>
         <recordType>AMS_OSCAR__c.NGFormsOfPayment</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AMS_OSCAR__c-OSCAR Layout</layout>
+        <recordType>AMS_OSCAR__c.NG_Part_Convert_MC_To_ST</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AMS_OSCAR__c-OSCAR Layout Changes</layout>
@@ -67313,6 +67321,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>AMS_OSCAR__c.ANG_Part_Convert_MC_To_LT</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>AMS_OSCAR__c.BANK_ACCOUNT_SETUP</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -67349,6 +67362,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_OSCAR__c.NGFormsOfPayment</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>AMS_OSCAR__c.NG_Part_Convert_MC_To_ST</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -70704,10 +70722,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ApexRestServices</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>ApiEnabled</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

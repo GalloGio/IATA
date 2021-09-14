@@ -163,17 +163,6 @@
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>
-        <fullName>Account_Management_Bulgaria</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Bulgaria</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>CountryManagerBulgaria</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>CountryManagerBulgaria</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
         <fullName>Account_Management_Canada</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Account Management Canada</label>
@@ -480,17 +469,6 @@
         </sharedTo>
         <sharedFrom>
             <roleAndSubordinatesInternal>CountryManagerJapan</roleAndSubordinatesInternal>
-        </sharedFrom>
-    </sharingOwnerRules>
-    <sharingOwnerRules>
-        <fullName>Account_Management_Kazakhstan_Kyrgyzstan_Uzbekistan_and_Tajikistan</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>Account Management Kazakhstan, Kyrgyzstan, Uzbekistan and Tajikistan</label>
-        <sharedTo>
-            <roleAndSubordinatesInternal>Country_Manager_Kazakhstan_Kyrgyzstan_Uzbekistan_and_Tajikistan_BKP</roleAndSubordinatesInternal>
-        </sharedTo>
-        <sharedFrom>
-            <roleAndSubordinatesInternal>Country_Manager_Kazakhstan_Kyrgyzstan_Uzbekistan_and_Tajikistan_BKP</roleAndSubordinatesInternal>
         </sharedFrom>
     </sharingOwnerRules>
     <sharingOwnerRules>

@@ -8,76 +8,6 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Id</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>true</checkedByDefault>
-            <field>Name</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CurrencyIsoCode</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CreatedDate</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CreatedBy</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>LastModifiedDate</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>LastModifiedBy</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>User</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ServicePresenceStatus</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>StatusStartDate</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>ConfiguredCapacity</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>StatusEndDate</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>IsAway</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>IdleDuration</field>
-            <table>UserServicePresence</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>AtCapacityDuration</field>
             <table>UserServicePresence</table>
         </columns>
@@ -88,7 +18,62 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ConfiguredCapacity</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CurrencyIsoCode</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IdleDuration</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsAway</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>IsCurrentState</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PresenceUserConfig</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ServicePresenceStatus</field>
             <table>UserServicePresence</table>
         </columns>
         <columns>
@@ -98,7 +83,27 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>PresenceUserConfig</field>
+            <field>StatusEndDate</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>StatusStartDate</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>User</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>UserServicePresence</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ServicePresenceStatus.MasterLabel</field>
             <table>UserServicePresence</table>
         </columns>
         <masterLabel>User Presences</masterLabel>
