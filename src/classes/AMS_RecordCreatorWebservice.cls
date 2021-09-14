@@ -227,6 +227,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 		return true;
 	}
 
+	public static boolean publicCreateHierarchy(String accountId, String typeOfProcess){
+		return createHierarchy(accountId, typeOfProcess);
+	}
+
 	private static boolean createHierarchy(String accountId, String typeOfProcess){
 
 		if(newgenChildProcess.contains(typeOfProcess)){
