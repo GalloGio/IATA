@@ -50500,6 +50500,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Opportunity.Make_or_Break__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Opportunity.New_Business_Booking__c</field>
         <readable>false</readable>
     </fieldPermissions>

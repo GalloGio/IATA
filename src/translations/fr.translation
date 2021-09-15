@@ -43191,6 +43191,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <name>Contracts</name>
         </sections>
         <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+        <sections>
             <label><!-- Opportunities (Future renewal) --></label>
             <name>Opportunities (Future renewal)</name>
         </sections>
