@@ -4842,10 +4842,14 @@ public class AMS_OSCARTriggerHandler {
 				if(acc.ANG_FA_Opt_out__c != valueToAgency ){
 					Account a = new Account(Id = oscar.Account__c);
 					a.ANG_FA_Opt_out__c = valueToAgency;
+					if(valueToAgency)
+						a.ANG_HE_RiskStatus__c = 'Not Applicable';
 					accountsToUpdate.add(a);
 
 					for(Account acct: acc.ChildAccounts){
 						acct.ANG_FA_Opt_out__c = valueToAgency;
+						if(valueToAgency)
+							a.ANG_HE_RiskStatus__c = 'Not Applicable';
 						accountsToUpdate.add(acct);
 					}
 				}
