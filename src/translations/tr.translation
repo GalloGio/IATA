@@ -43153,6 +43153,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Contracts</name>
         </sections>
         <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+        <sections>
             <label><!-- Opportunities (Future renewal) --></label>
             <name>Opportunities (Future renewal)</name>
         </sections>

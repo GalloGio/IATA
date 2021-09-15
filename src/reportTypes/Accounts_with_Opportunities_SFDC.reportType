@@ -758,6 +758,11 @@
             <field>IsWon</field>
             <table>Account.Opportunities</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Make_or_Break__c</field>
+            <table>Account.Opportunities</table>
+        </columns>
         <masterLabel>Opportunities</masterLabel>
     </sections>
 </ReportType>

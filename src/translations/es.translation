@@ -43180,6 +43180,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <name>Contracts</name>
         </sections>
         <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+        <sections>
             <label><!-- Opportunities (Future renewal) --></label>
             <name>Opportunities (Future renewal)</name>
         </sections>

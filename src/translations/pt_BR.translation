@@ -43155,6 +43155,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>Contracts</name>
         </sections>
         <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+        <sections>
             <label><!-- Opportunities (Future renewal) --></label>
             <name>Opportunities (Future renewal)</name>
         </sections>
