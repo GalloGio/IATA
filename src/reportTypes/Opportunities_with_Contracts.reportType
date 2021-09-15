@@ -840,4 +840,12 @@
         </columns>
         <masterLabel>Opportunities (Future renewal)</masterLabel>
     </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Make_or_Break__c</field>
+            <table>Contract.Opportunities1__r</table>
+        </columns>
+        <masterLabel>Opportunities</masterLabel>
+    </sections>
 </ReportType>

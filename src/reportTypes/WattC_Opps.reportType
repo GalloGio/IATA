@@ -451,6 +451,11 @@
             <field>Related_Contact__c</field>
             <table>Opportunity</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Make_or_Break__c</field>
+            <table>Opportunity</table>
+        </columns>
         <masterLabel>Opportunities</masterLabel>
     </sections>
 </ReportType>

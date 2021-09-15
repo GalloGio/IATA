@@ -43146,6 +43146,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <name>Contracts</name>
         </sections>
         <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+        <sections>
             <label><!-- Opportunities (Future renewal) --></label>
             <name>Opportunities (Future renewal)</name>
         </sections>
