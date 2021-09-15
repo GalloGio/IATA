@@ -129,12 +129,6 @@ public class ISSP_ANG_CodeSearch {
 					RHCValueForSpecialCountry = specialCountries[0].Remittance_Holding_Capacity_Value__c;
 				}
 
-				List<ANG_RHC_Information__c> rhcInfos = [SELECT Id, ANG_CashCondition__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :reqAgency.Id];
-
-				if (rhcInfos.size() > 0) {
-					rhcAgencyInfo = rhcInfos[0];
-				}
-
 				if(reqAgency.Location_Type__c == Ams_Utils.AW || reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 					if(reqAgency.Location_Type__c == Ams_Utils.AE || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 						auxReplacement = 'an ' + Label.ISSP_ANG_ASSOCIATE_ENTITY;
@@ -173,6 +167,12 @@ public class ISSP_ANG_CodeSearch {
 
 				} else {
 					this.agency = reqAgency;
+				}
+
+				List<ANG_RHC_Information__c> rhcInfos = [SELECT Id, ANG_CashCondition__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :this.agency.Id];
+
+				if (rhcInfos.size() > 0) {
+					rhcAgencyInfo = rhcInfos[0];
 				}
 
 				if (airline.Field_Head_Office__c == 'Branch') {
