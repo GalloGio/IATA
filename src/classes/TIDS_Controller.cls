@@ -109,8 +109,11 @@ public without sharing class TIDS_Controller {
 				tidsGenerateIATACode(tidsCase.contactId, caseId, null, false);
 				if (TIDSUtil.iataCodeError.hasAnError){
 					return TIDSUtil.iataCodeError;
+				}else{
+					manageHierarchy(tids.userInfo.tidsAccount.Id, tids.applicationType);
 				}
 			}
+			createChangeCode(tids.userInfo.tidsAccount.Id, tids.applicationType);
 		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
 			
 			tidsCase.Decision__c = TIDS_Constant.IS_REJECTED.toUpperCase();
@@ -1220,6 +1223,46 @@ public without sharing class TIDS_Controller {
 		private void getBusinessProfile(){
 			List<vslabel> values = this.sections.BusinessSpecialization.values.percentageBreakdown.values;
 			setBusinessCodes(values, false, true, '');
+		}
+	}
+
+	@future
+	private static void manageHierarchy(string accountId, string applicationType){
+		if(applicationType == TIDS_Constant.NEW_HO){
+			insert( new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'Hierarchy', Main_account__c = accountId));
+
+		}else{
+			boolean bIsHiearchyCreated = AMS_RecordCreatorWebservice.publicCreateHierarchy(accountId, applicationType);
+		}
+	}
+
+	@future
+	public static void createChangeCode(string accountId, string applicationType){
+		string sSettingName = '';
+		if(applicationType == TIDS_Constant.NEW_HO || applicationType == TIDS_Constant.NEW_BR || applicationType == TIDS_Constant.NEW_VB){
+			sSettingName = 'TIDS-FIN';
+		}
+		if(applicationType==TIDS_Constant.CHG_NAME || applicationType==TIDS_Constant.CHG_ADDRESS){
+			sSettingName = 'TIDS-CHF';
+		}
+		if(applicationType==TIDS_Constant.RELINQ_HO || applicationType==TIDS_Constant.RELINQ_BR || applicationType==TIDS_Constant.RELINQ_VB){
+			sSettingName = 'TIDS-CLO';
+		}
+		if(applicationType==TIDS_Constant.REINSTATE_HO || applicationType==TIDS_Constant.REINSTATE_BR || applicationType==TIDS_Constant.REINSTATE_VB){
+			sSettingName = 'TIDS-REI';
+		}
+
+		if(sSettingName!=''){
+			AMS_OSCAR_JSON.ChangeCode cc = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(sSettingName, '', '', null, '');
+			//DO NOT SET REASON CODE/DESCRIPTION OR ACCUONT STATUS. Otherwhise, Last Org Date Change gets updated, and we don't want it.
+			Agency_Applied_Change_code__c changeCode = new Agency_Applied_Change_code__c(
+						Account__c = accountId
+						,Active__c = true
+						,Bulletin_Information__c = cc.memoText
+						,Change_Code__c = cc.name
+						,To_Publish_in_e_Bulletin__c = cc.publishedOnEBulletin
+						);
+			insert changeCode;
 		}
 	}
 }
