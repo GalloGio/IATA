@@ -43152,6 +43152,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <name>Contracts</name>
         </sections>
         <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+        <sections>
             <label><!-- Opportunities (Future renewal) --></label>
             <name>Opportunities (Future renewal)</name>
         </sections>
