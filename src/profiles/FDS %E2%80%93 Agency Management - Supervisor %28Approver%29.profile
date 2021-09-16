@@ -38810,12 +38810,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Financial_Institution__c.Financial_Security_Country_Coverage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Financial_Institution__c.Financial_Security_Regional_Coverage__c</field>
         <readable>true</readable>
     </fieldPermissions>

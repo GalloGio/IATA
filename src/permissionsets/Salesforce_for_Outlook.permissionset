@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to grant access to the Salesforce for Outlook connected app, and therefore access to Salesforce for Outlook application.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Salesforce for Outlook</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiEnabled</name>
+    </userPermissions>
+</PermissionSet>
