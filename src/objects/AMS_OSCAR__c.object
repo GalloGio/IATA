@@ -77798,6 +77798,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>

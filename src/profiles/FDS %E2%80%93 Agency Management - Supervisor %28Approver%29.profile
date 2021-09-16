@@ -38810,12 +38810,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Financial_Institution__c.Financial_Security_Country_Coverage__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Financial_Institution__c.Financial_Security_Regional_Coverage__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50507,6 +50507,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Opportunity.Main_Loss_Reason__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Opportunity.Make_or_Break__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
