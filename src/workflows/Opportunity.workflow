@@ -161,6 +161,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>orlikr@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>padillab@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -198,10 +202,6 @@
         </recipients>
         <recipients>
             <recipient>wattc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>zhangln@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -455,6 +455,10 @@
         </recipients>
         <recipients>
             <recipient>meuniera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>orlikr@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to grant access to the Microsoft Power Query connected app, and therefore access to Microsoft Power Query application.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Microsoft Power Query</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiEnabled</name>
+    </userPermissions>
+</PermissionSet>
