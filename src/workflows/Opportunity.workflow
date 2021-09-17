@@ -185,6 +185,10 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>simonovi@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>siouffis@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -471,6 +475,10 @@
         </recipients>
         <recipients>
             <recipient>shemid2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>simonovi@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
