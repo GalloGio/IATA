@@ -121,6 +121,10 @@
                 <behavior>Edit</behavior>
                 <field>Related_Contact__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Make_or_Break__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
