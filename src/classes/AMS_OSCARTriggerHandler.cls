@@ -3985,7 +3985,7 @@ public class AMS_OSCARTriggerHandler {
 					updatedOSCAR.addError('Cannot pass the finalization step until the Risk Event button is clicked.');
 				}
 
-				if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
+				if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && (updatedOscar.STEP36__c != 'Passed' && updatedOscar.STEP36__c != AMS_Utils.NOT_APPLICABLE)){
 					updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step is completed.');
 				}
 
