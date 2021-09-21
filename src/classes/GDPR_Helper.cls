@@ -103,7 +103,7 @@ public without sharing class GDPR_Helper {
 					//Send an email to the entered email that redirects to a web to lead form
 
 					String token = String.valueOf(System.TODAY()).left(10)+email.toLowerCase(); //Ex: 2018.12.24myemail@gmail.com
-					String encryptedToken = Comm_User_Helper.EncryptString(token);
+					String encryptedToken = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(token),'UTF-8');
 					String link = Site.getBaseURL()+'/s/guest-information?token='+encryptedToken;
 					sendAccessEmailUnknown(email, link);
 
@@ -291,8 +291,8 @@ public without sharing class GDPR_Helper {
 		update ind;
 
 		//Encrypt token
-		String encryptedToken = Comm_User_Helper.EncryptString(token);
-		String encryptedId = Comm_User_Helper.EncryptString(individualId);
+		String encryptedToken = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(token),'UTF-8');
+		String encryptedId = EncodingUtil.urlEncode(Comm_User_Helper.EncryptString(individualId),'UTF-8');
 
 		//Send Email
 		String link = Site.getBaseURL()+'/s/guest?token='+encryptedToken+'&indId='+encryptedId;
@@ -307,7 +307,7 @@ public without sharing class GDPR_Helper {
 
 		if(isGuest) {
 			// Decrypt token to get individual Id in clear
-			individualId = Comm_User_Helper.DecryptString(individualId);
+			individualId = EncodingUtil.urlDecode(Comm_User_Helper.DecryptString(individualId),'UTF-8');
 			uiw.individualId = individualId;
 		}
 
