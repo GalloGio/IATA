@@ -12,12 +12,6 @@ private class AirportISServiceTest {
 	}
 
 	@IsTest
-	static void fakeMethod(){
-		AirportISService airportISService = new AirportISService();
-		airportISService.fakemethod();
-	}
-
-	@IsTest
 	static void testManageUserOnboarding(){
 		PortalApplicationRights portalApplicationRights = new PortalApplicationRights();
 
@@ -99,5 +93,16 @@ private class AirportISServiceTest {
 		//test account role unassignment
 		accountRoleList = [SELECT Id FROM Account_Role__c WHERE Status__c = :accountRoles.STATUSACTIVE];
 		System.assertEquals(0, accountRoleList.size(), 'Expected 0 Account Roles');
+	}
+
+	@IsTest
+	static void testException(){
+		try{
+			//this should throw an exception in the airportisservice class
+			AirportISService.manageUserOnboarding(null);
+		} catch(AirportISService.AirportISServiceException e){
+			//an exception should be thrown
+			System.assert(true);
+		}
 	}
 }
