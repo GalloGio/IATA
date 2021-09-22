@@ -1,0 +1,81 @@
+<template>
+    <div class={mainDivClass}>
+
+        <div class="slds-grid slds-size_1-of-1">
+            <div if:true={isCriticalVariation} class="slds-size_1-of-12 slds-align_absolute-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <use xlink:href={resources.icons.alert}></use>
+                </svg>
+            </div>
+            
+            <div if:true={isNonCriticalVariation} class="icon-col slds-size_1-of-12 slds-align_absolute-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <use xlink:href={resources.icons.alert2}></use>
+                </svg>
+            </div>
+
+            <div class="procedure-col slds-size_4-of-12">
+                <div class="text-box slds-truncate" title={procedureCompliance.variation}>{procedureCompliance.variation}</div>
+            </div>
+
+            <div class="icon-col slds-size_1-of-12 slds-align_absolute-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <use xlink:href={resources.icons.doubleArrow}></use>
+                </svg>
+            </div>
+
+            <div class="procedure-col slds-size_4-of-12">
+                <div class="text-box slds-truncate" title={igomProcedureName}>{igomProcedureName}</div>
+            </div>
+
+            <div class={procedureActionsClass} onclick={toggleDetails}>
+                <span class="slds-col slds-align_absolute-center slds-text-align_center">
+                    <svg class={commentClass} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <use xlink:href={resources.icons.comment}></use>
+                    </svg>
+                </span>
+                <span class="slds-col slds-align_absolute-center slds-text-align_center">
+                    <svg class={attachmentClass} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <use xlink:href={resources.icons.attachment}></use>
+                    </svg>
+                </span>
+                <span class="slds-col slds-align_absolute-center slds-text-align_center">
+                    <svg if:true={folded} class={foldIconClass} xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                        <use xlink:href={resources.icons.unfold}></use>
+                    </svg>
+                    <svg if:false={folded} class={foldIconClass} xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                        <use xlink:href={resources.icons.fold}></use>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div if:false={folded} class="procedure-details slds-size_1-of-1 slds-grid">
+            <div class="slds-size_1-of-12"></div>
+            <div class="slds-size_11-of-12">
+                <template if:true={hasVariationComments}>
+                    <p class="label slds-m-top_medium">Variation comments</p>
+                    <textarea class="text-box slds-size_1-of-1">
+                        {procedureCompliance.variationComments}
+                    </textarea>
+                </template>
+                <template if:true={hasMultilangVariationComments}>
+                    <p class="label slds-m-top_medium">Variation comments in {procedureCompliance.variationCommentLang}</p>
+                    <textarea class="text-box slds-size_1-of-1">
+                        {procedureCompliance.variationAlternativeComments}
+                    </textarea>
+                </template>
+                <template if:true={hasAttachments}>
+                    <p class="label slds-m-top_medium">Attachments ({attachmentNum})</p>
+                    <template for:each={procedureCompliance.attachments} for:item="attachment">
+                        <div data-id={attachment.Id} data-name={attachment.Name} key={attachment.Id} class="file slds-p-around_medium" onclick={downloadAttachment}>
+                            <a href="#"><svg class="slds-m-right_medium" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                                <use xlink:href={resources.icons.attachment}></use>
+                            </svg>{attachment.Name}</a>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

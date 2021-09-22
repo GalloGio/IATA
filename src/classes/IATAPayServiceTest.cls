@@ -4,15 +4,11 @@ private class IATAPayServiceTest {
 	static void makeData(){
 		List<Account> accountList = TestDataFactory_Accounts.createDefaultAccounts(1);
 		insert accountList;
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
+		contactList.get(0).AccountId = accountList.get(0).Id;
+		contactList.get(1).AccountId = accountList.get(0).Id;
 		insert contactList;
 		insert TestDataFactory_PortalApplications.createDefaultPortalApplication(1);		
-	}
-
-	@IsTest
-	static void fakeMethod(){
-		IATAPayService iataPayService = new IATAPayService();
-		iataPayService.fakemethod();
 	}
 
 	@IsTest
@@ -97,5 +93,16 @@ private class IATAPayServiceTest {
 		//test account role unassignment
 		accountRoleList = [SELECT Id FROM Account_Role__c WHERE Status__c = :accountRoles.STATUSACTIVE];
 		System.assertEquals(0, accountRoleList.size(), 'Expected 0 Account Roles');
+	}
+
+	@IsTest
+	static void testException(){
+		try{
+			//this should throw an exception in the IATAPayService class
+			IATAPayService.manageUserOnboarding(null);
+		} catch(IATAPayService.IATAPayServiceException e){
+			//an exception should be thrown
+			System.assert(true);
+		}
 	}
 }

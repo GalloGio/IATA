@@ -1,0 +1,20 @@
+<template>
+    <div class="col-12 box-shadow-col p-4">
+        <div class="slds-grid">
+            <template if:false={allowDetailToggle}>
+                <div class="slds-size_1-of-1"><p>{name}</p></div>
+            </template>
+            <template if:true={allowDetailToggle}>
+                <div class="slds-size_1-of-2 pb-2"><a class="text-blue cursor-pt" onclick={viewDetail} title={viewDetailLabel}>{name}</a></div>
+                <div class="slds-size_1-of-2 slds-text-align_right"><a class="text-blue cursor-pt" onclick={viewDetail}>{viewDetailLabel}</a></div>
+            </template>
+        </div>
+        <canvas class="linechart" lwc:dom="manual" onclick={chartClick}></canvas>
+        <div if:false={_isChartJsInitialized} class="slds-col_padded slds-size_1-of-1">
+            ChartJs Not loaded yet
+        </div>
+        <div if:true={_showDetail} class="mt-3 detail-container">
+            <slot></slot>
+        </div>
+    </div>
+</template>

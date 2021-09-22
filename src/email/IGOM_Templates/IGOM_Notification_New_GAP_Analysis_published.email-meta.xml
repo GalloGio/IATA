@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification email when a new GAP Analysis has been published</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IGOM Notification - New GAP Analysis published</name>
+    <style>none</style>
+    <subject>New GAP Analysis published in IGOM</subject>
+    <textOnly>New GAP Published A new GAP has been published in {!StationName}
+
+The recently published GAP requires your attention regarding the following GAP Analysis Items:
+
+{!Notifications}
+
+{!ConfirmationText}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

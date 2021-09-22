@@ -1,0 +1,31 @@
+<template>
+    
+    <c-ig-modal class="upload-modal" onaccept={uploadModalAcceptHandler} accept-disabled={isUploadModalAcceptDisabled} disabled={isUploadModalDisabled}
+        header={label.custom.ig_upload_igom_document} accept-button-label={uploadModalButtonLabel} hide-cancel={isUploadComplete} remove-close={isUploadModelUploaded}>
+        <template if:true={isUploadModalFileSelectorShown}>
+            <c-ig-file-picker onfileselected={uploadModalFileSelected} onfileunselected={uploadModalFileUnselected}></c-ig-file-picker>
+        </template>
+
+        <template if:true={isUploadModelUploading}>
+            <lightning-progress-bar value={uploadModalProgress}></lightning-progress-bar>
+        </template>
+
+        <template if:true={isUploadModelUploaded}>
+            <div class="slds-text-align_center slds-p-around_medium">
+                <lightning-icon icon-name="utility:check" variant="success" size="x-large"></lightning-icon>
+                <h2>{label.custom.ig_upload_succesful}</h2>
+            </div>
+        </template>
+
+        <template if:true={isUploadModelUploadFailed}>
+            <div class="slds-text-align_center">
+                <lightning-icon icon-name="utility:warning" variant="error" size="x-large"></lightning-icon>
+                <h2>{label.custom.ig_upload_failed}</h2>
+                <p>{label.custom.ig_error_has_ocurred}</p>
+                <p>{uploadModalErrorDescription}</p>
+            </div>
+        </template>
+
+    </c-ig-modal>
+
+</template>

@@ -1,0 +1,30 @@
+<template>
+    <div class="logo-sidebar-menu">
+        <div class="col-4 m-auto text-right">
+            <img src={resources.images.svg.logoWhite}/>
+        </div>
+        <div class="col-8 m-auto">
+            <p class="title-sidebar">ONE SOURCE</p>
+        </div>  
+    </div> 
+    <ul class="list-unstyled background-dark-grey pt-4 mb-0">
+        <li class="sidebar-item" onclick={selectItem} data-action="Dashboard" if:true={isVisibleMenuDashboard}>
+            <span><lightning-icon icon-name="utility:all" variant="inverse" class="pr-3" size="small"></lightning-icon>{label.custom.ig_dashboard}</span>
+        </li>
+        <li class="sidebar-item" onclick={selectItem} data-action="GAP Analysis" if:true={isVisibleMenuGAPAnalysis}>
+            <span><lightning-icon icon-name="utility:graph" variant="inverse" class="pr-3" size="small"></lightning-icon>{label.custom.ig_gap_analysis}</span>
+        </li>
+        <li class="sidebar-item" onclick={selectItem} data-action="Notifications" if:true={isVisibleMenuNotifications}>
+            <span><lightning-icon icon-name="utility:notification" variant="inverse" class="pr-3" size="small"></lightning-icon>{label.custom.ig_notifications}</span>
+        </li>
+        <li class="sidebar-item" onclick={selectItem} data-action="Variation report" if:true={isVisibleMenuVariationReport}>
+            <span><lightning-icon icon-name="utility:change_record_type" variant="inverse" class="pr-3" size="small"></lightning-icon>{label.custom.ig_variation_report}</span>
+        </li>
+        <li class="sidebar-item" onclick={selectItem} data-action="IGOM Document Description" if:true={isVisibleMenuIGOMDocumentDescription}>
+            <span><lightning-icon icon-name="utility:note" variant="inverse" class="pr-3" size="small"></lightning-icon>{label.custom.ig_IGOM_document_description}</span>
+        </li>
+        <li class="sidebar-item" onclick={selectItem} data-action="Station administration" if:true={isVisibleMenuStationAdministration}>
+            <span><lightning-icon icon-name="utility:custom_apps" variant="inverse" class="pr-3" size="small"></lightning-icon>{label.custom.ig_station_administration}</span>
+        </li>
+    </ul>
+</template>

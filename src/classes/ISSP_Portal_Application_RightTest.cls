@@ -149,7 +149,8 @@ public class ISSP_Portal_Application_RightTest {
 			Account acc = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 			insert acc;
 
-			Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+			Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+			contact.AccountId = acc.id;
 			insert contact;
 
 			User newUser = TestDataFactory_Users.createPortalUsers(new List<Contact>{contact}).get(0);
@@ -232,7 +233,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.SIS_ID__c = '123456';
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		insert contact;
 
 		system.runAs(thisUser) {
@@ -276,7 +278,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.SIS_ID__c = '123456';
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		insert contact;
 		
 		System.runAs(thisUser){
@@ -330,7 +333,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.SIS_ID__c = '123456';
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		insert contact;
 		
 		system.runAs(thisUser) {
@@ -375,7 +379,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.SIS_ID__c = '123456';
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		insert contact;
 
 		system.runAs(thisUser) {
@@ -421,7 +426,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.SIS_ID__c = '123456';
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		insert contact;
 		
 		system.runAs(thisUser) {
@@ -464,7 +470,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.RecordTypeId = recordtypeAgency;
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		insert contact;
 
 		contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
@@ -490,7 +497,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.RecordTypeId = recordtypeAgency;
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		insert contact;
 
 		contact = [SELECT Available_Services__c FROM Contact WHERE Id = :contact.Id];
@@ -523,7 +531,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.RecordTypeId = recordtypeAgency;
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		contact.ID_Card_Holder__c = true;
 		insert contact;
 		
@@ -551,7 +560,8 @@ public class ISSP_Portal_Application_RightTest {
 		acc.RecordTypeId = recordtypeAgency;
 		insert acc;
 
-		Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = acc.id;
 		contact.ID_Card_Holder__c = true;
 		insert contact;
 

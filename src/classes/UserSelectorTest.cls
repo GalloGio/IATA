@@ -9,7 +9,8 @@ private with sharing class UserSelectorTest {
 		System.runAs(adminUser){
 			Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 			insert account;
-			Contact contact = TestDataFactory_Contacts.createDefaultContact(account.Id, 1).get(0);
+			Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+			contact.AccountId = account.Id;
 			insert contact;
 			User user = TestDataFactory_Users.createPortalUsers(new List<Contact>{contact}).get(0);
 			user.FederationIdentifier = String.valueOf(contact.Id).substring(0,15);
