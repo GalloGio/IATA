@@ -1,0 +1,8 @@
+.slds-modal__header{
+    border-bottom: none;
+}
+
+.slds-modal__container{
+    width: 650px !important;
+    max-width: 650px !important;
+}

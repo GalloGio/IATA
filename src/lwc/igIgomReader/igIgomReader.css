@@ -1,0 +1,60 @@
+.header a {
+    white-space: nowrap;
+}
+
+.header-title {
+    font-size: 24px;
+    display: inline-block;
+}
+
+.header-data {
+    color: #90A0B7;
+}
+
+.header-right {
+    align-self: stretch;
+}
+
+.background {
+    background-color: white;
+}
+
+.highlight {
+    background: #FFF9EB;
+}
+
+.selected {
+    color: #1E32FA;
+    font-weight: 600;
+}
+
+.selector-modal a {
+    text-decoration: none;
+}
+
+.line-through {
+    position: relative;
+    z-index: 1;
+}
+
+.line-through::before {
+    border-top: 2px solid #dfdfdf;
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    z-index: -1;
+}
+
+.line-through span {
+    background: #fff;
+    padding: 0 15px;
+}
+.upload-igom-btn{
+    background-color: #1e32fa !important;
+    font-size: medium;
+}

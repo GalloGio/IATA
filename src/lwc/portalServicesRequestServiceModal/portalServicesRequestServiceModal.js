@@ -1,4 +1,4 @@
-import { LightningElement, track, wire, api } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import Id from '@salesforce/user/Id';
@@ -159,8 +159,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.isAdmin = this.trackedServiceRecord.isAdmin;
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
-			this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
-			this.isServiceAdminApproved = this.trackedServiceRecord.recordService.Requires_Service_Admin_Approval__c;
+            this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
+            this.isServiceAdminApproved = this.trackedServiceRecord.recordService.Requires_Service_Admin_Approval__c;
             if(this.serviceName == 'E&F APPS'){
                 this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
             } else {
@@ -185,6 +185,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         return this.label.newServiceRequestConfirmMsglb.replace('{0}', this.serviceFullName);
     }
 
+    @track isServiceAdminApproved;
     @track trackedServiceId;
     @track trackedServiceRecord = {};
     @track showConfirm = false;
@@ -479,17 +480,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         this.ShowIEPIntroMessage = false;
         this.showButtons = false;
         this.loadingMessage = this.label.ANG_ISSP_UserProvisioningWait;
-		availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
-			.then(result => {
-			let myResults = JSON.parse(JSON.stringify(result));
-			let mydefaultPortalUserRole = myResults.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
-			if (mydefaultPortalUserRole) {
-				this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
-				this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
-			} else {
-				console.log('Custom Setting configuration missing');
-			}
-		});
+        availableIEPPortalServiceRoles({ serviceId: this.trackedServiceId })
+            .then(result => {
+            let myResults = JSON.parse(JSON.stringify(result));
+            let mydefaultPortalUserRole = myResults.filter(obj => obj.Default_User_Role__c === true && obj.Connected_App__c === this.serviceFullName);
+            if (mydefaultPortalUserRole) {
+                this.defaultPortalUserRole = mydefaultPortalUserRole[0].Role__c;
+                this.newAppRequest(this.trackedServiceId, this.serviceFullName, this.userContactId, '', true, this.defaultPortalUserRole);
+            } else {
+                console.log('Custom Setting configuration missing');
+            }
+        });
     }
 
     ICCSRolePick(event) {
@@ -737,60 +738,59 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     handleSubmitRequest() {
-        this.showConfirm = false; //hides confirm box
-        //displays popup with active spinner (only if the service does not require approval)
-		//if the service requires service administrator approval, then this will be managed
-		//by the "<service> User Access" process builder for that service
-		if(!this.isServiceAdminApproved){
-			this.showPopUp = true;
-			this.showSpinner = true;
-			let serviceNameaux = this.serviceName;
-			if(this.serviceName == 'E&F APPS'){
-				this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
-			} else {
-				this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
-			}
-		}
+        this.showSpinner = true;
 
-		requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
-			.then(() => {
-				//Show toas with confirmation            
-				if(this.serviceName == 'E&F APPS'){
-					this.showSpinner = false;
-					this.showPopUp = true; // for e&f success box
-					this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
-				} else {
-					// for admins or if service admin approval not required
-					// don't send approval email nor show user the pending approval popup
-					if (this.isAdmin) {
-						this.showPopUp = false; 
-						this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
-						this.navigateToServicesPage();
-					} else {
-						this.showSpinner = false;
-						if(this.isServiceAdminApproved){
-							this[NavigationMixin.Navigate]({
-								type: 'standard__namedPage',
-								attributes: {
-									pageName: 'home'
-								},
-							});
-						}
-					}
-				}
-			}).catch(error => {
-				console.error(error);
-				this.showSpinner = false;
-				this.showPopUp = false;
-				this.dispatchEvent(
-					new ShowToastEvent({
-						title: 'Error',
-						message: JSON.parse(JSON.stringify(error)).body.message,
-						variant: 'error',
-						mode: 'pester'
-					})
-				);
-			});
+        //displays popup with active spinner (only if the service does not require approval)
+        //if the service requires service administrator approval, then this will be managed
+        //by the "<service> User Access" process builder for that service
+        if(!this.isServiceAdminApproved){
+            this.showPopUp = false;
+            let serviceNameaux = this.serviceName;
+            if(this.serviceName == 'E&F APPS'){
+                this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
+            } else {
+                this.submitMessage = this.label.confirmedRequestMsglb.replace('{0}', serviceNameaux);
+            }
+        }
+
+        requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
+            .then(() => {
+                //Show toas with confirmation
+                if(this.serviceName == 'E&F APPS'){
+                    this.showSpinner = false;
+                    this.showPopUp = true; // for e&f success box
+                    this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
+                } else {
+                    // for admins or if service admin approval not required
+                    // don't send approval email nor show user the pending approval popup
+                    if (this.isAdmin) {
+                        this.showPopUp = false; 
+                        this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
+                        this.navigateToServicesPage();
+                    } else {
+                        if(!this.isServiceAdminApproved){
+                            this[NavigationMixin.Navigate]({
+                                type: 'standard__namedPage',
+                                attributes: {
+                                    pageName: 'services'
+                                },
+                            });
+                        }
+                    }
+                }
+            }).catch(error => {
+                this.showSpinner = false;
+                this.showConfirm = false;
+                this.showPopUp = false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: JSON.parse(JSON.stringify(error)).body.message,
+                        variant: 'error',
+                        mode: 'pester'
+                    })
+                );
+            });
     }
 
     navigateToServicesPage() {
@@ -828,4 +828,3 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		return this.ShowLabRegistryModal ? '' : 'customPopupInteriorHalfScreenCentered defaultMessage';
 	}
 }
-

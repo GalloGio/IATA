@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -103,6 +103,7 @@ import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountry
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 
+import isServiceAdministrator from '@salesforce/apex/InvitationService.isServiceAdministrator'; // Params: Id portalApplicationId, List<Id> userIdList - Return: Map<Id,Boolean>
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -281,6 +282,19 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	@track showMassApprove = false;
 	@track showMassDeny = false;
 
+	accountId;
+
+	setIsServiceAdmin(){
+		const userIdList = [this.userID];
+		isServiceAdministrator({portalApplicationId: this.serviceId, userIdList: userIdList}).then(result => {
+			this.isServiceAdmin = result[this.userID];
+		});
+	}
+
+	get isServiceAdmin(){
+		return this.isServiceAdmin;
+	}
+
 	checkMassActionButtons() {
 		if(this.selectedRecords && this.selectedRecords.length > 0) {
 			const uniqueGrant = [...new Set(this.selectedRecords.map((rec) => {
@@ -314,6 +328,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		if (this.pageParams) {
 			this.serviceId = this.pageParams.serviceId;
 
+			this.setIsServiceAdmin();
+
 			if (this.pageParams.openRequestService) {
 				this.showConfirm = true;
 			}
@@ -328,6 +344,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 			let loggedUser = JSON.parse(JSON.stringify(userResult));
 
 			if (loggedUser.Contact != null && loggedUser.Contact.AccountId != null) {
+				this.accountId = loggedUser.Contact.AccountId;
 				this.contactId = loggedUser.ContactId;
 				let account = loggedUser.Contact.Account;
 				if (account.RecordType.DeveloperName === 'IATA_Agency' &&
@@ -447,7 +464,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 					this.serviceName = this.serviceRecord.recordService.ServiceName__c;
 					this.serviceFullName = this.serviceRecord.recordService.Name;
 					this.isIFG_Service = this.serviceRecord.isIFGPending;
-
 
 					//in E&F service it doesn't matter if the user is admin or not
 					if(this.serviceName.includes('E&F APPS')) {

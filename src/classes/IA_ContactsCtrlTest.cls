@@ -9,7 +9,8 @@ public class IA_ContactsCtrlTest {
 		airline = TestDataFactory_Accounts.createAirlineAccounts(1).get(0);
 		insert airline;
 
-		contact = TestDataFactory_Contacts.createDefaultContact(airline.id,1).get(0);
+		contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		contact.AccountId = airline.Id;
 		contact.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact') ;
 		contact.Phone = '123456789';
 		contact.Status__c = 'Active';

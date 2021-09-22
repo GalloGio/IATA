@@ -1,0 +1,10 @@
+<messaging:emailTemplate subject="Invitation to use {!relatedTo.ServiceId__r.Name}" recipientType="Contact" relatedToType="Invitation__c">
+<messaging:htmlEmailBody >
+Hello!
+<br></br>
+You have been invited to use {!relatedTo.ServiceId__r.Name}. Please click the link below to begin. <br></br>
+NOTE: If you have not yet registered for the IATA Customer Portal, you will be guided to do so. After completing this step, please return to this email and click the link to continue.<br></br>
+<br></br>
+<a href="{!$Label.CSP_PortalBaseURL}/csportal/s/manage-service?serviceId={!relatedTo.ServiceId__c}" target="_blank">Click here to continue.</a>
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>

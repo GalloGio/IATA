@@ -1,0 +1,106 @@
+<template>
+    <div class="slds-theme_default sans-serif slds-p-horizontal_large">
+        <div class="slds-p-vertical_large">
+            <div class="slds-grid slds-gutters_xx-small">
+                <div class="slds-col slds-size_5-of-6">
+                    <div class="slds-grid slds-gutters_xx-small">
+                        <div class="slds-col">
+                            <input type="text" class="slds-input custom-border" placeholder={label.email} data-field="email" onchange={updateField}>
+                        </div>
+
+                        <div class="slds-col">
+                            <div class="select-wrapper">
+                                <select class="slds-input slds-select custom-border" data-field="role" onchange={updateField}>
+                                    <template for:each={roleOptions} for:item="role">
+                                        <option if:true={role.selected} key={role.value} value={role.value} selected>{role.label}</option>
+                                        <option if:false={role.selected} key={role.value} value={role.value}>{role.label}</option>
+                                    </template>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="slds-col slds-p-top_xx-small">
+                        <button class="blue-btn" onclick={inviteUser}>{label.invite}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div if:true={areInvitationListed} class="slds-grid slds-gutters_xx-small">
+            <div class="slds-col slds-size_5-of-6">
+                <div class="slds-grid slds-gutters_xx-small">
+                    <div class="slds-col slds-size_3-of-12">
+                        <div class="header-label">
+                            <span>{label.status}</span>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_5-of-12">
+                        <div class="header-label">
+                            <span>{label.email}</span>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <div class="header-label">
+                            <span>{label.role}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-6"></div>
+        </div>
+
+        <template if:true={areInvitationListed} for:each={invitationsToDisplay} for:item="invitation">
+            <div key={invitation.id} class="slds-grid slds-gutters_xx-small slds-p-top_x-small">
+                <div class="slds-col slds-size_5-of-6">
+                    <div class="slds-grid slds-gutters_xx-small">
+                        <div class="slds-col slds-size_3-of-12">
+                            <div class="column-label">
+                                <span>{invitation.status}</span>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <div class="column-label">
+                                <span>{invitation.email}</span>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="column-label">
+                                <span>{invitation.role}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="slds-col slds-p-top_xx-small">
+                        <button if:true={invitation.isActive} class="blue-btn" data-id={invitation.id} onclick={cancelInvitation}>{label.cancel}</button>
+                        <button if:true={invitation.isCancelled} class="blue-btn" data-id={invitation.id} onclick={resendInvitation}>{label.reInvite}</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <div if:true={areInvitationListed} class="slds-grid slds-align_absolute-center slds-size_1-of-4">
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-button-icon if:false={isFirstPage} icon-name="utility:jump_to_left" alternative-text="First page"
+                title="First page" size="small" variant="container" onclick={handleFirst}></lightning-button-icon>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-button-icon  if:false={isFirstPage} icon-name="utility:chevronleft" alternative-text="Previous page"
+                title="Previous page" size="small" variant="container" onclick={handlePrevious}></lightning-button-icon>
+            </div>
+            <div class="slds-col slds-size_2-of-6">
+                {pageNumberLbl}
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-button-icon if:true={hasMorePages} icon-name="utility:chevronright" alternative-text="Next page"
+                title="Next page" size="small" variant="container" onclick={handleNext}></lightning-button-icon>
+            </div>
+            <div class="slds-col slds-size_1-of-6">
+                <lightning-button-icon if:true={hasMorePages} icon-name="utility:jump_to_right" alternative-text="Last page"
+                title="Last page" size="small" variant="container" onclick={handleLast}></lightning-button-icon>
+            </div>
+        </div>
+    </div>
+</template>
