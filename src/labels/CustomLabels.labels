@@ -11404,6 +11404,14 @@ This service is free of charge.</value>
         <value>Email cannot be empty</value>
     </labels>
     <labels>
+        <fullName>Email_Wrong_Format</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email Wrong Format</shortDescription>
+        <value>The specified email is not following the correct format.</value>
+    </labels>
+    <labels>
         <fullName>EmptyCart</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -53367,6 +53375,798 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>Request a change of agency</value>
     </labels>
     <labels>
+        <fullName>ig_IGOM_document_description</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig IGOM document description</shortDescription>
+        <value>IGOM Document Description</value>
+    </labels>
+    <labels>
+        <fullName>ig_IGOM_version</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig IGOM version</shortDescription>
+        <value>IGOM version</value>
+    </labels>
+    <labels>
+        <fullName>ig_IGOM_version_used</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig IGOM version used</shortDescription>
+        <value>IGOM version used</value>
+    </labels>
+    <labels>
+        <fullName>ig_action_required</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig action required</shortDescription>
+        <value>Action Required</value>
+    </labels>
+    <labels>
+        <fullName>ig_add_document</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_add_document</shortDescription>
+        <value>Add document</value>
+    </labels>
+    <labels>
+        <fullName>ig_add_document_first_msg</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig add document first msg</shortDescription>
+        <value>To be able to assign any reference, you need to add a document first.</value>
+    </labels>
+    <labels>
+        <fullName>ig_add_reference</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig add reference</shortDescription>
+        <value>Add reference</value>
+    </labels>
+    <labels>
+        <fullName>ig_add_variation_in_other_lang</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig add variation in other lang</shortDescription>
+        <value>Add variation in other language</value>
+    </labels>
+    <labels>
+        <fullName>ig_are_you_sure_delete_msg</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig are you sure delete msg</shortDescription>
+        <value>Are you sure you want to delete the draft &lt;b&gt;{0}&lt;/b&gt;?</value>
+    </labels>
+    <labels>
+        <fullName>ig_attachments</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig attachments</shortDescription>
+        <value>Attachments</value>
+    </labels>
+    <labels>
+        <fullName>ig_available_stations</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig available stations</shortDescription>
+        <value>Available stations</value>
+    </labels>
+    <labels>
+        <fullName>ig_blank_field</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig blank field</shortDescription>
+        <value>This field cannot be left blank</value>
+    </labels>
+    <labels>
+        <fullName>ig_browse_files</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_browse_files</shortDescription>
+        <value>Browse files</value>
+    </labels>
+    <labels>
+        <fullName>ig_chapter_not_publishable_err</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig chapter not publishable err</shortDescription>
+        <value>This chapter is not publishable because its incomplete (it may be pending review or lacking it entirely).</value>
+    </labels>
+    <labels>
+        <fullName>ig_chapters_to_publish</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig chapters to publish</shortDescription>
+        <value>Chapters to publish:</value>
+    </labels>
+    <labels>
+        <fullName>ig_chapters_with_modifications</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig chapters with modifications</shortDescription>
+        <value>This chapter contains modifications since the last IGOM.</value>
+    </labels>
+    <labels>
+        <fullName>ig_child_request</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig child request</shortDescription>
+        <value>is requesting to be your child in a relationship.</value>
+    </labels>
+    <labels>
+        <fullName>ig_close</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig close</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>ig_comments</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig comments</shortDescription>
+        <value>Comments</value>
+    </labels>
+    <labels>
+        <fullName>ig_complete</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig complete</shortDescription>
+        <value>complete</value>
+    </labels>
+    <labels>
+        <fullName>ig_completion</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig completion</shortDescription>
+        <value>Completion</value>
+    </labels>
+    <labels>
+        <fullName>ig_conformity</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig conformity</shortDescription>
+        <value>Conformity</value>
+    </labels>
+    <labels>
+        <fullName>ig_continue</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig continue</shortDescription>
+        <value>Continue</value>
+    </labels>
+    <labels>
+        <fullName>ig_continue_draft</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig continue draft</shortDescription>
+        <value>CONTINUE DRAFT</value>
+    </labels>
+    <labels>
+        <fullName>ig_corporate_gap_message</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig corporate gap message</shortDescription>
+        <value>Corporate GAP Analyses will be published as one and when imported they can only be retrieved one at a time (publishing by chapters forces GAPs to be made by chapters)</value>
+    </labels>
+    <labels>
+        <fullName>ig_dashboard</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig dashboard</shortDescription>
+        <value>Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>ig_delete</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_delete</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>ig_delete_reference</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig delete reference</shortDescription>
+        <value>Delete reference</value>
+    </labels>
+    <labels>
+        <fullName>ig_discard_changes</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig discard changes</shortDescription>
+        <value>Discard changes</value>
+    </labels>
+    <labels>
+        <fullName>ig_discard_draft</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig discard draft</shortDescription>
+        <value>Discard draft</value>
+    </labels>
+    <labels>
+        <fullName>ig_document_name_short</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_document_name_short</shortDescription>
+        <value>Name</value>
+    </labels>
+    <labels>
+        <fullName>ig_document_type_short</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_document_type_short</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>ig_documents</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_documents</shortDescription>
+        <value>Documents</value>
+    </labels>
+    <labels>
+        <fullName>ig_download_file_template</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig download file template</shortDescription>
+        <value>Download file template</value>
+    </labels>
+    <labels>
+        <fullName>ig_drag_and_drop_file</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_drag_and_drop_file</shortDescription>
+        <value>Drag and drop file</value>
+    </labels>
+    <labels>
+        <fullName>ig_edit</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_edit</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>ig_effective_date</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig effective date</shortDescription>
+        <value>Effective date</value>
+    </labels>
+    <labels>
+        <fullName>ig_error_has_ocurred</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig error has ocurred</shortDescription>
+        <value>An error has ocurred.</value>
+    </labels>
+    <labels>
+        <fullName>ig_file_name</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig file name</shortDescription>
+        <value>File name</value>
+    </labels>
+    <labels>
+        <fullName>ig_gap_analysis</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig gap analysis</shortDescription>
+        <value>GAP Analysis</value>
+    </labels>
+    <labels>
+        <fullName>ig_gap_exit</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig exit</shortDescription>
+        <value>Exit</value>
+    </labels>
+    <labels>
+        <fullName>ig_gap_exit_msg</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig gap exit msg</shortDescription>
+        <value>Are you sure you want to exit? Your saved progress will be available as drafts.</value>
+    </labels>
+    <labels>
+        <fullName>ig_go_back</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_go_back</shortDescription>
+        <value>Go back</value>
+    </labels>
+    <labels>
+        <fullName>ig_group_request</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig group request</shortDescription>
+        <value>is requesting to be in a group relationship with you.</value>
+    </labels>
+    <labels>
+        <fullName>ig_informative</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig informative</shortDescription>
+        <value>Informative</value>
+    </labels>
+    <labels>
+        <fullName>ig_import_igom</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_import_igom</shortDescription>
+        <value>Adopt IGOM</value>
+    </labels>
+    <labels>
+        <fullName>ig_mapping</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig mapping</shortDescription>
+        <value>Mapping</value>
+    </labels>
+    <labels>
+        <fullName>ig_new_file</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig new file</shortDescription>
+        <value>NEW FILE</value>
+    </labels>
+    <labels>
+        <fullName>ig_new_file_from_previous</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig new file from previous</shortDescription>
+        <value>NEW FILE FROM&lt;br/&gt;PREVIOUS VERSION</value>
+    </labels>
+    <labels>
+        <fullName>ig_no_chapter_selected</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig no chapter selected</shortDescription>
+        <value>No chapter selected</value>
+    </labels>
+    <labels>
+        <fullName>ig_no_documents_station</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_no_documents_station</shortDescription>
+        <value>No documents for the current station</value>
+    </labels>
+    <labels>
+        <fullName>ig_no_section_selected</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig no section selected</shortDescription>
+        <value>No section selected</value>
+    </labels>
+    <labels>
+        <fullName>ig_no_unrelated_stations_for_search</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig no unrelated stations for search</shortDescription>
+        <value>There are no unrelated stations to send requests to, try to search for a different term.</value>
+    </labels>
+    <labels>
+        <fullName>ig_no_users_to_display</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No users to display</shortDescription>
+        <value>There are no users to display.</value>
+    </labels>
+    <labels>
+        <fullName>ig_no_variations</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig no variations</shortDescription>
+        <value>No variations found in the selected gap analysis.</value>
+    </labels>
+    <labels>
+        <fullName>ig_notification_info_msg</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig notification info msg</shortDescription>
+        <value>The users selected will be sent a notification as soon as the gap is published with every change it contains. Airline users may not receive a notification if they have them disabled.</value>
+    </labels>
+    <labels>
+        <fullName>ig_notifications</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig notifications</shortDescription>
+        <value>Notifications</value>
+    </labels>
+    <labels>
+        <fullName>ig_or</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_or</shortDescription>
+        <value>or</value>
+    </labels>
+    <labels>
+        <fullName>ig_out_of_scope</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig out of scope</shortDescription>
+        <value>Out of scope</value>
+    </labels>
+    <labels>
+        <fullName>ig_parent_request</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig parent request</shortDescription>
+        <value>is requesting to be your parent in a relationship.</value>
+    </labels>
+    <labels>
+        <fullName>ig_pending_review</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig pending review</shortDescription>
+        <value>Pending review</value>
+    </labels>
+    <labels>
+        <fullName>ig_process_document</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig process document</shortDescription>
+        <value>Process document</value>
+    </labels>
+    <labels>
+        <fullName>ig_publish</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig publish</shortDescription>
+        <value>Publish</value>
+    </labels>
+    <labels>
+        <fullName>ig_publish_a_gap</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig publish a gap</shortDescription>
+        <value>Publish a GAP Analysis</value>
+    </labels>
+    <labels>
+        <fullName>ig_publish_a_template</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig publish a template</shortDescription>
+        <value>Publish a Corporate GAP Analysis (template)</value>
+    </labels>
+    <labels>
+        <fullName>ig_publish_date</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig publish date</shortDescription>
+        <value>Publish date</value>
+    </labels>
+    <labels>
+        <fullName>ig_publishing_information</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig publishing information</shortDescription>
+        <value>Publishing information:</value>
+    </labels>
+    <labels>
+        <fullName>ig_reference_will_be_removed</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig reference will be removed</shortDescription>
+        <value>The reference &lt;b&gt;{0} - {1}&lt;/b&gt; will be removed</value>
+    </labels>
+    <labels>
+        <fullName>ig_references</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig references</shortDescription>
+        <value>References</value>
+    </labels>
+    <labels>
+        <fullName>ig_references_are_reviewed</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig references are reviewed</shortDescription>
+        <value>All the references from a modified procedure are reviewed.</value>
+    </labels>
+    <labels>
+        <fullName>ig_reminder_date</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig reminder date</shortDescription>
+        <value>Reminder date:</value>
+    </labels>
+    <labels>
+        <fullName>ig_reminder_date_error_msg</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig reminder date error msg</shortDescription>
+        <value>A reminder may only be set if there&apos;s more than 7 days until the effective date.</value>
+    </labels>
+    <labels>
+        <fullName>ig_reminder_date_info_msg</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig reminder date info msg</shortDescription>
+        <value>A notification will be sent to remind every user of the station that hasn&apos;t read the first notification indicating that the effective date is approaching.</value>
+    </labels>
+    <labels>
+        <fullName>ig_remove_document_title</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_remove_document_title</shortDescription>
+        <value>Removing document</value>
+    </labels>
+    <labels>
+        <fullName>ig_remove_document_warning</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig_remove_document_warning</shortDescription>
+        <value>Removing a document will remove every reference that points to it. Are you sure?</value>
+    </labels>
+    <labels>
+        <fullName>ig_remove_reference</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig remove reference</shortDescription>
+        <value>Remove Reference</value>
+    </labels>
+    <labels>
+        <fullName>ig_remove_variation_in_other_lang</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig remove variation in other lang</shortDescription>
+        <value>Remove variation in other language</value>
+    </labels>
+    <labels>
+        <fullName>ig_save</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig save</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>ig_select_another_igom</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig select another igom</shortDescription>
+        <value>Select another IGOM</value>
+    </labels>
+    <labels>
+        <fullName>ig_select_evey_chapter</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig select evey chapter</shortDescription>
+        <value>Select every chapter</value>
+    </labels>
+    <labels>
+        <fullName>ig_select_section_to_add_reference</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig select section to add reference</shortDescription>
+        <value>Please select a section to add a reference to.</value>
+    </labels>
+    <labels>
+        <fullName>ig_selected_gap_analsis</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig selected gap analsis</shortDescription>
+        <value>Selected GAP Analysis:</value>
+    </labels>
+    <labels>
+        <fullName>ig_send_manual_notification</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig send manual notification</shortDescription>
+        <value>Send manual notification</value>
+    </labels>
+    <labels>
+        <fullName>ig_station_administration</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig station administration</shortDescription>
+        <value>Station administration</value>
+    </labels>
+    <labels>
+        <fullName>ig_station_management</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig station management</shortDescription>
+        <value>Station Management</value>
+    </labels>
+    <labels>
+        <fullName>ig_station_relationships</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig station relationships</shortDescription>
+        <value>Station Relationships</value>
+    </labels>
+    <labels>
+        <fullName>ig_sub_reference</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig sub reference</shortDescription>
+        <value>Sub Reference</value>
+    </labels>
+    <labels>
+        <fullName>ig_type</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig type</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>ig_upload_failed</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig upload failed</shortDescription>
+        <value>Upload failed</value>
+    </labels>
+    <labels>
+        <fullName>ig_upload_igom_document</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig upload igom document</shortDescription>
+        <value>Upload IGOM document</value>
+    </labels>
+    <labels>
+        <fullName>ig_upload_new_igom</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig upload new igom</shortDescription>
+        <value>Upload new IGOM</value>
+    </labels>
+    <labels>
+        <fullName>ig_upload_succesful</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig upload succesful</shortDescription>
+        <value>Upload succesful</value>
+    </labels>
+    <labels>
+        <fullName>ig_user_provision</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig user provision</shortDescription>
+        <value>User Provision</value>
+    </labels>
+    <labels>
+        <fullName>ig_users_to_notify</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig users to notify</shortDescription>
+        <value>Users to notify:</value>
+    </labels>
+    <labels>
+        <fullName>ig_variation</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig variation</shortDescription>
+        <value>Variation</value>
+    </labels>
+    <labels>
+        <fullName>ig_variation_description</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig variation description</shortDescription>
+        <value>Variation Description</value>
+    </labels>
+    <labels>
+        <fullName>ig_variation_description_alt</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig variation description alt</shortDescription>
+        <value>Variation Description (alternative)</value>
+    </labels>
+    <labels>
+        <fullName>ig_variation_description_in_lang</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig variation description in langig variationig variation</shortDescription>
+        <value>Variation Description in {0}</value>
+    </labels>
+    <labels>
+        <fullName>ig_variation_report</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig variation report</shortDescription>
+        <value>Variation report</value>
+    </labels>
+    <labels>
         <fullName>issp_apppicker_new_application</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -53438,6 +54238,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>noreplyEmail</shortDescription>
         <value>noreply@iata.org</value>
+    </labels>
+    <labels>
+        <fullName>Page_Numbering</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page Numbering</shortDescription>
+        <value>Page {0} of {1}</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ar</fullName>
@@ -53748,6 +54556,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>中文</value>
     </labels>
     <labels>
+        <fullName>Re_Invite</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Re-invite</shortDescription>
+        <value>Re-invite</value>
+    </labels>
+    <labels>
         <fullName>regular_price</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -53769,6 +54585,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>select all</shortDescription>
         <value>select all</value>
+    </labels>
+    <labels>
+        <fullName>Selected_Role</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Selected Role</shortDescription>
+        <value>Selected Role</value>
     </labels>
     <labels>
         <fullName>wire_transfer_payment_msg</fullName>

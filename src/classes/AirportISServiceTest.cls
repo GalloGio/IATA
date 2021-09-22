@@ -4,17 +4,11 @@ private class AirportISServiceTest {
 	static void makeData(){
 		List<Account> accountList = TestDataFactory_Accounts.createDefaultAccounts(1);
 		insert accountList;
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
+		contactList.get(0).AccountId = accountList.get(0).Id;
+		contactList.get(1).AccountId = accountList.get(0).Id;
 		insert contactList;
-		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		portalApplication.Functional_Role__c = AirportISService.FUNCTIONALROLE;
-		insert portalApplication;
-	}
-
-	@IsTest
-	static void fakeMethod(){
-		AirportISService airportISService = new AirportISService();
-		airportISService.fakemethod();
+		insert TestDataFactory_PortalApplications.createDefaultPortalApplication(1);		
 	}
 
 	@IsTest
@@ -99,5 +93,16 @@ private class AirportISServiceTest {
 		//test account role unassignment
 		accountRoleList = [SELECT Id FROM Account_Role__c WHERE Status__c = :accountRoles.STATUSACTIVE];
 		System.assertEquals(0, accountRoleList.size(), 'Expected 0 Account Roles');
+	}
+
+	@IsTest
+	static void testException(){
+		try{
+			//this should throw an exception in the airportisservice class
+			AirportISService.manageUserOnboarding(null);
+		} catch(AirportISService.AirportISServiceException e){
+			//an exception should be thrown
+			System.assert(true);
+		}
 	}
 }

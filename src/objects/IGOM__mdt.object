@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Metadata used for the IGOM IATA Portal configuration</description>
+    <fields>
+        <fullName>Value__c</fullName>
+        <description>Value of the record.</description>
+        <externalId>false</externalId>
+        <fieldManageability>SubscriberControlled</fieldManageability>
+        <label>Value</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <label>IGOM Configuration</label>
+    <pluralLabel>IGOM Configurations</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

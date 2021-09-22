@@ -1,0 +1,27 @@
+<template>
+    <li if:true={section.subprocedures} class={liClass} onclick={showChildren} id={section.procedure.Id}>{section.index} {section.procedure.Name__c}
+        <img if:true={section.modified} src={resources.icons.png.warning} class="warning-icon slds-m-around_xx-small">
+        <lightning-icon icon-name="utility:chevrondown" size="xx-small" class="slds-float_right remove-margin"></lightning-icon>
+
+        <ul class="list-group-child hidden">
+            <template for:each={section.subprocedures} for:item="subsection">
+                <c-ig-gap-analysis-igom-section-display 
+                    key={subsection.procedure.Id} 
+                    section={subsection}
+                    onsectionselected={sectionSelected}
+                    selected-procedure-id={selectedProcedureId}>
+                </c-ig-gap-analysis-igom-section-display>
+            </template>
+        </ul>
+    </li>
+
+    
+    <li if:false={section.subprocedures} class={liClass} id={section.procedure.Id}
+    data-item={section.procedure.Id} data-name={section.procedure.Name__c} onclick={selectPoint}>
+        <svg if:true={referenceIsNotBlank} version="1.1" baseProfile="full" width="20" height="20" class="completition-status">
+            <circle cx="10" cy="5" r="3" fill={section.referenceStatus}></circle>
+        </svg>
+        <span>{section.index}&nbsp;{section.procedure.Name__c}</span>
+        <img if:true={section.modified} src={resources.icons.png.warning} class="warning-icon">
+    </li>
+</template>

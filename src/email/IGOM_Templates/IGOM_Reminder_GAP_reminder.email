@@ -1,0 +1,3 @@
+<h1>Notifications have not been read</h1>
+<p>Following notifications have not been marked as read.</p>
+<div>{!Notifications}</div>

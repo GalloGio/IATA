@@ -33,11 +33,10 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 			acc.IATA_ISO_Country__c = isoc.Id;
 			insert acc;
 
-			Contact con = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+			Contact con = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+			con.AccountId = acc.Id;
 			con.User_Portal_Status__c = 'Approved User';
 			insert con;
-
-			Profile p = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)' LIMIT 1];
 
 			newUser = TestDataFactory_Users.createPortalUsers(new List<Contact>{con}).get(0);
 			insert newUser;
@@ -90,7 +89,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 			acc.IATA_ISO_Country__c = isoc.Id;
 			insert acc;
 
-			Contact con = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+			Contact con = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+			con.AccountId = acc.id;
 			con.User_Portal_Status__c = 'Approved User';
 			insert con;
 
@@ -162,7 +162,8 @@ private class ISSP_AMS_MSO_Request_Controller_Test {
 			acc.IATA_ISO_Country__c = isoc.Id;
 			insert acc;
 
-			Contact con = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+			Contact con = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+			con.AccountId = acc.id;
 			con.User_Portal_Status__c = 'Approved User';
 			insert con;
 
