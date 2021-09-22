@@ -1,0 +1,54 @@
+.sans-serif {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.custom-border {
+    border-radius: 0px;
+    border-color: #cbcbcb;
+}
+
+.blue-btn {
+    border: 0px;
+    border-radius: 0px;
+    background-color: #00a5eb;
+    color: white;
+    padding: 0.2em 0.9em;
+    font-size: 13px;
+}
+
+select {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: "▼";
+    font-size: 0.6em;
+    top: 11px;
+    right: 13px;
+    position: absolute;
+    color: #cbcbcb;
+}
+
+.header-label {
+    background-color: #00a5eb;
+    color: white;
+    text-align: center;
+    font-size: 13px;
+    padding: 0.3em 0em;
+    border: solid 1px #f0f0f0;
+}
+
+.column-label {
+    background-color: white;
+    color: black;
+    text-align: left;
+    font-size: 13px;
+    padding: 0.3em 0em 0.3em 0.5em;
+    border: solid 2px #f0f0f0;
+}

@@ -1,0 +1,59 @@
+<template>
+    
+    <template if:true={subsection}>
+        
+        <div class={mainDivClass}>
+                    
+            <div class="slds-p-around_medium">
+
+                <template if:true={subsection.isEmpty}>
+                    <h4 class="slds-size_3-of-4">{subsection.index} - {subsection.procedure.Name__c}</h4>
+                </template>
+
+                <template if:false={subsection.isEmpty}>
+                    <a class="slds-grid" onclick={toggleSubprocedureVisibility}>
+
+                        <h4 class="slds-size_3-of-4">{subsection.index} - {subsection.procedure.Name__c}</h4>
+    
+                        <template if:false={open}>
+                            <span class="open-panel slds-size_1-of-4 slds-text-align_right">
+                                <lightning-icon icon-name="utility:chevrondown" size="small" alternative-text="Show" title="Show"></lightning-icon>
+                            </span>
+                        </template>
+
+                        <template if:true={open}>
+                            <span class="close-panel slds-size_1-of-4 slds-text-align_right">
+                                <lightning-icon icon-name="utility:chevronup" size="small" alternative-text="Hide" title="Hide"></lightning-icon>
+                            </span>
+                        </template> 
+                   
+                    </a>
+                </template>
+                
+            </div>
+
+            <template if:false={subsection.isEmpty}>
+
+                <template if:true={open}>
+
+                    <div class="subprocedures">
+                        <template for:each={subsection.subprocedures} for:item="item">
+
+                            <c-ig-igom-reader-chapter-display-item 
+                                key={item.procedure.Id} 
+                                version-change={item.procedure.Version_Change_Status__c}>
+                                {item.index} {item.procedure.Name__c}
+                            </c-ig-igom-reader-chapter-display-item>
+
+                        </template>
+                    </div>
+
+                </template>
+
+            </template>
+            
+        </div>
+
+    </template>
+
+</template>

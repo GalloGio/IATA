@@ -1,0 +1,32 @@
+<template>
+
+    <div class={procedureClass}>
+
+        <span class="procedure-change-icon">
+
+            <template if:true={isVersionNew}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <use xlink:href={resources.plus_icon}></use>
+                </svg>
+            </template>
+
+            <template if:true={isVersionModified}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <use xlink:href={resources.warning_icon}></use>
+                </svg>
+            </template>
+
+            <template if:true={isVersionCancelled}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <use xlink:href={resources.cancel_icon}></use>
+                </svg>
+            </template>
+
+        </span>
+
+        <h5 class="slds-p-left_large">
+            <slot></slot>
+        </h5>
+    </div>
+    
+</template>

@@ -1,0 +1,119 @@
+<template>
+
+    <template if:true={_editingGapAnalysisItem}>
+
+        <div class={editorDivClass}>
+
+            <div if:true={isProcedurePendingReview} class={pendingReviewClass}>
+                <template if:true={isEditingCriticalVariation}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                        <use xlink:href={resources.icons.alert}></use>
+                    </svg>
+                </template>
+                <template if:true={isEditingNonCriticalVariation}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                        <use xlink:href={resources.icons.alert2}></use>
+                    </svg>
+                </template>
+                <b class="small-font ml-2">{label.custom.ig_pending_review}</b>
+            </div>
+
+            <div class="col-12 text-left">
+                <div class="slds-grid">
+                    <div class="slds-size_1-of-3 slds-p-right_small">
+                        <label class="small-font">{label.custom.ig_user_provision}</label>
+                        <select class="slds-select form-control width-100" data-field="document" onchange={updateEditingItem}>
+                            <template for:each={documentList} for:item="document">
+                                <option key={document.id} value={document.id}>{document.reference}</option>
+                            </template>
+                        </select>
+                    </div>
+                    <div class="slds-size_2-of-3">
+                        <label class="small-font">{label.custom.ig_sub_reference}</label>
+                        <input class="form-control width-100" type="text" data-field="userProvisionProcedure" oninput={updateEditingItem} value={editingGapAnalysisItem.userProvisionProcedure}/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 text-left mt-3">
+                <label class="small-font">{label.custom.ig_mapping}</label>
+                <div>
+                    <button class={buttonTagConformityClass} data-variation-status={constants.PROCEDURE_COMPLIANCE.VARIATION_STATUS.VALUES.CONFORMITY} onclick={changeVariationStatus}>{label.custom.ig_conformity}</button>
+                    <button class={buttonTagVariationClass} data-variation-status={constants.PROCEDURE_COMPLIANCE.VARIATION_STATUS.VALUES.VARIATION} onclick={changeVariationStatus}>{label.custom.ig_variation}</button>
+                    <button class={buttonTagOutOfScopeClass} data-variation-status={constants.PROCEDURE_COMPLIANCE.VARIATION_STATUS.VALUES.OUT_OF_SCOPE} onclick={changeVariationStatus}>{label.custom.ig_out_of_scope}</button>    
+                </div>
+            </div>    
+            <div if:true={canEditActionNotes} class="col-12 text-left mt-3">
+                <div class="form-group">
+                    <label class="small-font">{label.custom.ig_comments}</label>
+                    <textarea class="form-control" rows="3" data-field="notes" oninput={updateEditingItem}>{editingGapAnalysisItem.notes}</textarea>
+                </div>
+            </div>
+            <div if:true={isEditingGapAnalysisItemVariation} class="col-12 text-left mt-3">
+                <div class="form-group">
+                    <label class="small-font">{label.custom.ig_variation_description}</label>
+                    <textarea class="form-control" rows={numRowsVariationComments} data-field="variationComments" oninput={updateEditingItem}>{editingGapAnalysisItem.variationComments}</textarea>
+                </div>
+                <div class={addVariationCommentInLanguageClass} onclick={addVariationLanguage}>
+                    <a if:true={isOtherLangAdded} class="small-font"><b>x {label.custom.ig_remove_variation_in_other_lang}</b></a>
+                    <a if:false={isOtherLangAdded} class="small-font"><b>+ {label.custom.ig_add_variation_in_other_lang}</b></a>
+                </div>
+                <div if:true={isOtherLangAdded}>
+                    <div class="form-group slds-select_container">
+                        <select class="slds-select form-control width-100" data-field="variationCommentLang" onchange={updateEditingItem}>
+                            <template for:each={commentLanguages} for:item="language">
+                                <option key={language} value={language}>{language}</option>
+                            </template>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="small-font">{label.custom.ig_variation_description_alt}</label>
+                        <textarea class="form-control" rows="3" data-field="variationAlternativeComments" oninput={updateEditingItem}>{editingGapAnalysisItem.variationAlternativeComments}</textarea>
+                    </div>
+                </div>
+
+                <div class="col-12 text-left mt-3">
+                    <label class="small-font">{label.custom.ig_attachments}</label>
+                    <template for:each={editingGapAnalysisItem.attachments} for:item="attachment">
+
+                        <div class="attachment" data-id={attachment.Id} key={attachment.Id}>
+
+                            <template if:false={attachment.delete}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="cursor-pt" onclick={toggleAttachmentDelete}>
+                                    <use xlink:href={resources.icons.delete}></use>
+                                </svg>
+                                <a class="file" data-id={attachment.Id} data-name={attachment.Name} onclick={downloadAttachment}>
+                                    <span>- {attachment.Name}</span>
+                                </a>
+                            </template>
+
+                            <template if:true={attachment.delete}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="cursor-pt" onclick={toggleAttachmentDelete}>
+                                    <use xlink:href={resources.icons.undelete}></use>
+                                </svg>
+                                <a class="file" data-id={attachment.Id} data-name={attachment.Name} onclick={downloadAttachment}>
+                                    <span class="removed-text">- {attachment.Name}</span>
+                                </a>
+                            </template>
+
+                        </div>
+
+                    </template>
+                    <c-ig-file-picker multifile="true" onfileselected={updateFiles} onfileunselected={updateFiles}>
+                    </c-ig-file-picker>
+                </div>
+            </div>
+            <div class="col-12 text-center mt-4">
+                <button class="button btn-ig-secondary border-red text-red mr-3" onclick={discardChangesButton}><b>{label.custom.ig_discard_changes}</b></button>
+                <button if:true={isEdition} class="button btn-ig-primary btn-ig-tag-danger mr-3" onclick={removeButton}><b>{label.custom.ig_remove_reference}</b></button>
+                <button class={saveButtonClass} onclick={saveButton} disabled={isSaveButtonDisabled}><b>{label.custom.ig_save}</b></button>
+            </div>
+        </div>
+
+        <c-ig-modal class="delete-confirmation" header={label.custom.ig_delete_reference} onaccept={confirmDelete} accept-button-label="Remove">
+            <p><lightning-formatted-rich-text value={referenceRemoveMsg}></lightning-formatted-rich-text></p>
+            <p>{label.custom.ig_want_to_continue}</p>
+        </c-ig-modal>
+
+    </template>
+
+</template>
