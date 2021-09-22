@@ -1,0 +1,27 @@
+<template>
+    <ul class="chapter-list">
+
+        <template for:each={igom.chapters} for:item="chapter">
+
+            <a key={chapter.procedure.Id} data-id={chapter.procedure.Id} onclick={chapterClickHandler}>
+                <c-ig-igom-reader-chapter-item type="chapter" item={chapter}></c-ig-igom-reader-chapter-item>
+            </a>
+
+            <template if:true={chapter.isSelected}>
+
+                <ol key={chapter.procedure.Id} data-id={chapter.procedure.Id}>
+
+                    <template for:each={chapter.subprocedures} for:item="section">
+                        <a key={section.procedure.Id} data-id={section.procedure.Id} onclick={sectionClickHandler}>
+                            <c-ig-igom-reader-chapter-item type="section" item={section}></c-ig-igom-reader-chapter-item>
+                        </a>
+                    </template>
+                    
+                </ol>
+
+            </template>
+
+        </template>
+
+    </ul>  
+</template>

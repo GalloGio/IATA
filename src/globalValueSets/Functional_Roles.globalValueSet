@@ -121,6 +121,11 @@
         <label>Financial Securities</label>
     </customValue>
     <customValue>
+        <fullName>FRED+</fullName>
+        <default>false</default>
+        <label>FRED+</label>
+    </customValue>
+    <customValue>
         <fullName>GADM</fullName>
         <default>false</default>
         <label>GADM</label>
@@ -219,6 +224,11 @@
         <fullName>IFTP</fullName>
         <default>false</default>
         <label>IFTP</label>
+    </customValue>
+    <customValue>
+        <fullName>IGOM</fullName>
+        <default>false</default>
+        <label>IGOM</label>
     </customValue>
     <customValue>
         <fullName>Insurance Providers</fullName>

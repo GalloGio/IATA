@@ -1,0 +1,74 @@
+<template>
+    <div class="col-12 box-shadow-col p-3 height-100">
+        <div if:true={itemSelected} id="content" class="p-3">
+            <div class="col-8 offset-2 row" onclick={moveToProcedure}>
+                <div class="col-3 text-left display-inline-flex">
+                    <div class="col-6 cursor-pt" data-name="previousWarningProcedure">
+                        <img if:true={itemSelected.hasWarningPositionsBefore} src={resources.icons.png.warning} class="warning-icon-left"><lightning-icon if:true={itemSelected.hasWarningPositionsBefore} icon-name="utility:chevronleft" size="small"></lightning-icon>
+                    </div>
+                    <div class="col-6 cursor-pt" data-name="previousProcedure">
+                        <lightning-icon icon-name="utility:chevronleft" if:true={itemSelected.hasPositionsBefore} size="small"></lightning-icon>
+                    </div>
+                </div>
+                <div class="col-6 text-center">
+                    <p><b>{itemSelected.index}&nbsp;{itemSelected.procedure.Name__c}</b></p>
+                </div>
+                <div class="col-3 text-right display-inline-flex">
+                    <div class="col-6 cursor-pt" data-name="nextProcedure">
+                        <lightning-icon if:true={itemSelected.hasPositionsAfter} icon-name="utility:chevronright" size="small"></lightning-icon>
+                    </div>
+                    <div class="col-6 cursor-pt" data-name="nextWarningProcedure">
+                        <img if:true={itemSelected.hasWarningPositionsAfter} src={resources.icons.png.warning} class="warning-icon-right"><lightning-icon if:true={itemSelected.hasWarningPositionsAfter} icon-name="utility:chevronright" size="small"></lightning-icon>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-2 text-left">
+                    <p><b>{label.custom.ig_references}</b></p>
+                </div>
+                <div class="col-8">
+                    <hr>
+                </div>
+                <template if:true={documentsExist}>
+                    <div class="col-2 text-blue text-left cursor-pt add-new-reference" onclick={addNewGapAnalysisItem}>
+                        <a><b>+ {label.custom.ig_add_reference}</b></a>
+                    </div>
+                </template>
+                <template if:false={documentsExist}>
+                    <div class="col-2 disabled-filter text-left cursor-pt add-new-reference">
+                        <a><b>+ {label.custom.ig_add_reference}</b></a>
+                    </div>
+                </template>
+            </div>
+
+            <div>
+                <template if:true={documentsExist}>
+                    <template if:true={references}>
+                        <template for:each={references} for:item="item">
+                            <c-ig-gap-analysis-reference-procedure-item 
+                                key={item.id}
+                                class="cursor-pt"
+                                gap-analysis-item={item}
+                                onselect={selectGapAnalysisItem}
+                                onconfirm={reviewGapAnalysisItem}>
+                            </c-ig-gap-analysis-reference-procedure-item>
+                        </template>
+                    </template>
+
+                    <c-ig-gap-analysis-reference-procedure-editor document-list={documentList}>
+                    </c-ig-gap-analysis-reference-procedure-editor>                        
+
+                </template>
+                <template if:false={documentsExist}>
+                    <div class="mt-5 mb-5">
+                        {label.custom.ig_add_document_first_msg}
+                    </div>
+                </template>
+            </div>
+        </div>
+        <div if:false={itemSelected} id="selectionNotMade">
+            <span class="absolute-center slds-p-around_large">{label.custom.ig_select_section_to_add_reference}</span>
+        </div>
+    </div>
+</template>

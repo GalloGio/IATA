@@ -1,0 +1,31 @@
+<template>
+    <template if:true={stationList}>
+        <select class="slds-select mr-3" style="width: auto;display: inline-block;color:orange;border: 0;" onchange={onStationChange}>
+            <template for:each={stationList} for:item="station">
+                <option key={station.id} value={station.id}>{station.name}</option>
+            </template>
+        </select>
+    </template>
+    <div if:true={hasNotificationsPermission} class="notifications mr-5">
+        <template if:true={hasUnreadNotifications}>
+            <a onclick={gotoNotifications}>
+                <img src={resources.icons.notifications} />
+            </a>
+            <span class="notification-count">
+                {notificationCount}
+            </span>
+        </template>
+        <template if:false={hasUnreadNotifications}>
+            <a onclick={gotoNotifications}>
+                <img src={resources.icons.notifications} />
+            </a>
+        </template>
+    </div>
+    <template if:true={userData}>
+        <template if:true={userData.data}>
+            <img if:true={userData.data.avatarUrl} src={userData.data.avatarUrl} class="mr-3 user-avatar" width="32" height="32" />
+            <img if:false={userData.data.avatarUrl} src={resources.icons.user} class="mr-3 user-avatar" width="32" height="32" />
+            <span class="m-auto pr-2"><b>{userData.data.fullName}</b></span>
+        </template>
+    </template>
+</template>

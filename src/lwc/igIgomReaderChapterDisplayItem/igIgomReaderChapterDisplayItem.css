@@ -1,0 +1,17 @@
+.procedure-change-icon {
+    width: 32px;
+    display: inline-block;
+    text-align: center;
+}
+
+.procedure-new {
+    color: #03A50A; 
+}
+
+.procedure-change {
+    color: #E3240D;
+}
+
+.procedure-cancelled {
+    color: gray;
+}
