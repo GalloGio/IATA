@@ -35,10 +35,6 @@
                 <behavior>Edit</behavior>
                 <field>Contact_Role_Detail_Name__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Auto_grant_Account_Role__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
