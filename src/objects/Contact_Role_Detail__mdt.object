@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <description>The roles permitted for Contacts (used with a dependency on Functional_Role Custom Metadata type) to define roles per service.</description>
-    <label>Contact Role Detail</label>
-    <pluralLabel>Contact Role Details</pluralLabel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Functional_Role__c</fullName>
         <description>The Service for which this Contact Role Detail is valid.</description>
@@ -37,4 +34,7 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <label>Contact Role Detail</label>
+    <pluralLabel>Contact Role Details</pluralLabel>
+    <visibility>Public</visibility>
 </CustomObject>
