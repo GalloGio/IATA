@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">https://portal.iata.org/csportal/s/igom</value>
+        <value xsi:type="xsd:string">https://portal.iata.org/s/igom</value>
     </values>
 </CustomMetadata>
