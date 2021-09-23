@@ -247,6 +247,15 @@
         <label>Delegated Tasks</label>
     </listViews>
     <listViews>
+        <fullName>IGOM_Portal_approvals_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>IGOM Portal approvals</label>
+        <queue>IGOM_Portal_approvals</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>L3_TACT_Operations_Task</fullName>
         <filterScope>Queue</filterScope>
         <label>L3-TACT-Operations</label>
