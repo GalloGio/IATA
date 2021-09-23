@@ -8400,6 +8400,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Email_To_Case_Replier</name>
     </customLabels>
     <customLabels>
+        <label><!-- Email Wrong Format --></label>
+        <name>Email_Wrong_Format</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Email address --></label>
         <name>Email_address</name>
     </customLabels>
@@ -30418,6 +30422,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>PageTitleShoppingCart</name>
     </customLabels>
     <customLabels>
+        <label><!-- Page Numbering --></label>
+        <name>Page_Numbering</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Page Product Detail --></label>
         <name>Page_Product_Detail</name>
     </customLabels>
@@ -30682,6 +30690,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Re-invite --></label>
+        <name>Re_Invite</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reactivate Risk Event warning message --></label>
         <name>Reactivate_Risk_Event_warning_message</name>
     </customLabels>
@@ -30900,6 +30912,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- Select the target Case --></label>
         <name>Select_the_target_Case</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Selected Role --></label>
+        <name>Selected_Role</name>
     </customLabels>
     <customLabels>
         <label><!-- Send FS Request Letter Error --></label>
@@ -34556,6 +34572,402 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- IDCard_replacementHeadText --></label>
         <name>idcard_replacementHeadText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig IGOM document description --></label>
+        <name>ig_IGOM_document_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig IGOM version --></label>
+        <name>ig_IGOM_version</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig IGOM version used --></label>
+        <name>ig_IGOM_version_used</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig action required --></label>
+        <name>ig_action_required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_add_document --></label>
+        <name>ig_add_document</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig add document first msg --></label>
+        <name>ig_add_document_first_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig add reference --></label>
+        <name>ig_add_reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig add variation in other lang --></label>
+        <name>ig_add_variation_in_other_lang</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig are you sure delete msg --></label>
+        <name>ig_are_you_sure_delete_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig attachments --></label>
+        <name>ig_attachments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig available stations --></label>
+        <name>ig_available_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig blank field --></label>
+        <name>ig_blank_field</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_browse_files --></label>
+        <name>ig_browse_files</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig chapter not publishable err --></label>
+        <name>ig_chapter_not_publishable_err</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig chapters to publish --></label>
+        <name>ig_chapters_to_publish</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig chapters with modifications --></label>
+        <name>ig_chapters_with_modifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig child request --></label>
+        <name>ig_child_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig close --></label>
+        <name>ig_close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig comments --></label>
+        <name>ig_comments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig complete --></label>
+        <name>ig_complete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig completion --></label>
+        <name>ig_completion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig conformity --></label>
+        <name>ig_conformity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig continue --></label>
+        <name>ig_continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig continue draft --></label>
+        <name>ig_continue_draft</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig corporate gap message --></label>
+        <name>ig_corporate_gap_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig dashboard --></label>
+        <name>ig_dashboard</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_delete --></label>
+        <name>ig_delete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig delete reference --></label>
+        <name>ig_delete_reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig discard changes --></label>
+        <name>ig_discard_changes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig discard draft --></label>
+        <name>ig_discard_draft</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_document_name_short --></label>
+        <name>ig_document_name_short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_document_type_short --></label>
+        <name>ig_document_type_short</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_documents --></label>
+        <name>ig_documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig download file template --></label>
+        <name>ig_download_file_template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_drag_and_drop_file --></label>
+        <name>ig_drag_and_drop_file</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_edit --></label>
+        <name>ig_edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig effective date --></label>
+        <name>ig_effective_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig error has ocurred --></label>
+        <name>ig_error_has_ocurred</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig file name --></label>
+        <name>ig_file_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig gap analysis --></label>
+        <name>ig_gap_analysis</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig exit --></label>
+        <name>ig_gap_exit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig gap exit msg --></label>
+        <name>ig_gap_exit_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_go_back --></label>
+        <name>ig_go_back</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig group request --></label>
+        <name>ig_group_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_import_igom --></label>
+        <name>ig_import_igom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig informative --></label>
+        <name>ig_informative</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig mapping --></label>
+        <name>ig_mapping</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig new file --></label>
+        <name>ig_new_file</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig new file from previous --></label>
+        <name>ig_new_file_from_previous</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig no chapter selected --></label>
+        <name>ig_no_chapter_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_no_documents_station --></label>
+        <name>ig_no_documents_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig no section selected --></label>
+        <name>ig_no_section_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig no unrelated stations for search --></label>
+        <name>ig_no_unrelated_stations_for_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- No users to display --></label>
+        <name>ig_no_users_to_display</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig no variations --></label>
+        <name>ig_no_variations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig notification info msg --></label>
+        <name>ig_notification_info_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig notifications --></label>
+        <name>ig_notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_or --></label>
+        <name>ig_or</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig out of scope --></label>
+        <name>ig_out_of_scope</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig parent request --></label>
+        <name>ig_parent_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig pending review --></label>
+        <name>ig_pending_review</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig process document --></label>
+        <name>ig_process_document</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig publish --></label>
+        <name>ig_publish</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig publish a gap --></label>
+        <name>ig_publish_a_gap</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig publish a template --></label>
+        <name>ig_publish_a_template</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig publish date --></label>
+        <name>ig_publish_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig publishing information --></label>
+        <name>ig_publishing_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig reference will be removed --></label>
+        <name>ig_reference_will_be_removed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig references --></label>
+        <name>ig_references</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig references are reviewed --></label>
+        <name>ig_references_are_reviewed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig reminder date --></label>
+        <name>ig_reminder_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig reminder date error msg --></label>
+        <name>ig_reminder_date_error_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig reminder date info msg --></label>
+        <name>ig_reminder_date_info_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_remove_document_title --></label>
+        <name>ig_remove_document_title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig_remove_document_warning --></label>
+        <name>ig_remove_document_warning</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig remove reference --></label>
+        <name>ig_remove_reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig remove variation in other lang --></label>
+        <name>ig_remove_variation_in_other_lang</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig save --></label>
+        <name>ig_save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig select another igom --></label>
+        <name>ig_select_another_igom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig select evey chapter --></label>
+        <name>ig_select_evey_chapter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig select section to add reference --></label>
+        <name>ig_select_section_to_add_reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig selected gap analsis --></label>
+        <name>ig_selected_gap_analsis</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig send manual notification --></label>
+        <name>ig_send_manual_notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig station administration --></label>
+        <name>ig_station_administration</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig station management --></label>
+        <name>ig_station_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig station relationships --></label>
+        <name>ig_station_relationships</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig sub reference --></label>
+        <name>ig_sub_reference</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig type --></label>
+        <name>ig_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig upload failed --></label>
+        <name>ig_upload_failed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig upload igom document --></label>
+        <name>ig_upload_igom_document</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig upload new igom --></label>
+        <name>ig_upload_new_igom</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig upload succesful --></label>
+        <name>ig_upload_succesful</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig user provision --></label>
+        <name>ig_user_provision</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig users to notify --></label>
+        <name>ig_users_to_notify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig variation --></label>
+        <name>ig_variation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig variation description --></label>
+        <name>ig_variation_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig variation description alt --></label>
+        <name>ig_variation_description_alt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig variation description in langig variationig variation --></label>
+        <name>ig_variation_description_in_lang</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ig variation report --></label>
+        <name>ig_variation_report</name>
     </customLabels>
     <customLabels>
         <label><!-- new application --></label>
@@ -42110,8 +42522,16 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- IATA Geoname Cities --></label>
         <name>IATA_Geoname_Cities</name>
         <sections>
+            <label><!-- Country --></label>
+            <name>Country</name>
+        </sections>
+        <sections>
             <label><!-- IATA Geonames Cities --></label>
             <name>IATA Geonames Cities</name>
+        </sections>
+        <sections>
+            <label><!-- State --></label>
+            <name>State</name>
         </sections>
     </reportTypes>
     <reportTypes>
