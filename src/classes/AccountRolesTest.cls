@@ -18,7 +18,7 @@ private class AccountRolesTest {
 	@IsTest
 	static void testActivate(){
 		AccountRoles accountRoles = new AccountRoles();
-		String activeStatus = AccountRoles.STATUSACTIVE;
+		String activeStatus = accountRoles.STATUSACTIVE;
 		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
 		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
 		accountRoles.records.addAll(accountRoles.create(new Set<Id>{account.Id}, functionalRole));
@@ -29,7 +29,7 @@ private class AccountRolesTest {
 	@IsTest
 	static void testInactivate(){
 		AccountRoles accountRoles = new AccountRoles();
-		String inactiveStatus = AccountRoles.STATUSINACTIVE;
+		String inactiveStatus = accountRoles.STATUSINACTIVE;
 		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
 		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
 		accountRoles.records.addAll(accountRoles.create(new Set<Id>{account.Id}, functionalRole));

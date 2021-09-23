@@ -520,9 +520,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field1Values__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Bulletin_Memo_Text__c</field>
+            <field>Change_Code__c</field>
             <operation>contains</operation>
-            <value>default</value>
+            <value>NEW,FIN</value>
         </filters>
         <label>AMS_NOT</label>
         <language>en_US</language>

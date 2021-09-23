@@ -1,0 +1,101 @@
+<template>
+    <template if:true={showSpinner}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+        </lightning-spinner>
+    </template>
+    <div if:true={showAll} class="row height-100vh row-no-margin">       
+        <template if:true={sidebar}>
+            <div class={sidebarClass}>
+                <template if:true={defaultSidebar}>
+                    <c-ig-sidebar-menu station-id={stationId} onmenuitemselection={menuSelection}></c-ig-sidebar-menu>
+                </template>
+                <template if:false={defaultSidebar}>
+                    <c-ig-sidebar-menu-gap onshowfullmenu={showFullMenu} onhidemenu={hideMenu} onselectedsection={getSection} igom-manual={igomManual}></c-ig-sidebar-menu-gap>
+                </template>
+            </div>
+        </template>     
+        <div class={containerWidth}>
+            <div class={headerClass}>
+                <div class="col-6 display-flex">
+                    <img width="11" src={resources.icons.indicatorHeader}/>
+                    <span class="title-active-menu-header">{menuItemSelected}</span>
+                    <template if:true={showGapAnalysis}>
+                        <span class="igom-version">{igomVersion}</span>
+                    </template>
+                </div>
+                <div class="col-6 display-flex">
+                    <template if:true={showStationSelector}>
+                        <div class="col-12 m-auto text-right">
+                            <c-ig-user-menu active-station-id={stationId} onstationchange={stationChange} onmenuitemselection={menuSelection}></c-ig-user-menu> 
+                        </div>
+                    </template>
+                    <template if:true={showGapAnalysis}>                     
+                        <div class="col-12 m-auto text-right">
+                            <div if:true={showLanguageSelector} class="slds-show_inline-block mr-4">
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <select if:true={igomLanguages} class="slds-select" onchange={changeLanguage}>
+                                            <template for:each={igomLanguages} for:item="language">
+                                                <option key={language.value} value={language.value}>{language.label}</option>
+                                            </template>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <button if:true={showDocumentsButton} class="button btn-ig-secondary mr-4" onclick={goToDocuments}>{label.custom.ig_documents}</button>
+                            <button if:true={showPublishButton} class="button btn-ig-primary mr-4" onclick={goToPublish}>{label.custom.ig_publish}</button>
+                            <lightning-icon icon-name="utility:logout" size="small" class="mr-4 cursor-pt" onclick={showModalExitGapAnalysis}></lightning-icon>                           
+                        </div>
+                    </template>
+                </div>
+                
+            </div>
+            
+            <!--DINAMIC CONTAINER-->
+            <template if:true={showMessageCentered}>
+                <div class="col-12 p-5 text-center">
+                    <h3>{message}</h3>
+                </div>
+            </template>
+            <template if:true={showGapAnalysisStart}>
+                <div class="col-12 p-5">
+                    <c-ig-gap-analysis-n-file station-id={activeStation.id} station-name={activeStation.name} ongotogapanalysis={goToGapAnalysis}></c-ig-gap-analysis-n-file>
+                </div>
+            </template>
+            <template if:true={showGapAnalysis}>
+                <div class="col-12 p-3 backg-light-grey height-100">
+                    <c-ig-gap-analysis station-id={activeStation.id}
+                    gap-analysis-id={selectedGapId}
+                    section-obj={selectedSectionObj} 
+                    chapter={selectedChapter}
+                    onselectsection={gotoSectionHandler}></c-ig-gap-analysis>
+                </div>
+            </template>
+            <template if:true={showDocuments}>
+                <c-ig-gap-analysis-documents onback={showGap} gap-analysis-id={gapAnalysisInUse.id} station-id={activeStation.id}></c-ig-gap-analysis-documents>
+            </template>
+            <template if:true={showPublish}>
+                <c-ig-gap-analysis-publish onback={showGap} onpublish={publishGap} gap-analysis-id={selectedGapId} as-template={activeStation.publishesTemplates}></c-ig-gap-analysis-publish>
+            </template>
+            <template if:true={showDashboard}>
+                <c-ig-dashboard></c-ig-dashboard>
+            </template>
+            <template if:true={showNotifications}>
+                <c-ig-notifications station-id={activeStation.id}></c-ig-notifications>
+            </template> 
+            <template if:true={showIGOMReader}>
+                <c-ig-igom-reader></c-ig-igom-reader>
+            </template>    
+            <template if:true={showVariationReport}>
+                <c-ig-variation-report></c-ig-variation-report>
+            </template>           
+            <template if:true={showStationAdministration}>
+                <c-ig-administration-panel station-id={activeStation.id}></c-ig-administration-panel>
+            </template>
+        </div>
+
+        <c-ig-modal class="exit-confirmation" header="Exit GAP Analysis" onaccept={exitGapAnalysis} accept-button-label={label.custom.ig_gap_exit}>
+            <p>{label.custom.ig_gap_exit_msg}</p>
+        </c-ig-modal>
+    </div>               
+</template>

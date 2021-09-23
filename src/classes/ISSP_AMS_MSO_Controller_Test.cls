@@ -37,8 +37,9 @@ private class ISSP_AMS_MSO_Controller_Test {
 
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(acc.id,1);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(1);
 		Contact con = contactList.get(0);
+		con.AccountId = acc.id;
 		con.Email = TestDataFactory_Contacts.DEFAULTEMAIL;
 		con.RecordTypeId = conRtId;
 		con.LastName = 'portalUser';

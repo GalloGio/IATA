@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>The roles permitted for Contacts (used with a dependency on Functional_Role Custom Metadata type) to define roles per service.</description>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <description>The Service for which this Contact Role Detail is valid.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Functional Role</label>
+        <referenceTo>Functional_Role__mdt</referenceTo>
+        <relationshipLabel>Contact Role Details</relationshipLabel>
+        <relationshipName>Contact_Role_Details</relationshipName>
+        <required>true</required>
+        <type>MetadataRelationship</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Role_Name__c</fullName>
+        <description>The name of the role that a Contact may assume. NOTE: this should be aligned with the record type name of the &lt;Service&gt; Contact Role Detail object.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Role Name</label>
+        <required>true</required>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Service Administrator</fullName>
+                    <default>true</default>
+                    <label>Service Administrator</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Contact Role Detail</label>
+    <pluralLabel>Contact Role Details</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,58 @@
+<template>
+    <div class="col-12 pl-5 pr-5 pt-4 height-100">
+        <div class="row col-12 mt-4">
+            <div class={tabAllClass} data-tab="" onclick={selectTab}>
+                ALL NOTIFICATIONS ({notificationQuantity})
+            </div>
+            <div class={tabActionRequiredClass} data-tab={constants.NOTIFICATION.SEVERITY.VALUES.ACTION_REQUIRED} onclick={selectTab}>
+                ACTION REQUIRED ({notificationActionRequiredQuantity})
+            </div>
+            <div class={tabInformativeClass} data-tab={constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE} onclick={selectTab}>
+                INFORMATIVE ({notificationInformativeQuantity})
+            </div>
+            <div if:true={isVisibleManualNotifications} class={tabButtonClass}>
+                <lightning-button class="slds-float_right" label={label.custom.ig_send_manual_notification} onclick={showModalNotification}></lightning-button>
+            </div>
+        </div>
+        <div class="col-12 box-shadow-col p-3 mt-4 mb-4">
+            <div class="col-10 offset-1 pt-4 pb-4">
+                <div class="input-pills-filter" onclick={toggleAirlineFilters}>
+                    <span class="filters-applied">{placeHolderInputFilters}
+                        <template for:each={selectedAirlinesFilter} for:item="item">
+                            <lightning-pill 
+                                key={item.id} 
+                                label={item.name} 
+                                data-id={item.id}
+                                onremove={deleteFilter}
+                                onclick={removedPill}>
+                            </lightning-pill>
+                        </template>
+                    </span>
+                </div>
+                <ul class={filterAirlineClass}>
+                    <div class="close-filters"><lightning-icon icon-name="utility:close" size="x-small" class="cursor-pt" onclick={closeFilters}></lightning-icon></div>
+                    <template for:each={notifiedAirlines} for:item="airline">
+                        <li key={airline.id}>
+                            <div class="form-check cursor-pt" data-id={airline.id} onclick={addFilter}>
+                                <input type="checkbox" class="form-check-input" checked={airline.checked}>
+                                <label class="form-check-label">{airline.name}</label>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+                <ul class="notification-ul">
+                    <template if:true={areNotificationsQueried}>
+                        <template for:each={notificationsFiltered} for:item="notification">
+                            <c-ig-notifications-item key={notification.id} notification={notification} onread={markAsReadEvent}></c-ig-notifications-item>
+                        </template>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <c-ig-modal class="manual-notification-modal" header={label.custom.ig_send_manual_notification}
+    onaccept={sendManualNotification} accept-button-label="Send">
+        <c-ig-manual-notification station-id={stationId}></c-ig-manual-notification>
+    </c-ig-modal>
+</template>

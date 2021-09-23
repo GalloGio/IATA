@@ -1,0 +1,130 @@
+h1 {
+    font-size: 24px;
+}
+
+.tabs > span {
+    display: inline-block;
+    text-transform: uppercase;
+    margin-right: 15px;
+    padding-bottom: 6px;
+}
+
+.tabs > span.selected {
+    border-bottom: 3px solid #1E32FA;
+    font-weight: bold;
+}
+
+.shadow-drop {
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+}
+
+.content {
+    background: white;
+}
+
+a {
+    color: #1E32FA;
+    font-weight: bold;
+}
+
+.station-bot {
+    color: #90A0B7;
+}
+
+.selector-label {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.selector-field {
+    color: #90A0B7;
+    font-size: 12px;
+}
+
+.background {
+    background: white;
+}
+
+.chapter-menu li {
+    padding: 10px 25px;
+    color: #707683;
+    font-weight: normal;
+}
+
+.chapter-menu li.selected {
+    font-weight: bold;
+    color: #1E32FA;
+}
+
+a {
+    text-decoration: none;
+}
+
+h2 {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 21px;    
+    font-weight: 500;
+}
+
+h3 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.line-through {
+    position: relative;
+    z-index: 1;
+}
+
+.line-through::before {
+    border-top: 2px solid #dfdfdf;
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    z-index: -1;
+}
+
+.line-through span {
+    background: #fff;
+    padding: 0 15px 0 0;
+}
+
+.procedure-header {
+    color: #90A0B7;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    padding-bottom: 4px;
+}
+
+.chapter-container:last-child {
+    min-height: calc(100% +  1rem);
+}
+
+.variation-list {
+    overflow-y: scroll;
+    position: relative;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.variation-report-body {
+    align-items: inherit;
+}
+
+svg {
+    fill: currentColor;
+}

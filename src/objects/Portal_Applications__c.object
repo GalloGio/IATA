@@ -174,6 +174,26 @@
         </displayedFields>
         <label>ISSP Available Services</label>
     </fieldSets>
+    <fieldSets>
+        <fullName>Invitation</fullName>
+        <description>PortalApplicationSelector class</description>
+        <displayedFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Functional_Role__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Is_Invitation_Enabled__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Invitation</label>
+    </fieldSets>
     <fields>
         <fullName>ANG_Accre_Tp__c</fullName>
         <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
@@ -623,16 +643,6 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-        <fullName>Auto_grant_Account_Role__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Determines if the Account Role is automatically granted when the first user is granted access to this service and also removed when the last user is denied access to the service.</description>
-        <externalId>false</externalId>
-        <label>Auto grant Account Role?</label>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>Cannot_be_managed_by_portal_admin__c</fullName>
         <defaultValue>true</defaultValue>
         <description>If true do not allow portal admin to manage service</description>
@@ -690,6 +700,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                 <controllingFieldValue>MedAire</controllingFieldValue>
                 <controllingFieldValue>Training</controllingFieldValue>
                 <controllingFieldValue>One Source</controllingFieldValue>
+                <controllingFieldValue>IGOM</controllingFieldValue>
                 <valueName>Operational Contact</valueName>
             </valueSettings>
         </valueSet>
@@ -827,6 +838,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <description>If checked (true), this service requires manual User provisioning steps to be completed before access is granted to Users.</description>
         <externalId>false</externalId>
         <label>Is Async Manual User Provisioning</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Invitation_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if this Portal Application allows users to be Invited or not.</description>
+        <externalId>false</externalId>
+        <label>Is Invitation Enabled?</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1634,6 +1655,10 @@ IF(OR(
                 <fullName>Operational Contact</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Service Administrator</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Country_Visibility_Control__c</picklist>
@@ -1745,6 +1770,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>FRED%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Financial Securities</fullName>
                 <default>false</default>
             </values>
@@ -1826,6 +1855,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IGOM</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -154,13 +154,48 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
+    <fieldSets>
+        <fullName>Invitation</fullName>
+        <description>InvitationSelector.cls</description>
+        <displayedFields>
+            <field>Account__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Email__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Functional_Role__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Role_Name__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>ServiceId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Invitation</label>
+    </fieldSets>
     <fields>
         <fullName>AccountId__c</fullName>
         <description>Account Id send by FRED application</description>
         <externalId>false</externalId>
         <label>AccountId</label>
         <length>18</length>
-        <required>true</required>
+        <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -172,6 +207,19 @@
         <externalId>false</externalId>
         <label>Account Role</label>
         <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>Invitations</relationshipLabel>
+        <relationshipName>Invitations</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <description>The Account to which the Invitee is being invited on behalf of to use the Service. This will be used to define the Account that is related to the Contact’s Account and Contact Role records.</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
         <relationshipLabel>Invitations</relationshipLabel>
         <relationshipName>Invitations</relationshipName>
         <required>false</required>
@@ -196,6 +244,7 @@
     </fields>
     <fields>
         <fullName>Email__c</fullName>
+        <description>The email address for the Person being invited.</description>
         <externalId>false</externalId>
         <label>Email</label>
         <required>false</required>
@@ -212,6 +261,19 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Functional_Role__c</fullName>
+        <description>The Service (Functional Role) that the invitee is being invited to participate.</description>
+        <externalId>false</externalId>
+        <label>Functional Role</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Functional_Roles</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>GADM_Power_User__c</fullName>
@@ -350,6 +412,24 @@
         <type>Phone</type>
     </fields>
     <fields>
+        <fullName>Role_Name__c</fullName>
+        <description>The role to which the invitee is to be assigned.</description>
+        <externalId>false</externalId>
+        <label>Role Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Functional_Role__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetName>Contact_Role_Details</valueSetName>
+            <valueSettings>
+                <controllingFieldValue>IGOM</controllingFieldValue>
+                <valueName>Service Administrator</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Role__c</fullName>
         <description>Role that the contact should be granted</description>
         <externalId>false</externalId>
@@ -413,6 +493,37 @@
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Status__c</fullName>
+        <defaultValue>&quot;Active&quot;</defaultValue>
+        <description>The current status of the Invitation: Active for an &apos;open&apos; invitation; Completed for a successfully completed invitation; Cancelled for when an Active Invitation is cancelled and cannot be applied to Completed Invitations.</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>is_Accepted__c</fullName>
         <defaultValue>false</defaultValue>
         <description>True when a user accepts the invitation</description>
@@ -426,14 +537,15 @@
     <listViews>
         <fullName>All</fullName>
         <columns>NAME</columns>
-        <columns>First_Name__c</columns>
-        <columns>Last_Name__c</columns>
         <columns>Email__c</columns>
-        <columns>Role__c</columns>
+        <columns>ServiceId__c</columns>
+        <columns>Account__c</columns>
+        <columns>Role_Name__c</columns>
+        <columns>Status__c</columns>
         <columns>CREATED_DATE</columns>
+        <columns>Functional_Role__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>INV-{00000000}</displayFormat>
@@ -443,5 +555,21 @@
     <pluralLabel>Invitations</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Status_can_only_be_changed_from_Active</fullName>
+        <active>true</active>
+        <description>Status value cannot be changed from Completed or Cancelled</description>
+        <errorConditionFormula>IF(
+  AND(
+    NOT(ISNEW()),
+    ISCHANGED(Status__c),
+    ISPICKVAL(Status__c, &apos;Active&apos;)
+  ), 
+  TRUE,
+  FALSE
+)</errorConditionFormula>
+        <errorDisplayField>Status__c</errorDisplayField>
+        <errorMessage>Status value cannot be changed from Completed or Cancelled</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

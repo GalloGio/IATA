@@ -484,8 +484,8 @@ private class OneId_RegistrationProcessControllerTest {
 		contact.AccountId = acc.Id;
 		insert contact;
 
-		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		app.Name = 'IATA Accreditation & Changes';
+		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
+		Portal_Applications__c app = new Portal_Applications__c(Functional_Role__c = functionalRole, Name = 'IATA Accreditation & Changes');
 		insert app;
 
 		User user = new User(
@@ -543,8 +543,8 @@ private class OneId_RegistrationProcessControllerTest {
 		 IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
 		 insert country ;
 
-		 Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		 pa.Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP;
+		 String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
+		 Portal_Applications__c pa = new Portal_Applications__c(Functional_Role__c = functionalRole, name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
 		 insert pa;
 
 		 ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
@@ -589,8 +589,10 @@ private class OneId_RegistrationProcessControllerTest {
 		contactRoles2.RecordTypeId = externalRecordTypeId;
 		insert contactRoles2;
 
-		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
+		Portal_Applications__c portalApplications = new Portal_Applications__c();
 		portalApplications.Name = 'GADM';
+		portalApplications.Functional_Role__c = functionalRole;
 		insert portalApplications;
 
 		Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
@@ -657,8 +659,8 @@ private class OneId_RegistrationProcessControllerTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
 		insert country ;
 
-		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		pa.Name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI;
+		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
+		Portal_Applications__c pa = new Portal_Applications__c(Functional_Role__c = functionalRole, name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI);
 		insert pa;
 
 		ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
@@ -671,8 +673,8 @@ private class OneId_RegistrationProcessControllerTest {
 
 		Contact c;
 
-		Portal_Applications__c p = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		p.Name='One Id NDC Matchmaker';
+		functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
+		Portal_Applications__c p = new Portal_Applications__c(Functional_Role__c = functionalRole, Name='One Id NDC Matchmaker');
 		insert p;
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];
@@ -748,8 +750,11 @@ private class OneId_RegistrationProcessControllerTest {
 		};
 		Insert accs;
 
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Functional_Role__c = 'FRED+';
+		insert portalApplication;
 		// Insert an invitation
-		Invitation__c invitation = new Invitation__c(AccountId__c=accs[2].Id); // the verifier account inserted previously
+		Invitation__c invitation = new Invitation__c(ServiceId__c = portalApplication.Id, AccountId__c=accs[2].Id); // the verifier account inserted previously
 		insert invitation;
 
 		Test.startTest();
@@ -913,9 +918,13 @@ private class OneId_RegistrationProcessControllerTest {
 
 		insert accountsToInsert;
 
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Functional_Role__c = 'FRED+';
+		insert portalApplication;
 		Invitation__c testInvitation = new Invitation__c();
 		testInvitation.AccountId__c = acc.Id;
 		testInvitation.GADM_Power_User__c = true;
+		testInvitation.ServiceId__c = portalApplication.Id;
 		insert testInvitation;
 
 

@@ -1,0 +1,20 @@
+.title-sidebar{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+}
+
+.logo-sidebar-menu{
+    background: #1E32FA;
+    color: white;
+    border-bottom: 1px solid #e3ecf9;
+    display: flex;
+    height: 60px;
+}
+
+.ul-sidebar{
+    height: 100vh;
+}

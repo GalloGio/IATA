@@ -1,0 +1,15 @@
+.highlight {
+    background: #FFF9EB;
+}
+
+div.active-procedure-list {
+    color: #323C47;
+}
+
+.procedure-list {
+    color: #707683;
+}
+
+.procedure-list a {
+    color: inherit;
+}

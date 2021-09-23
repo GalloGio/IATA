@@ -15,7 +15,8 @@ private class ISSP_CurrencyCenterUtilTest {
 		Account acc = TestDataFactory_Accounts.createStandardAccounts(1).get(0);
 		insert acc;
 
-		Contact con = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		Contact con = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		con.AccountId = acc.id;
 		con.User_Portal_Status__c = 'Approved User';
 		insert con;
 

@@ -138,7 +138,7 @@ public class PortalServicesCtrlTest {
 
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 6);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(6);
 
 		Contact c = contactList.get(0);
 		c.LastName = 'ContactTest';
@@ -187,28 +187,28 @@ public class PortalServicesCtrlTest {
 
 		PortalApplicationRights portalApplicationRights = new PortalApplicationRights();
 		Portal_Application_Right__c appRight = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(easyPay1.id, c.Id);
-		appRight.Right__c = PortalApplicationRights.ACCESSGRANTED;	
+		appRight.Right__c = portalApplicationRights.ACCESSGRANTED;	
 
 		Portal_Application_Right__c appRight2 = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(easyPay2.id, c2.Id);
-		appRight2.Right__c = PortalApplicationRights.ACCESSGRANTED;
+		appRight2.Right__c = portalApplicationRights.ACCESSGRANTED;
 
 		Portal_Application_Right__c appRight3 = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(easyPay3.id, c3.Id);
-		appRight3.Right__c = PortalApplicationRights.ACCESSREQUESTED;
+		appRight3.Right__c = portalApplicationRights.ACCESSREQUESTED;
 
 		Portal_Application_Right__c appRight4 = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(serviceTest3.id, c2.Id);
-		appRight4.Right__c = PortalApplicationRights.ACCESSGRANTED;
+		appRight4.Right__c = portalApplicationRights.ACCESSGRANTED;
 
 		Portal_Application_Right__c appRight5 = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(serviceTest4.id, c4.Id);
-		appRight5.Right__c = PortalApplicationRights.ACCESSREQUESTED;
+		appRight5.Right__c = portalApplicationRights.ACCESSREQUESTED;
 		
 		Portal_Application_Right__c appRight6 = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(serviceTest3.id, c21.Id);
-		appRight6.Right__c = PortalApplicationRights.ACCESSGRANTED;
+		appRight6.Right__c = portalApplicationRights.ACCESSGRANTED;
 
 		Portal_Application_Right__c appRight7 = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(serviceTest7.id, c4.Id);
-		appRight7.Right__c = PortalApplicationRights.ACCESSGRANTED;
+		appRight7.Right__c = portalApplicationRights.ACCESSGRANTED;
 
 		Portal_Application_Right__c appRight8 = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(serviceTest8.id, c4.Id);
-		appRight8.Right__c = PortalApplicationRights.ACCESSGRANTED;
+		appRight8.Right__c = portalApplicationRights.ACCESSGRANTED;
 
 		insert new List<Portal_Application_Right__c> {appRight,appRight2,appRight3,appRight4,appRight5,appRight6,appRight7};
 

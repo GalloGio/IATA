@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notification reminder email when a GAP Analysis has been published for the latest IGOM but it has not been read</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>IGOM Reminder - GAP reminder</name>
+    <style>none</style>
+    <subject>Notifications still unread</subject>
+    <textOnly>Notifications have not been read
+
+Following notifications have not been marked as read.
+
+{!Notifications}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
