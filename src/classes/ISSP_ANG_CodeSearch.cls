@@ -119,15 +119,6 @@ public class ISSP_ANG_CodeSearch {
 
 			if(!agencies.isEmpty()) {
 				Account reqAgency = agencies[0];
-				String isoCountry = reqAgency.IATA_ISO_Country__r.Name == null ? '' :reqAgency.IATA_ISO_Country__r.Name.replace(' ','_');
-				IATA_Code_Search_Special_Countries__mdt[] specialCountries = [SELECT Remittance_Holding_Capacity_Value__c
-																				FROM IATA_Code_Search_Special_Countries__mdt
-															 													WHERE DeveloperName =:isoCountry LIMIT 1];
-
-				if(!specialCountries.isEmpty()){
-					isSpecialIATACodeSearchCountry = true;
-					RHCValueForSpecialCountry = specialCountries[0].Remittance_Holding_Capacity_Value__c;
-				}
 
 				if(reqAgency.Location_Type__c == Ams_Utils.AW || reqAgency.Location_Type__c == Ams_Utils.AE || reqAgency.Location_Type__c == Ams_Utils.BR || reqAgency.Location_Type__c == Ams_Utils.SA || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
 					if(reqAgency.Location_Type__c == Ams_Utils.AE || (reqAgency.Location_Type__c == Ams_Utils.HE && reqAgency.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY)) {
@@ -173,6 +164,16 @@ public class ISSP_ANG_CodeSearch {
 
 				if (rhcInfos.size() > 0) {
 					rhcAgencyInfo = rhcInfos[0];
+				}
+
+				String isoCountry = this.agency.IATA_ISO_Country__r.Name == null ? '' :this.agency.IATA_ISO_Country__r.Name.replace(' ','_');
+				IATA_Code_Search_Special_Countries__mdt[] specialCountries = [SELECT Remittance_Holding_Capacity_Value__c
+																				FROM IATA_Code_Search_Special_Countries__mdt
+															 													WHERE DeveloperName =:isoCountry LIMIT 1];
+
+				if(!specialCountries.isEmpty()){
+					isSpecialIATACodeSearchCountry = true;
+					RHCValueForSpecialCountry = specialCountries[0].Remittance_Holding_Capacity_Value__c;
 				}
 
 				if (airline.Field_Head_Office__c == 'Branch') {
