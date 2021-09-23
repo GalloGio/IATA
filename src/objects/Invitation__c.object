@@ -154,16 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>Invitation</label>
-    <nameField>
-        <displayFormat>INV-{00000000}</displayFormat>
-        <label>Invitation Name</label>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Invitations</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
     <fieldSets>
         <fullName>Invitation</fullName>
         <description>InvitationSelector.cls</description>
@@ -543,6 +533,28 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
+    <label>Invitation</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Email__c</columns>
+        <columns>ServiceId__c</columns>
+        <columns>Account__c</columns>
+        <columns>Role_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Functional_Role__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>INV-{00000000}</displayFormat>
+        <label>Invitation Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Invitations</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Status_can_only_be_changed_from_Active</fullName>
         <active>true</active>
@@ -559,17 +571,5 @@
         <errorDisplayField>Status__c</errorDisplayField>
         <errorMessage>Status value cannot be changed from Completed or Cancelled</errorMessage>
     </validationRules>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Email__c</columns>
-        <columns>ServiceId__c</columns>
-        <columns>Account__c</columns>
-        <columns>Role_Name__c</columns>
-        <columns>Status__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Functional_Role__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -11389,6 +11389,14 @@ This service is free of charge.</value>
         <value>ifgcare@iata.org</value>
     </labels>
     <labels>
+        <fullName>Email_Wrong_Format</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Email Wrong Format</shortDescription>
+        <value>The specified email is not following the correct format.</value>
+    </labels>
+    <labels>
         <fullName>Email_address</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -11402,14 +11410,6 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>Email cannot be empty</shortDescription>
         <value>Email cannot be empty</value>
-    </labels>
-    <labels>
-        <fullName>Email_Wrong_Format</fullName>
-        <categories>User Service Invitation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Email Wrong Format</shortDescription>
-        <value>The specified email is not following the correct format.</value>
     </labels>
     <labels>
         <fullName>EmptyCart</fullName>
@@ -46580,6 +46580,14 @@ Also, the package has changed the setting to prevent the creation of Contacts an
         <value>Shopping Cart</value>
     </labels>
     <labels>
+        <fullName>Page_Numbering</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Page Numbering</shortDescription>
+        <value>Page {0} of {1}</value>
+    </labels>
+    <labels>
         <fullName>Page_Product_Detail</fullName>
         <categories>Page Title</categories>
         <language>en_US</language>
@@ -47096,6 +47104,14 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <value>Prejudiced Collection of Funds</value>
     </labels>
     <labels>
+        <fullName>Re_Invite</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Re-invite</shortDescription>
+        <value>Re-invite</value>
+    </labels>
+    <labels>
         <fullName>Reactivate_Risk_Event_warning_message</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -47551,6 +47567,14 @@ title,Title,Name</value>
         <protected>false</protected>
         <shortDescription>Select the target Case</shortDescription>
         <value>Select the target Case(s) in the following list of related Cases.</value>
+    </labels>
+    <labels>
+        <fullName>Selected_Role</fullName>
+        <categories>User Service Invitation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Selected Role</shortDescription>
+        <value>Selected Role</value>
     </labels>
     <labels>
         <fullName>Send_FS_Request_Letter_Error</fullName>
@@ -53727,20 +53751,20 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>is requesting to be in a group relationship with you.</value>
     </labels>
     <labels>
-        <fullName>ig_informative</fullName>
-        <categories>IATA IGOM Report</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ig informative</shortDescription>
-        <value>Informative</value>
-    </labels>
-    <labels>
         <fullName>ig_import_igom</fullName>
         <categories>IATA IGOM Report</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ig_import_igom</shortDescription>
         <value>Adopt IGOM</value>
+    </labels>
+    <labels>
+        <fullName>ig_informative</fullName>
+        <categories>IATA IGOM Report</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ig informative</shortDescription>
+        <value>Informative</value>
     </labels>
     <labels>
         <fullName>ig_mapping</fullName>
@@ -54240,14 +54264,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>noreply@iata.org</value>
     </labels>
     <labels>
-        <fullName>Page_Numbering</fullName>
-        <categories>User Service Invitation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Page Numbering</shortDescription>
-        <value>Page {0} of {1}</value>
-    </labels>
-    <labels>
         <fullName>pkb2_lang_ar</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -54556,14 +54572,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>中文</value>
     </labels>
     <labels>
-        <fullName>Re_Invite</fullName>
-        <categories>User Service Invitation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Re-invite</shortDescription>
-        <value>Re-invite</value>
-    </labels>
-    <labels>
         <fullName>regular_price</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -54585,14 +54593,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>select all</shortDescription>
         <value>select all</value>
-    </labels>
-    <labels>
-        <fullName>Selected_Role</fullName>
-        <categories>User Service Invitation</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Selected Role</shortDescription>
-        <value>Selected Role</value>
     </labels>
     <labels>
         <fullName>wire_transfer_payment_msg</fullName>
