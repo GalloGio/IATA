@@ -822,7 +822,7 @@
 							<apex:outputPanel id="allowedAccreditationModelSelectPanel" style="display : {!IF(newForm.Notify_Change_Accreditation_Type__c == true, '', 'none')}">
 								<apex:pageBlockSectionItem labelStyle="width:26%;display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}" dataStyle="display: {!IF(newForm.Notify_Change_Accreditation_Type__c, '', 'none')}">
 									<apex:outputLabel style="font-size: 12px; padding-right: 20px;" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ANG_Accreditation_Model_to_Change__c.Label}" styleClass="agencyAccreditationTypeComponent"/>
-									<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this); checkGoGlobal();" html-disabled="{!isChangeOfAccreditationType}"></apex:inputField>
+									<apex:inputField id="allowedAccreditationModelSelect" value="{!newForm.ANG_Accreditation_Model_to_Change__c}" styleClass="agencyAccreditationTypeComponent" onchange="accreditationModelChanged(this); checkGoGlobal();" html-disabled="true"></apex:inputField>
 								</apex:pageBlockSectionItem>
 
 								<apex:outputPanel id="selectHEForConversion" style="display: none;">
@@ -2342,6 +2342,8 @@
 				} else if (element.checked === true) {
 					confirmAccType[0].checked = false; 
 					allowedAccreditationModelSelectPanel.css('display', '');
+					if('{!isChangeOfAccreditationType}'==='false')
+						allowedAccreditationModelSelect.prop('disabled', false);
 				}
 
 				if (element.checked === false) {

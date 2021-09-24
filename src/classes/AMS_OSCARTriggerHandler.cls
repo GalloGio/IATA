@@ -2978,7 +2978,7 @@ public class AMS_OSCARTriggerHandler {
 					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
 					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
 					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c, recordTypeID,
-					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, 
+					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -3985,7 +3985,7 @@ public class AMS_OSCARTriggerHandler {
 					updatedOSCAR.addError('Cannot pass the finalization step until the Risk Event button is clicked.');
 				}
 
-				if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && updatedOscar.STEP36__c != 'Passed'){
+				if(oldOSCAR.Status__c <> updatedOscar.Status__c && updatedOscar.Status__c == 'Closed' && updatedOscar.RPM_Approval__c == 'Authorize Approval' && (updatedOscar.STEP36__c != 'Passed' && updatedOscar.STEP36__c != AMS_Utils.NOT_APPLICABLE)){
 					updatedOSCAR.addError('Cannot close the OSCAR until the Risk Event step is completed.');
 				}
 
@@ -4842,10 +4842,14 @@ public class AMS_OSCARTriggerHandler {
 				if(acc.ANG_FA_Opt_out__c != valueToAgency ){
 					Account a = new Account(Id = oscar.Account__c);
 					a.ANG_FA_Opt_out__c = valueToAgency;
+					if(valueToAgency)
+						a.ANG_HE_RiskStatus__c = 'Not Applicable';
 					accountsToUpdate.add(a);
 
 					for(Account acct: acc.ChildAccounts){
 						acct.ANG_FA_Opt_out__c = valueToAgency;
+						if(valueToAgency)
+							a.ANG_HE_RiskStatus__c = 'Not Applicable';
 						accountsToUpdate.add(acct);
 					}
 				}
