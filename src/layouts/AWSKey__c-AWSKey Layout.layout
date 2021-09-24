@@ -52,6 +52,10 @@
                 <behavior>Edit</behavior>
                 <field>WS_Endpoint__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Named_Credential__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>

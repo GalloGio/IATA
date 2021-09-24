@@ -26,7 +26,7 @@ private class AWS_XMLDomTest {
 
 		string testListBucketResponse =
 				'<?xml version="1.0" encoding="UTF-8"?>' +
-				'<ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Name>klklklk-test-bucket</Name><Prefix>' +
+				'<ListBucketResult xmlns="http://s-3.amazonaws.com/doc/2006-03-01/"><Name>klklklk-test-bucket</Name><Prefix>' +
 				'</Prefix><Marker></Marker><MaxKeys>1000</MaxKeys><IsTruncated>false</IsTruncated><Contents><Key>/apex/adnDevSignup</Key>' +
 				'<LastModified>2008-01-27T21:13:58.000Z</LastModified><ETag>&quot;630581ddc40fa0a3b7e521c67962baba&quot;</ETag><Size>27411</Size>' +
 				'<Owner><ID>173ea00b3418d9a715d5f5a0d85290c3be11135ecf9a085504a4b1bbb6ea1</ID><DisplayName>vne</DisplayName></Owner>' +
@@ -76,7 +76,7 @@ private class AWS_XMLDomTest {
 		// uses namespaces
 		string testACLResponse =
 				'<?xml version="1.0" encoding="UTF-8"?>' +
-				'<AccessControlPolicy xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Owner><ID>owner_id</ID><DisplayName>foobar</DisplayName></Owner>' +
+				'<AccessControlPolicy xmlns="http://s-3.amazonaws.com/doc/2006-03-01/"><Owner><ID>owner_id</ID><DisplayName>foobar</DisplayName></Owner>' +
 				'<AccessControlList><Grant><Grantee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="CanonicalUser" foo="bar" ><ID>owner_id</ID>' +
 				'<DisplayName>foobar</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>';
 		d = new AWS_XMLDom(testACLResponse);

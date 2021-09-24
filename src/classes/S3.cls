@@ -47,64 +47,35 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 public class S3 {
 
 	public class ListBucketResponse_element {
-			public S3.ListBucketResult ListBucketResponse;
-			private String[] ListBucketResponse_type_info = new String[]{'ListBucketResponse','http://s3.amazonaws.com/doc/2006-03-01/','ListBucketResult','1','1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'ListBucketResponse'};
+		public S3.ListBucketResult ListBucketResponse;
+		private String[] ListBucketResponse_type_info = new String[]{'ListBucketResponse','http://s3.amazonaws.com/doc/2006-03-01/','ListBucketResult','1','1','false'};
+		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
+		private String[] field_order_type_info = new String[]{'ListBucketResponse'};
 	}
 	public class ListBucketResult {
-			public S3.MetadataEntry[] Metadata { get; set; }
-			public String Name {get;set;} //added by davidv
-			public String Prefix;
-			public String Marker;
-			public String NextMarker;
-			public Integer MaxKeys;
-			public String Delimiter;
-			public Boolean IsTruncated;
-			public S3.ListEntry[] Contents;
-			public S3.PrefixEntry[] CommonPrefixes;
-			private String[] Metadata_type_info = new String[]{'Metadata','http://s3.amazonaws.com/doc/2006-03-01/','MetadataEntry','0','-1','false'};
-			private String[] Name_type_info = new String[]{'Name','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] Prefix_type_info = new String[]{'Prefix','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] Marker_type_info = new String[]{'Marker','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] NextMarker_type_info = new String[]{'NextMarker','http://www.w3.org/2001/XMLSchema','string','0','1','false'};
-			private String[] MaxKeys_type_info = new String[]{'MaxKeys','http://www.w3.org/2001/XMLSchema','int','1','1','false'};
-			private String[] Delimiter_type_info = new String[]{'Delimiter','http://www.w3.org/2001/XMLSchema','string','0','1','false'};
-			private String[] IsTruncated_type_info = new String[]{'IsTruncated','http://www.w3.org/2001/XMLSchema','boolean','1','1','false'};
-			private String[] Contents_type_info = new String[]{'Contents','http://s3.amazonaws.com/doc/2006-03-01/','ListEntry','0','-1','false'};
-			private String[] CommonPrefixes_type_info = new String[]{'CommonPrefixes','http://s3.amazonaws.com/doc/2006-03-01/','PrefixEntry','0','-1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'Metadata','Name','Prefix','Marker','NextMarker','MaxKeys','Delimiter','IsTruncated','Contents','CommonPrefixes'};
+		public S3.MetadataEntry[] Metadata { get; set; }
+		public String Name {get;set;} //added by davidv
+		public String Prefix;
+		public String Marker;
+		public String NextMarker;
+		public Integer MaxKeys;
+		public String Delimiter;
+		public Boolean IsTruncated;
+		public S3.ListEntry[] Contents;
+		public S3.PrefixEntry[] CommonPrefixes;
+		private String[] Metadata_type_info = new String[]{'Metadata','http://s3.amazonaws.com/doc/2006-03-01/','MetadataEntry','0','-1','false'};
+		private String[] Name_type_info = new String[]{'Name','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
+		private String[] Prefix_type_info = new String[]{'Prefix','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
+		private String[] Marker_type_info = new String[]{'Marker','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
+		private String[] NextMarker_type_info = new String[]{'NextMarker','http://www.w3.org/2001/XMLSchema','string','0','1','false'};
+		private String[] MaxKeys_type_info = new String[]{'MaxKeys','http://www.w3.org/2001/XMLSchema','int','1','1','false'};
+		private String[] Delimiter_type_info = new String[]{'Delimiter','http://www.w3.org/2001/XMLSchema','string','0','1','false'};
+		private String[] IsTruncated_type_info = new String[]{'IsTruncated','http://www.w3.org/2001/XMLSchema','boolean','1','1','false'};
+		private String[] Contents_type_info = new String[]{'Contents','http://s3.amazonaws.com/doc/2006-03-01/','ListEntry','0','-1','false'};
+		private String[] CommonPrefixes_type_info = new String[]{'CommonPrefixes','http://s3.amazonaws.com/doc/2006-03-01/','PrefixEntry','0','-1','false'};
+		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
+		private String[] field_order_type_info = new String[]{'Metadata','Name','Prefix','Marker','NextMarker','MaxKeys','Delimiter','IsTruncated','Contents','CommonPrefixes'};
 	}
- /**/
-	public class CopyObjectResult {
-			public DateTime LastModified;
-			public String ETag;
-			private String[] LastModified_type_info = new String[]{'LastModified','http://www.w3.org/2001/XMLSchema','dateTime','1','1','false'};
-			private String[] ETag_type_info = new String[]{'ETag','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'LastModified','ETag'};
-	}
-
-
-	public class ListAllMyBucketsList {
-			public S3.ListAllMyBucketsEntry[] Bucket {get;set;}
-			private String[] Bucket_type_info = new String[]{'Bucket','http://s3.amazonaws.com/doc/2006-03-01/','ListAllMyBucketsEntry','0','-1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'Bucket'};
-	}
-
-
-	public class MetadataEntry {
-			public String Name {get; set;}
-			public String Value;
-			private String[] Name_type_info = new String[]{'Name','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] Value_type_info = new String[]{'Value','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'Name','Value'};
-	}
-
-
 	/*
 	 	This inner class, AmazonS3, contains the methods that invoke the Web Service calls to Amazon Web Services.
 	*/
@@ -147,63 +118,63 @@ public class S3 {
 			 This method invokes the S3 DeleteObject web service operation.
 		*/
 		public S3.Status DeleteObject(String Bucket,String Key,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) {
-				S3.DeleteObject_element request_x = new S3.DeleteObject_element();
-				S3.DeleteObjectResponse_element response_x;
-				request_x.Bucket = Bucket;
-				request_x.Key = Key;
-				request_x.AWSAccessKeyId = AWSAccessKeyId;
-				request_x.Timestamp = Timestamp;
-				request_x.Signature = Signature;
-				request_x.Credential = Credential;
-				Map<String, S3.DeleteObjectResponse_element> response_map_x = new Map<String, S3.DeleteObjectResponse_element>();
-				response_map_x.put('response_x', response_x);
-				WebServiceCallout.invoke(
-					this,
-					request_x,
-					response_map_x,
-					new String[]{endpoint_x,
-					'',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'DeleteObject',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'DeleteObjectResponse',
-					'S3.DeleteObjectResponse_element'}
-				);
-				response_x = response_map_x.get('response_x');
-				return response_x.DeleteObjectResponse;
+			S3.DeleteObject_element request_x = new S3.DeleteObject_element();
+			S3.DeleteObjectResponse_element response_x;
+			request_x.Bucket = Bucket;
+			request_x.Key = Key;
+			request_x.AWSAccessKeyId = AWSAccessKeyId;
+			request_x.Timestamp = Timestamp;
+			request_x.Signature = Signature;
+			request_x.Credential = Credential;
+			Map<String, S3.DeleteObjectResponse_element> response_map_x = new Map<String, S3.DeleteObjectResponse_element>();
+			response_map_x.put('response_x', response_x);
+			WebServiceCallout.invoke(
+				this,
+				request_x,
+				response_map_x,
+				new String[]{endpoint_x,
+				'',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'DeleteObject',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'DeleteObjectResponse',
+				'S3.DeleteObjectResponse_element'}
+			);
+			response_x = response_map_x.get('response_x');
+			return response_x.DeleteObjectResponse;
 		}
 
 		/*
 			 This method invokes the S3 ListBucket web service operation.
 		*/
 		public S3.ListBucketResult ListBucket(String Bucket,String Prefix,String Marker,Integer MaxKeys,String Delimiter,String AWSAccessKeyId,DateTime Timestamp,String Signature, String Credential) {
-				S3.ListBucket_element request_x = new S3.ListBucket_element();
-				S3.ListBucketResponse_element response_x;
-				request_x.Bucket = Bucket;
-				request_x.Prefix = Prefix;
-				request_x.Marker = Marker;
-				request_x.MaxKeys = MaxKeys;
-				request_x.Delimiter = Delimiter;
-				request_x.AWSAccessKeyId = AWSAccessKeyId;
-				request_x.Timestamp = Timestamp;
-				request_x.Signature = Signature;
-				request_x.Credential = Credential;
-				Map<String, S3.ListBucketResponse_element> response_map_x = new Map<String, S3.ListBucketResponse_element>();
-				response_map_x.put('response_x', response_x);
-				WebServiceCallout.invoke(
-					this,
-					request_x,
-					response_map_x,
-					new String[]{endpoint_x,
-					'',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'ListBucket',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'ListBucketResponse',
-					'S3.ListBucketResponse_element'}
-				);
-				response_x = response_map_x.get('response_x');
-				return response_x.ListBucketResponse;
+			S3.ListBucket_element request_x = new S3.ListBucket_element();
+			S3.ListBucketResponse_element response_x;
+			request_x.Bucket = Bucket;
+			request_x.Prefix = Prefix;
+			request_x.Marker = Marker;
+			request_x.MaxKeys = MaxKeys;
+			request_x.Delimiter = Delimiter;
+			request_x.AWSAccessKeyId = AWSAccessKeyId;
+			request_x.Timestamp = Timestamp;
+			request_x.Signature = Signature;
+			request_x.Credential = Credential;
+			Map<String, S3.ListBucketResponse_element> response_map_x = new Map<String, S3.ListBucketResponse_element>();
+			response_map_x.put('response_x', response_x);
+			WebServiceCallout.invoke(
+				this,
+				request_x,
+				response_map_x,
+				new String[]{endpoint_x,
+				'',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'ListBucket',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'ListBucketResponse',
+				'S3.ListBucketResponse_element'}
+			);
+			response_x = response_map_x.get('response_x');
+			return response_x.ListBucketResponse;
 		}
 
 
@@ -211,27 +182,27 @@ public class S3 {
 			 This method invokes the S3 ListAllMyBuckets web service operation.
 		*/
 		public S3.ListAllMyBucketsResult ListAllMyBuckets(String AWSAccessKeyId,DateTime Timestamp,String Signature) {
-				S3.ListAllMyBuckets_element request_x = new S3.ListAllMyBuckets_element();
-				S3.ListAllMyBucketsResponse_element response_x;
-				request_x.AWSAccessKeyId = AWSAccessKeyId;
-				request_x.Timestamp = Timestamp;
-				request_x.Signature = Signature;
-				Map<String, S3.ListAllMyBucketsResponse_element> response_map_x = new Map<String, S3.ListAllMyBucketsResponse_element>();
-				response_map_x.put('response_x', response_x);
-				WebServiceCallout.invoke(
-					this,
-					request_x,
-					response_map_x,
-					new String[]{endpoint_x,
-					'',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'ListAllMyBuckets',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'ListAllMyBucketsResponse',
-					'S3.ListAllMyBucketsResponse_element'}
-				);
-				response_x = response_map_x.get('response_x');
-				return response_x.ListAllMyBucketsResponse;
+			S3.ListAllMyBuckets_element request_x = new S3.ListAllMyBuckets_element();
+			S3.ListAllMyBucketsResponse_element response_x;
+			request_x.AWSAccessKeyId = AWSAccessKeyId;
+			request_x.Timestamp = Timestamp;
+			request_x.Signature = Signature;
+			Map<String, S3.ListAllMyBucketsResponse_element> response_map_x = new Map<String, S3.ListAllMyBucketsResponse_element>();
+			response_map_x.put('response_x', response_x);
+			WebServiceCallout.invoke(
+				this,
+				request_x,
+				response_map_x,
+				new String[]{endpoint_x,
+				'',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'ListAllMyBuckets',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'ListAllMyBucketsResponse',
+				'S3.ListAllMyBucketsResponse_element'}
+			);
+			response_x = response_map_x.get('response_x');
+			return response_x.ListAllMyBucketsResponse;
 		}
 
 		/*
@@ -268,29 +239,29 @@ public class S3 {
 			 This method invokes the S3 DeleteBucket web service operation.
 		*/
 		public S3.Status DeleteBucket(String Bucket,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) {
-				S3.DeleteBucket_element request_x = new S3.DeleteBucket_element();
-				S3.DeleteBucketResponse_element response_x;
-				request_x.Bucket = Bucket;
-				request_x.AWSAccessKeyId = AWSAccessKeyId;
-				request_x.Timestamp = Timestamp;
-				request_x.Signature = Signature;
-				request_x.Credential = Credential;
-				Map<String, S3.DeleteBucketResponse_element> response_map_x = new Map<String, S3.DeleteBucketResponse_element>();
-				response_map_x.put('response_x', response_x);
-				WebServiceCallout.invoke(
-					this,
-					request_x,
-					response_map_x,
-					new String[]{endpoint_x,
-					'',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'DeleteBucket',
-					'http://s3.amazonaws.com/doc/2006-03-01/',
-					'DeleteBucketResponse',
-					'S3.DeleteBucketResponse_element'}
-				);
-				response_x = response_map_x.get('response_x');
-				return response_x.DeleteBucketResponse;
+			S3.DeleteBucket_element request_x = new S3.DeleteBucket_element();
+			S3.DeleteBucketResponse_element response_x;
+			request_x.Bucket = Bucket;
+			request_x.AWSAccessKeyId = AWSAccessKeyId;
+			request_x.Timestamp = Timestamp;
+			request_x.Signature = Signature;
+			request_x.Credential = Credential;
+			Map<String, S3.DeleteBucketResponse_element> response_map_x = new Map<String, S3.DeleteBucketResponse_element>();
+			response_map_x.put('response_x', response_x);
+			WebServiceCallout.invoke(
+				this,
+				request_x,
+				response_map_x,
+				new String[]{endpoint_x,
+				'',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'DeleteBucket',
+				'http://s3.amazonaws.com/doc/2006-03-01/',
+				'DeleteBucketResponse',
+				'S3.DeleteBucketResponse_element'}
+			);
+			response_x = response_map_x.get('response_x');
+			return response_x.DeleteBucketResponse;
 		}
 
 		public S3.CopyObjectResult CopyObject(String SourceBucket,String SourceKey,String DestinationBucket,String DestinationKey,String MetadataDirective,S3.MetadataEntry[] Metadata,S3.AccessControlList AccessControlList,DateTime CopySourceIfModifiedSince,DateTime CopySourceIfUnmodifiedSince,String[] CopySourceIfMatch,String[] CopySourceIfNoneMatch,String StorageClass,String AWSAccessKeyId,DateTime Timestamp,String Signature,String Credential) {
@@ -461,12 +432,12 @@ public class S3 {
 	}
 
 	public class Status {
-			public Integer Code {get;set;}
-			public String Description {get;set;}
-			private String[] Code_type_info = new String[]{'Code','http://www.w3.org/2001/XMLSchema','int','1','1','false'};
-			private String[] Description_type_info = new String[]{'Description','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'Code','Description'};
+		public Integer Code {get;set;}
+		public String Description {get;set;}
+		private String[] Code_type_info = new String[]{'Code','http://www.w3.org/2001/XMLSchema','int','1','1','false'};
+		private String[] Description_type_info = new String[]{'Description','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
+		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
+		private String[] field_order_type_info = new String[]{'Code','Description'};
 	}
 
 	public class DeleteBucket_element {
@@ -644,53 +615,53 @@ public class S3 {
 		public string error {get;set;}
 
 		public HttpResponse makeRequest()  { // leaves result in res instance member
-				error = null;
-				HttpRequest req = new HttpRequest();
-				req.setEndpoint('https://s3-eu-west-1.amazonaws.com/soap');
-				req.setMethod('POST');
-				//req.setCompressed(true); // otherwise we hit a limit of 32000
-				/* avoid getting more than we can process on the callout
-				 * max is 32000, more will throw an exception from the server
-				 * we could go back for a second range, but this will give ~10 normal blog entries
-				 */
-				//req.setHeader('Range','bytes=0-50000');  // not all feeds respect this
+			error = null;
+			HttpRequest req = new HttpRequest();
+			req.setEndpoint('https://s3-eu-west-1.amazonaws.com/soap');
+			req.setMethod('POST');
+			//req.setCompressed(true); // otherwise we hit a limit of 32000
+			/* avoid getting more than we can process on the callout
+				* max is 32000, more will throw an exception from the server
+				* we could go back for a second range, but this will give ~10 normal blog entries
+				*/
+			//req.setHeader('Range','bytes=0-50000');  // not all feeds respect this
 
-				System.debug('before soap body: ' + soapBody);
+			System.debug('before soap body: ' + soapBody);
 
-				System.debug('after soap body: ' + soapBody);
-				req.setBody(soapBody);
-				req.setHeader('Content-Type', 'application/soap+xml' );
-				req.setHeader('SOAPAction','');
-				System.debug('content length: ' + string.valueof(soapBody.trim().length()));
-				req.setHeader('Content-Length',string.valueof(soapBody.trim().length()));
+			System.debug('after soap body: ' + soapBody);
+			req.setBody(soapBody);
+			req.setHeader('Content-Type', 'application/soap+xml' );
+			req.setHeader('SOAPAction','');
+			System.debug('content length: ' + string.valueof(soapBody.trim().length()));
+			req.setHeader('Content-Length',string.valueof(soapBody.trim().length()));
 
-				try {
-					Http http = new Http();
-					System.debug('making S3 request...: ' + req);
-					response = http.send(req);
-					if (response.getStatusCode() != 200 ) {
+			try {
+				Http http = new Http();
+				System.debug('making S3 request...: ' + req);
+				response = http.send(req);
+				if (response.getStatusCode() != 200 ) {
 
-						System.debug('STATUS:'+response.getStatus());
-						System.debug('STATUS_CODE:'+response.getStatusCode());
-						System.debug('BODY: '+response.getBody());
-						AWS_XMLDom dom = new AWS_XMLDom( response.getBody() );
+					System.debug('STATUS:'+response.getStatus());
+					System.debug('STATUS_CODE:'+response.getStatusCode());
+					System.debug('BODY: '+response.getBody());
+					AWS_XMLDom dom = new AWS_XMLDom( response.getBody() );
 
-			 			dom.dumpAll();
-			 			if ( response.getStatusCode() == 500 ) {
-			 				string reasonPath = '';
-			 				AWS_XMLDom.element e = dom.getElementByPath('/.*/Fault') ;
-			 				if ( e!= null ) {
-			 					e.dumpAll();
-			 					error = body + response.getBody() ;
-		 					} else {
-		 					 system.debug( 'no fault found' );
-		 					}
+					dom.dumpAll();
+					if ( response.getStatusCode() == 500 ) {
+						string reasonPath = '';
+						AWS_XMLDom.element e = dom.getElementByPath('/.*/Fault') ;
+						if ( e!= null ) {
+							e.dumpAll();
+							error = body + response.getBody() ;
+						} else {
+							system.debug( 'no fault found' );
 						}
 					}
-				} catch( System.Exception e) {
-						System.debug('ERROR: '+ e);
 				}
-				return response;
+			} catch( System.Exception e) {
+					System.debug('ERROR: '+ e);
+			}
+			return response;
 		}
 	}
 
