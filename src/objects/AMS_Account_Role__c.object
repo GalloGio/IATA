@@ -1091,6 +1091,25 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
         <label>All</label>
     </listViews>
     <listViews>
+        <fullName>Owners</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Contact_Email__c</columns>
+        <columns>Owner_Account__c</columns>
+        <columns>Owner_Email__c</columns>
+        <columns>Owner_Type__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>AMS_Account_Role__c.Ownership</value>
+        </filters>
+        <label>Owners</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>TD</fullName>
         <columns>NAME</columns>
         <columns>Termination_Date__c</columns>
