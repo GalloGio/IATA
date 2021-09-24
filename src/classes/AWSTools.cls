@@ -7,7 +7,7 @@ global class AWSTools{
 	private S3.AmazonS3 as3 = null;
 	private AWSKeys credentials = null;
 	private static Map<String,AWSTools> instance = new Map<string,AWSTools>();
-	private String OwnerId ;
+	//private String OwnerId ;
 	public static String ERROR_MESSAGE = 'ERROR';
 	public static String SUCCESS_MESSAGE = 'SUCCESS';
 	private static String default_permission = 'authenticated-read';
@@ -18,10 +18,6 @@ global class AWSTools{
 		//change : get name from custom setting		
 		AWSKeys credentials = new AWSKeys(name);
 		as3 = new S3.AmazonS3(credentials.key,credentials.secret);
-		//This performs the Web Service call to Amazon S3 and retrieves all the Buckets in your AWS Account.
-		S3.ListAllMyBucketsResult allBuckets = as3.ListAllMyBuckets(as3.key,now,as3.signature('ListAllMyBuckets',now));
-		//Store the Canonical User Id for your account
-		OwnerId = allBuckets.Owner.Id;
 	}
 
 	/**
