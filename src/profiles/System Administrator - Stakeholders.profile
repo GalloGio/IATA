@@ -53145,11 +53145,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Portal_Applications__c.Auto_grant_Account_Role__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Portal_Applications__c.Cannot_be_managed_by_portal_admin__c</field>
         <readable>true</readable>
