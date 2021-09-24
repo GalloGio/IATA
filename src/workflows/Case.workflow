@@ -12231,12 +12231,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         </actions>
         <active>true</active>
         <description>Update field Date/Time IRR Approval</description>
-        <formula>AND(
-            CONTAINS(RecordType__c, &quot;SIDRA&quot;), 
-            OR(ISPICKVAL(IRR_Approval_Rejection__c, &quot;Approved&quot;),ISPICKVAL(IRR_Approval_Rejection__c, &quot;Rejected&quot;)), 
-            NOT( ISPICKVAL(BSPCountry__c, &quot;Israel&quot;)),
-            OR(ISCHANGED(RecordType__c),ISCHANGED(IRR_Approval_Rejection__c),ISCHANGED(BSPCountry__c))
-        )</formula>
+        <formula>AND(             CONTAINS(RecordType__c, &quot;SIDRA&quot;),              OR(ISPICKVAL(IRR_Approval_Rejection__c, &quot;Approved&quot;),ISPICKVAL(IRR_Approval_Rejection__c, &quot;Rejected&quot;)),              NOT( ISPICKVAL(BSPCountry__c, &quot;Israel&quot;)),             OR(ISCHANGED(RecordType__c),ISCHANGED(IRR_Approval_Rejection__c),ISCHANGED(BSPCountry__c))         )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
