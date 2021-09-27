@@ -13,7 +13,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied_by_PortalAdmin_CNS</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -34,7 +33,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied_by_PortalAdmin</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -55,7 +53,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -82,7 +79,6 @@
         <locationY>200</locationY>
         <actionName>DO_NOTHING</actionName>
         <actionType>flow</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -97,7 +93,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -118,7 +113,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -139,7 +133,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -166,7 +159,6 @@
         <locationY>200</locationY>
         <actionName>DO_NOTHING</actionName>
         <actionType>flow</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -181,7 +173,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied_by_internal_user_cns</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -202,7 +193,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied_by_internal_user</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -210,7 +200,6 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
     <decisions>
         <name>isChangedDecision5_myRule_3_Right_c</name>
         <label>isChangedDecision5_myRule_3_Right_c</label>
@@ -1309,7 +1298,6 @@
         <label>Deactivate Financial contact</label>
         <locationX>1500</locationX>
         <locationY>200</locationY>
-        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -1390,7 +1378,6 @@
         <label>ISS Portal - SIS Portal service Inactivate</label>
         <locationX>1700</locationX>
         <locationY>200</locationY>
-        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
