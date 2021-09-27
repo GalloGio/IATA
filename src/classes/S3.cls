@@ -46,30 +46,27 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 public class S3 {
 	public class CopyObjectResult {
-			public DateTime LastModified;
-			public String ETag;
-			private String[] LastModified_type_info = new String[]{'LastModified','http://www.w3.org/2001/XMLSchema','dateTime','1','1','false'};
-			private String[] ETag_type_info = new String[]{'ETag','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'LastModified','ETag'};
+		public DateTime LastModified;
+		public String ETag;
+		private String[] LastModified_type_info = new String[]{'LastModified','http://www.w3.org/2001/XMLSchema','dateTime','1','1','false'};
+		private String[] ETag_type_info = new String[]{'ETag','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
+		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
+		private String[] field_order_type_info = new String[]{'LastModified','ETag'};
 	}
 
 	public class MetadataEntry {
-			public String Name {get; set;}
-			public String Value;
-			private String[] Name_type_info = new String[]{'Name','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] Value_type_info = new String[]{'Value','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
-			private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
-			private String[] field_order_type_info = new String[]{'Name','Value'};
+		public String Name {get; set;}
+		public String Value;
+		private String[] Name_type_info = new String[]{'Name','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
+		private String[] Value_type_info = new String[]{'Value','http://www.w3.org/2001/XMLSchema','string','1','1','false'};
+		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
+		private String[] field_order_type_info = new String[]{'Name','Value'};
 	}
-
 
 	/*
 	 	This inner class, AmazonS3, contains the methods that invoke the Web Service calls to Amazon Web Services.
 	*/
-
 	public class AmazonS3 {
-
 		public AmazonS3(String key, String secret){
 			this.key = key;
 			this.secret= secret;
@@ -79,11 +76,11 @@ public class S3 {
 
 		/*
 			Per the AWS S3 documentation:
-				The RFC 2104 HMAC-SHA1 digest (go to http://www.ietf.org/rfc/rfc2104.txt) of the
-				concatenation of "AmazonS3" + OPERATION + Timestamp, using your AWS Secret Access Key as the key.
+			The RFC 2104 HMAC-SHA1 digest (go to http://www.ietf.org/rfc/rfc2104.txt) of the
+			concatenation of "AmazonS3" + OPERATION + Timestamp, using your AWS Secret Access Key as the key.
 		*/
 		public string signature( string op, Datetime now) {
-		//format should be  2006-01-01T12:00:00.000Z
+			//format should be  2006-01-01T12:00:00.000Z
 			system.assert( this.secret != null ,' missing S3.secret key');
 			String formattednow = now.formatGmt('yyyy-MM-dd')+'T'+now.formatGmt('HH:mm:ss')+'.'+now.formatGMT('SSS')+'Z';
 			String canonical = 'AmazonS3'+op+formattednow; //"AmazonS3" + OPERATION + Timestamp
@@ -188,8 +185,6 @@ public class S3 {
 		private String[] field_order_type_info = new String[]{'Bucket','Key','AWSAccessKeyId','Timestamp','Signature','Credential'};
 	}
 
-	
-
 	public class Status {
 			public Integer Code {get;set;}
 			public String Description {get;set;}
@@ -205,8 +200,6 @@ public class S3 {
 		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
 		private String[] field_order_type_info = new String[]{'DeleteObjectResponse'};
 	}
-
-
 
 	public class PutObjectResult {
 		public String ETag;
@@ -229,7 +222,6 @@ public class S3 {
 		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
 		private String[] field_order_type_info = new String[]{'Grant'};
 	}
-
 
 	public class CopyObject_element {
 		public String SourceBucket;
@@ -267,5 +259,4 @@ public class S3 {
 		private String[] apex_schema_type_info = new String[]{'http://s3.amazonaws.com/doc/2006-03-01/','true'};
 		private String[] field_order_type_info = new String[]{'SourceBucket','SourceKey','DestinationBucket','DestinationKey','MetadataDirective','Metadata','AccessControlList','CopySourceIfModifiedSince','CopySourceIfUnmodifiedSince','CopySourceIfMatch','CopySourceIfNoneMatch','StorageClass','AWSAccessKeyId','Timestamp','Signature','Credential'};
 	}
-
 }
