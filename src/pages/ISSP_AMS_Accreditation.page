@@ -960,7 +960,7 @@
                                     </div>
                                      <!--##RN INC463820  -->
                                     <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only',newForm.Scope_of_Change__c=='GE - Change to Gostandard', newForm.Scope_of_Change__c=='GE - Change to Golite'), '', 'none')}">
-                                        <apex:pageBlockSection id="table" columns="1" title="{!$Label.ISSP_AMS_Select_AEs}" rendered="{!AND(hierarchyValues.size > 0, selectedCountryIsos.size > 0)}">
+                                        <apex:pageBlockSection id="table" columns="1" title="{!$Label.ISSP_AMS_Select_AEs}" rendered="{!OR(AND(hierarchyValues.size > 0,!isChangeOfAccreditationType), AND(selectedCountryIsos.size > 0, isChangeOfAccreditationType))}">
 
                                             <apex:outputPanel id="buttonPanel">
                                                 <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>
