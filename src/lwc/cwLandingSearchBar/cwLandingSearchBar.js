@@ -283,6 +283,9 @@ export default class CwLandingSearchBar extends LightningElement {
 	updateSearchbox(event) {
 		let searchbox = this.template.querySelector(".searchbox");
 		searchbox.value = event.detail && event.detail.value ? event.detail.value : event.target.value;
+		if(this.isCompanyName)
+		searchbox.key = event.detail && event.detail.basekey && event.detail.basekey.split("##").length > 2 ? event.detail.basekey.split("##")[1] : "";
+		else
 		searchbox.key = event.detail && event.detail.basekey && event.detail.basekey.split("##").length > 1 ? event.detail.basekey.split("##")[1] : "";
 		this.resultsPage(searchbox);
 	}

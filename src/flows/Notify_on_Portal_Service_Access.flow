@@ -105,77 +105,23 @@
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
-            <name>filterType</name>
+            <name>ActionCallType</name>
             <value>
-                <stringValue>quickActionType</stringValue>
+                <stringValue>flow</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
-            <name>quickActionSelection</name>
+            <name>flowSelection</name>
             <value>
-                <stringValue>Update Portal Service Access</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>quickActionSelectionType</name>
-            <value>
-                <stringValue>Portal_Application_Right__c</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>quickActionType</name>
-            <value>
-                <stringValue>update</stringValue>
+                <stringValue>DO NOTHING</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_1_A1</name>
-        <label>Do Nothing</label>
+        <label>EXIT FLOW</label>
         <locationX>100</locationX>
         <locationY>200</locationY>
-        <actionName>Portal_Application_Right__c.Do_not_update</actionName>
-        <actionType>quickAction</actionType>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Related Record ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Reference</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>contextId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
+        <actionName>DO_NOTHING</actionName>
+        <actionType>flow</actionType>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -434,77 +380,23 @@
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
-            <name>filterType</name>
+            <name>ActionCallType</name>
             <value>
-                <stringValue>quickActionType</stringValue>
+                <stringValue>flow</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
-            <name>quickActionSelection</name>
+            <name>flowSelection</name>
             <value>
-                <stringValue>Update Portal Service Access</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>quickActionSelectionType</name>
-            <value>
-                <stringValue>Portal_Application_Right__c</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>quickActionType</name>
-            <value>
-                <stringValue>update</stringValue>
+                <stringValue>DO NOTHING</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_3_A1</name>
-        <label>Do Nothing</label>
+        <label>EXIT FLOW</label>
         <locationX>300</locationX>
         <locationY>200</locationY>
-        <actionName>Portal_Application_Right__c.Do_not_update</actionName>
-        <actionType>quickAction</actionType>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Related Record ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>1.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Reference</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>contextId</name>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </inputParameters>
+        <actionName>DO_NOTHING</actionName>
+        <actionType>flow</actionType>
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
@@ -698,7 +590,7 @@
                 <leftValueReference>myVariable_current.Contact__r.Email</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>.invalid</stringValue>
+                    <stringValue>.inactive</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1073,7 +965,7 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_4_myRule_3_6273793519</elementReference>
+                    <elementReference>formula_4_myRule_3_4350245233</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -2040,7 +1932,7 @@
                 <stringValue>[Portal_Application_Right__c].CreatedDate + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_4_myRule_3_6273793519</name>
+        <name>formula_4_myRule_3_4350245233</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate} + 0.000022</expression>
     </formulas>
@@ -2128,7 +2020,7 @@
 	{!myVariable_current.Contact__c}  = {!$User.ContactId}
 )</expression>
     </formulas>
-    <interviewLabel>Notify_on_Portal_Service_Access-9_InterviewLabel</interviewLabel>
+    <interviewLabel>Notify_on_Portal_Service_Access-13_InterviewLabel</interviewLabel>
     <label>Notify on Portal Service Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
