@@ -10,7 +10,7 @@
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
-	<fieldUpdates>
+    <fieldUpdates>
         <fullName>NULL_Case_Id_Uniqueness</fullName>
         <description>Blank the Case Id Uniqueness field</description>
         <field>Case_Id_Uniqueness__c</field>
@@ -18,7 +18,6 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Null</operation>
         <protected>false</protected>
-        <reevaluateOnChange>false</reevaluateOnChange>
     </fieldUpdates>
     <rules>
         <fullName>Case Item Case Id</fullName>
@@ -31,7 +30,7 @@
         <formula>TRUE</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
-	<rules>
+    <rules>
         <fullName>Reset Case Id Uniqueness on Status Close</fullName>
         <actions>
             <name>NULL_Case_Id_Uniqueness</name>

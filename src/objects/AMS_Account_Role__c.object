@@ -321,6 +321,7 @@
     </fields>
     <fields>
         <fullName>Contact_Email__c</fullName>
+        <complianceGroup>PII</complianceGroup>
         <externalId>false</externalId>
         <formula>Contact__r.Email</formula>
         <label>Contact Email</label>
@@ -332,6 +333,7 @@
     </fields>
     <fields>
         <fullName>Contact_Phone__c</fullName>
+        <complianceGroup>PII</complianceGroup>
         <externalId>false</externalId>
         <formula>Contact__r.Phone</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -686,6 +688,7 @@ IF(Percentage__c = 1 ,100,20),2)</formula>
     </fields>
     <fields>
         <fullName>Owner_Email__c</fullName>
+        <complianceGroup>PII</complianceGroup>
         <description>Email Address of the Owner - Blank if owner type is &quot;Publicly Traded&quot;</description>
         <externalId>false</externalId>
         <inlineHelpText>Email Address of the Owner - Blank if owner type is &quot;Publicly Traded&quot;</inlineHelpText>
