@@ -16,8 +16,8 @@ public class File_Upload_CTRL_TEST {
 		User testUser2 = createTestUser(testContact2);
 
 		Data_Submission__c dataSubmission = createDataSubmission(testContact, testAccount.Id);
-		createCredentials('GenericAttach');
-		createCredentials('RecycleBin');
+
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		Account_Roles__c accountRoles = new Account_Roles__c();
 		accountRoles.Name = 'GADM Participant';
@@ -188,29 +188,6 @@ public class File_Upload_CTRL_TEST {
 
 		insert dataSubmission;
 		return dataSubmission;
-	}
-
-	private static void createCredentials(String credentialName){
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = credentialName, Prod_Configuration__c = credentialName+'aprodconf' , Dev_Configuration__c = credentialName+'adevconf');
-		insert Amazon_Cred;
-
-		List<AWSKey__c> AWS_KEYs = new List<AWSKey__c>{new AWSKey__c(name = credentialName+'aprodconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'),
-				new AWSKey__c(name = credentialName+'adevconf' ,
-						Key__c = 'asd',
-						Secret__c = 'asd',
-						IAS_configuration_name__c = 'asdas',
-						IAS_Access_Point__c = 'asd',
-						Bucket__c = 'asd',
-						AWS_ENDPOINT_URL__c = 'asd')
-		};
-
-		insert AWS_KEYs;
 	}
 
 

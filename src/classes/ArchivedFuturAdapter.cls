@@ -9,7 +9,7 @@ public with sharing class ArchivedFuturAdapter {
 		String name = 'production';
 		if(DevsTools.isRunningInSandbox())
 			name = 'sandbox';
-		AWSKey__c awsc = [SELECT Bucket__c, Name, Id, Secret__c, Key__c FROM AWSKey__c where Name = :name limit 1];
+		AWSKey__c awsc = [SELECT Bucket__c, Name, Id, secret_encrypted__c, key_encrypted__c FROM AWSKey__c where Name = :name limit 1];
 		if(awsc !=null){
 			ArchivedFuturAdapter.bucket = awsc.Bucket__c;
 			aws = AWSTools.getInstance(name);

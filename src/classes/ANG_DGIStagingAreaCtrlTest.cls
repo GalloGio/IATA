@@ -1,26 +1,5 @@
 @isTest
 private class ANG_DGIStagingAreaCtrlTest {
-
-	private static void loadCredentials() {
-
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
-		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred2;
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
-	}
-
 	@testSetup static void setup(){
 
 		Test.startTest();
@@ -57,7 +36,7 @@ private class ANG_DGIStagingAreaCtrlTest {
 		insert oscarCase;
 
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'test name',

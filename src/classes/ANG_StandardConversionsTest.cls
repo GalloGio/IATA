@@ -9,39 +9,7 @@ private class ANG_StandardConversionsTest {
 		par.Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE;
 		insert par;
 
-		Amazon_Cred__c amazon_Cred =  new Amazon_Cred__c(
-			Name = 'IFAP',
-			Prod_Configuration__c = 'adevconf',
-			Dev_Configuration__c = 'adevconf'
-		);
-
-		Amazon_Cred__c genericAttach = new Amazon_Cred__c(
-			Name = 'GenericAttach',
-			Prod_Configuration__c = 'adevconf',
-			Dev_Configuration__c = 'adevconf'
-		);
-
-		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(
-			Name = 'RecycleBin',
-			Prod_Configuration__c = 'adevconf',
-			Dev_Configuration__c = 'adevconf'
-		);
-
-		insert new List<Amazon_Cred__c>{amazon_Cred, genericAttach, recycleBin};
-
-		List<AWSKey__c> AWS_KEYs = new List<AWSKey__c>{
-				new AWSKey__c(
-					name = 'adevconf',
-					Key__c = 'asd',
-					Secret__c = 'asd',
-					IAS_configuration_name__c = 'asdas',
-					IAS_Access_Point__c = 'asd',
-					Bucket__c = 'asd',
-					AWS_ENDPOINT_URL__c = 'asd'
-				)
-		};
-
-		insert AWS_KEYs;
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		ANG_AgencyChangesConfig__c convertMulticountryToStandard = new ANG_AgencyChangesConfig__c();
 		convertMulticountryToStandard.Name = 'ConvertMulticountryToStandard';

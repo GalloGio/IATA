@@ -192,7 +192,9 @@ public with sharing class ISSP_AMC_ParticipationFactory {
 		List <AmazonFile__c> filesList = new List<AmazonFile__c>();
 
 
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 
 		//String parentId = controller.participation.case__c;
@@ -240,7 +242,10 @@ public with sharing class ISSP_AMC_ParticipationFactory {
 	}
 
 	public static void testUploads(ISSP_AMC_Location_Identifier controller){
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+
 		ISSP_AMC_Upload_Files uploadFiles = new ISSP_AMC_Upload_Files();
 		Set<Id> testSet = uploadFiles.myAmazon;
 		String testString = uploadFiles.amazonFileId;
@@ -298,7 +303,9 @@ public with sharing class ISSP_AMC_ParticipationFactory {
 		List <AmazonFile__c> filesList = new List<AmazonFile__c>();
 
 
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 
 		String parentId = controller.participation.case__c;
@@ -360,7 +367,9 @@ public with sharing class ISSP_AMC_ParticipationFactory {
 		List <AmazonFile__c> filesList = new List<AmazonFile__c>();
 
 
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 
 		String parentId = controller.participation.case__c;
@@ -422,7 +431,9 @@ public with sharing class ISSP_AMC_ParticipationFactory {
 		List <AmazonFile__c> filesList = new List<AmazonFile__c>();
 
 
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 
 		String parentId = controller.participation.case__c;

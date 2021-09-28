@@ -24,26 +24,8 @@
 			Minimum_DGR_BR__c = 0
 		);
 		insert new list<AMS_Country_Specific_Attribute__c>{countrySpec1, countrySpec2};
-	}
 
-	private static void loadCredentials() {
-
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
-		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred2;
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
 
 	@isTest static void testCargoAgencyRegulationsHOClassC() {
@@ -77,7 +59,6 @@
 			update dgaStaff;
 
 			Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
-			loadCredentials();
 			AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
 			insert AmzFile;
 
@@ -163,7 +144,6 @@
 		update dgrStaff;
 
 		Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
-		loadCredentials();
 		AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
 		insert AmzFile;
 
@@ -223,7 +203,6 @@
 			update dgrStaff;
 
 			Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
-			loadCredentials();
 			AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
 			insert AmzFile;
 
@@ -375,7 +354,6 @@
 		update uldStaff;
 
 		Case case1 = [Select Id, OSCAR__c from Case where OSCAR__c = :oscar.Id];
-		loadCredentials();
 		AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
 		insert AmzFile;
 

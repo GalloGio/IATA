@@ -47,7 +47,7 @@ public without sharing class AmazonCredentials {
 			string tmpconfigurationName = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? Amazon_Cred.Prod_Configuration__c : Amazon_Cred.Dev_Configuration__c ;
 
 			list<AWSKey__c> AWS_KEYs = [
-				Select Key__c, Secret__c,  IAS_configuration_name__c,
+				Select key_encrypted__c, secret_encrypted__c,  IAS_configuration_name__c,
 				IAS_Access_Point__c, Bucket__c, AWS_ENDPOINT_URL__c, Named_Credential__c
 				From AWSKey__c
 				Where Name = :tmpconfigurationName
@@ -60,7 +60,7 @@ public without sharing class AmazonCredentials {
 				throw new transformationException('Error Credentials '+ message  );
 			}
 
-			AmazonCredentials instance = new AmazonCredentials(AWS_KEYs[0].AWS_ENDPOINT_URL__c,AWS_KEYs[0].Bucket__c,AWS_KEYs[0].Key__c,AWS_KEYs[0].Secret__c,AWS_KEYs[0].IAS_configuration_name__c,AWS_KEYs[0].IAS_Access_Point__c, AWS_KEYs[0].Named_Credential__c);
+			AmazonCredentials instance = new AmazonCredentials(AWS_KEYs[0].AWS_ENDPOINT_URL__c,AWS_KEYs[0].Bucket__c,AWS_KEYs[0].key_encrypted__c,AWS_KEYs[0].secret_encrypted__c,AWS_KEYs[0].IAS_configuration_name__c,AWS_KEYs[0].IAS_Access_Point__c, AWS_KEYs[0].Named_Credential__c);
 			if(CredPerName == null || CredPerName.keyset() == null) CredPerName = new map<string,AmazonCredentials>();
 			CredPerName.put(configurationName,instance);
 

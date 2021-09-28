@@ -3,22 +3,22 @@ public class AWSKeys {
 	public class AWSKeysException extends Exception {}
 
 	AWSKey__c keyObj = null;
-	public string key { get { return keyObj.key__c; } private set; }
-	public string secret { get { return keyObj.secret__c; } private set; }
+	public string key { get { return keyObj.key_encrypted__c; } private set; }
+	public string secret { get { return keyObj.secret_encrypted__c; } private set; }
 	public string sNamedCredential { get { return keyObj.Named_Credential__c; } private set; }
 	// constructor
 	public AWSKeys(string name) {
 		try {
 			string sErrField = '';
-			keyObj = [select key__c, secret__c, id, Named_Credential__c from AWSKey__c where name = :name limit 1];
+			keyObj = [select key_encrypted__c, secret_encrypted__c, id, Named_Credential__c from AWSKey__c where name = :name limit 1];
 
 			//Check that key__c is not null
-			if (string.isBlank(keyObj.key__c)) { sErrField = 'Key';}
+			if (string.isBlank(keyObj.key_encrypted__c)) { sErrField = 'Key';}
 
-			//Check that secret__c is not null
-			if (string.isBlank(keyObj.secret__c)) { sErrField = 'Secret';}
+			//Check that secret_encrypted__c is not null
+			if (string.isBlank(keyObj.secret_encrypted__c)) { sErrField = 'Secret';}
 
-			if (string.isBlank(keyObj.Named_Credential__c)) { sErrField = 'Named Credential';}
+			//if (string.isBlank(keyObj.Named_Credential__c)) { sErrField = 'Named Credential';}
 
 			if(sErrField!=''){
 				string sErrMsg = 'Error: No ' + sErrField + ' is specified for the AWSKey__c record with name of [' + name + ']. Pleaes enter the ' + sErrField + 'value and retry.';

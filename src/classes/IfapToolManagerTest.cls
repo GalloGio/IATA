@@ -7,36 +7,14 @@ public class IfapToolManagerTest {
 
 	*/
 
-	public static void beforeTest() {
+	@TestSetup
+	static void makeData(){
 		insert new UtilityCS__c(name = 'ifapBatchSize', Value__c = '5');
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
 
-
 	static testMethod void UpdateCaseStatusToAssessmentCancelledNewTest() {
-		beforeTest();
 		CaseChildHelper.noValidationsOnTrgCAseIFAP = true;  //later I switch it to false to fully emulate production envinroment */
-
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c> {new AWSKey__c(name = 'aprodconf',
-					Key__c = 'asd',
-					Secret__c = 'asd',
-					IAS_configuration_name__c = 'asdas',
-					IAS_Access_Point__c = 'asd',
-					Bucket__c = 'asd',
-					AWS_ENDPOINT_URL__c = 'asd'),
-										new AWSKey__c(name = 'adevconf' ,
-												Key__c = 'asd',
-												Secret__c = 'asd',
-												IAS_configuration_name__c = 'asdas',
-												IAS_Access_Point__c = 'asd',
-												Bucket__c = 'asd',
-												AWS_ENDPOINT_URL__c = 'asd')
-		};
-
-		insert AWS_KEYs;
-
 		UtilityCS__c sup = new UtilityCS__c(name = 'Emails', value__c = 'arandomEmail@gmail.com');
 		insert sup;
 		IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse', ISO_Code__c = 'SS' );
@@ -159,13 +137,11 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void startMergeAllPDFForCaseTest() {
-		beforeTest();
 		Test.startTest();
 		Test.stopTest();
 	}
 
 	static testMethod void AsyncCallsTest() {
-		beforeTest();
 		Test.startTest();
 		IfapToolManager.startMergeAllPDFForCase( null, 'casenumber', 'outputFilename', 'xml');
 		IfapToolManager.testJsonResults = '';
@@ -179,14 +155,12 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void submitCaseCancellationToMFTTest() {
-		beforeTest();
 		Test.startTest();
 		IfapToolManager.testJsonResults = '';
 		Test.stopTest();
 	}
 
 	static testMethod void processPWCResultsTest_Error() {
-		beforeTest();
 		Test.startTest();
 		//IfapToolManager.testJsonResults = '{"success":false,"ErrorMessage":"errorMessage", "responses": []}';
 		IfapToolManager.testJsonResults = null;
@@ -198,7 +172,6 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void processPWCResultsTest_Ok() {
-		beforeTest();
 		Test.startTest();
 		IfapToolManager.testJsonResults = '{"success":true,"ErrorMessage":"", "responses": [{"success":true,"caseNumber":"111","originalFileName":"FileName","xml":"asdsd","message":"asdd"}]}';
 		IfapToolManager.testJsonResultsGxA = '{"success":true,"ErrorMessage":"", "responses": [{"success":true,"caseNumber":"123","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"tyu","message":"tyu"}]}';
@@ -209,7 +182,6 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void processPWCRejectionTest_Error() {
-		beforeTest();
 		Test.startTest();
 		IfapToolManager.testJsonResults = null;
 		IfapToolManager.PWCResponses result = IfapToolManager.processPWCRejections();
@@ -219,7 +191,6 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void processPWCRejectionTest_Ok() {
-		beforeTest();
 		Test.startTest();
 		IfapToolManager.testJsonResults = '{"success":true,"ErrorMessage":"", "responses": [{"success":true,"caseNumber":"","originalFileName":"","xml":"","message":""}]}';
 		IfapToolManager.PWCResponses result = IfapToolManager.processPWCRejections();
@@ -228,7 +199,6 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void classResponseTest() {
-		beforeTest();
 		Test.startTest();
 		String json = '{"success": true, "code": "CODE","response":"RESPONSE"}';
 		System.assert(true, new IfapToolManager.Response(json).toString() == 'SUCCESS RESPONSE');
@@ -238,7 +208,6 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void submitCaseQualityIssuesToMFTTest_TooMayIds() {
-		beforeTest();
 		list<id> qualityIssueId = new list<Id>();
 		for (Integer i = 0; i < 10; i++) {
 			qualityIssueId.add('50011000006kn5P');
@@ -250,8 +219,6 @@ public class IfapToolManagerTest {
 	}
 
 	static testMethod void submitCaseQualityIssuesToMFTTest() {
-		beforeTest();
-
 		Id recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(ISO_Code__c = 'AA', Name = 'AA', AIMS_Area_ID__c = 'A');

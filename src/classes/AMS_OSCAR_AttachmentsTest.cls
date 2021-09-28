@@ -2,8 +2,10 @@
 private class AMS_OSCAR_AttachmentsTest {
 
 	@testSetup static void setup(){
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
 		AMS_OSCAR_TestDataFactory.createOSCARtestData();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
 
 	static testMethod void AMS_OSCAR_Attachments() {

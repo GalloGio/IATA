@@ -2,27 +2,7 @@
 private class ISSP_AddAttachment_Test {
 
 	@isTest static void test_method_one() {
-		WrapperAttachTest.loadTestCredentials();
-
-		insert new list <AWSKey__c>{
-			new AWSKey__c(
-				name = 'sandbox',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-		  ),
-			new AWSKey__c(
-				name = 'production',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			)};
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
 				IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,

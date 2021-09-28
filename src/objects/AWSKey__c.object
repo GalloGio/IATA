@@ -252,6 +252,28 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>key_encrypted__c</fullName>
+        <externalId>false</externalId>
+        <label>key_encrypted</label>
+        <length>175</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>all</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>secret_encrypted__c</fullName>
+        <externalId>false</externalId>
+        <label>secret_encrypted</label>
+        <length>175</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>all</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
     <label>AWS Credential</label>
     <listViews>
         <fullName>All</fullName>
