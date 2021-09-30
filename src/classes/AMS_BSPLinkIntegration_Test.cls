@@ -80,18 +80,6 @@ private class AMS_BSPLinkIntegration_Test {
 		test.StopTest();
 	}
 
-	static testMethod void ErrorMissingConfig(){
-		test.startTest();
-		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
-		list<AMS_BSPLinkIntegration.Response> lsResp = new list<AMS_BSPLinkIntegration.Response>();
-		list<id> lsId = new list<id>();
-		lsId.add([select Id from account where Name='Accnt1'].get(0).Id);
-		lsResp = AMS_BSPLinkIntegration.ProcessBSPLinkFromCase('Deactivation', lsId, 'Hierarchy', cases.get(0).Id);
-		system.assertEquals('Error', lsResp.get(0).result);
-		system.assertEquals('Integration Parameters not set. Please contact a system administrator', lsResp.get(0).description);
-		test.StopTest();
-	}
-
 	static testMethod void ErrorWrongProcess(){
 		test.startTest();
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
