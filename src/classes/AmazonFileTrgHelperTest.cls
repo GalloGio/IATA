@@ -1,25 +1,9 @@
 @isTest
 private class AmazonFileTrgHelperTest {
-	private static void loadCredentials() {
-
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
-		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred2;
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
+	@TestSetup
+	static void makeData(){
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
-
 
 	static Case initializeCase() {
 
@@ -57,7 +41,6 @@ private class AmazonFileTrgHelperTest {
 		// Implement test code
 
 		Test.startTest();
-		loadCredentials();
 
 		Case case1 =  initializeCase();
 
@@ -115,7 +98,6 @@ private class AmazonFileTrgHelperTest {
 	}
 
 	@isTest static void test_InsertWithAction() {
-		loadCredentials();
 		Account account = new Account(
 									Name = 'testAccount',
 									Sector__c = AMS_Utils.SECTOR_AIRLINE,
@@ -135,7 +117,6 @@ private class AmazonFileTrgHelperTest {
 	}
 
 	@isTest static void test_UpdateWithAction_Reminder30() {
-		loadCredentials();
 		Account account = new Account(
 									Name = 'testAccount',
 									Sector__c = AMS_Utils.SECTOR_AIRLINE,
@@ -163,7 +144,6 @@ private class AmazonFileTrgHelperTest {
 	}
 
 	@isTest static void test_UpdateWithAction_ReminderOnExpiry() {
-		loadCredentials();
 		Account account = new Account(
 									Name = 'testAccount',
 									Sector__c = AMS_Utils.SECTOR_AIRLINE,
@@ -191,8 +171,6 @@ private class AmazonFileTrgHelperTest {
 	}
 
 	@isTest static void testAutomaticReports() {
-
-		loadCredentials();
 
 		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplication.Name = 'TIP Reports';
@@ -288,8 +266,6 @@ private class AmazonFileTrgHelperTest {
 	}
 
 	@isTest static void test_Case_Id_Populated_From_SObjectId() {
-		loadCredentials();
-
 		Case case1 =  initializeCase();
 
 		Test.startTest();

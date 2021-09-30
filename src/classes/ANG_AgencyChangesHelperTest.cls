@@ -69,6 +69,7 @@ public class ANG_AgencyChangesHelperTest {
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
                                            +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
+		TestDataFactory_AWSKeys.createAllEntries();
 		Test.stopTest();
 	}
 
@@ -1062,8 +1063,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		insert oscarCase;
 
-		loadCredentials();
-
 		insert new AmazonFile__c(Full_Name_Unique__c = 'Attachment Required',
 			Case__c = oscarCase.Id);
 
@@ -1174,8 +1173,6 @@ public class ANG_AgencyChangesHelperTest {
 			Region__c = 'Europe');
 
 		insert oscarCase;
-
-		loadCredentials();
 
 		insert new AmazonFile__c(Full_Name_Unique__c = 'Attachment Required',
 			Case__c = oscarCase.Id);
@@ -1986,10 +1983,7 @@ public class ANG_AgencyChangesHelperTest {
 	}
 
 	@isTest static void performChangeOfLocationTypeOscar(){
-
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
-
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 
 				//Agency changes configuration settings
@@ -2160,36 +2154,11 @@ public class ANG_AgencyChangesHelperTest {
 
 	}
 
-	private static void loadCredentials() {
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-		creds.add(Amazon_Cred);
-		creds.add(GenericAttach);
-		creds.add(recycleBin);
-		insert creds;
-
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
-	}
-
 	@isTest static void test_getChangeCodes(){
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		ANG_AgencyChangesHelper.testRunnningForNonBackup = true;
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
 
 				//Agency changes configuration settings
 		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
@@ -2366,7 +2335,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
 
 				//Agency changes configuration settings
 		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
@@ -2631,7 +2599,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
 
 				//Agency changes configuration settings
 		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
@@ -2813,7 +2780,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
 
 				//Agency changes configuration settings
 		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
@@ -2953,7 +2919,6 @@ public class ANG_AgencyChangesHelperTest {
 
 		// push a subset of agencies and creating a new brand new hierarchy (scenario 1)
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
 
 				//Agency changes configuration settings
 		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();
@@ -3184,8 +3149,6 @@ public class ANG_AgencyChangesHelperTest {
 		oscarCase.AccountId = acct.Id;
 		oscarCase.ContactId = cont.Id;
 		insert oscarCase;
-
-		loadCredentials();
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'Attachment Required',
@@ -3480,8 +3443,6 @@ public class ANG_AgencyChangesHelperTest {
 		oscarCase.ContactId = cont.Id;
 		insert oscarCase;
 
-		loadCredentials();
-
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'Attachment Required',
 			Case__c = oscarCase.Id
@@ -3751,8 +3712,6 @@ public class ANG_AgencyChangesHelperTest {
 		oscarCase.AccountId = acct.Id;
 		oscarCase.ContactId = cont.Id;
 		insert oscarCase;
-
-		loadCredentials();
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'Attachment Required',

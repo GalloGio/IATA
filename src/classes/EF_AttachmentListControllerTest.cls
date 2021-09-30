@@ -34,77 +34,7 @@ private class EF_AttachmentListControllerTest {
 		efGM.GroupId= efPrivateGroup.Id;
 		//insert efGM;
 
-		List<Amazon_Cred__c> listAmazonCred =  new List<Amazon_Cred__c>{
-			new Amazon_Cred__c(
-				name = 'GenericAttach',
-				Prod_Configuration__c = 'GenericAttach-prod' ,
-				Dev_Configuration__c = 'GenericAttach-dev'
-			),
-			new Amazon_Cred__c(
-				name = 'RecycleBin',
-				Prod_Configuration__c = 'RecycleBin-prod' ,
-				Dev_Configuration__c = 'RecycleBin-dev'
-			)
-		};
-		insert listAmazonCred;
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'GenericAttach-prod',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'GenericAttach-dev' ,
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'RecycleBin-prod',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'RecycleBin-dev' ,
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'production',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'sandbox',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			)
-		};
-		insert AWS_KEYs;
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		EF_Amazonfile_Private__c ap = new EF_Amazonfile_Private__c();
 		ap.Name = 'Case';

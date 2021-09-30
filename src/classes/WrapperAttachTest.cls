@@ -1,65 +1,10 @@
 @isTest
 public class WrapperAttachTest {
-
-
 	@testSetup
 	public static void loadTestCredentials() {
-
-		list<Amazon_Cred__c> listAmazonCred =  new list<Amazon_Cred__c>{
-			new Amazon_Cred__c(
-				name = 'GenericAttach',
-				Prod_Configuration__c = 'GenericAttach-prod' ,
-				Dev_Configuration__c = 'GenericAttach-dev'
-			),
-			new Amazon_Cred__c(
-				name = 'RecycleBin',
-				Prod_Configuration__c = 'RecycleBin-prod' ,
-				Dev_Configuration__c = 'RecycleBin-dev'
-			)
-		};
-		insert listAmazonCred;
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'GenericAttach-prod',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'GenericAttach-dev' ,
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'RecycleBin-prod',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'RecycleBin-dev' ,
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			)
-		};
-		insert AWS_KEYs;
+		TestDataFactory_AWSKeys.createAllEntries();
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
 
 	public static AmazonFile createAmazonFile(Case cse) {

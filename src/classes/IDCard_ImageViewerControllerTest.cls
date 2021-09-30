@@ -3,13 +3,7 @@ private class IDCard_ImageViewerControllerTest {
 
 
 	@isTest static void test_IDCard_ImageViewerController() {
-		Amazon_Cred__c amc = new Amazon_Cred__c(Name = 'IdCard', Dev_Configuration__c = 'IdCardDev', Prod_Configuration__c = 'IdCardProd');
-		insert amc;
-
-		AWSKey__c awsk_dev = new AWSKey__c(Name = 'IdCardDev', Key__c = 'asd', Secret__c = 'asd',  IAS_configuration_name__c = 'asd', IAS_Access_Point__c = 'asd', Bucket__c = 'asd', AWS_ENDPOINT_URL__c = 'https://asd.com');
-		AWSKey__c awsk_prd = new AWSKey__c(Name = 'IdCardProd', Key__c = 'asd', Secret__c = 'asd',  IAS_configuration_name__c = 'asd', IAS_Access_Point__c = 'asd', Bucket__c = 'asd', AWS_ENDPOINT_URL__c = 'https://asd.com');
-		insert awsk_dev;
-		insert awsk_prd;
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		ID_Card__c idCard = CreateValidIDCardTest();
 
