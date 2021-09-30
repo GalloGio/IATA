@@ -1527,6 +1527,11 @@
         <label>S - Confirmed Renewal Intent</label>
     </standardValue>
     <standardValue>
+        <fullName>Send request for meeting</fullName>
+        <default>false</default>
+        <label>Send request for meeting</label>
+    </standardValue>
+    <standardValue>
         <fullName>Sent</fullName>
         <default>false</default>
         <label>Sent</label>

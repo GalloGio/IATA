@@ -14,10 +14,8 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>abbadid@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
             <criteriaItems>
@@ -34,14 +32,8 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>cedrolav@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <approver>
-                <name>martinyuks@iata.org</name>
-                <type>user</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
             <criteriaItems>
@@ -61,18 +53,8 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>praban@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <approver>
-                <name>thamoh@iata.org</name>
-                <type>user</type>
-            </approver>
-            <approver>
-                <name>wongsf@iata.org</name>
-                <type>user</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
             <criteriaItems>
@@ -92,10 +74,8 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>xuj@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
             <criteriaItems>
@@ -115,14 +95,8 @@
         <allowDelegate>true</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>martinyuks@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <approver>
-                <name>sarrie@iata.org</name>
-                <type>user</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
             <criteriaItems>

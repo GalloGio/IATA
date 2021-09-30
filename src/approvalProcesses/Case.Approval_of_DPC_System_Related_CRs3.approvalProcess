@@ -55,10 +55,8 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>grintchena@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <description>Step to request approval from the process owner (automatic)</description>
         <label>System Management Approval</label>
@@ -83,14 +81,8 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>coler@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <approver>
-                <name>mcbrideg@iata.org</name>
-                <type>user</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <label>DPC Management Approval</label>
         <name>ISTS_Admin_Approval</name>

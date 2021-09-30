@@ -13,18 +13,8 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>kirkl@iata.org</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <approver>
-                <name>luntrarum@iata.org.prod</name>
-                <type>user</type>
-            </approver>
-            <approver>
-                <name>pilonb@iata.org</name>
-                <type>user</type>
-            </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <label>Step 1</label>
         <name>Step_1</name>
