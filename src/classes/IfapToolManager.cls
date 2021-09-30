@@ -22,8 +22,7 @@ global class IfapToolManager {
 			AsyncWSToolmasterIfap.AsyncIfapToolMaster app = new AsyncWSToolmasterIfap.AsyncIfapToolMaster();
 
 			AsyncWSToolmasterIfap.mergeAndSubmitParametersResponse_elementFuture futureElement = null;
-			if ( !Test.isRunningTest())
-				futureElement = app.beginMergeAndSubmitParameters( cont,AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName, caseNumber, outputFileName, xmlString);
+			futureElement = app.beginMergeAndSubmitParameters( cont,AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName, caseNumber, outputFileName, xmlString);
 			return futureElement;
 		}catch ( Exception e ) {
 			transformationHelper.sendEmailSupport('Error IFAPtoolManager',e.getMessage() + ' '+ e.getStackTraceString() +  '  '  + e.getMessage());
