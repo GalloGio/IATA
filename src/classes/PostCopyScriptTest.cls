@@ -129,7 +129,7 @@ public class PostCopyScriptTest {
 		List<RTS_Orange_Senior_Manager__c> listRecords9 = new List<RTS_Orange_Senior_Manager__c>();
 		listRecords9 = RTS_Orange_Senior_Manager__c.getAll().values();
 
-		Integer numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size() + listRecords8.size() + listRecords9.size();
+		Integer numRecords = listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size() + listRecords8.size() + listRecords9.size();
 
 		if(numRecords!=0) {
 
@@ -158,7 +158,7 @@ public class PostCopyScriptTest {
 			listRecords7 = new List<Apex_Setting__c>();
 			listRecords7 = Apex_Setting__c.getAll().values();
 
-			numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size();
+			numRecords = listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size();
 
 			System.assertEquals(numRecords, 0);
 
