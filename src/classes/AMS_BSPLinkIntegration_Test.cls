@@ -93,7 +93,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void ErrorWrongProcess(){
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
 		list<AMS_BSPLinkIntegration.Response> lsResp = new list<AMS_BSPLinkIntegration.Response>();
@@ -106,7 +105,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void ErrorLogin() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
 
@@ -123,7 +121,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void DeactivationSingleAgencySuccess() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
@@ -142,7 +139,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void DeactivationSingleAgencyError() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
@@ -161,9 +157,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void DeactivationUndoSingleAgencyError() {
-
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
-
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
 		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		update cases;
@@ -184,8 +177,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void DeactivationUndoSingleAgencySuccess() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
-
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
 		for(case c:cases) c.Shut_Down_TKT_System_GDS_and_BSPlink__c = system.now();
 		update cases;
@@ -205,8 +196,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void ReactivationUndoSingleAgencyError() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
-
 		test.startTest();
 
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
@@ -225,8 +214,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void ReactivationUndoSingleAgencySuccess() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
-
 		test.startTest();
 
 		list<case> cases = [select id from case where account.Name='Accnt1' limit 1];
@@ -244,7 +231,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void DeactivateWholeHierarchy() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 
 		list<case> cases = [select id from case where account.Name='Accnt3' limit 1];
@@ -263,7 +249,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void DeactivationSingleAgencyAccountInvolvedError() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 
 		list<case> cases = [select id from case where account.Name='Accnt3.2' limit 1];
@@ -283,7 +268,6 @@ private class AMS_BSPLinkIntegration_Test {
 	}
 
 	static testMethod void DeactivationSingleAgencyAccountInvolvedSuccess() {
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 
 		list<AMS_BSPLinkIntegration.Response> lsResp = new list<AMS_BSPLinkIntegration.Response>();
 
@@ -303,19 +287,6 @@ private class AMS_BSPLinkIntegration_Test {
 
 		test.StopTest();
 	}
-
-	static void CreateConfiguration(){
-		AMS_BSPLink_Integration__c BSPLinkParameter = new AMS_BSPLink_Integration__c();
-		BSPLinkParameter.EndpointToken__c = 'https://bsplinkweb.accelya.com/BSPlinkAPI/Token';
-		BSPLinkParameter.Password__c = 'thePassword';
-		BSPLinkParameter.Username__c = 'theUsername';
-		BSPLinkParameter.GrantType__c = 'password';
-		BSPLinkParameter.EndpointDeactivation__c = 'https://bsplinkweb.accelya.com/BSPlinkAPI/api/AgentDeactivation';
-		BSPLinkParameter.EndpointDeactivationUndo__c = 'https://bsplinkweb.accelya.com/BSPlinkAPI/api/AgentDeactivationUndo';
-		BSPLinkParameter.EndpointReactivation__c = 'https://bsplinkweb.accelya.com/BSPlinkAPI/api/AgentReactivation';
-		insert BSPLinkParameter;
-	}
-
 
 	static testMethod void testBatch(){
 		id AccntId = [select Id from Account where name ='Accnt1'].get(0).Id;
@@ -338,7 +309,6 @@ private class AMS_BSPLinkIntegration_Test {
 
 		insert lsAuth;
 
-		AMS_BSPLinkIntegration_Test.CreateConfiguration();
 		test.startTest();
 
 		Test.setMock(HttpCalloutMock.class, new AMS_BSPLinkIntegration_Test.AMS_BSPLinkIntegration_Test_MockWS('Success'));
@@ -365,10 +335,8 @@ private class AMS_BSPLinkIntegration_Test {
 
 		public HTTPResponse respond(HTTPRequest req) {
 			HttpResponse res = new HttpResponse();
-			//res.setHeader('Content-Type', 'application/json');
-			system.debug('DTULLO 155 --> ' + this.sType);
-			if(this.sType=='Success' || (this.sType!='ErrorLogin' && req.getEndpoint()=='https://bsplinkweb.accelya.com/BSPlinkAPI/Token')){
-				if(req.getEndpoint()=='https://bsplinkweb.accelya.com/BSPlinkAPI/Token'){
+			if(this.sType=='Success' || (this.sType!='ErrorLogin' && req.getEndpoint().contains('token'))){
+				if(req.getEndpoint().contains('token')){
 					AMS_BSPLinkIntegration.GrantTokenResponse tokenResponse = new AMS_BSPLinkIntegration.GrantTokenResponse();
 					tokenResponse.access_token = 'access_token';
 					tokenResponse.token_type = 'token_type';
@@ -381,7 +349,7 @@ private class AMS_BSPLinkIntegration_Test {
 					res.setStatusCode(200);
 				}
 
-				if(req.getEndpoint()=='https://bsplinkweb.accelya.com/BSPlinkAPI/api/AgentDeactivation'){
+				if(req.getEndpoint().contains('AgentDeactivation')){
 					AMS_BSPLinkIntegration.agentDeactivationRequestResponse AgentDeactivation = new AMS_BSPLinkIntegration.agentDeactivationRequestResponse();
 
 					AgentDeactivation.IsoCountryCode = 'IsoCountryCode';
@@ -392,7 +360,7 @@ private class AMS_BSPLinkIntegration_Test {
 					res.setStatusCode(200);
 				}
 
-				if(req.getEndpoint()=='https://bsplinkweb.accelya.com/BSPlinkAPI/api/AgentDeactivationUndo'){
+				if(req.getEndpoint().contains('AgentDeactivationUndo')){
 					AMS_BSPLinkIntegration.agentDeactivationUndoRequestResponse AgentDeactivationUndo = new AMS_BSPLinkIntegration.agentDeactivationUndoRequestResponse();
 
 					AgentDeactivationUndo.IsoCountryCode = 'IsoCountryCode';
@@ -404,7 +372,7 @@ private class AMS_BSPLinkIntegration_Test {
 					res.setStatusCode(200);
 				}
 
-				if(req.getEndpoint()=='https://bsplinkweb.accelya.com/BSPlinkAPI/api/AgentReactivation'){
+				if(req.getEndpoint().contains('AgentReactivation')){
 					AMS_BSPLinkIntegration.agentReactivationRequestResponse AgentReactivation = new AMS_BSPLinkIntegration.agentReactivationRequestResponse();
 
 					AgentReactivation.IsoCountryCode = 'IsoCountryCode';

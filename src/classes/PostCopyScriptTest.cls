@@ -45,12 +45,6 @@ public class PostCopyScriptTest {
 		insert testUser;
 
 		System.runAs(testUser) {
-
-			AMS_BSPLink_Integration__c rec1 = new AMS_BSPLink_Integration__c(
-				SetupOwnerId = UserInfo.getOrganizationId(),
-				Name = 'Test AMS_BSPLink_Integration__c');
-			insert rec1;
-
 			AMS_SAP_Settings__c rec2 = new AMS_SAP_Settings__c(
 				SetupOwnerId = UserInfo.getOrganizationId(),
 				Name = 'Test AMS_SAP_Settings__c',
@@ -111,9 +105,6 @@ public class PostCopyScriptTest {
 
 		final String PROFILE_NAME = 'System Administrator';
 
-		List<AMS_BSPLink_Integration__c> listRecords1 = new List<AMS_BSPLink_Integration__c>();
-		listRecords1 = [SELECT id From AMS_BSPLink_Integration__c];
-
 		List<AMS_SAP_Settings__c> listRecords2 = new List<AMS_SAP_Settings__c>();
 		listRecords2 = [SELECT id From AMS_SAP_Settings__c];
 
@@ -148,9 +139,6 @@ public class PostCopyScriptTest {
 
 			PostCopyScript script = new PostCopyScript();
 			script.deleteCustomSettingsRecords();
-
-			listRecords1 = new List<AMS_BSPLink_Integration__c>();
-			listRecords1 = [SELECT id From AMS_BSPLink_Integration__c];
 
 			listRecords2 = new List<AMS_SAP_Settings__c>();
 			listRecords2 = [SELECT id From AMS_SAP_Settings__c];
