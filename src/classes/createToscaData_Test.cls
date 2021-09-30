@@ -15,30 +15,10 @@ private class createToscaData_Test{
 		IATA_ISO_State__c amsState = new IATA_ISO_State__c(IEC_Valid_SAP__c=true, IATA_ISO_Country__c=amsCountry.Id, Name='Xe', ISO_Code__c='PH-LO');
 		insert amsState;
         
-        Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'ACLI', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-        Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-        Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-        List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-        creds.add(Amazon_Cred);
-        creds.add(GenericAttach);
-        creds.add(recycleBin);
-        insert creds;
-
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
                                            +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
-
-        list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-            new AWSKey__c(
-                name = 'adevconf',
-                Key__c = 'asd', 
-                Secret__c = 'asd',  
-                IAS_configuration_name__c = 'asdas', 
-                IAS_Access_Point__c = 'asd',
-                Bucket__c = 'asd',
-                AWS_ENDPOINT_URL__c = 'asd')
-        };
-        insert AWS_KEYs;
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
 
 	@isTest

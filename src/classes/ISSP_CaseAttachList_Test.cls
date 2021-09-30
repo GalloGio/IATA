@@ -2,7 +2,9 @@
 public class ISSP_CaseAttachList_Test {
 	@testSetup
 	public static void loadTestCredentials() {
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
 
 	public static testMethod void myTest_1() {
@@ -15,8 +17,6 @@ public class ISSP_CaseAttachList_Test {
 		insert contact;
 		Case c=new Case(Subject='test 1',Status='Open', AccountId=account.id, ContactId=contact.id,Region__c = 'Europe');
 		insert c;
-		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		Attachment attach = new Attachment();
 		attach.Name='[UNITTEST][FILE][SMALL]';
 		Blob bodyBlob = Blob.valueOf('Unit Test Attachment Body');
@@ -120,8 +120,6 @@ public class ISSP_CaseAttachList_Test {
 
 		contact.OwnerId = newUser.Id;
 		update contact;
-		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		AttachmentListLimitedAccess__c access = new AttachmentListLimitedAccess__c();
 		access.SetupOwnerId = profileId;
 		insert access;
@@ -158,8 +156,6 @@ public class ISSP_CaseAttachList_Test {
 
 	public static testMethod void myTest_3() {
 		//ISSP_ObjectFactory.fiilIncludedFields();
-		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		String profileId = [SELECT Id FROM Profile WHERE Name = 'ISS Portal DPC Admin' LIMIT 1].Id;
 		//Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
 		Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -222,8 +218,6 @@ public class ISSP_CaseAttachList_Test {
 	}
 
 	public static testMethod void myTest_4() {
-		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		//ISSP_ObjectFactory.fiilIncludedFields();
 		//Account acc = (Account)ISSP_ObjectFactory.createSObject('Account',false,4);
 		Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -262,8 +256,8 @@ public class ISSP_CaseAttachList_Test {
 	}
 
 	public static testMethod void myTest_5() {
-		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+		TestDataFactory_AWSKeys.createAllEntries();
+
 		Account acc = ISSP_ObjectFactory.createNewAccount();
 		insert acc;
 

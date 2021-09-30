@@ -9,7 +9,9 @@ private class AMS_CertificateTest {
 		Account acc4 = new Account(Name = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', TradeName__c = 'TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST', IataCode__c = '3', Certificate_Generated_Current_Year__c = false, recordtypeid = Art);
 		insert new List<Account>{acc1, acc2, acc3, acc4};
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+		
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
 
 	static testMethod void manager() {
@@ -67,9 +69,6 @@ private class AMS_CertificateTest {
 	}
 
 	static testMethod void uploadFile(){
-		AmazonRestTest.createCredentials(AMS_CertificateHelper.CREDENTIAL_NAME);
-		AmazonRestTest.createCredentials('RecycleBin');
-
 		Account acc = [SELECT Id FROM Account LIMIT 1];
 		AMS_Oscar__c oscar = new AMS_Oscar__c(Account__c = acc.Id);
 		insert oscar;

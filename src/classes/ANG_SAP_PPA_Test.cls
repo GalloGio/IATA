@@ -2,7 +2,9 @@
 private class ANG_SAP_PPA_Test {
 
 	@testSetup static void createData() {
-		WrapperAttachTest.loadTestCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'Country',
 																ANG_Enable_NewGen__c = true,
