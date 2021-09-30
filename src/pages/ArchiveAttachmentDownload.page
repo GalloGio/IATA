@@ -25,8 +25,8 @@
         <script >
             function getAWSLink(){
                 var filePath = "{!Archived_Attachment__c.AWS_S3_URL__c}";
-                var secretAccessKey='{!awsCredential.Secret__c}';
-                var accessKeyId ='{!awsCredential.Key__c}';
+                var secretAccessKey='{!awsCredential.secret_encrypted__c}';
+                var accessKeyId ='{!awsCredential.key_encrypted__c}';
                 var dateTime = Math.floor(new Date().getTime() / 1000) + 300; // allows for 5 minutes clock diff
                 var stringToSign = "GET\n\n\n" + dateTime + "\n" + filePath;
                 var signature = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA1(stringToSign, secretAccessKey));

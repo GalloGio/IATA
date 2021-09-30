@@ -211,6 +211,19 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Key_Encrypted__c</fullName>
+        <description>Access Key used to connect to amazon S3. To view the value, is necessary to have View Encrypted Data permission</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Access Key used to connect to amazon S3</inlineHelpText>
+        <label>key_encrypted</label>
+        <length>175</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>all</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
         <fullName>Key__c</fullName>
         <externalId>false</externalId>
         <label>Key</label>
@@ -219,6 +232,31 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Named_Credential__c</fullName>
+        <description>the API Name of the named credential to use to consume AWS services</description>
+        <externalId>false</externalId>
+        <inlineHelpText>the API Name of the named credential to use to consume AWS services</inlineHelpText>
+        <label>Named Credential</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Secret_Encrypted__c</fullName>
+        <description>Access Secret used to connect to amazon S3. To view the value, is necessary to have View Encrypted Data permission</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Access Secret used to connect to amazon S3.</inlineHelpText>
+        <label>secret_encrypted</label>
+        <length>175</length>
+        <maskChar>asterisk</maskChar>
+        <maskType>all</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
     </fields>
     <fields>
         <fullName>Secret__c</fullName>
