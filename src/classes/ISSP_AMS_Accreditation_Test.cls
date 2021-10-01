@@ -25,15 +25,7 @@ private class ISSP_AMS_Accreditation_Test {
 		portalApplication.Name = 'IFAP';
 		insert portalApplication;
 
-		insert new aWSKey__c(Name = 'adevconf', Key__c = 'asd', Secret__c = 'asd', IAS_configuration_name__c = 'asdas', IAS_Access_Point__c = 'asd',
-					Bucket__c = 'asd', AWS_ENDPOINT_URL__c = 'asd', WS_Endpoint__c = 'apoint');
-
-		Amazon_Cred__c acli = new Amazon_Cred__c(Name = 'ACLI', Prod_Configuration__c = 'aprodconf', Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c amazon_Cred = new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf', Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c genericAttach = new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf', Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c recycleBin = new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf', Dev_Configuration__c = 'adevconf');
-
-		insert new List<Amazon_Cred__c>{acli, amazon_Cred, genericAttach, recycleBin};
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		Id bspRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
 

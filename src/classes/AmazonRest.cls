@@ -182,20 +182,6 @@ public static string TESTSTRING =
  public static string TESTRESULT = 'OK';
 	
 		public static final string SEPARATOR = '/';
-		
-
-
-
-/*AmazonRest.Credentials Credentials = new AmazonRest.Credentials('https://s3-eu-west-1.amazonaws.com/',
-										'sfdc-ifap-dev-23ea0b9fb2a21f7f',
-										'AKIAJVPKEUZ4GL4KZDZA',
-										'/pRJY7OCsLKKnwZdzjIRV9Us0tyIip0ax3YiwpOz'); 
-
-AmazonXMLParser.ListBucketResult  ListBucketResult =
-AmazonRest.listFiles( 'IFAP/',Credentials);
-					
-throw new transformationException('' +ListBucketResult);*/
-
 	
 	   public static AmazonXMLParser.ListBucketResult listFiles(string Folder,AmazonCredentials credentials){
 			

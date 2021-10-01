@@ -79,22 +79,7 @@ private class AMS_Change_Code_Notification_Contr_Test {
 
 		ctrl.setNotificationMessage();
 
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
-		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred2;
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-				new AWSKey__c(
-						name = 'adevconf',
-						Key__c = 'asd',
-						Secret__c = 'asd',
-						IAS_configuration_name__c = 'asdas',
-						IAS_Access_Point__c = 'asd',
-						Bucket__c = 'asd',
-						AWS_ENDPOINT_URL__c = 'asd')
-				};
-		insert AWS_KEYs;
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		Account_Statement__c acctS = new Account_Statement__c(
 				Period__c ='20180604W',

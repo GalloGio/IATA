@@ -1,32 +1,14 @@
 @isTest
 private class AmazonFinancialTest {
 
-	private static void createAmazonCredential() {
+	@TestSetup
+	static void makeData(){
 		insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
-
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(
-			name = IfapToolManager.IFAPCONFIGARATIONNAME,
-			Prod_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME,
-			Dev_Configuration__c = IfapToolManager.IFAPCONFIGARATIONNAME
-		);
-		insert Amazon_Cred;
-
-		AWSKey__c credential = new AWSKey__c(
-			name = IfapToolManager.IFAPCONFIGARATIONNAME,
-			Key__c = 'asd',
-			Secret__c = 'asd',
-			IAS_configuration_name__c = 'asdas',
-			IAS_Access_Point__c = 'asd',
-			Bucket__c = 'asd',
-			AWS_ENDPOINT_URL__c = 'asd'
-		);
-		insert credential;
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
 
 	@isTest
 	private static void testArchivedCase(){
-		createAmazonCredential();
-
 		Case caseObj = new Case();
 		caseObj.ArchivedDate__c = Date.today();
 		insert caseObj;
@@ -46,8 +28,6 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void testNotArchivedCase_ErrorAgentCode(){
-		createAmazonCredential();
-
 		Case caseObj = new Case();
 		caseObj.ArchivedDate__c = null;
 		insert caseObj;
@@ -76,7 +56,6 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void testNotArchivedCase(){
-		createAmazonCredential();
 		Case caseObj = initializeCase();
 
 		ApexPages.StandardController stdController = new ApexPages.StandardController(caseObj);
@@ -96,7 +75,6 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void testProcessResponse_Exception(){
-		createAmazonCredential();
 		Case caseObj = initializeCase();
 
 		ApexPages.StandardController stdController = new ApexPages.StandardController(caseObj);
@@ -112,7 +90,6 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void testProcessResponse_Error(){
-		createAmazonCredential();
 		Case caseObj = initializeCase();
 
 		ApexPages.StandardController stdController = new ApexPages.StandardController(caseObj);
@@ -130,7 +107,6 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void testProcessResponse_Success(){
-		createAmazonCredential();
 		Case caseObj = initializeCase();
 
 		ApexPages.StandardController stdController = new ApexPages.StandardController(caseObj);
@@ -148,7 +124,6 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void testRemoteFunctions(){
-		createAmazonCredential();
 		Case caseObj = initializeCase();
 
 		Test.startTest();
@@ -183,29 +158,9 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void secondNotArchived(){
-		insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
 		PageReference pageRef = Page.AmazonFinancial;
 		Test.setCurrentPage(pageRef);
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
-		 insert Amazon_Cred;
-
-		 list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{new AWSKey__c(name = 'aprodconf',
-																		Key__c = 'asd',
-																		Secret__c = 'asd',
-																		IAS_configuration_name__c = 'asdas',
-																		IAS_Access_Point__c = 'asd',
-																		Bucket__c = 'asd',
-																		 AWS_ENDPOINT_URL__c = 'asd'),
-														 new AWSKey__c(name = 'adevconf' ,
-																		Key__c = 'asd',
-																		Secret__c = 'asd',
-																		IAS_configuration_name__c = 'asdas',
-																		IAS_Access_Point__c = 'asd',
-																		Bucket__c = 'asd',
-																		AWS_ENDPOINT_URL__c = 'asd')
-																		 };
-
-		 insert AWS_KEYs;
+		
 		 UtilityCS__c sup = new UtilityCS__c(name = 'Emails',value__c='arandomEmail@gmail.com');
 		 insert sup;
 
@@ -306,30 +261,8 @@ private class AmazonFinancialTest {
 
 	@isTest
 	private static void firstMethodArchivedPath(){
-		insert new UtilityCS__c(name='ifapBatchSize', Value__c = '5');
 		PageReference pageRef = Page.AmazonFinancial;
 		Test.setCurrentPage(pageRef);
-
-			Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'aprodconf' , Dev_Configuration__c = 'adevconf');
-		 insert Amazon_Cred;
-
-		 list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{new AWSKey__c(name = 'aprodconf',
-																		Key__c = 'asd',
-																		Secret__c = 'asd',
-																		IAS_configuration_name__c = 'asdas',
-																		IAS_Access_Point__c = 'asd',
-																		Bucket__c = 'asd',
-																		 AWS_ENDPOINT_URL__c = 'asd'),
-														 new AWSKey__c(name = 'adevconf' ,
-																		Key__c = 'asd',
-																		Secret__c = 'asd',
-																		IAS_configuration_name__c = 'asdas',
-																		IAS_Access_Point__c = 'asd',
-																		Bucket__c = 'asd',
-																		AWS_ENDPOINT_URL__c = 'asd')
-																		 };
-
-		 insert AWS_KEYs;
 
 
 		 UtilityCS__c sup = new UtilityCS__c(name = 'Emails',value__c='arandomEmail@gmail.com');
@@ -377,9 +310,6 @@ private class AmazonFinancialTest {
 	}
 
 	@isTest static void canUploadFinancialReviewDocumentsTest(){
-
-		createAmazonCredential();
-
 		AMS_Settlement_System__c bspSG = new AMS_Settlement_System__c(
 			Name = 'BSP-SG',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP

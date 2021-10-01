@@ -2,6 +2,8 @@
 private class ISSP_AmazonS3_Test {
 
 	@testSetup static void setup(){
+		TestDataFactory_AWSKeys.createAllEntries();
+
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test', CurrencyIsoCode = 'CNY',
 									IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
 									IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
@@ -198,22 +200,6 @@ private class ISSP_AmazonS3_Test {
 			cs2.Value__c = 'pdf';
 			insert cs2;
 
-			Amazon_Cred__c cred = new Amazon_Cred__c();
-			cred.Name = 'GenericAttach';
-			cred.Dev_Configuration__c = 'GenericDev';
-			cred.Prod_Configuration__c = 'GenericProd';
-			insert cred;
-
-			AWSKey__c key = new AWSKey__c();
-			key.AWS_ENDPOINT_URL__c = 'test';
-			key.Bucket__c = 'test';
-			key.IAS_Configation_name__c = 'test';
-			key.IAS_configuration_name__c = 'test';
-			key.Key__c = 'test';
-			key.Name = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? cred.Prod_Configuration__c : cred.Dev_Configuration__c ;
-			key.Secret__c = 'test';
-			insert key;
-			
 			Test.startTest();
 			ISSP_AmazonS3_Ctrl ctrlId = new ISSP_AmazonS3_Ctrl();
 
@@ -226,28 +212,6 @@ private class ISSP_AmazonS3_Test {
 				Boolean thisTest = true;
 			}
 			String testExpiringLink = ISSP_AmazonS3_Ctrl.getExpiringLinkIfap('test.pdf');
-
-			Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-			Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-			Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-			List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-			creds.add(Amazon_Cred);
-			creds.add(GenericAttach);
-			creds.add(recycleBin);
-			insert creds;
-
-
-			list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-				new AWSKey__c(
-					name = 'adevconf',
-					Key__c = 'asd',
-					Secret__c = 'asd',
-					IAS_configuration_name__c = 'asdas',
-					IAS_Access_Point__c = 'asd',
-					Bucket__c = 'asd',
-					AWS_ENDPOINT_URL__c = 'asd')
-			};
-			insert AWS_KEYs;
 
 			AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'test name',
@@ -321,21 +285,6 @@ private class ISSP_AmazonS3_Test {
 	 }
 
 	 static testMethod void unitTest_2() {
-		Amazon_Cred__c cred = new Amazon_Cred__c();
-		cred.Name = 'GenericAttach';
-		cred.Dev_Configuration__c = 'GenericDev';
-		cred.Prod_Configuration__c = 'GenericProd';
-		insert cred;
-
-		AWSKey__c key = new AWSKey__c();
-		key.AWS_ENDPOINT_URL__c = 'test';
-		key.Bucket__c = 'test';
-		key.IAS_Configation_name__c = 'test';
-		key.IAS_configuration_name__c = 'test';
-		key.Key__c = 'test';
-		key.Name = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? cred.Prod_Configuration__c : cred.Dev_Configuration__c ;
-		key.Secret__c = 'test';
-		insert key;
 		Case cse = new Case();
 		insert cse;
 
@@ -348,23 +297,6 @@ private class ISSP_AmazonS3_Test {
 	}
 
 	static testMethod void unitTest_3() {
-		Amazon_Cred__c cred = new Amazon_Cred__c();
-		cred.Name = 'GenericAttach';
-		cred.Dev_Configuration__c = 'GenericDev';
-		cred.Prod_Configuration__c = 'GenericProd';
-		insert cred;
-
-		AWSKey__c key = new AWSKey__c();
-		key.AWS_ENDPOINT_URL__c = 'test';
-		key.Bucket__c = 'test';
-		key.IAS_Configation_name__c = 'test';
-		key.IAS_configuration_name__c = 'test';
-		key.Key__c = 'test';
-		key.Name = UserInfo.getOrganizationId().substring(0,15) == '00D2000000008TF'  ? cred.Prod_Configuration__c : cred.Dev_Configuration__c ;
-		key.Secret__c = 'test';
-		insert key;
-
-		
 		Account a1 = [SELECT id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name =: 'test' LIMIT 1];
 
 		AMS_Agency_Regulation__c certificate1 = [SELECT id, Last_Name__c, Account__c, Type_of_Certificate__c , Expiry_Date__c, Issued_on__c, Is_your_firm_handling_Dangerous_Goods__c FROM AMS_Agency_Regulation__c WHERE Account__c =: a1.id LIMIT 1];
@@ -375,22 +307,6 @@ private class ISSP_AmazonS3_Test {
 	}
 
 	static testMethod void unitTest_4() {
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
-		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred2;
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
-
 		Account parent = [SELECT id, Name, IATACode__c, BillingCountry, Region_formula__c, ANG_Accreditation_Model__c FROM Account WHERE Name =: 'Travel Portugal' LIMIT 1];
 		AMS_Pax_Accreditation_Form__c accre = [SELECT id, SAAM_Case__r.AccountId, Location_Class__c, Branch_Office_Country__c, ISSP_AMS_License_No__c FROM AMS_Pax_Accreditation_Form__c WHERE ISSP_AMS_License_No__c =: 'test'];
 		String result = ISSP_AmazonS3_Ctrl.isFileInTheSameAccountHierarchy(accre.SAAM_Case__r.AccountId, 'test2', 'test2', '1/15/2040', '1/15/2040');
