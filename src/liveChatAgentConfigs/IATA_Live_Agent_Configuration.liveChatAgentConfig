@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LiveChatAgentConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+    <assignments>
+        <profiles>
+            <profile>admin</profile>
+            <profile>fds hub analyst arm ai</profile>
+            <profile>gcs - management</profile>
+            <profile>gcs - management - ai</profile>
+            <profile>gcs - staff</profile>
+            <profile>gcs - staff - ai</profile>
+        </profiles>
+        <users>
+            <user>rovedaa@iata.org</user>
+            <user>mezzinab@iata.org</user>
+            <user>velascop@iata.org</user>
+        </users>
+    </assignments>
+    <autoGreeting>Hello! 
+My name is {!User_FirstName} and I&apos;m here to help you</autoGreeting>
+    <capacity>1</capacity>
+    <enableAgentFileTransfer>true</enableAgentFileTransfer>
+    <enableAgentSneakPeek>true</enableAgentSneakPeek>
+    <enableAssistanceFlag>true</enableAssistanceFlag>
+    <enableAutoAwayOnDecline>false</enableAutoAwayOnDecline>
+    <enableAutoAwayOnPushTimeout>false</enableAutoAwayOnPushTimeout>
+    <enableChatConferencing>true</enableChatConferencing>
+    <enableChatMonitoring>true</enableChatMonitoring>
+    <enableChatTransferToAgent>true</enableChatTransferToAgent>
+    <enableChatTransferToButton>true</enableChatTransferToButton>
+    <enableChatTransferToSkill>true</enableChatTransferToSkill>
+    <enableLogoutSound>true</enableLogoutSound>
+    <enableNotifications>true</enableNotifications>
+    <enableRequestSound>true</enableRequestSound>
+    <enableSneakPeek>true</enableSneakPeek>
+    <enableVisitorBlocking>true</enableVisitorBlocking>
+    <enableWhisperMessage>true</enableWhisperMessage>
+    <label>IATA Live Agent Configuration</label>
+    <supervisorSkills>
+        <skill>Africa_Middle_East</skill>
+        <skill>Airline</skill>
+        <skill>Americas</skill>
+        <skill>Asia_Pacific</skill>
+        <skill>China_North_Asia</skill>
+        <skill>English</skill>
+        <skill>Europe</skill>
+    </supervisorSkills>
+</LiveChatAgentConfig>
