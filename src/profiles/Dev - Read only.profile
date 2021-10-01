@@ -2271,22 +2271,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AWS_ExplorerCon</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AWS_ExplorerConTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AWS_S3_ExampleController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AWS_S3_ExampleControllerTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AWS_XMLDom</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2989,14 +2973,6 @@
     <classAccesses>
         <apexClass>AutomateCaseEmailMessageToParentCaseTest</apexClass>
         <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AwsCaseMigrationJob</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AwsMigrationTest</apexClass>
-        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AzureRegistrationHandler</apexClass>
@@ -4292,22 +4268,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EBC_TestUtility</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EC2Connection</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EC2ConnectionTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EC2ConsoleController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EC2ConsoleControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9611,14 +9571,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>S3FormController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>S3FormController_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>S3_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10404,6 +10356,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestData</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_AWSKeys</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -21402,8 +21358,23 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>AWSKey__c.Key_Encrypted__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AWSKey__c.Key__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AWSKey__c.Named_Credential__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AWSKey__c.Secret_Encrypted__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
