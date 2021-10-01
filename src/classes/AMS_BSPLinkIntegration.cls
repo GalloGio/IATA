@@ -127,46 +127,28 @@ global class AMS_BSPLinkIntegration {
 		}
 
 		if(lsToRemove.size()<80){
-			AMS_BSPLink_Integration__c BSPLinkParameter = AMS_BSPLink_Integration__c.getInstance();
-
-			if(string.isEmpty(BSPLinkParameter.EndpointToken__c) || string.isEmpty(BSPLinkParameter.Password__c) || string.isEmpty(BSPLinkParameter.Username__c) || string.isEmpty(BSPLinkParameter.GrantType__c)){
-				response r = new response();
-				r.IATACode='-';
-				r.result = 'Error';
-				r.description = 'Integration Parameters not set. Please contact a system administrator';
-				oReturn.Add(r);
-				return oReturn;
-			}
-
 			//Check sProcess variable
 			if(sProcess=='Deactivation' || sProcess == 'UrgentDeactivation' || sProcess == 'DeactivationUndo' || sProcess == 'Reactivation'){
 
-				//map<id, string> mapBPEEmails = new map<id, string>();
-				//for(Contact c: [select AccountId, Email from contact where Financial_Assessment_Contact__c=true and AccountId in :setAccntId])
-				//	mapBPEEmails.put(c.AccountId, c.Email);
-
-				//DO Login
-				Response GenerateToken = GrantToken(BSPLinkParameter.EndpointToken__c, BSPLinkParameter.Username__c, BSPLinkParameter.Password__c, BSPLinkParameter.GrantType__c);
+				Response GenerateToken = GrantToken();
 				//Token generation has to be invoked from the class that will invoke the webservice (batch or realtime)
 				if(GenerateToken.result=='Ok'){
 
 					for(Agency_Authorization__c AA:lsToRemove){
 						Response resp;
 						if(sProcess == 'Deactivation' || sProcess=='UrgentDeactivation')
-							resp = AgentDeactivation(GenerateToken.description, AA, BSPLinkParameter, sProcess);
+							resp = AgentDeactivation(GenerateToken.description, AA, sProcess);
 
-						system.debug('DTULLO 142 --> ' + AA);
+						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA);
 
-						if(sProcess == 'DeactivationUndo')	resp = AgentDeactivationUndo(GenerateToken.description, AA, BSPLinkParameter);
-
-						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA, BSPLinkParameter);
+						if(sProcess == 'Reactivation')		resp = AgentReactivation(GenerateToken.description, AA);
 
 
 						if(resp.result == 'Ok'){
 							if(sProcess == 'Deactivation' ||  sProcess == 'UrgentDeactivation') AA.Status__c = 'Deactivation in process';
 							AA.Last_Request_Result__c = sProcess + ' in process';
 						}
-						else 					AA.Last_Request_Result__c = resp.description;
+						else AA.Last_Request_Result__c = resp.description;
 
 						oReturn.add(resp);
 					}
@@ -200,18 +182,16 @@ global class AMS_BSPLinkIntegration {
 	}
 
 	//Method to invoke the webservice exposed by BSPLink to get the token
-	global static Response GrantToken(string sEndpoint, string sUsername, string sPassword, string sGrantType){
+	global static Response GrantToken(){
 		Response oReturn = new Response();
 
 		HttpRequest req = new HttpRequest();
 		Http http = new Http();
 		req.setMethod('POST');
-		req.setEndpoint(sEndpoint);// 'https://bsplinkweb.accelya.com/BSPlinkAPI/Token'   ?grant_type=password&UserName=bsplinkapiuser&Password=iWpaeb1!');
+		req.setEndpoint('callout:AMS_BSPLink/token');
 
 		GrantTokenRequest BodyRequest = new GrantTokenRequest();
-
-		//req.setBody('grant_type=password&UserName=bsplinkapiuser&Password=iWpaeb1!');
-		req.setBody('grant_type=' + sGrantType + '&UserName=' + sUsername + '&Password=' + sPassword);
+		req.setBody('grant_type=password&UserName={!$Credential.Username}&Password={!$Credential.Password}');
 		req.setTimeout(120000); //Timeout: 2 minutes
 		try{
 			HTTPResponse resp = http.send(req);
@@ -234,7 +214,7 @@ global class AMS_BSPLinkIntegration {
 	}
 
 	//Method to invoke the webservice exposed by BSPLink to deactivate an agency
-	global static Response AgentDeactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param, string sProcess){
+	global static Response AgentDeactivation(string sToken, Agency_Authorization__c AA, string sProcess){
 		Response oReturn = new Response();
 
 		HttpRequest req = new HttpRequest();
@@ -243,8 +223,7 @@ global class AMS_BSPLinkIntegration {
 		req.setHeader('Authorization', 'Bearer ' + sToken);
 		req.setHeader('Accept', 'application/json');
 		req.setHeader('Content-Type', 'application/json');
-		req.setEndpoint(Param.EndpointDeactivation__c);
-
+		req.setEndpoint('callout:AMS_BSPLink/api/AgentDeactivation');
 		agentDeactivationRequestResponse BodyRequest = new agentDeactivationRequestResponse();
 		BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
 		BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
@@ -275,7 +254,7 @@ global class AMS_BSPLinkIntegration {
 
 
 	//Method to invoke the webservice exposed by BSPLink to undo a deactivation of an agency
-	global static Response AgentDeactivationUndo(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param){
+	global static Response AgentDeactivationUndo(string sToken, Agency_Authorization__c AA){
 		Response oReturn = new Response();
 
 		HttpRequest req = new HttpRequest();
@@ -284,16 +263,14 @@ global class AMS_BSPLinkIntegration {
 		req.setHeader('Authorization', 'Bearer ' + sToken);
 		req.setHeader('Accept', 'application/json');
 		req.setHeader('Content-Type', 'application/json');
-		req.setEndpoint(Param.EndpointDeactivationUndo__c);
-
+		req.setEndpoint('callout:AMS_BSPLink/api/AgentDeactivationUndo');
 		agentDeactivationUndoRequestResponse BodyRequest = new agentDeactivationUndoRequestResponse();
 		BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
 		BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
 		BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
-		BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c;				//EmailAddress of the agent
+		BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c; //EmailAddress of the agent
 		req.setBody(JSON.serialize(BodyRequest));
 		req.setTimeout(120000);
-		system.debug('DTULLO 277 --> ' + AA.IATACode__c);
 		try{
 			HTTPResponse resp = http.send(req);
 			//All good
@@ -315,7 +292,7 @@ global class AMS_BSPLinkIntegration {
 	}
 
 	//Method to invoke the webservice exposed by BSPLink to reactivate an agency
-	global static Response AgentReactivation(string sToken, Agency_Authorization__c AA, AMS_BSPLink_Integration__c Param){
+	global static Response AgentReactivation(string sToken, Agency_Authorization__c AA){
 		Response oReturn = new Response();
 
 		HttpRequest req = new HttpRequest();
@@ -324,13 +301,12 @@ global class AMS_BSPLinkIntegration {
 		req.setHeader('Authorization', 'Bearer ' + sToken);
 		req.setHeader('Accept', 'application/json');
 		req.setHeader('Content-Type', 'application/json');
-		req.setEndpoint(Param.EndpointReactivation__c);
-
+		req.setEndpoint('callout:AMS_BSPLink/api/AgentReactivation');
 		agentReactivationRequestResponse BodyRequest = new agentReactivationRequestResponse();
 		BodyRequest.IsoCountryCode = AA.ISO_Country__c;	//Get Country Code of the Agency
 		BodyRequest.AgentCode = AA.IATACode__c;			//Get IATA COde
 		BodyRequest.SalesForceId = AA.Id;		//ID of the record created in the queue table
-		BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c;				//EmailAddress of the agent
+		BodyRequest.Bpe = AA.Email_Used_for_BSP_Creation__c; //EmailAddress of the agent
 		req.setBody(JSON.serialize(BodyRequest));
 		req.setTimeout(120000);
 
@@ -526,11 +502,9 @@ global class AMS_BSPLinkIntegration {
 
 	//Generic method to format the error output
 	static response FormatErrorOutput(HTTPResponse resp, string sIATACode){
-		system.debug('DTULLO 462 --> ' + sIATACode);
 		Response oReturn = new Response();
 		if(resp.getStatusCode()==400){ //Managed Error
 			ErrorResponse Resp400 = (ErrorResponse)JSON.Deserialize(resp.getBody(), ErrorResponse.class);
-			system.debug('DTULLO --> 465 ' + Resp400);
 			oReturn.result = 'Error';
 			oReturn.description = Resp400.error + ': ' + Resp400.error_description;
 		}else{ //Other Type Of Error

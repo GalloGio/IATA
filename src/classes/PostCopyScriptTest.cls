@@ -45,12 +45,6 @@ public class PostCopyScriptTest {
 		insert testUser;
 
 		System.runAs(testUser) {
-
-			AMS_BSPLink_Integration__c rec1 = new AMS_BSPLink_Integration__c(
-				SetupOwnerId = UserInfo.getOrganizationId(),
-				Name = 'Test AMS_BSPLink_Integration__c');
-			insert rec1;
-
 			AMS_SAP_Settings__c rec2 = new AMS_SAP_Settings__c(
 				SetupOwnerId = UserInfo.getOrganizationId(),
 				Name = 'Test AMS_SAP_Settings__c',
@@ -111,9 +105,6 @@ public class PostCopyScriptTest {
 
 		final String PROFILE_NAME = 'System Administrator';
 
-		List<AMS_BSPLink_Integration__c> listRecords1 = new List<AMS_BSPLink_Integration__c>();
-		listRecords1 = [SELECT id From AMS_BSPLink_Integration__c];
-
 		List<AMS_SAP_Settings__c> listRecords2 = new List<AMS_SAP_Settings__c>();
 		listRecords2 = [SELECT id From AMS_SAP_Settings__c];
 
@@ -138,7 +129,7 @@ public class PostCopyScriptTest {
 		List<RTS_Orange_Senior_Manager__c> listRecords9 = new List<RTS_Orange_Senior_Manager__c>();
 		listRecords9 = RTS_Orange_Senior_Manager__c.getAll().values();
 
-		Integer numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size() + listRecords8.size() + listRecords9.size();
+		Integer numRecords = listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size() + listRecords8.size() + listRecords9.size();
 
 		if(numRecords!=0) {
 
@@ -148,9 +139,6 @@ public class PostCopyScriptTest {
 
 			PostCopyScript script = new PostCopyScript();
 			script.deleteCustomSettingsRecords();
-
-			listRecords1 = new List<AMS_BSPLink_Integration__c>();
-			listRecords1 = [SELECT id From AMS_BSPLink_Integration__c];
 
 			listRecords2 = new List<AMS_SAP_Settings__c>();
 			listRecords2 = [SELECT id From AMS_SAP_Settings__c];
@@ -170,7 +158,7 @@ public class PostCopyScriptTest {
 			listRecords7 = new List<Apex_Setting__c>();
 			listRecords7 = Apex_Setting__c.getAll().values();
 
-			numRecords = listRecords1.size() + listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size();
+			numRecords = listRecords2.size() + listRecords3.size() + listRecords4.size() + listRecords5.size() + listRecords6.size() + listRecords7.size();
 
 			System.assertEquals(numRecords, 0);
 
