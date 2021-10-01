@@ -1,30 +1,7 @@
 @isTest class AMS_OSCAR_TriggerTest {
-
-	private static void loadCredentials() {
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-		creds.add(Amazon_Cred);
-		creds.add(GenericAttach);
-		creds.add(recycleBin);
-		insert creds;
-
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
-	}
-
 	@testSetup static void setup(){
+		TestDataFactory_AWSKeys.createAllEntries();
+
 		AMS_ChangeCodes__c cc1 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'DIS-AMS', Change_Code__c = 'DIS');
 		AMS_ChangeCodes__c cc2 = new AMS_ChangeCodes__c(Integration_RecId__c = 'C', Name = 'FIN-AMS', Change_Code__c = 'FIN');
 		upsert new List<AMS_ChangeCodes__c>{cc1, cc2};
@@ -76,7 +53,6 @@
 	@isTest static void updateOSCARTestOKFirstStep() {
 
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-		loadCredentials();
 
 		Test.startTest();
 		Account a = [SELECT id from Account where Name = 'Test1 Agency' LIMIT 1];
@@ -230,7 +206,6 @@
 		insert a;
 
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'test name',
@@ -328,7 +303,6 @@
 	@isTest static void updateOSCARTestNOKSecondStep() {
 
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-		loadCredentials();
 
 		Test.startTest();
 
@@ -605,7 +579,6 @@
 		insert oscarCase;
 
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'test name',
@@ -805,7 +778,6 @@
 
 		AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
-		loadCredentials();
 
 		insert new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Test Combination', TC_Name__c = true);
 
@@ -1035,10 +1007,7 @@
 	}
 
 	@isTest static void testCertificates() {
-
-
 		AMS_OSCAR_TestDataFactory.createCargoAgencyOSCARtestData();
-		loadCredentials();
 
 		Account a = [SELECT id from Account where Name = 'Test Cargo HO' LIMIT 1];
 
@@ -1077,8 +1046,6 @@
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
 		AMS_OSCARTriggerHandler.allOnlineAccr = null;
-
-		loadCredentials();
 
 		Test.startTest();
 
@@ -1189,10 +1156,6 @@
 
 		AMS_OSCARTriggerHandler.allOnlineAccr = null;
 
-		loadCredentials();
-
-
-
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination10', TC_Location_type__c = false, TCA_Fields_to_Migrate__c = 'ChangeOfOwnership',
 															TC_Legal_status__c = false, TC_Location__c = false, TC_Location_with_inspection__c = false,
@@ -1278,8 +1241,6 @@
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
 
 		AMS_OSCARTriggerHandler.allOnlineAccr = null;
-
-		loadCredentials();
 
 		Test.startTest();
 
@@ -1368,7 +1329,6 @@
 		insert stt;
 
 		AMS_OSCAR_TestDataFactory.createOSCARwithInspectionsTestData();
-		loadCredentials();
 
 		Test.startTest();
 

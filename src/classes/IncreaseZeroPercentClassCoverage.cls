@@ -24,9 +24,28 @@ private class IncreaseZeroPercentClassCoverage{
 	}
 
 
-	static testMethod void test4(){
-		ArchiveAttachmentListController temp = new ArchiveAttachmentListController();
-		ArchivedAttachmentControllerExtension t;
+	static testMethod void ArchivedAttachmentControllerExtensionCoverage(){
+		TestDataFactory_AWSKeys.createAllEntries();
+		Account acc = IECTestUtil.createSampleAccount();
+		Contact cont = IECTestUtil.createSampleContact(acc);
+		Case ca = new Case();
+			ca.Subject = 'test 1';
+			ca.Status = 'Open';
+			ca.AccountId = acc.id;
+			ca.ContactId = cont.id;
+			ca.CaseArea__c = 'test';
+			ca.Reason1__c = 'test';
+		insert ca;
+		List<Archived_Attachment__c> listAtt = new List<Archived_Attachment__c>();
+		Archived_Attachment__c att = new Archived_Attachment__c(
+			Case__c = ca.Id,
+			Bucket__c = 'asd',
+			Name = 'asd'
+		);
+		insert att;
+		listAtt.add(att);
+		ApexPages.StandardController stdController = new ApexPages.StandardController(listAtt[0]);
+		ArchivedAttachmentControllerExtension t = new ArchivedAttachmentControllerExtension(stdController);
 	}
 
 	static testMethod void ArchiveMessageExtensionControllerCoverage(){

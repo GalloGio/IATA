@@ -13,7 +13,7 @@ public class AMS_OSCAR_WebserviceTest {
 	private static Account a4;
 	private static Account a5;
 	private static Case oscarCase;
-
+	
 	private static void setup(){
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'US', ISO_Code__c = 'US');
 		insert ctry;
@@ -62,7 +62,8 @@ public class AMS_OSCAR_WebserviceTest {
 		insert oscarCase;
 		update new AMS_OSCAR__c(Id = oscar6.Id, Oscar_Communication_Case_Id__c = oscarCase.Id);
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
 
 
@@ -287,11 +288,7 @@ public class AMS_OSCAR_WebserviceTest {
 
 		setup();
 
-		AmazonRestTest.createCredentials(AMS_CertificateHelper.CREDENTIAL_NAME);
-		AmazonRestTest.createCredentials('RecycleBin');
-
-		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c(Account__c = oscar.Account__c, Change_Code__c = 'TST', Sent_to_external_system__c = false,
-			Active__c = true);
+		Agency_Applied_Change_code__c cc = new Agency_Applied_Change_code__c(Account__c = oscar.Account__c, Change_Code__c = 'TST', Sent_to_external_system__c = false, Active__c = true);
 		insert cc;
 
 		Test.startTest();

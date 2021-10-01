@@ -62,7 +62,8 @@ private class AMS_PCI_Complaint_Batch_Test {
 
 		//AMS_PCI_Complaint_Batch batch = new AMS_PCI_Complaint_Batch();
 		List<AMS_PCI_Complaint_Batch.ResultWrapper> resChunk = new List<AMS_PCI_Complaint_Batch.ResultWrapper>();
-
+		TestDataFactory_AWSKeys.createAllEntries();
+		
 		Test.startTest();
 		try {
 			DateTime dt = system.now();
@@ -82,7 +83,6 @@ private class AMS_PCI_Complaint_Batch_Test {
 										 	AND Status__c = 'Accepted_Future Date'
 										];
 
-			loadCredentials();
 			List<AmazonFile__c> listFile = new List<AmazonFile__c>();
 			for(AMS_OSCAR__c oscar : oscars){
 				AmazonFile__c aFile = new AmazonFile__c(
@@ -135,30 +135,6 @@ private class AMS_PCI_Complaint_Batch_Test {
 		Test.startTest();
 		AMS_PCI_Complaint_Batch.stop();
 		Test.stopTest();
-	}
-
-	private static void loadCredentials() {
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-		creds.add(Amazon_Cred);
-		creds.add(GenericAttach);
-		creds.add(recycleBin);
-		insert creds;
-
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
 	}
 
 		public static User createPortalUser(Contact con) {

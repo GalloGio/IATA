@@ -18,34 +18,10 @@ public class AmazonFileTest {
 		return aFile;
 	}
 
-	private static void loadCredentials() {
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c GenericAttach =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		Amazon_Cred__c recycleBin =  new Amazon_Cred__c(name = 'RecycleBin', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		List<Amazon_Cred__c> creds = new List<Amazon_Cred__c>();
-		creds.add(Amazon_Cred);
-		creds.add(GenericAttach);
-		creds.add(recycleBin);
-		insert creds;
-
-
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd')
-		};
-		insert AWS_KEYs;
-	}
-
 	@testSetup
 	private static void initialize() {
 		EF_AttachmentListController.runningForEF = false;
-		loadCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
 	}
 
 	static testMethod void testwithS3File(){

@@ -117,7 +117,7 @@ global   class  ArchiveAttachmentListController {
 			this.archivedAttachments  = [SELECT AWS_S3_URL__c, Name, ArchivedMessage__c, Bucket__c, Case__c, Id, BodyLength__c, Original_Creation_Date__c, OriginalCreatedBy__c, ContentType__c, Originally_created_by__c FROM Archived_Attachment__c where Case__c= :aCaseId and ArchivedMessage__c = null order by Original_Creation_Date__c desc];
 			for(Archived_Attachment__c a:this.archivedAttachments){
 			   if(!awsBucketUrl.containskey(a.Bucket__c)){
-					AWSKey__c keysSet = [SELECT Name, Key__c, Secret__c, Id, AWS_ENDPOINT_URL__c, Bucket__c FROM AWSKey__c where Bucket__c = :a.Bucket__c limit 1];
+					AWSKey__c keysSet = [SELECT Name, key_encrypted__c, secret_encrypted__c, Id, AWS_ENDPOINT_URL__c, Bucket__c FROM AWSKey__c where Bucket__c = :a.Bucket__c limit 1];
 					awsBucketUrl.put(a.Bucket__c, keysSet);
 					system.debug('add to map new bucket '+a.Bucket__c);
 			   }
@@ -143,7 +143,7 @@ global   class  ArchiveAttachmentListController {
 	}
 
 	private void loadAWSCrendtial(String bucketName){
-		   AWSKey__c keysSet = [SELECT Name, Key__c, Secret__c, Id, AWS_ENDPOINT_URL__c, Bucket__c FROM AWSKey__c where Bucket__c = :bucketName limit 1];
+		   AWSKey__c keysSet = [SELECT Name, key_encrypted__c, secret_encrypted__c, Id, AWS_ENDPOINT_URL__c, Bucket__c FROM AWSKey__c where Bucket__c = :bucketName limit 1];
 		   awsBucketUrl.put(bucketName, keysSet);
 	}
 

@@ -36,9 +36,11 @@ private class Part_Online_App_ReqTriggerHandler_Test{
 															Subject = 'case1');
 				insert case1;
 
-				WrapperAttachTest.loadTestCredentials();
-				AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
-				insert AmzFile;
+		TestDataFactory_AWSKeys.createAllEntries();
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+		AmazonFile__C AmzFile = new AmazonFile__C(name ='file',Full_Name_Unique__c = 'test name', case__c = case1.id, Category__c = 'Contractual', Subcategory__c = 'Signatory Authority');
+		insert AmzFile;
 
 		System.runAs(myUser)
 		{

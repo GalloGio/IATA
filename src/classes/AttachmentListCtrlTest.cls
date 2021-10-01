@@ -2,38 +2,16 @@
 private  class AttachmentListCtrlTest {
 	@testSetup
 	public static void loadTestCredentials() {
-		WrapperAttachTest.loadTestCredentials();
-
+		TestDataFactory_AWSKeys.createAllEntries();
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
-		insert new list <AWSKey__c>{
-			new AWSKey__c(
-				name = 'sandbox',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			),
-			new AWSKey__c(
-				name = 'production',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd'
-			)};
+									+ 'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
 
 	static testMethod void testGetters() {
-
 	   List<CSP_Utils.PickListWrapper> identifierList=  AttachmentListCtrl.getFileIdentifierPickValues();
 	   List<CSP_Utils.PickListWrapper> reviewStatusList=  AttachmentListCtrl.getReviewStatusPickValues();
-
-
 	}
+
 	static testMethod void testChangeAttachmentVisibility() {
 		 Case cse = new Case();
 		insert cse;
@@ -56,6 +34,7 @@ private  class AttachmentListCtrlTest {
 		system.assertEquals(wrlist.get(0).permission.ShowToPortalUsers__c,true);
 
 	}
+
 	static testMethod void testUpdateAttachment() {
 		Case cse = new Case();
 		insert cse;
@@ -94,10 +73,7 @@ private  class AttachmentListCtrlTest {
 			)};
 		insert attList;
 
-
-
 		AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
-
 
 		AttachmentListCtrl.ReturnWrapper rw=AttachmentListCtrl.makeAllAttachPublic(cse.id, false, false);
 
@@ -130,8 +106,6 @@ private  class AttachmentListCtrlTest {
 		arch.AWS_S3_URL__c = 'testurl';
 		insert arch;
 
-
-
 		AttachmentListCtrl.PropertiesWrapper pw= AttachmentListCtrl.getPanelProperties(cse.id, false, '');
 		AttachmentListCtrl.ReturnWrapper rw= AttachmentListCtrl.deleteAttachment(att.id, att.name);
 		system.assertEquals(rw.severity,'SUCCESS');
@@ -154,7 +128,6 @@ private  class AttachmentListCtrlTest {
 		Case cse = new Case();
 		insert cse;
 
-
 		//filename too big
 		string filename='7Ss2YCdGrhtP5SO3688fnGsLjhDeoZmpOWzSY8k5GMccAZIoDDjPoP8bYntk9KTNu8G5Oydfs1KRqShek';
 		AttachmentListCtrl.UploadFile file2=AttachmentListCtrl.createUploadFile(cse.id,filename, 'asd',219, '', 'GenericAttach');
@@ -163,8 +136,6 @@ private  class AttachmentListCtrlTest {
 
 	   AttachmentListCtrl.UploadFile file3=AttachmentListCtrl.createUploadFile(cse.id,'testname', 'asd',219, '', 'GenericAttach');
 		system.assertEquals(file3.isSuccess,true);
-
-
 
 		boolean fileAmazon=AttachmentListCtrl.createAmazonFileObject('aaaakkk', 12, cse.id, 'File', '', '');
 		system.assertEquals(fileAmazon,true);
