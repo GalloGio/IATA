@@ -34,11 +34,11 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>key_encrypted__c</field>
+                <field>Key_Encrypted__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>secret_encrypted__c</field>
+                <field>Secret_Encrypted__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
