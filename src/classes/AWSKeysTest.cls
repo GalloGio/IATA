@@ -11,7 +11,7 @@ private class AWSKeysTest {
 
 		}
 
-		AWSKey__c t1 = new AWSKey__c( key__c = 's1', secret__c = 's1', name = 'test' );
+		AWSKey__c t1 = new AWSKey__c( key_encrypted__c = 's1', secret_encrypted__c = 's1', name = 'test' );
 		insert t1;
 		AWSKeys k = new AWSKeys('test');
 		system.assert(k.key == 's1');
@@ -19,7 +19,7 @@ private class AWSKeysTest {
 
 
 		try {
-			AWSKey__c t2 = new AWSKey__c( secret__c = 's1', name = 'test2' );
+			AWSKey__c t2 = new AWSKey__c( secret_encrypted__c = 's1', name = 'test2' );
 			insert t2;
 			k = new AWSKeys('test2');
 		} catch (AWSKeys.AWSKeysException AWSExcept) {
@@ -28,7 +28,7 @@ private class AWSKeysTest {
 		}
 
 		try {
-			AWSKey__c t3 = new AWSKey__c( key__c = 's1', name = 'test3' );
+			AWSKey__c t3 = new AWSKey__c( key_encrypted__c = 's1', name = 'test3' );
 			insert t3;
 			k = new AWSKeys('test3');
 		} catch (AWSKeys.AWSKeysException AWSExcept) {

@@ -16,15 +16,6 @@ global class PostCopyScript implements SandboxPostCopy {
 	*/
 	@TestVisible
 	private void deleteCustomSettingsRecords() {
-
-		//delete AMS BSPLink Integration custom setting record
-		List<AMS_BSPLink_Integration__c> listBSPLinkIntegrations = new List<AMS_BSPLink_Integration__c>();
-		listBSPLinkIntegrations = [SELECT id From AMS_BSPLink_Integration__c];
-		if(!listBSPLinkIntegrations.isEmpty()) {
-			delete listBSPLinkIntegrations;
-		}
-
-
 		//delete AMS SAP Settings custom setting record
 		List<AMS_SAP_Settings__c> listSAPSettings = new List<AMS_SAP_Settings__c>();
 		listSAPSettings = [SELECT id From AMS_SAP_Settings__c];

@@ -1,5 +1,9 @@
 @IsTest
 public with sharing class WSToolmasterIfapTest {
+	@TestSetup
+	static void makeData(){
+		TestDataFactory_AWSKeys.createAllEntries();
+	}
 
 	private class WebServiceMockImpl implements WebServiceMock {
 		public void doInvoke(
@@ -52,25 +56,6 @@ public with sharing class WSToolmasterIfapTest {
 	}
 
 	private static testMethod void coverTypes() {
-
-
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
- Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'endpoint', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred2 ;
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd',
-				WS_Endpoint__c = 'apoint')
-		};
-		insert AWS_KEYs;
-
 		test.startTest();
 		new WSToolmasterIfap.mergeAndSubmitParametersResponse_element();
 		new WSToolmasterIfap.submitCaseQualityIssuesToMFT_element();
@@ -95,23 +80,7 @@ public with sharing class WSToolmasterIfapTest {
 	}
 
 	private static testMethod void coverMethods() {
-		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'IFAP', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred;
-		Amazon_Cred__c Amazon_Cred2 =  new Amazon_Cred__c(name = 'endpoint', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
-		insert Amazon_Cred2;
-		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
-			new AWSKey__c(
-				name = 'adevconf',
-				Key__c = 'asd',
-				Secret__c = 'asd',
-				IAS_configuration_name__c = 'asdas',
-				IAS_Access_Point__c = 'asd',
-				Bucket__c = 'asd',
-				AWS_ENDPOINT_URL__c = 'asd',
-				WS_Endpoint__c = 'apoint')
-		};
-		insert AWS_KEYs;
-			test.startTest();
+		test.startTest();
 
 		System.Test.setMock(WebServiceMock.class, new WebServiceMockImpl());
 		WSToolmasterIfap.IfapToolMaster ifapToolMaster = new WSToolmasterIfap.IfapToolMaster();
@@ -126,8 +95,7 @@ public with sharing class WSToolmasterIfapTest {
 		ifapToolMaster.submitCaseParametersToMFT(null, null, null, null);
 		ifapToolMaster.processPWCRejections(null,1);
 		ifapToolMaster.mergeAndSubmitParameters(null, null, null, null);
-				test.stopTest();
-
+		test.stopTest();
 	}
 
 }

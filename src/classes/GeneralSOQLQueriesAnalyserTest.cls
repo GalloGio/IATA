@@ -79,7 +79,7 @@ private class GeneralSOQLQueriesAnalyserTest {
 		ANG_EntityCreator.checkSFDCLimits();
 
 		EF_AttachmentListController.runningForEF = false;
-		ANG_EntityCreator.loadCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'test name',
@@ -394,7 +394,7 @@ private class GeneralSOQLQueriesAnalyserTest {
 		insert c;
 
 		EF_AttachmentListController.runningForEF = false;
-		ANG_EntityCreator.loadCredentials();
+		TestDataFactory_AWSKeys.createAllEntries();
 
 		AmazonFile__c aFile = new AmazonFile__c(
 			Full_Name_Unique__c = 'test name',

@@ -87,15 +87,14 @@ public class ANG_RiskAssessmentEngine{
 		get{
 			if(accInfoMap==null){
 				accInfoMap = new map<id,AccHelperClass>();
-				for(account acc:[select id,name, Top_Parent__c, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c,(select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Limit_Cash_Conditions__c from All_Risk_Events__r where ANG_Event_Status__c=:Ang_Risk_Helper.STATUS_ACTIVE) from account where id in :accCalcMap.keySet()]){
+				for(account acc:[select id,name, Top_Parent__c, remittance_frequency__c,ANG_Limit_Cash_Condition__c,ANG_Accreditation_Model__c,Financial_Review_Result__c,status__c, ANG_FA_Opt_out__c, (select id,ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c,ANG_Limit_Cash_Conditions__c from All_Risk_Events__r where ANG_Event_Status__c=:Ang_Risk_Helper.STATUS_ACTIVE) from account where id in :accCalcMap.keySet()]){
 					integer nAdjs=0;
 					boolean hasCashCond=false;
 					for(ANG_Agency_Risk_Event__c are:acc.All_Risk_Events__r){
 						if(are.ANG_Risk_Type__r.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c=='Yes') nAdjs++;
-						hasCashCond=hasCashCond||are.ANG_Limit_Cash_Conditions__c;
+						hasCashCond = hasCashCond || are.ANG_Limit_Cash_Conditions__c;
 					}
-					accInfoMap.put(acc.id,new AccHelperClass(nAdjs,hasCashCond,acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__c, acc.Id, acc.Top_Parent__c));
-
+					accInfoMap.put(acc.id,new AccHelperClass(nAdjs, (hasCashCond || acc.ANG_FA_Opt_out__c), acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__c, acc.Id, acc.Top_Parent__c));
 				}
 			}
 			return accInfoMap;
@@ -208,10 +207,10 @@ public class ANG_RiskAssessmentEngine{
 				if(ret.ANG_Agency_Risk_Calculation__r.ANG_Adjusted__c==ANG_Risk_Helper.ADJ_YES){
 					nrAdjustedRe+=1;
 				}
-				hasCashCond=hasCashCond||are.ANG_Limit_Cash_Conditions__c;
+				hasCashCond = hasCashCond || are.ANG_Limit_Cash_Conditions__c;
 			}
 			accCalcMap.put(acc.id,tempCalcMap);
-			accInfoMap.put(acc.id,new AccHelperClass(nrAdjustedRe,hasCashCond,acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__C, acc.Id, acc.Top_Parent__c));
+			accInfoMap.put(acc.id,new AccHelperClass(nrAdjustedRe,(hasCashCond || acc.ANG_FA_Opt_out__c),acc.ANG_Limit_Cash_Condition__c,acc.remittance_frequency__c,acc.ANG_Accreditation_Model__c,acc.Financial_Review_Result__c,acc.status__C, acc.Id, acc.Top_Parent__c));
 		}
 	}
 

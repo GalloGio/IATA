@@ -201,14 +201,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AWS_ExplorerCon</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AWS_S3_ExampleController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AWS_XMLDom</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -430,14 +422,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Auto_Queue_Triggers</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AwsCaseMigrationJob</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AwsMigrationTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1050,14 +1034,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>E2CP__pageJumper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EC2Connection</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>EC2ConsoleController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2414,10 +2390,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>S3</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>S3FormController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
