@@ -38686,14 +38686,6 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <value>Your login attempt has failed. Make sure the Email and Password are correct.</value>
     </labels>
     <labels>
-        <fullName>ISSP_Registration_Error_MobilePhone</fullName>
-        <categories>ISSP, login</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Registration_Error_MobilePhone</shortDescription>
-        <value>Please enter your mobile phone number</value>
-    </labels>
-    <labels>
         <fullName>ISSP_Registration_Error_Password</fullName>
         <categories>ISSP, login</categories>
         <language>en_US</language>
@@ -43957,30 +43949,6 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <value>Registration Process</value>
     </labels>
     <labels>
-        <fullName>OneId_EligibleExistingUserError</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_EligibleExistingUserError</shortDescription>
-        <value>This Email is already registered with us.
-&lt;br/&gt;
-If you are an E-Commerce user, please use your E-Commerce credentials.
-&lt;br/&gt;
-If you are a Customer Portal user, please use your Customer Portal credentials.
-&lt;br/&gt;
-Please follow the link below to login. From 1ID homepage, you will be able to request access to FRED+.</value>
-    </labels>
-    <labels>
-        <fullName>OneId_EligibleLoggedUserRegisteringError</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_EligibleLoggedUserRegisteringError</shortDescription>
-        <value>You already have an active 1ID session opened.
-&lt;br/&gt;
-Please follow the link below to access 1ID homepage. From there, you will be able to request access to FRED+.</value>
-    </labels>
-    <labels>
         <fullName>OneId_EmailError</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -43996,20 +43964,6 @@ Please follow the link below to access 1ID homepage. From there, you will be abl
         <value>https://iata--csp1idsre--c.cs88.content.force.com/servlet/servlet.ImageServer?id=0159E000000MCzW&amp;oid=00D9E0000001L6b&amp;lastMod=1522143388000</value>
     </labels>
     <labels>
-        <fullName>OneId_ExistingUserWithFredAccessError</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_ExistingUserWithFredAccessError</shortDescription>
-        <value>This Email is already registered with us and has access to FRED+.
-&lt;br/&gt;
-If you are an E-Commerce user, please use your E-Commerce credentials.
-&lt;br/&gt;
-If you are a Customer Portal user, please use your Customer Portal credentials.
-&lt;br/&gt;
-Please follow the link below to login. From 1ID homepage, click the FRED+ Service in &quot;My available services&quot; section to access FRED+ system.</value>
-    </labels>
-    <labels>
         <fullName>OneId_FRED_ContactUs_Link</fullName>
         <categories>OneId</categories>
         <language>en_US</language>
@@ -44023,22 +43977,6 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_FRED_Missing_Mandatory_Fields</shortDescription>
         <value>To request access to FRED+ the mandatory fields &quot;Salutation&quot;, &quot;Job Title&quot; and &quot;Mobile Phone&quot; need to be filled. To update these field proceed to the &quot;My Profile&quot; section of this page.</value>
-    </labels>
-    <labels>
-        <fullName>OneId_FRED_RegistrationProcess</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId FRED RegistrationProcess</shortDescription>
-        <value>Verifiers should NOT use this form. Instead, please refer to the FAQ section for registration instructions.</value>
-    </labels>
-    <labels>
-        <fullName>OneId_FRED_RegistrationProcess_URL</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId FRED RegistrationProcess URL</shortDescription>
-        <value>https://www.iata.org/fred#tab-5</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_0</fullName>
@@ -44577,14 +44515,6 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <value>Troubleshooting</value>
     </labels>
     <labels>
-        <fullName>OneId_FRED_Troubleshooting_Link</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_FRED_Troubleshooting_Link</shortDescription>
-        <value>https://fred.iata.org/contact</value>
-    </labels>
-    <labels>
         <fullName>OneId_FRED_URL</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -44605,14 +44535,6 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_Fred_App_Description</shortDescription>
         <value>CORSIA CO2 emissions reporting for Aircraft Operators and States</value>
-    </labels>
-    <labels>
-        <fullName>OneId_Fred_Select_Type_of_Company</fullName>
-        <categories>OneId, Fred</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_Fred_Select_Type_of_Company</shortDescription>
-        <value>- Select the Type of Organization -</value>
     </labels>
     <labels>
         <fullName>OneId_GADM_Terms_of_Use_Link</fullName>
@@ -44774,16 +44696,6 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <protected>false</protected>
         <shortDescription>OneId_Job_Function</shortDescription>
         <value>Job Function</value>
-    </labels>
-    <labels>
-        <fullName>OneId_LoggedUserWithServiceAccessRegisteringError</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_LoggedUserWithServiceAccessRegisteringError</shortDescription>
-        <value>You already have an active 1ID  session opened and have access to FRED+.
-&lt;br/&gt;
-Please follow the link below to access 1ID homepage. From there, click the FRED+ Service in &quot;My available services&quot; section to access FRED+ system.</value>
     </labels>
     <labels>
         <fullName>OneId_Login</fullName>
@@ -45234,37 +45146,6 @@ If you want to reset your password, go back to login screen and use &quot;forgot
         <protected>false</protected>
         <shortDescription>OneId URL javaScript</shortDescription>
         <value>https://identity.iata.org</value>
-    </labels>
-    <labels>
-        <fullName>OneId_UneligibleExistingUserError</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_UneligibleExistingUserError</shortDescription>
-        <value>This Email is already registered with us, but the related user is not eligible for FRED+.
-&lt;br/&gt;
-If you believe that it is a mistake, please follow the link below to contact us.</value>
-    </labels>
-    <labels>
-        <fullName>OneId_UneligibleLoggedUserRegisteringError</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_UneligibleLoggedUserRegisteringError</shortDescription>
-        <value>You already have an active 1ID session opened.
-&lt;br/&gt;
-Note that your user is not eligible for FRED+ access.
-&lt;br/&gt;
-If you believe that it is a mistake, please follow the link below to contact us.</value>
-    </labels>
-    <labels>
-        <fullName>OneId_User_CreatedFromContact</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>OneId_User_CreatedFromContact</shortDescription>
-        <value>Thank you for your registration.
-Please check your mailbox to finalize the registration process.</value>
     </labels>
     <labels>
         <fullName>OneId_Username</fullName>

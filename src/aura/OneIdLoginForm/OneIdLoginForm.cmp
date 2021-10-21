@@ -11,7 +11,7 @@
     <aura:attribute name="selfRegisterUrl" type="String" required="false" default="/SelfRegister"/>
     <aura:attribute name="sanctionCountry" type="Boolean" required="false" default="false"/>
     <aura:attribute name="show90Days" type="Boolean" required="false" default="false"/>
-    //ff
+    
     <aura:attribute name="isUsernamePasswordEnabled" type="Boolean" access="private"/>
     <aura:attribute name="isSelfRegistrationEnabled" type="Boolean" access="private"/>
     <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>

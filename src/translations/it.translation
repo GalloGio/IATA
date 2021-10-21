@@ -22644,10 +22644,6 @@ Tenga presente che molte fatture IATA vengono addebitate via BSP/CASS. La preghi
         <name>ISSP_Registration_Error_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration_Error_MobilePhone --></label>
-        <name>ISSP_Registration_Error_MobilePhone</name>
-    </customLabels>
-    <customLabels>
         <label>Il campo della password non può essere vuoto, immetta un valore.</label>
         <name>ISSP_Registration_Error_Password</name>
     </customLabels>
@@ -28994,14 +28990,6 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>OneId_Create_an_account</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_EligibleExistingUserError --></label>
-        <name>OneId_EligibleExistingUserError</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_EligibleLoggedUserRegisteringError --></label>
-        <name>OneId_EligibleLoggedUserRegisteringError</name>
-    </customLabels>
-    <customLabels>
         <label>Inserisca il suo indirizzo e-mail</label>
         <name>OneId_EmailError</name>
     </customLabels>
@@ -29010,24 +28998,12 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>OneId_Email_Header_Identity</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_ExistingUserWithFredAccessError --></label>
-        <name>OneId_ExistingUserWithFredAccessError</name>
-    </customLabels>
-    <customLabels>
         <label><!-- OneId_FRED_ContactUs_Link --></label>
         <name>OneId_FRED_ContactUs_Link</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Missing_Mandatory_Fields --></label>
         <name>OneId_FRED_Missing_Mandatory_Fields</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId FRED RegistrationProcess --></label>
-        <name>OneId_FRED_RegistrationProcess</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId FRED RegistrationProcess URL --></label>
-        <name>OneId_FRED_RegistrationProcess_URL</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_Terms_0 --></label>
@@ -29298,10 +29274,6 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
         <name>OneId_FRED_Troubleshooting</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_FRED_Troubleshooting_Link --></label>
-        <name>OneId_FRED_Troubleshooting_Link</name>
-    </customLabels>
-    <customLabels>
         <label><!-- OneId_FRED_URL --></label>
         <name>OneId_FRED_URL</name>
     </customLabels>
@@ -29312,10 +29284,6 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label><!-- OneId_Fred_App_Description --></label>
         <name>OneId_Fred_App_Description</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_Fred_Select_Type_of_Company --></label>
-        <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId GADM Terms of Use Link --></label>
@@ -29400,10 +29368,6 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label><!-- OneId_Job_Function --></label>
         <name>OneId_Job_Function</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_LoggedUserWithServiceAccessRegisteringError --></label>
-        <name>OneId_LoggedUserWithServiceAccessRegisteringError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Login --></label>
@@ -29639,14 +29603,6 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- OneId URL javaScript --></label>
         <name>OneId_URL_javaScript</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_UneligibleExistingUserError --></label>
-        <name>OneId_UneligibleExistingUserError</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_UneligibleLoggedUserRegisteringError --></label>
-        <name>OneId_UneligibleLoggedUserRegisteringError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_User_CreatedFromContact --></label>

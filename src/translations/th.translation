@@ -22638,10 +22638,6 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_Registration_Error_Login</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_Registration_Error_MobilePhone --></label>
-        <name>ISSP_Registration_Error_MobilePhone</name>
-    </customLabels>
-    <customLabels>
         <label>ช่องรหัสผ่านไม่สามารถเว้นว่างไว้ได้ โปรดป้อนข้อมูล</label>
         <name>ISSP_Registration_Error_Password</name>
     </customLabels>
@@ -28989,24 +28985,12 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_Create_an_account</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_EligibleExistingUserError --></label>
-        <name>OneId_EligibleExistingUserError</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_EligibleLoggedUserRegisteringError --></label>
-        <name>OneId_EligibleLoggedUserRegisteringError</name>
-    </customLabels>
-    <customLabels>
         <label>โปรดระบุอีเมลของคุณ</label>
         <name>OneId_EmailError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Email_Header_Identity --></label>
         <name>OneId_Email_Header_Identity</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_ExistingUserWithFredAccessError --></label>
-        <name>OneId_ExistingUserWithFredAccessError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_FRED_ContactUs_Link --></label>
@@ -29293,10 +29277,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>OneId_FRED_Troubleshooting</name>
     </customLabels>
     <customLabels>
-        <label><!-- OneId_FRED_Troubleshooting_Link --></label>
-        <name>OneId_FRED_Troubleshooting_Link</name>
-    </customLabels>
-    <customLabels>
         <label><!-- OneId_FRED_URL --></label>
         <name>OneId_FRED_URL</name>
     </customLabels>
@@ -29307,10 +29287,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Fred_App_Description --></label>
         <name>OneId_Fred_App_Description</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_Fred_Select_Type_of_Company --></label>
-        <name>OneId_Fred_Select_Type_of_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId GADM Terms of Use Link --></label>
@@ -29395,10 +29371,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId_Job_Function --></label>
         <name>OneId_Job_Function</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_LoggedUserWithServiceAccessRegisteringError --></label>
-        <name>OneId_LoggedUserWithServiceAccessRegisteringError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_Login --></label>
@@ -29634,14 +29606,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- OneId URL javaScript --></label>
         <name>OneId_URL_javaScript</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_UneligibleExistingUserError --></label>
-        <name>OneId_UneligibleExistingUserError</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- OneId_UneligibleLoggedUserRegisteringError --></label>
-        <name>OneId_UneligibleLoggedUserRegisteringError</name>
     </customLabels>
     <customLabels>
         <label><!-- OneId_User_CreatedFromContact --></label>

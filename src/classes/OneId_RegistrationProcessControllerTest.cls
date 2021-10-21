@@ -708,7 +708,6 @@ private class OneId_RegistrationProcessControllerTest {
 				Test.startTest();
 
 						OneId_RegistrationProcessController.registration(a,c,serviceName, false);
-						OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'FRED');
 						OneId_RegistrationProcessController.registration(a,c,'NDCMM', false);
 						OneId_RegistrationProcessController.getUserInformationFromEmail(con.email,'NDCMM');
 						OneId_RegistrationProcessController.getUserInformationFromEmail(c.email,'ISSP');

@@ -20,32 +20,6 @@
                 <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr>{!$Label.c.ISSP_MyProfile_EMAIL}</label>
                 <ui:inputEmail aura:id="email" placeholder="test@email.com" value="{!v.contact.Email}" class="slds-input" required="true" />
             </div>
-            <aura:if isTrue="{! and(v.serviceName=='FRED',v.isEmailAddressAvailable == false)}">
-                <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">
-                    <li class="form-element__help">
-                        <aura:if isTrue="{! v.isServiceUser}">
-                            <aura:unescapedHTML value="{! $Label.c.OneId_ExistingUserWithFredAccessError}"/>
-                            <br/>
-                            <a href="{!'/' + $Label.c.OneId_Community_Name + '/login'}">Login</a>
-                                                                
-                            <aura:set attribute="else">
-                                <aura:if isTrue="{! v.isServiceEligible}">
-                                    <aura:unescapedHTML value="{! $Label.c.OneId_EligibleExistingUserError}"/>
-                                    <br/>
-                                    <a href="{!'/' + $Label.c.OneId_Community_Name + '/login'}">Login</a>
-                                    <aura:set attribute="else">
-                                        <aura:unescapedHTML value="{! $Label.c.OneId_UneligibleExistingUserError}"/>
-	                                    <br/>
-	                                    <a href="{! $Label.c.OneId_FRED_Troubleshooting_Link}" target="_blank">{! $Label.c.OneId_FRED_Troubleshooting_Link}</a>
-                                    </aura:set>
-                                </aura:if>                                
-                            </aura:set>
-                        </aura:if>
-                    </li>
-                </ul>
-                <br/>
-                &nbsp;
-            </aura:if>
             
             <aura:if isTrue="{! and(v.serviceName == 'NDCMM', v.isGuest)}">
                 <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">
@@ -78,7 +52,7 @@
                         <a class="terms" href="{!$Label.c.OneId_CSP_Terms_Of_Use_Link}" target="_blank">{!$Label.c.ISSP_Registration_acceptGeneralConditions}</a>
                     </div>
                 </aura:set>
-                    </aura:if>
+                </aura:if>
                 
             	<aura:set attribute="else">
             	   	<div class="slds-grid slds-grid_align-end">

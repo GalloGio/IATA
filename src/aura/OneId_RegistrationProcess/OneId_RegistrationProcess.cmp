@@ -44,41 +44,6 @@
         <div class="slds-grid">
             <div class="slds-p-horizontal--small slds-size--1-of-1">
                 <h1>{!$Label.c.OneId_Create_an_account}</h1>
-                <aura:if isTrue="{!and(v.serviceName == 'FRED',empty(v.invitationId))}">
-                  <p>
-                    <a href="{!$Label.c.OneId_FRED_RegistrationProcess_URL}">
-                    {!$Label.c.OneId_FRED_RegistrationProcess}
-                    </a>
-                  </p>
-                </aura:if>
-                <aura:if isTrue="{! and(v.serviceName=='FRED',v.isGuest == false)}">
-                    <br/>
-                    <ul class="has-error uiInputDefaultError uiInput uiInputEmail uiInput--default uiInput--input">
-                        <li class="form-element__help">
-                            <aura:if isTrue="{! v.isServiceUser}">
-                                <aura:unescapedHTML value="{! $Label.c.OneId_LoggedUserWithServiceAccessRegisteringError}"/>
-                                <br/>
-                                <a href="{!'/' + $Label.c.OneId_Community_Name}">Home</a>
-
-                                <aura:set attribute="else">
-                                    <aura:if isTrue="{! v.isServiceEligible}">
-                                        <aura:unescapedHTML value="{! $Label.c.OneId_EligibleLoggedUserRegisteringError}"/>
-                                        <br/>
-                                        <a href="{!'/' + $Label.c.OneId_Community_Name}">Home</a>
-
-                                        <aura:set attribute="else">
-                                            <aura:unescapedHTML value="{! $Label.c.OneId_UneligibleLoggedUserRegisteringError}"/>
-                                            <br/>
-                                            <a href="{! $Label.c.OneId_FRED_Troubleshooting_Link}" target="_blank">{! $Label.c.OneId_FRED_Troubleshooting_Link}</a>
-                                        </aura:set>
-                                    </aura:if>
-                                </aura:set>
-                            </aura:if>
-                        </li>
-                    </ul>
-                    <br/>
-                    &nbsp;
-                </aura:if>
 
                 <aura:if isTrue="{! and(v.serviceName=='NDCMM',v.isGuest == false)}">
                     <br/>
@@ -99,7 +64,7 @@
                     &nbsp;
                 </aura:if>
 
-                <aura:if isTrue="{! v.isGuest || and(v.serviceName != 'FRED',v.serviceName != 'NDCMM') || and(v.serviceName == 'NDCMM',and(!v.isServiceUser,v.isServiceEligible))}">
+                <aura:if isTrue="{! v.isGuest || v.serviceName != 'NDCMM' || and(v.serviceName == 'NDCMM',and(!v.isServiceUser,v.isServiceEligible))}">
 
                     <div class="slds-accordion">
                         <div class="slds-accordion__list-item">
@@ -160,52 +125,41 @@
                                     </div>
                                 </div>
                                 <div aria-hidden="true" class="slds-accordion__content" id="step3">
-                                    <aura:if isTrue="{!v.serviceName=='FRED'}">
-                                        <!-- New version for FRED account creation -->
-                                        <c:OneId_Fred_AccountSelection contact="{!v.contact}" account="{!v.account}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
-                                        <aura:set attribute="else">
-                                            <aura:if isTrue="{!v.serviceName=='NDCMM'}">
-                                                <c:OneId_NDCMM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
+                                        <aura:if isTrue="{!v.serviceName=='NDCMM'}">
+                                            <c:OneId_NDCMM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" userInput="{!v.account.Name}"/>
 
-                                                <!-- Default account creation -->
-                                                <aura:set attribute="else">
-                                                    <aura:if isTrue="{!v.serviceName=='ISSP'}">
-                                                        <c:OneId_ISSP_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}"/>
+                                             <!-- Default account creation -->
+                                            <aura:set attribute="else">
+                                                <aura:if isTrue="{!v.serviceName=='ISSP'}">
+                                                    <c:OneId_ISSP_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}"/>
 
-                                                        <aura:set attribute="else">
+                                                    <aura:set attribute="else">
 
-                                                            <aura:if isTrue="{!v.serviceName == 'GADM'}">
+                                                        <aura:if isTrue="{!v.serviceName == 'GADM'}">
 
-                                                                <c:OneId_GADM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}" gadmAccountId="{! v.gadmAccountId}"/>
+                                                            <c:OneId_GADM_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}" gadmAccountId="{! v.gadmAccountId}"/>
 
-                                                                <!-- Default account creation -->
-                                                                <aura:set attribute="else">
-                                                                    <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}"/>
-                                                                </aura:set>
+                                                            <!-- Default account creation -->
+                                                            <aura:set attribute="else">
+                                                                <c:OneId_AccountSelection account="{!v.account}" contact="{!v.contact}" serviceName="{!v.serviceName}" isGadmPowerUser="{!v.isGadmPowerUser}"/>
+                                                            </aura:set>
 
-                                                            </aura:if>
-                                                        </aura:set>
-                                                    </aura:if>
-                                                </aura:set>
-                                            </aura:if>
-                                        </aura:set>
-                                    </aura:if>
-                                </div>
-                            </section>
-                        </div>
+                                                        </aura:if>
+                                                    </aura:set>
+                                                </aura:if>
+                                            </aura:set>
+                                        </aura:if>                                
+                         </div>
+                        </section>
                     </div>
-                </aura:if>
-            </div>
+                </div>
+            </aura:if>
         </div>
+    </div>
     </div>
 
     <div aura:id="registrationComplete" class="slds-text-align_center slds-p-around_large slds-hide">
-        <aura:if isTrue="{!v.serviceName == 'FRED'}">
-            <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_CheckEmail}</h1>
-            <aura:set attribute="else">
-                <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>
-                <h3>{!$Label.c.OneId_CheckEmail}</h3>
-            </aura:set>
-        </aura:if>
+        <h1 class="slds-m-bottom_medium">{!$Label.c.OneId_RegistrationComplete}</h1>
+        <h3>{!$Label.c.OneId_CheckEmail}</h3>
     </div>
 </aura:component>

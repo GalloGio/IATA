@@ -46,7 +46,7 @@
             c.set("v.isServiceEligible", params.isServiceEligible);
             
             if(params.isContactInserted){
-            	if(serviceName != 'FRED' && serviceName != 'NDCMM'){
+            	if(serviceName != 'NDCMM'){
                 	var e = c.getEvent("StepCompletionNotification");
                 	e.setParams({
                 	    "stepNumber" : 3,
@@ -59,13 +59,6 @@
                 	c.find("termsaccepted").set("v.disabled", true);
             	}
             	else{
-            		if(! params.isServiceEligible){
-            			if(serviceName == 'FRED'){
-                        	emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
-            			}
-                        c.set("v.Terms", false);
-            		}
-            		else{
 	                    c.set("v.contact",params.con);
 	                    c.set("v.account",params.acc);
 	                    //notify parent component that step is completed
@@ -78,7 +71,7 @@
 	                    emailCmp.set("v.errors", null);
 	                    emailCmp.set("v.disabled", true);
 	                    c.find("termsaccepted").set("v.disabled", true);
-            		}
+            		
             	}
             }
             else if(params.isEmailAddressAvailable && !params.isContactInserted){
@@ -97,7 +90,7 @@
             	}
             }
             else{
-                if(c.get("v.serviceName") != 'FRED' && c.get("v.serviceName") != 'NDCMM'){
+                if(c.get("v.serviceName") != 'NDCMM'){
                     emailCmp.set("v.errors", [{message: $A.get("$Label.c.OneId_Registration_UserExist")}]);
                 }
                 c.set("v.Terms", false);

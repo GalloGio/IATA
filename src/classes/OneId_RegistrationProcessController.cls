@@ -85,29 +85,6 @@ public without sharing class OneId_RegistrationProcessController {
 		userInformation.isGuest = guestUser > 0;
 
 		// This part has to be made generic, using the serviceName parameter
-		if(!userInformation.isGuest && serviceName == 'FRED'){
-			Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND PermissionSet.Name = 'FRED_SSO'];
-
-			userInformation.isServiceUser = fredAccess > 0;
-
-			if(!userInformation.isServiceUser){
-				User usr = [SELECT AccountId FROM User where Id =: UserInfo.getUserId()];
-
-				Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
-
-
-				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
-					userInformation.isServiceEligible = true;
-				}
-				else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
-					userInformation.isServiceEligible = true;
-				}
-				else{
-					userInformation.isServiceEligible = false;
-				}
-			}
-		}
-		// This part has to be made generic, using the serviceName parameter
 		if(!userInformation.isGuest && serviceName == 'NDCMM'){
 			User usr = [SELECT ContactId, AccountId
 			FROM User
@@ -195,7 +172,7 @@ public without sharing class OneId_RegistrationProcessController {
 			//Id userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false);
 			//Boolean userCreated = Comm_User_Helper.createNewUser(conList.get(0), '' , serviceName , (conList.get(0).Preferred_Language__c != null ?  conList.get(0).Preferred_Language__c : languageString) , false, false) != null ? TRUE : FALSE;
 
-			if(serviceName != 'FRED' && serviceName != 'NDCMM'){
+			if(serviceName != 'NDCMM'){
 				isAlreadyContact = true;
 				Boolean userCreated = registration(returnRelatedAcc(conList.get(0).AccountId), conList.get(0), serviceName, new Map<String,String>(), false);
 
@@ -209,22 +186,6 @@ public without sharing class OneId_RegistrationProcessController {
 					userInformation.isContactInserted = false;
 					System.Debug('User NOT created!');
 				}
-			}
-			else if(serviceName == 'FRED'){
-				userInformation.isContactInserted = true;
-				userInformation.con = conList.get(0);
-				Account acc = [SELECT Name, RecordTypeId, RecordType.Name, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: conList.get(0).Account.Id];
-
-				if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
-					userInformation.isServiceEligible = true;
-				}
-				else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
-					userInformation.isServiceEligible = true;
-				}
-				else{
-					userInformation.isServiceEligible = false;
-				}
-				userInformation.acc = acc;
 			}
 			else{
 				userInformation.isContactInserted = true;
@@ -242,24 +203,6 @@ public without sharing class OneId_RegistrationProcessController {
 				User usr = usrs[0];
 				Account acc = [SELECT RecordTypeId, fredp_aircraftoperator_eligibility__c, RecordType.DeveloperName FROM Account WHERE Id =: usr.AccountId];
 
-				// This part has to be made generic, using the serviceName parameter
-				if(serviceName == 'FRED'){
-					Integer fredAccess = [SELECT count() FROM PermissionSetAssignment WHERE AssigneeId =: usr.Id AND PermissionSet.Name = 'FRED_SSO'];
-
-					userInformation.isServiceUser = fredAccess > 0;
-
-					if(!userInformation.isServiceUser){
-						if((acc.RecordType.DeveloperName == 'IATA_Airline' ||  acc.RecordType.DeveloperName == 'Operator') && acc.fredp_aircraftoperator_eligibility__c){
-							userInformation.isServiceEligible = true;
-						}
-						else if(acc.RecordType.DeveloperName == 'ICAO_Member_State' || acc.RecordType.DeveloperName == 'Verifiers'){
-							userInformation.isServiceEligible = true;
-						}
-						else{
-							userInformation.isServiceEligible = false;
-						}
-					}
-				}
 				if(serviceName == 'NDCMM'){
 					getNDCMMUserInformation(userInformation, usrs[0].ContactId, usrs[0].AccountId);
 				}
@@ -604,11 +547,6 @@ public without sharing class OneId_RegistrationProcessController {
 				List<Contact> gpContact = [SELECT id, AccountId FROM Contact WHERE AccountId =:acc.Id LIMIT 1];
 				if(gpContact.isEmpty()) //in this case the Portal Status will be Pending Approval
 					con.User_Portal_Status__c = 'Active';
-			}
-
-			if(serviceName == 'FRED'){
-				//con.User_Portal_Status__c = 'Pending Approval';
-				con.Community__c = 'FRED Customer Portal';
 			}
 
 		}else{ // account not found
